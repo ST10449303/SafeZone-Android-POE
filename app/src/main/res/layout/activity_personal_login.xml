@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/safezone_white"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- SafeZone Top Navigation -->
+        <TextView
+            android:id="@+id/tvHeader"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/safezone_navy"
+            android:gravity="center"
+            android:text="SafeZone"
+            android:textColor="@color/safezone_white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Main Content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="22dp"
+            android:paddingBottom="30dp">
+
+            <!-- SafeZone Logo -->
+            <ImageView
+                android:id="@+id/imgSafeZoneLogo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:contentDescription="SafeZone Logo"
+                android:src="@drawable/safezone_logo"
+                android:scaleType="fitCenter" />
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:text="Personal Safety Login"
+                android:textColor="@color/safezone_dark"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Subtitle -->
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:gravity="center"
+                android:text="Sign in to access your personal safety account."
+                android:textColor="@color/safezone_grey"
+                android:textSize="14sp" />
+
+            <!-- Email Field -->
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/rounded_login_input"
+                android:drawableStart="@drawable/ic_email"
+                android:drawablePadding="14dp"
+                android:hint="Email Address"
+                android:inputType="textEmailAddress"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/safezone_dark"
+                android:textColorHint="@color/safezone_grey"
+                android:textSize="16sp" />
+
+            <!-- Password Field -->
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/rounded_login_input"
+                android:drawableStart="@drawable/ic_lock"
+                android:drawableEnd="@drawable/ic_visibility_off"
+                android:drawablePadding="14dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/safezone_dark"
+                android:textColorHint="@color/safezone_grey"
+                android:textSize="16sp" />
+
+            <!-- Remember Me / Forgot Password -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <!-- Remember Me -->
+                <CheckBox
+                    android:id="@+id/cbRememberMe"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/safezone_navy"
+                    android:minHeight="48dp"
+                    android:text="Remember me"
+                    android:textColor="@color/safezone_dark"
+                    android:textSize="14sp" />
+
+                <!-- Forgot Password -->
+                <TextView
+                    android:id="@+id/tvForgotPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:minWidth="130dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="Forgot Password?"
+                    android:textColor="@color/safezone_blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:contentDescription="Forgot Password" />
+
+            </LinearLayout>
+
+            <!-- Login Button -->
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="14dp"
+                android:backgroundTint="@color/safezone_navy"
+                android:text="Login"
+                android:textAllCaps="false"
+                android:textColor="@color/safezone_white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <!-- OR Divider -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/safezone_grey" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:text="OR"
+                    android:textColor="@color/safezone_grey"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/safezone_grey" />
+
+            </LinearLayout>
+
+            <!-- Register Message -->
+            <TextView
+                android:id="@+id/tvNoAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:gravity="center"
+                android:text="Don't have a personal account?"
+                android:textColor="@color/safezone_grey"
+                android:textSize="14sp" />
+
+            <!-- Register -->
+            <TextView
+                android:id="@+id/tvCreateAccount"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="Register"
+                android:textColor="@color/safezone_blue"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

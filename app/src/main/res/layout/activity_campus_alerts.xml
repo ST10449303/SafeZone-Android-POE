@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F8FC">
+
+    <!-- ===================================================== -->
+    <!-- TOP HEADER -->
+    <!-- ===================================================== -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/safezone_navy"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <!-- Back -->
+        <ImageView
+            android:id="@+id/tvBack"
+            android:layout_width="42dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Back"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- SafeZone -->
+        <TextView
+            android:id="@+id/tvHeaderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="SafeZone"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <!-- Notification -->
+        <ImageView
+            android:id="@+id/ivNotification"
+            android:layout_width="42dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_notifications"
+            android:contentDescription="Notifications"
+            android:clickable="true"
+            android:focusable="true" />
+
+    </RelativeLayout>
+
+
+    <!-- ===================================================== -->
+    <!-- MAIN CONTENT -->
+    <!-- ===================================================== -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+
+            <!-- ================================================= -->
+            <!-- TITLE AREA -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:padding="13dp"
+                    android:background="@drawable/bg_alert_icon_circle"
+                    android:src="@drawable/ic_notifications"
+                    android:contentDescription="Campus alerts" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Campus Alerts"
+                        android:textColor="#0B2A4A"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="Stay informed. Stay safe."
+                        android:textColor="#526B8D"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Receive important updates, safety notices and emergency information for your campus."
+                android:textColor="#58708F"
+                android:textSize="15sp"
+                android:lineSpacingExtra="3dp" />
+
+
+            <!-- ================================================= -->
+            <!-- CAMPUS SELECTOR -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:id="@+id/campusSelector"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_alert_selector"
+                android:gravity="center_vertical"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_campus"
+                    android:contentDescription="Campus" />
+
+                <TextView
+                    android:id="@+id/tvSelectedCampus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:text="Pretoria Campus"
+                    android:textColor="#17395F"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_arrow_down"
+                    android:contentDescription="Select campus" />
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- FILTERS -->
+            <!-- ================================================= -->
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnFilterAll"
+                        android:layout_width="82dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/bg_alert_filter_selected"
+                        android:backgroundTint="@null"
+                        android:stateListAnimator="@null"
+                        android:text="All"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnFilterEmergency"
+                        android:layout_width="112dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_alert_filter"
+                        android:backgroundTint="@null"
+                        android:stateListAnimator="@null"
+                        android:drawableStart="@drawable/ic_alert_emergency"
+                        android:drawablePadding="6dp"
+                        android:text="Emergency"
+                        android:textAllCaps="false"
+                        android:textColor="#243B5A"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnFilterSafety"
+                        android:layout_width="100dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_alert_filter"
+                        android:backgroundTint="@null"
+                        android:stateListAnimator="@null"
+                        android:drawableStart="@drawable/ic_shield"
+                        android:drawablePadding="6dp"
+                        android:text="Safety"
+                        android:textAllCaps="false"
+                        android:textColor="#243B5A"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnFilterGeneral"
+                        android:layout_width="100dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_alert_filter"
+                        android:backgroundTint="@null"
+                        android:stateListAnimator="@null"
+                        android:drawableStart="@drawable/ic_info"
+                        android:drawablePadding="6dp"
+                        android:text="General"
+                        android:textAllCaps="false"
+                        android:textColor="#243B5A"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnFilterEvents"
+                        android:layout_width="92dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_alert_filter"
+                        android:backgroundTint="@null"
+                        android:stateListAnimator="@null"
+                        android:drawableStart="@drawable/ic_event"
+                        android:drawablePadding="6dp"
+                        android:text="Events"
+                        android:textAllCaps="false"
+                        android:textColor="#243B5A"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+
+            <!-- ================================================= -->
+            <!-- ALERT CONTAINER -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:id="@+id/alertsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="18dp" />
+
+
+            <!-- ================================================= -->
+            <!-- ENABLE NOTIFICATIONS -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:id="@+id/notificationPrompt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_notification_prompt"
+                android:gravity="center_vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_alert_icon_circle"
+                    android:src="@drawable/ic_megaphone"
+                    android:contentDescription="Notifications" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Enable Notifications"
+                        android:textColor="#12345A"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="Don't miss important campus updates."
+                        android:textColor="#637A98"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnEnableNotifications"
+                    android:layout_width="92dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_alert_primary_button"
+                    android:backgroundTint="@null"
+                    android:stateListAnimator="@null"
+                    android:text="Turn On"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <!-- ===================================================== -->
+    <!-- BOTTOM NAVIGATION -->
+    <!-- ===================================================== -->
+
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:background="@android:color/white"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
+
+        <!-- HOME -->
+
+        <LinearLayout
+            android:id="@+id/navHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:src="@drawable/ic_home"
+                android:contentDescription="Home" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textColor="#183B63"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+        <!-- MAP -->
+
+        <LinearLayout
+            android:id="@+id/navMap"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:src="@drawable/ic_location"
+                android:contentDescription="Map" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Map"
+                android:textColor="#183B63"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+        <!-- REPORTS -->
+
+        <LinearLayout
+            android:id="@+id/navReports"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:src="@drawable/ic_reports"
+                android:contentDescription="Reports" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reports"
+                android:textColor="#183B63"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+        <!-- ALERTS -->
+
+        <LinearLayout
+            android:id="@+id/navNotifications"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/bg_alert_nav_selected"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:src="@drawable/ic_notifications"
+                android:contentDescription="Alerts" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alerts"
+                android:textColor="#1976D2"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <!-- PROFILE -->
+
+        <LinearLayout
+            android:id="@+id/navProfile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:src="@drawable/ic_person"
+                android:contentDescription="Profile" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textColor="#183B63"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

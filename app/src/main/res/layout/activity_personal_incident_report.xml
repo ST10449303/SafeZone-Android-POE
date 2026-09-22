@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FA">
+
+    <!-- ================= HEADER ================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/safezone_navy"
+        android:paddingStart="8dp"
+        android:paddingEnd="12dp">
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:layout_width="50dp"
+            android:layout_height="54dp"
+            android:gravity="center"
+            android:text="‹"
+            android:textColor="#FFFFFF"
+            android:textSize="38sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="SafeZone"
+            android:textColor="#FFFFFF"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+    </LinearLayout>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="22dp"
+            android:paddingBottom="30dp">
+
+
+            <!-- ================= REPORT ICON ================= -->
+
+            <ImageView
+                android:layout_width="78dp"
+                android:layout_height="78dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_report_icon"
+                android:padding="20dp"
+                android:src="@drawable/ic_report"
+                android:contentDescription="Report incident" />
+
+
+            <!-- ================= TITLE ================= -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:gravity="center"
+                android:text="Report a Personal Incident"
+                android:textColor="#0B1F3A"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:gravity="center"
+                android:text="Help us keep our community safe by reporting incidents."
+                android:textColor="#667085"
+                android:textSize="14sp" />
+
+
+            <!-- ================= INCIDENT TYPE ================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/bg_report_input"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_report_info_icon"
+                    android:padding="11dp"
+                    android:src="@drawable/ic_report_type"
+                    android:contentDescription="Incident type" />
+
+                <Spinner
+                    android:id="@+id/spIncidentType"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_report_spinner"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:spinnerMode="dropdown" />
+
+            </LinearLayout>
+
+
+            <!-- ================= DESCRIPTION ================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="115dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_report_input"
+                android:gravity="top"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_report_info_icon"
+                    android:padding="11dp"
+                    android:src="@drawable/ic_description"
+                    android:contentDescription="Description" />
+
+                <EditText
+                    android:id="@+id/etDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:hint="Describe what happened..."
+                    android:inputType="textMultiLine"
+                    android:maxLines="5"
+                    android:padding="5dp"
+                    android:textColor="#172033"
+                    android:textColorHint="#8A94A6"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+            <!-- ================= LOCATION ================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_report_input"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_report_info_icon"
+                    android:padding="11dp"
+                    android:src="@drawable/ic_location"
+                    android:contentDescription="Location" />
+
+                <EditText
+                    android:id="@+id/etLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Current Location"
+                    android:inputType="text"
+                    android:paddingStart="5dp"
+                    android:textColor="#172033"
+                    android:textColorHint="#8A94A6"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+            <!-- ================= DATE / TIME ================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_report_input"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_report_info_icon"
+                    android:padding="11dp"
+                    android:src="@drawable/ic_calendar"
+                    android:contentDescription="Date and time" />
+
+                <EditText
+                    android:id="@+id/etDateTime"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Automatically recorded"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:paddingStart="5dp"
+                    android:textColor="#172033"
+                    android:textColorHint="#8A94A6"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+            <!-- ================= EVIDENCE ================= -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Add Evidence"
+                android:textColor="#0B1F3A"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Optional — photos, videos or files can support your report."
+                android:textColor="#667085"
+                android:textSize="13sp" />
+
+
+            <!-- ================= EVIDENCE BUTTONS ================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:layout_marginTop="11dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnAddPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/bg_report_evidence"
+                    android:backgroundTint="@null"
+                    android:stateListAnimator="@null"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="8dp"
+                    android:gravity="center"
+                    android:drawableTop="@drawable/ic_camera"
+                    android:drawablePadding="8dp"
+                    android:text="Add Photo"
+                    android:textAllCaps="false"
+                    android:textColor="#172033"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnAddVideo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/bg_report_evidence"
+                    android:backgroundTint="@null"
+                    android:stateListAnimator="@null"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="8dp"
+                    android:gravity="center"
+                    android:drawableTop="@drawable/ic_video"
+                    android:drawablePadding="8dp"
+                    android:text="Add Video"
+                    android:textAllCaps="false"
+                    android:textColor="#172033"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnAddFile"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/bg_report_evidence"
+                    android:backgroundTint="@null"
+                    android:stateListAnimator="@null"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="8dp"
+                    android:gravity="center"
+                    android:drawableTop="@drawable/ic_file"
+                    android:drawablePadding="8dp"
+                    android:text="Add File"
+                    android:textAllCaps="false"
+                    android:textColor="#172033"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <!-- EVIDENCE STATUS -->
+
+            <TextView
+                android:id="@+id/tvEvidence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="No evidence selected"
+                android:textColor="#667085"
+                android:textSize="13sp" />
+
+
+            <!-- ================= SUBMIT ================= -->
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubmitReport"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_submit_report"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:gravity="center"
+                android:text="Submit Report   →"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

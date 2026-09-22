@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Fictional institutions for SafeZone prototype -->
+    <string-array name="institutions">
+        <item>Select Institution</item>
+        <item>SafeZone Institute of Technology</item>
+        <item>National Safety &amp; Technology College</item>
+        <item>Metro Digital University</item>
+    </string-array>
+
+    <!-- Available SafeZone campuses -->
+    <string-array name="campuses">
+        <item>Select Campus</item>
+        <item>Pretoria</item>
+        <item>Johannesburg</item>
+        <item>Polokwane</item>
+        <item>Durban</item>
+        <item>Bloemfontein</item>
+    </string-array>
+
+</resources>

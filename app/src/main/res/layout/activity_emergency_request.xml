@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FA">
+
+    <!-- ================= HEADER ================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/safezone_navy"
+        android:paddingStart="8dp"
+        android:paddingEnd="12dp">
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:layout_width="50dp"
+            android:layout_height="54dp"
+            android:gravity="center"
+            android:text="‹"
+            android:textColor="#FFFFFF"
+            android:textSize="38sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="SafeZone"
+            android:textColor="#FFFFFF"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+    </LinearLayout>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="30dp">
+
+
+            <!-- ================= SUCCESS ICON ================= -->
+
+            <ImageView
+                android:layout_width="82dp"
+                android:layout_height="82dp"
+                android:background="@drawable/bg_emergency_request_icon"
+                android:padding="20dp"
+                android:src="@drawable/ic_emergency_request"
+                android:contentDescription="Emergency assistance requested" />
+
+
+            <!-- ================= TITLE ================= -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:gravity="center"
+                android:text="Emergency Assistance Requested"
+                android:textColor="#0B1F3A"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:gravity="center"
+                android:text="Your emergency assistance request has been recorded."
+                android:textColor="#667085"
+                android:textSize="14sp" />
+
+
+            <!-- ================= REQUEST DETAILS ================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/bg_emergency_request_card"
+                android:orientation="vertical"
+                android:padding="17dp">
+
+
+                <!-- ASSISTANCE TYPE -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_emergency_info_icon"
+                        android:padding="11dp"
+                        android:src="@drawable/ic_emergency_type"
+                        android:contentDescription="Assistance type" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Assistance Type"
+                            android:textColor="#0B1F3A"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvAssistanceType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="Emergency Assistance"
+                            android:textColor="#667085"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!-- DIVIDER -->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#D8E3F0" />
+
+
+                <!-- STATUS -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_emergency_info_icon"
+                        android:padding="11dp"
+                        android:src="@drawable/ic_emergency_status"
+                        android:contentDescription="Request status" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Request Status"
+                            android:textColor="#0B1F3A"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="Request Sent"
+                            android:textColor="#1976D2"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!-- DIVIDER -->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#D8E3F0" />
+
+
+                <!-- LOCATION -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/bg_emergency_info_icon"
+                        android:padding="11dp"
+                        android:src="@drawable/ic_location"
+                        android:contentDescription="Location" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Location"
+                            android:textColor="#0B1F3A"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="Share your location if possible."
+                            android:textColor="#667085"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- ================= EMERGENCY SERVICES ================= -->
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnEmergencyServices"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/bg_emergency_call"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:gravity="center"
+                android:drawableStart="@drawable/ic_phone_white"
+                android:drawablePadding="10dp"
+                android:text="Call Emergency Services"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <!-- ================= SHARE LOCATION ================= -->
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnShareLocation"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/bg_emergency_primary"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:gravity="center"
+                android:drawableStart="@drawable/ic_location_white"
+                android:drawablePadding="10dp"
+                android:text="Share Location"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <!-- ================= RETURN HOME ================= -->
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnReturnHome"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/bg_emergency_return"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:gravity="center"
+                android:drawableStart="@drawable/ic_home_white"
+                android:drawablePadding="10dp"
+                android:text="Return to Home"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

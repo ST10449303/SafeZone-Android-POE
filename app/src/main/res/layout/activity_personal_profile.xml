@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FA">
+
+    <!-- ================= HEADER ================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/safezone_navy"
+        android:paddingStart="8dp"
+        android:paddingEnd="12dp">
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:layout_width="50dp"
+            android:layout_height="54dp"
+            android:gravity="center"
+            android:text="‹"
+            android:textColor="#FFFFFF"
+            android:textSize="38sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="SafeZone"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+    </LinearLayout>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="22dp"
+            android:paddingBottom="30dp">
+
+
+            <!-- ================= PROFILE ICON ================= -->
+
+            <TextView
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_profile_avatar"
+                android:gravity="center"
+                android:text="●"
+                android:textColor="#1976D2"
+                android:textSize="45sp"
+                android:textStyle="bold" />
+
+
+            <!-- ================= PROFILE NAME ================= -->
+
+            <TextView
+                android:id="@+id/tvProfileName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Personal User"
+                android:textColor="#0B1F3A"
+                android:textSize="27sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="Manage your profile and account settings."
+                android:textColor="#667085"
+                android:textSize="14sp" />
+
+
+            <!-- ================= ACCOUNT INFORMATION ================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/bg_profile_information"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+
+                <!-- EMAIL -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_profile_info_icon"
+                        android:gravity="center"
+                        android:text="✉"
+                        android:textColor="#1976D2"
+                        android:textSize="23sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Email"
+                            android:textColor="#0B1F3A"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="Not available"
+                            android:textColor="#667085"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!-- DIVIDER -->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#D8E3F0" />
+
+
+                <!-- PHONE -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_profile_info_icon"
+                        android:gravity="center"
+                        android:text="☎"
+                        android:textColor="#1976D2"
+                        android:textSize="22sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Phone"
+                            android:textColor="#0B1F3A"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvPhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="Not available"
+                            android:textColor="#667085"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!-- DIVIDER -->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#D8E3F0" />
+
+
+                <!-- ACCOUNT TYPE -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_profile_info_icon"
+                        android:gravity="center"
+                        android:text="✓"
+                        android:textColor="#1976D2"
+                        android:textSize="23sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Account Type"
+                            android:textColor="#0B1F3A"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvAccountType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="Personal"
+                            android:textColor="#667085"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- ================= EDIT PROFILE ================= -->
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnEditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_profile_action"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:gravity="center_vertical"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:text="✎    Edit Profile                              ›"
+                android:textAllCaps="false"
+                android:textColor="#0B1F3A"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <!-- ================= TRUSTED CONTACTS ================= -->
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnTrustedContacts"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/bg_profile_action"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:gravity="center_vertical"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:text="👥    Trusted Contacts                         ›"
+                android:textAllCaps="false"
+                android:textColor="#0B1F3A"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <!-- ================= REPORTS ================= -->
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMyReports"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/bg_profile_action"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:gravity="center_vertical"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:text="▤    My Reports                              ›"
+                android:textAllCaps="false"
+                android:textColor="#0B1F3A"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <!-- ================= SETTINGS ================= -->
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSettings"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/bg_profile_action"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:gravity="center_vertical"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:text="⚙    Settings                                  ›"
+                android:textAllCaps="false"
+                android:textColor="#0B1F3A"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <!-- ================= LOGOUT ================= -->
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_profile_logout"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:gravity="center"
+                android:text="Logout"
+                android:textAllCaps="false"
+                android:textColor="#D32F2F"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

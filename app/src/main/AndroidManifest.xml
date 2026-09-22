@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ========================================== -->
+    <!-- INTERNET PERMISSION -->
+    <!-- ========================================== -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
+    <!-- ========================================== -->
+    <!-- LOCATION PERMISSIONS -->
+    <!-- ========================================== -->
+
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission
+        android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
+    <!-- ========================================== -->
+    <!-- APPLICATION -->
+    <!-- ========================================== -->
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SafeZone"
+        android:usesCleartextTraffic="true">
+
+
+        <!-- ========================================== -->
+        <!-- MAIN SCREEN -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+
+            <intent-filter>
+
+                <action
+                    android:name="android.intent.action.MAIN" />
+
+                <category
+                    android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+
+        </activity>
+
+
+        <!-- ========================================== -->
+        <!-- CHOOSE SAFETY PANEL -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".ChoosePanelActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- PERSONAL SAFETY - AUTHENTICATION -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".PersonalLoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PersonalRegistrationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CreateNewPasswordActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- PERSONAL HOME -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".PersonalHomeActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- CAMPUS SAFETY - AUTHENTICATION -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".CampusRegistrationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusLoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusForgotPasswordActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusCreateNewPasswordActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- CAMPUS HOME -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".CampusHomeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusIncidentReportActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusIncidentConfirmationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusEmergencyActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusSafetyMapActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusAlertsActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- SOS -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".SOSConfirmationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SOSActiveActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- EMERGENCY ASSISTANCE -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".EmergencyAssistanceActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".EmergencyRequestActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- SAFETY CHECK-IN -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".SafetyCheckInActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ActiveSafetyCheckActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- INCIDENT REPORTING -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".PersonalIncidentReportActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PersonalReportsActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- TRUSTED CONTACTS -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".TrustedContactsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AddTrustedContactActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- FIND HELP / LOCATION -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".FindHelpActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- PERSONAL PROFILE -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".PersonalProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- PERSONAL SETTINGS -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".PersonalSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".LocationSharingActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".EmergencyPreferencesActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- CAMPUS SETTINGS -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".CampusChangePasswordActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusHelpSupportActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusAboutSafeZoneActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusEmergencyPreferencesActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampusLocationSharingActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- CAMPUS REPORTS -->
+        <!-- ========================================== -->
+
+        <activity
+            android:name=".CampusReportsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PersonalAlertsActivity"
+            android:exported="false" />
+
+
+        <!-- ========================================== -->
+        <!-- FILE PROVIDER -->
+        <!-- Used to securely open saved evidence -->
+        <!-- ========================================== -->
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+
+        </provider>
+
+
+    </application>
+
+</manifest>

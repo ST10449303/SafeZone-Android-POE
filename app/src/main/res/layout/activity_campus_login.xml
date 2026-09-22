@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/safezone_white">
+
+    <!-- SafeZone Full-Width Top Navigation -->
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/safezone_navy"
+        android:gravity="center"
+        android:text="SafeZone"
+        android:textColor="@color/safezone_white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="24dp">
+
+            <!-- SafeZone Logo -->
+            <ImageView
+                android:id="@+id/imgSafeZoneLogo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="22dp"
+                android:contentDescription="SafeZone Logo"
+                android:src="@drawable/safezone_logo"
+                android:scaleType="fitCenter" />
+
+            <!-- Page Title -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:text="Campus Safety Login"
+                android:textColor="@color/safezone_dark"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Subtitle -->
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:text="Sign in to access campus-specific safety services."
+                android:textColor="@color/safezone_grey"
+                android:textSize="14sp" />
+
+            <!-- Student Email -->
+            <EditText
+                android:id="@+id/etStudentEmail"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rounded_login_input"
+                android:drawableStart="@drawable/ic_email"
+                android:drawablePadding="12dp"
+                android:hint="Student Email Address"
+                android:inputType="textEmailAddress"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:textColor="@color/safezone_dark"
+                android:textColorHint="@color/safezone_grey"
+                android:textSize="16sp" />
+
+            <!-- Password -->
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/rounded_login_input"
+                android:drawableStart="@drawable/ic_lock"
+                android:drawableEnd="@drawable/ic_visibility_off"
+                android:drawablePadding="12dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:textColor="@color/safezone_dark"
+                android:textColorHint="@color/safezone_grey"
+                android:textSize="16sp" />
+
+            <!-- Remember Me + Forgot Password -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <!-- Remember Me -->
+                <CheckBox
+                    android:id="@+id/cbRememberMe"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/safezone_navy"
+                    android:text="Remember Me"
+                    android:textColor="@color/safezone_dark"
+                    android:textSize="14sp" />
+
+                <!-- Forgot Password -->
+                <TextView
+                    android:id="@+id/tvForgotPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:minWidth="130dp"
+                    android:gravity="center"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="Forgot Password?"
+                    android:textColor="@color/safezone_navy"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:contentDescription="Forgot Password" />
+
+            </LinearLayout>
+
+            <!-- Login Button -->
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="18dp"
+                android:backgroundTint="@color/safezone_navy"
+                android:text="LOGIN"
+                android:textColor="@color/safezone_white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- No Account -->
+            <TextView
+                android:id="@+id/tvNoAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="Don't have a campus account?"
+                android:textColor="@color/safezone_grey"
+                android:textSize="14sp" />
+
+            <!-- Register -->
+            <TextView
+                android:id="@+id/tvRegister"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="25dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="Register"
+                android:textColor="@color/safezone_navy"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

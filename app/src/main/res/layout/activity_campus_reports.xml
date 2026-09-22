@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FA">
+
+    <!-- ===================================================== -->
+    <!-- HEADER -->
+    <!-- ===================================================== -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/safezone_navy"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp">
+
+        <!-- BACK BUTTON -->
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="‹"
+            android:textColor="@android:color/white"
+            android:textSize="34sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Back"/>
+
+        <!-- HEADER TITLE -->
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Campus Reports"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <!-- HEADER SPACER -->
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
+    </LinearLayout>
+
+
+    <!-- ===================================================== -->
+    <!-- PAGE TITLE -->
+    <!-- ===================================================== -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="My Incident Reports"
+        android:textColor="#172033"
+        android:textSize="24sp"
+        android:textStyle="bold"/>
+
+
+    <!-- ===================================================== -->
+    <!-- PAGE DESCRIPTION -->
+    <!-- ===================================================== -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:text="View incidents you have reported on campus."
+        android:textColor="#667085"
+        android:textSize="15sp"/>
+
+
+    <!-- ===================================================== -->
+    <!-- REPORT AREA -->
+    <!-- ===================================================== -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <!-- ================================================= -->
+            <!-- EMPTY STATE -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:id="@+id/tvNoReports"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:gravity="center"
+                android:text="You have not submitted any campus reports yet."
+                android:textColor="#667085"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+
+
+            <!-- ================================================= -->
+            <!-- DYNAMIC REPORT CARDS -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:id="@+id/reportsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

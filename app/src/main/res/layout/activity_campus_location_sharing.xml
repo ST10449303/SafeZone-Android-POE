@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FA">
+
+    <!-- ===================================================== -->
+    <!-- SAFEZONE HEADER -->
+    <!-- ===================================================== -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/safezone_navy"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="‹"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/tvHeaderTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="SafeZone"
+            android:textColor="@android:color/white"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="1dp" />
+
+    </LinearLayout>
+
+
+    <!-- ===================================================== -->
+    <!-- CONTENT -->
+    <!-- ===================================================== -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+
+            <!-- ================================================= -->
+            <!-- LOGO -->
+            <!-- ================================================= -->
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:src="@drawable/safezone_logo"
+                android:contentDescription="SafeZone Logo"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp" />
+
+
+            <!-- ================================================= -->
+            <!-- CAMPUS SAFETY LABEL -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Campus Safety"
+                android:textColor="#1976D2"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+
+            <!-- ================================================= -->
+            <!-- TITLE -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location Sharing"
+                android:textColor="#172033"
+                android:textSize="27sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="6dp" />
+
+
+            <!-- ================================================= -->
+            <!-- SUBTITLE -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Control whether SafeZone can use your location for campus safety features."
+                android:textColor="#667085"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="24dp" />
+
+
+            <!-- ================================================= -->
+            <!-- LOCATION SHARING CARD -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_settings_card"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:text="📍"
+                    android:textSize="24sp"
+                    android:background="@drawable/bg_settings_icon" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Location Sharing"
+                        android:textColor="#172033"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvLocationStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Location sharing is OFF"
+                        android:textColor="#C62828"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchLocationSharing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- EXPLANATION -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_settings_security"
+                android:padding="16dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:text="🛡"
+                    android:textSize="23sp"
+                    android:background="@drawable/bg_settings_security_icon" />
+
+                <TextView
+                    android:id="@+id/tvLocationExplanation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="14dp"
+                    android:text="Location sharing allows SafeZone to use your device location for safety and emergency features."
+                    android:textColor="#344054"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="2dp" />
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- LOCATION STATUS -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:id="@+id/tvSystemLocationStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Checking device location..."
+                android:textColor="#667085"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:layout_marginBottom="16dp" />
+
+
+            <!-- ================================================= -->
+            <!-- OPEN LOCATION SETTINGS -->
+            <!-- ================================================= -->
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLocationSettings"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:text="OPEN LOCATION SETTINGS"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_primary_button"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:layout_marginBottom="12dp" />
+
+
+            <!-- ================================================= -->
+            <!-- BACK TO SETTINGS -->
+            <!-- ================================================= -->
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBackToSettings"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="BACK TO CAMPUS SETTINGS"
+                android:textColor="#0B1F3A"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_secondary_button"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:layout_marginBottom="20dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

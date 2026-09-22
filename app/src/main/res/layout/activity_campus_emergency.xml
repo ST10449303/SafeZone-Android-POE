@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FA">
+
+    <!-- ===================================================== -->
+    <!-- SAFEZONE HEADER -->
+    <!-- ===================================================== -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/safezone_navy"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <ImageView
+            android:id="@+id/tvBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="7dp"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Back"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SafeZone"
+            android:textColor="@android:color/white"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
+    </LinearLayout>
+
+
+    <!-- ===================================================== -->
+    <!-- CONTENT -->
+    <!-- ===================================================== -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <!-- ================================================= -->
+            <!-- TITLE -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Campus Emergency"
+                android:textColor="#0B1F3A"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get immediate help or contact campus security in case of an emergency."
+                android:textColor="#536B8A"
+                android:textSize="17sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="18dp"/>
+
+
+            <!-- ================================================= -->
+            <!-- WARNING -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="92dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_emergency_warning"
+                android:padding="16dp"
+                android:layout_marginBottom="18dp">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:src="@drawable/ic_warning_red"
+                    android:contentDescription="Emergency warning"
+                    android:layout_marginEnd="14dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="If you are in immediate danger, call emergency services now."
+                    android:textColor="#D91E2B"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:lineSpacingExtra="3dp"/>
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- CALL EMERGENCY SERVICES -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:id="@+id/cardEmergencyCall"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_emergency_call"
+                android:padding="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginBottom="28dp">
+
+                <FrameLayout
+                    android:layout_width="82dp"
+                    android:layout_height="82dp"
+                    android:background="@drawable/bg_phone_circle"
+                    android:layout_marginEnd="20dp">
+
+                    <ImageView
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_phone_white"
+                        android:contentDescription="Phone"/>
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Call Emergency Services"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="112"
+                        android:textColor="@android:color/white"
+                        android:textSize="42sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="2dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Police • Ambulance • Fire"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- CAMPUS SECURITY CONTACTS -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Campus Security Contacts"
+                android:textColor="#0B1F3A"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp"/>
+
+
+            <!-- Contact Card -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_contact_card"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+
+                <!-- CAMPUS SECURITY -->
+
+                <LinearLayout
+                    android:id="@+id/contactCampusSecurity"
+                    android:layout_width="match_parent"
+                    android:layout_height="86dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <FrameLayout
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:background="@drawable/bg_icon_circle_blue">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_shield_blue"
+                            android:contentDescription="Campus Security"/>
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Campus Security"
+                            android:textColor="#0B1F3A"
+                            android:textSize="17sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Available 24/7"
+                            android:textColor="#536B8A"
+                            android:textSize="15sp"
+                            android:layout_marginTop="3dp"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/btnCallSecurity"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_phone_blue"
+                        android:contentDescription="Call Campus Security"/>
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E1E7EF"
+                    android:layout_marginStart="68dp"/>
+
+
+                <!-- PRETORIA CAMPUS CONTROL -->
+
+                <LinearLayout
+                    android:id="@+id/contactCampusControl"
+                    android:layout_width="match_parent"
+                    android:layout_height="86dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:background="@drawable/bg_icon_circle_blue">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_campus_building"
+                            android:contentDescription="Campus Control"/>
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pretoria Campus Control"
+                            android:textColor="#0B1F3A"
+                            android:textSize="17sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="012 345 6789"
+                            android:textColor="#536B8A"
+                            android:textSize="15sp"
+                            android:layout_marginTop="3dp"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/btnCallCampusControl"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_phone_blue"
+                        android:contentDescription="Call Campus Control"/>
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E1E7EF"
+                    android:layout_marginStart="68dp"/>
+
+
+                <!-- HEALTH CENTRE -->
+
+                <LinearLayout
+                    android:id="@+id/contactHealthCentre"
+                    android:layout_width="match_parent"
+                    android:layout_height="86dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:background="@drawable/bg_icon_circle_blue">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_health_red"
+                            android:contentDescription="Campus Health Centre"/>
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Campus Health Centre"
+                            android:textColor="#0B1F3A"
+                            android:textSize="17sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="012 345 6790"
+                            android:textColor="#536B8A"
+                            android:textSize="15sp"
+                            android:layout_marginTop="3dp"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/btnCallHealth"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_phone_blue"
+                        android:contentDescription="Call Health Centre"/>
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E1E7EF"
+                    android:layout_marginStart="68dp"/>
+
+
+                <!-- STUDENT SUPPORT -->
+
+                <LinearLayout
+                    android:id="@+id/contactStudentSupport"
+                    android:layout_width="match_parent"
+                    android:layout_height="86dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:background="@drawable/bg_icon_circle_blue">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_support"
+                            android:contentDescription="Student Support"/>
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Student Support"
+                            android:textColor="#0B1F3A"
+                            android:textSize="17sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="012 345 6791"
+                            android:textColor="#536B8A"
+                            android:textSize="15sp"
+                            android:layout_marginTop="3dp"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/btnCallStudentSupport"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_phone_blue"
+                        android:contentDescription="Call Student Support"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- STAY SAFE -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_stay_safe"
+                android:padding="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <FrameLayout
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/bg_info_circle">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_location_share"
+                            android:contentDescription="Location"/>
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Stay Safe"
+                            android:textColor="#0B1F3A"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Share your location with campus security during an emergency for faster assistance."
+                            android:textColor="#536B8A"
+                            android:textSize="15sp"
+                            android:lineSpacingExtra="2dp"
+                            android:layout_marginTop="3dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnShareLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:text="➤   Share My Location"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:background="@drawable/bg_share_location_button"
+                    android:backgroundTint="@null"
+                    android:stateListAnimator="@null"
+                    android:layout_marginTop="16dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <!-- ===================================================== -->
+    <!-- BOTTOM NAVIGATION -->
+    <!-- ===================================================== -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@android:color/white"
+        android:elevation="8dp">
+
+        <!-- HOME -->
+
+        <LinearLayout
+            android:id="@+id/navHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_home_outline"
+                android:contentDescription="Home"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textColor="#173B62"
+                android:textSize="13sp"
+                android:layout_marginTop="3dp"/>
+
+        </LinearLayout>
+
+
+        <!-- MAP -->
+
+        <LinearLayout
+            android:id="@+id/navMap"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_map_outline"
+                android:contentDescription="Map"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Map"
+                android:textColor="#173B62"
+                android:textSize="13sp"
+                android:layout_marginTop="3dp"/>
+
+        </LinearLayout>
+
+
+        <!-- REPORTS -->
+
+        <LinearLayout
+            android:id="@+id/navReports"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_reports_outline"
+                android:contentDescription="Reports"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reports"
+                android:textColor="#173B62"
+                android:textSize="13sp"
+                android:layout_marginTop="3dp"/>
+
+        </LinearLayout>
+
+
+        <!-- ALERTS -->
+
+        <LinearLayout
+            android:id="@+id/navNotifications"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_bell_outline"
+                android:contentDescription="Alerts"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alerts"
+                android:textColor="#173B62"
+                android:textSize="13sp"
+                android:layout_marginTop="3dp"/>
+
+        </LinearLayout>
+
+
+        <!-- PROFILE -->
+
+        <LinearLayout
+            android:id="@+id/navProfile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_profile_outline"
+                android:contentDescription="Profile"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textColor="#173B62"
+                android:textSize="13sp"
+                android:layout_marginTop="3dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

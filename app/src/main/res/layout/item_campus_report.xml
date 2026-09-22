@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="18dp"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/bg_report_card">
+
+    <!-- ===================================================== -->
+    <!-- INCIDENT INFORMATION -->
+    <!-- ===================================================== -->
+
+    <TextView
+        android:id="@+id/tvReportId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Incident ID: SZ-000001"
+        android:textColor="#1976D2"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvReportType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Fire"
+        android:textColor="#0B1F3A"
+        android:textSize="21sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvReportCampus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Campus: Pretoria Campus"
+        android:textColor="#1976D2"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+    <!-- ===================================================== -->
+    <!-- DATE AND TIME -->
+    <!-- ===================================================== -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvReportDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date: 19 Sep 2026"
+            android:textColor="#667085"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvReportTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Time: 14:30"
+            android:textColor="#667085"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+
+    <!-- ===================================================== -->
+    <!-- DESCRIPTION -->
+    <!-- ===================================================== -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Description"
+        android:textColor="#172033"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvReportDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Incident description"
+        android:textColor="#667085"
+        android:textSize="15sp"
+        android:lineSpacingExtra="2dp" />
+
+
+    <!-- ===================================================== -->
+    <!-- LOCATION -->
+    <!-- ===================================================== -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Location"
+        android:textColor="#172033"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvReportLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Pretoria Campus"
+        android:textColor="#667085"
+        android:textSize="14sp" />
+
+    <!-- GPS -->
+    <TextView
+        android:id="@+id/tvReportCoordinates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="GPS: -25.123456, 28.123456"
+        android:textColor="#667085"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+
+    <!-- ===================================================== -->
+    <!-- VIEW LOCATION -->
+    <!-- ===================================================== -->
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnViewLocation"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_secondary_button"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null"
+        android:text="View Location on Map"
+        android:textAllCaps="false"
+        android:textColor="#0B1F3A"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+    <!-- ===================================================== -->
+    <!-- REPORT STATUS -->
+    <!-- ===================================================== -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Report Status"
+        android:textColor="#172033"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvReportStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:paddingStart="14dp"
+        android:paddingTop="7dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="7dp"
+        android:background="@drawable/bg_secondary_button"
+        android:text="Submitted"
+        android:textColor="#1976D2"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+
+    <!-- ===================================================== -->
+    <!-- EVIDENCE -->
+    <!-- ===================================================== -->
+
+    <TextView
+        android:id="@+id/tvEvidenceTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Evidence"
+        android:textColor="#172033"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+
+    <!-- ===================================================== -->
+    <!-- PHOTO -->
+    <!-- ===================================================== -->
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnViewPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_secondary_button"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null"
+        android:text="View Photo"
+        android:textAllCaps="false"
+        android:textColor="#0B1F3A"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+
+    <!-- ===================================================== -->
+    <!-- VIDEO -->
+    <!-- ===================================================== -->
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnViewVideo"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_secondary_button"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null"
+        android:text="View Video"
+        android:textAllCaps="false"
+        android:textColor="#0B1F3A"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+
+    <!-- ===================================================== -->
+    <!-- AUDIO -->
+    <!-- ===================================================== -->
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnViewAudio"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_secondary_button"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null"
+        android:text="View Audio"
+        android:textAllCaps="false"
+        android:textColor="#0B1F3A"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+
+    <!-- ===================================================== -->
+    <!-- FILE -->
+    <!-- ===================================================== -->
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnViewFile"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_secondary_button"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null"
+        android:text="View File"
+        android:textAllCaps="false"
+        android:textColor="#0B1F3A"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+</LinearLayout>

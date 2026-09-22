@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/bg_report_item"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- INCIDENT TYPE -->
+
+    <TextView
+        android:id="@+id/tvReportType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Incident"
+        android:textColor="#0B1F3A"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- INCIDENT ID -->
+
+    <TextView
+        android:id="@+id/tvReportId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Incident ID: -"
+        android:textColor="#1976D2"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <!-- CAMPUS -->
+
+    <TextView
+        android:id="@+id/tvReportCampus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Campus: Not provided"
+        android:textColor="#667085"
+        android:textSize="13sp" />
+
+    <!-- DATE -->
+
+    <TextView
+        android:id="@+id/tvReportDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="Date: Not available"
+        android:textColor="#667085"
+        android:textSize="14sp" />
+
+    <!-- TIME -->
+
+    <TextView
+        android:id="@+id/tvReportTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Time: Not available"
+        android:textColor="#667085"
+        android:textSize="14sp" />
+
+    <!-- DESCRIPTION -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Description"
+        android:textColor="#172033"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvReportDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="No description provided."
+        android:textColor="#667085"
+        android:textSize="14sp" />
+
+    <!-- LOCATION -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Location"
+        android:textColor="#172033"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvReportLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Location not provided"
+        android:textColor="#667085"
+        android:textSize="14sp" />
+
+    <!-- GPS -->
+
+    <TextView
+        android:id="@+id/tvReportCoordinates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Coordinates not available"
+        android:textColor="#667085"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+    <!-- MAP -->
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnViewLocation"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_secondary_button"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null"
+        android:text="VIEW LOCATION ON MAP"
+        android:textAllCaps="false"
+        android:textColor="#0B1F3A"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <!-- STATUS -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: "
+            android:textColor="#172033"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvReportStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submitted"
+            android:textColor="#1976D2"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- EVIDENCE -->
+
+    <TextView
+        android:id="@+id/tvEvidenceTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Evidence"
+        android:textColor="#172033"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnViewPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_secondary_button"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null"
+        android:text="VIEW PHOTO"
+        android:textAllCaps="false"
+        android:textColor="#0B1F3A"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnViewVideo"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_secondary_button"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null"
+        android:text="VIEW VIDEO"
+        android:textAllCaps="false"
+        android:textColor="#0B1F3A"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnViewFile"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_secondary_button"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null"
+        android:text="VIEW FILE"
+        android:textAllCaps="false"
+        android:textColor="#0B1F3A"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+</LinearLayout>

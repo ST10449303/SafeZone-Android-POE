@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="safezone_navy">#1F3B64</color>
+    <color name="safezone_blue">#4F6FFF</color>
+    <color name="safezone_light_blue">#EEF3FF</color>
+    <color name="safezone_white">#FFFFFF</color>
+    <color name="safezone_dark">#333333</color>
+    <color name="safezone_grey">#777777</color>
+</resources>

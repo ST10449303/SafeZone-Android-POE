@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/safezone_white">
+
+    <!-- Top Header -->
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:background="@color/safezone_navy"
+        android:gravity="center"
+        android:text="SafeZone"
+        android:textColor="@color/safezone_white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- SafeZone Logo -->
+    <ImageView
+        android:id="@+id/imgSafeZoneLogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:contentDescription="SafeZone logo"
+        android:scaleType="fitCenter"
+        android:src="@drawable/safezone_logo"
+        app:layout_constraintTop_toBottomOf="@id/tvHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Welcome -->
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Welcome to SafeZone"
+        android:textColor="@color/safezone_dark"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/imgSafeZoneLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Instruction -->
+    <TextView
+        android:id="@+id/tvChoose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Choose your safety panel"
+        android:textColor="@color/safezone_grey"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Personal Safety Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardPersonalSafety"
+        android:layout_width="0dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="25dp"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="5dp"
+        app:cardBackgroundColor="@color/safezone_light_blue"
+        app:layout_constraintTop_toBottomOf="@id/tvChoose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Personal Safety"
+                android:textColor="@color/safezone_navy"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Stay safe wherever you are"
+                android:textColor="@color/safezone_dark"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Campus Safety Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardCampusSafety"
+        android:layout_width="0dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="25dp"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="5dp"
+        app:cardBackgroundColor="@color/safezone_light_blue"
+        app:layout_constraintTop_toBottomOf="@id/cardPersonalSafety"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Campus Safety"
+                android:textColor="@color/safezone_navy"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Connect to your campus safety services"
+                android:textColor="@color/safezone_dark"
+                android:textSize="13sp"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Emergency Assistance -->
+    <TextView
+        android:id="@+id/tvEmergency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Need help? Emergency Assistance"
+        android:textColor="@color/safezone_blue"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/cardCampusSafety"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

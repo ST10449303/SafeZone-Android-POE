@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FA">
+
+    <!-- ===================================================== -->
+    <!-- SAFEZONE HEADER -->
+    <!-- ===================================================== -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="#0B1F3A"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <!-- Back -->
+
+        <ImageView
+            android:id="@+id/tvBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_back"
+            app:tint="#FFFFFF"
+            android:contentDescription="Back"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- SafeZone -->
+
+        <TextView
+            android:id="@+id/tvHeaderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="SafeZone"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <!-- Notification -->
+
+        <ImageView
+            android:id="@+id/tvNotification"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_notifications"
+            app:tint="#FFFFFF"
+            android:contentDescription="Notifications"
+            android:clickable="true"
+            android:focusable="true" />
+
+    </RelativeLayout>
+
+
+    <!-- ===================================================== -->
+    <!-- MAIN CONTENT -->
+    <!-- ===================================================== -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- ================================================= -->
+            <!-- TITLE -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:gravity="center"
+                    android:background="@drawable/bg_map_icon">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_location_pin"
+                        app:tint="#1976D2"
+                        android:contentDescription="Campus location" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Campus Safety Map"
+                        android:textColor="#0B1F3A"
+                        android:textSize="27sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="Explore your campus and find your way around safely."
+                        android:textColor="#60708A"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- CAMPUS SELECTOR -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:id="@+id/layoutCampusSelector"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="18dp"
+                android:gravity="center_vertical"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:background="@drawable/bg_map_selector"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_campus_building"
+                    app:tint="#1976D2"
+                    android:contentDescription="Campus" />
+
+                <TextView
+                    android:id="@+id/tvSelectedCampus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:text="Pretoria Campus"
+                    android:textColor="#0B1F3A"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCampusArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⌄"
+                    android:textColor="#0B1F3A"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- SEARCH -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="14dp"
+                android:gravity="center_vertical"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:background="@drawable/bg_map_search">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_search"
+                    app:tint="#60708A"
+                    android:contentDescription="Search" />
+
+                <EditText
+                    android:id="@+id/etSearchLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Search for a building or location..."
+                    android:textColor="#172033"
+                    android:textColorHint="#7C8DA5"
+                    android:textSize="15sp"
+                    android:singleLine="true"
+                    android:inputType="text"
+                    android:padding="0dp" />
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- CAMPUS MAP -->
+            <!-- ================================================= -->
+
+            <FrameLayout
+                android:id="@+id/mapContainer"
+                android:layout_width="match_parent"
+                android:layout_height="430dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_campus_map"
+                android:clipToOutline="true">
+
+                <!-- ROAD 1 -->
+
+                <View
+                    android:layout_width="520dp"
+                    android:layout_height="34dp"
+                    android:layout_gravity="center"
+                    android:background="#D5DCE5"
+                    android:rotation="-8" />
+
+
+                <!-- ROAD 2 -->
+
+                <View
+                    android:layout_width="500dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:background="#DDE3EA"
+                    android:rotation="42" />
+
+
+                <!-- ROAD 3 -->
+
+                <View
+                    android:layout_width="430dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:background="#D8E0E8"
+                    android:rotation="-38" />
+
+
+                <!-- PATH -->
+
+                <View
+                    android:layout_width="420dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center"
+                    android:background="#FFFFFF"
+                    android:rotation="15" />
+
+
+                <!-- ================================================= -->
+                <!-- LIBRARY -->
+                <!-- ================================================= -->
+
+                <TextView
+                    android:id="@+id/mapLibrary"
+                    android:layout_width="105dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="90dp"
+                    android:gravity="center"
+                    android:background="@drawable/bg_map_building"
+                    android:text="Library"
+                    android:textColor="#17385F"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+                <!-- ================================================= -->
+                <!-- STUDENT CENTRE -->
+                <!-- ================================================= -->
+
+                <TextView
+                    android:id="@+id/mapStudentCentre"
+                    android:layout_width="120dp"
+                    android:layout_height="75dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/bg_map_building"
+                    android:text="Student&#10;Centre"
+                    android:textColor="#17385F"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+                <!-- ================================================= -->
+                <!-- LECTURE HALLS -->
+                <!-- ================================================= -->
+
+                <TextView
+                    android:id="@+id/mapLectureHalls"
+                    android:layout_width="115dp"
+                    android:layout_height="72dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="90dp"
+                    android:layout_marginEnd="30dp"
+                    android:gravity="center"
+                    android:background="@drawable/bg_map_building"
+                    android:text="Lecture&#10;Halls"
+                    android:textColor="#17385F"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+                <!-- ================================================= -->
+                <!-- ADMIN BLOCK -->
+                <!-- ================================================= -->
+
+                <TextView
+                    android:id="@+id/mapAdmin"
+                    android:layout_width="115dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="55dp"
+                    android:layout_marginTop="245dp"
+                    android:gravity="center"
+                    android:background="@drawable/bg_map_building"
+                    android:text="Admin&#10;Block"
+                    android:textColor="#17385F"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+                <!-- ================================================= -->
+                <!-- MAIN ENTRANCE -->
+                <!-- ================================================= -->
+
+                <TextView
+                    android:id="@+id/mapMainEntrance"
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="260dp"
+                    android:layout_marginEnd="50dp"
+                    android:gravity="center"
+                    android:background="@drawable/bg_map_building"
+                    android:text="Main&#10;Entrance"
+                    android:textColor="#17385F"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+                <!-- ================================================= -->
+                <!-- CURRENT LOCATION -->
+                <!-- ================================================= -->
+
+                <LinearLayout
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/bg_location_accuracy">
+
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/bg_current_location" />
+
+                </LinearLayout>
+
+
+                <!-- ================================================= -->
+                <!-- COMPASS -->
+                <!-- ================================================= -->
+
+                <ImageView
+                    android:id="@+id/btnCompass"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_margin="14dp"
+                    android:padding="10dp"
+                    android:background="@drawable/bg_map_control"
+                    android:src="@drawable/ic_compass"
+                    app:tint="#0B1F3A"
+                    android:contentDescription="Compass" />
+
+
+                <!-- ================================================= -->
+                <!-- MAP CONTROLS -->
+                <!-- ================================================= -->
+
+                <LinearLayout
+                    android:layout_width="55dp"
+                    android:layout_height="110dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="95dp"
+                    android:layout_marginEnd="14dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_map_control">
+
+                    <TextView
+                        android:id="@+id/btnZoomIn"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textColor="#0B1F3A"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#DDE4EC" />
+
+                    <TextView
+                        android:id="@+id/btnZoomOut"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:gravity="center"
+                        android:text="−"
+                        android:textColor="#0B1F3A"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                </LinearLayout>
+
+
+                <!-- ================================================= -->
+                <!-- MY LOCATION BUTTON -->
+                <!-- ================================================= -->
+
+                <ImageView
+                    android:id="@+id/btnMyLocation"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="bottom|start"
+                    android:layout_margin="14dp"
+                    android:padding="14dp"
+                    android:background="@drawable/bg_map_control"
+                    android:src="@drawable/ic_my_location"
+                    app:tint="#1976D2"
+                    android:contentDescription="My location"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </FrameLayout>
+
+
+            <!-- ================================================= -->
+            <!-- EXPLORE CARD -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="18dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_explore_card">
+
+                <LinearLayout
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:gravity="center"
+                    android:background="@drawable/bg_info_circle">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_info"
+                        app:tint="#1976D2"
+                        android:contentDescription="Information" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Explore Your Campus"
+                        android:textColor="#0B1F3A"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Find buildings, pathways and important campus locations."
+                        android:textColor="#60708A"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnGetDirections"
+                    android:layout_width="125dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_directions_button"
+                    android:backgroundTint="@null"
+                    android:stateListAnimator="@null"
+                    android:text="Get&#10;Directions"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:padding="5dp" />
+
+            </LinearLayout>
+
+
+            <!-- Bottom spacing -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <!-- ===================================================== -->
+    <!-- BOTTOM NAVIGATION -->
+    <!-- ===================================================== -->
+
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:background="#FFFFFF"
+        android:elevation="12dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- ================================================= -->
+        <!-- HOME -->
+        <!-- ================================================= -->
+
+        <LinearLayout
+            android:id="@+id/navHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:src="@drawable/ic_home"
+                app:tint="#344B68"
+                android:contentDescription="Home" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Home"
+                android:textColor="#344B68"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+        <!-- ================================================= -->
+        <!-- MAP -->
+        <!-- ================================================= -->
+
+        <LinearLayout
+            android:id="@+id/navMap"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/bg_nav_selected"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:src="@drawable/ic_location_pin"
+                app:tint="#1976D2"
+                android:contentDescription="Map" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Map"
+                android:textColor="#1976D2"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <!-- ================================================= -->
+        <!-- REPORTS -->
+        <!-- ================================================= -->
+
+        <LinearLayout
+            android:id="@+id/navReports"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:src="@drawable/ic_reports"
+                app:tint="#344B68"
+                android:contentDescription="Reports" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Reports"
+                android:textColor="#344B68"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+        <!-- ================================================= -->
+        <!-- ALERTS -->
+        <!-- ================================================= -->
+
+        <LinearLayout
+            android:id="@+id/navNotifications"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/ivAlertsBottom"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:src="@drawable/ic_notifications"
+                app:tint="#344B68"
+                android:contentDescription="Alerts" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Alerts"
+                android:textColor="#344B68"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <!-- ================================================= -->
+        <!-- PROFILE -->
+        <!-- ================================================= -->
+
+        <LinearLayout
+            android:id="@+id/navProfile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/ivProfileBottom"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:src="@drawable/ic_profile"
+                app:tint="#344B68"
+                android:contentDescription="Profile" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Profile"
+                android:textColor="#344B68"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FA">
+
+    <!-- ================= HEADER ================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/safezone_navy"
+        android:paddingStart="8dp"
+        android:paddingEnd="12dp">
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:layout_width="50dp"
+            android:layout_height="54dp"
+            android:gravity="center"
+            android:text="‹"
+            android:textColor="#FFFFFF"
+            android:textSize="38sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="SafeZone"
+            android:textColor="#FFFFFF"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+    </LinearLayout>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="22dp"
+            android:paddingBottom="30dp">
+
+
+            <!-- ================= TITLE ================= -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Settings"
+                android:textColor="#0B1F3A"
+                android:textSize="27sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Manage your SafeZone account and safety preferences."
+                android:textColor="#667085"
+                android:textSize="14sp" />
+
+
+            <!-- ================================================= -->
+            <!-- ACCOUNT -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="ACCOUNT"
+                android:textColor="#234572"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.08" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_settings_card"
+                android:orientation="vertical">
+
+
+                <!-- EDIT PROFILE -->
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnEditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@null"
+                    android:stateListAnimator="@null"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:drawableStart="@drawable/ic_settings_profile"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Edit Profile"
+                    android:textAllCaps="false"
+                    android:textColor="#172033"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="68dp"
+                    android:background="#E5EAF0" />
+
+
+                <!-- CHANGE PASSWORD -->
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnChangePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@null"
+                    android:stateListAnimator="@null"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:drawableStart="@drawable/ic_settings_lock"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Change Password"
+                    android:textAllCaps="false"
+                    android:textColor="#172033"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="68dp"
+                    android:background="#E5EAF0" />
+
+
+                <!-- LOGOUT -->
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnLogout"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@null"
+                    android:stateListAnimator="@null"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:drawableStart="@drawable/ic_settings_logout"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Logout"
+                    android:textAllCaps="false"
+                    android:textColor="#D32F2F"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- SAFETY -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="SAFETY"
+                android:textColor="#234572"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.08" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_settings_card"
+                android:orientation="vertical">
+
+
+                <!-- TRUSTED CONTACTS -->
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnTrustedContacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@null"
+                    android:stateListAnimator="@null"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:drawableStart="@drawable/ic_settings_contacts"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Trusted Contacts"
+                    android:textAllCaps="false"
+                    android:textColor="#172033"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="68dp"
+                    android:background="#E5EAF0" />
+
+
+                <!-- LOCATION SHARING -->
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnLocationSharing"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@null"
+                    android:stateListAnimator="@null"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:drawableStart="@drawable/ic_settings_location"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Location Sharing"
+                    android:textAllCaps="false"
+                    android:textColor="#172033"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="68dp"
+                    android:background="#E5EAF0" />
+
+
+                <!-- EMERGENCY PREFERENCES -->
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnEmergencyPreferences"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@null"
+                    android:stateListAnimator="@null"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:drawableStart="@drawable/ic_settings_emergency"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Emergency Preferences"
+                    android:textAllCaps="false"
+                    android:textColor="#172033"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- NOTIFICATIONS -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="NOTIFICATIONS"
+                android:textColor="#234572"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.08" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_settings_card"
+                android:orientation="vertical">
+
+
+                <!-- PUSH NOTIFICATIONS -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="78dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/bg_settings_icon"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_settings_notification"
+                        android:contentDescription="Push notifications" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Push Notifications"
+                            android:textColor="#172033"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Receive important SafeZone updates."
+                            android:textColor="#667085"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switchPushNotifications"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:contentDescription="Push notifications" />
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="72dp"
+                    android:background="#E5EAF0" />
+
+
+                <!-- SAFETY CHECK ALERTS -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="78dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/bg_settings_icon"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_settings_safety_alert"
+                        android:contentDescription="Safety check alerts" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Safety Check Alerts"
+                            android:textColor="#172033"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Get alerts when a safety check-in needs attention."
+                            android:textColor="#667085"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switchSafetyAlerts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:contentDescription="Safety check alerts" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- ================= SECURITY MESSAGE ================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="82dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_settings_security"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <ImageView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_settings_security_icon"
+                    android:padding="11dp"
+                    android:src="@drawable/ic_settings_security"
+                    android:contentDescription="Security" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your safety comes first"
+                        android:textColor="#0B1F3A"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="Your account and safety information are protected."
+                        android:textColor="#667085"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
