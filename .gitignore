@@ -1,15 +1,80 @@
+# =========================================================
+# Android Studio
+# =========================================================
+
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+.gradle/
 local.properties
+
+.idea/
+.idea/caches
+.idea/libraries
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+
+# Android build/generated files
+/build/
+/captures/
+.externalNativeBuild/
+.cxx/
+
+# =========================================================
+# APK / App Bundle
+# =========================================================
+
+*.apk
+*.aab
+
+# =========================================================
+# Signing files
+# =========================================================
+
+*.jks
+*.keystore
+
+# =========================================================
+# Firebase configuration
+# =========================================================
+
+# Do not upload Firebase configuration containing project credentials
+google-services.json
+
+# =========================================================
+# Visual Studio / .NET SafeZone API
+# =========================================================
+
+SafeZoneAPI/.vs/
+SafeZoneAPI/bin/
+SafeZoneAPI/obj/
+
+# Visual Studio user-specific files
+*.user
+*.suo
+
+# .NET generated files
+*.pdb
+
+# =========================================================
+# Publish / deployment files
+# =========================================================
+
+SafeZoneAPI/publish/
+
+# =========================================================
+# Operating system files
+# =========================================================
+
+.DS_Store
+Thumbs.db
+
+# =========================================================
+# Temporary / log files
+# =========================================================
+
+*.log
+
+# Azure / Visual Studio deployment files
+SafeZoneAPI/Properties/PublishProfiles/
+SafeZoneAPI/Properties/ServiceDependencies/

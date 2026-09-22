@@ -1,0 +1,6 @@
+@SafeZoneAPI_HostAddress = http://localhost:5036
+
+GET {{SafeZoneAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
