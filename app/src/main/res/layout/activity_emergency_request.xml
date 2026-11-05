@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F5F7FA">
 
-    <!-- ================= HEADER ================= -->
-
+    <!-- Header: back navigation and SafeZone branding -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="62dp"
@@ -27,14 +25,14 @@
             android:textSize="38sp"
             android:clickable="true"
             android:focusable="true"
-            android:contentDescription="Back" />
+            android:contentDescription="@string/emergency_request_back" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="SafeZone"
+            android:text="@string/app_name"
             android:textColor="#FFFFFF"
             android:textSize="23sp"
             android:textStyle="bold" />
@@ -42,12 +40,9 @@
         <View
             android:layout_width="50dp"
             android:layout_height="50dp" />
-
     </LinearLayout>
 
-
-    <!-- ================= CONTENT ================= -->
-
+    <!-- Scrollable emergency request details and actions -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -65,26 +60,22 @@
             android:paddingTop="24dp"
             android:paddingBottom="30dp">
 
-
-            <!-- ================= SUCCESS ICON ================= -->
-
+            <!-- Emergency confirmation icon -->
             <ImageView
                 android:layout_width="82dp"
                 android:layout_height="82dp"
                 android:background="@drawable/bg_emergency_request_icon"
                 android:padding="20dp"
                 android:src="@drawable/ic_emergency_request"
-                android:contentDescription="Emergency assistance requested" />
+                android:contentDescription="@string/emergency_request_icon_description" />
 
-
-            <!-- ================= TITLE ================= -->
-
+            <!-- Page heading and explanation -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="17dp"
                 android:gravity="center"
-                android:text="Emergency Assistance Requested"
+                android:text="@string/emergency_request_title"
                 android:textColor="#0B1F3A"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -94,13 +85,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:gravity="center"
-                android:text="Your emergency assistance request has been recorded."
+                android:text="@string/emergency_request_description"
                 android:textColor="#667085"
                 android:textSize="14sp" />
 
-
-            <!-- ================= REQUEST DETAILS ================= -->
-
+            <!-- Request information card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -109,9 +98,7 @@
                 android:orientation="vertical"
                 android:padding="17dp">
 
-
-                <!-- ASSISTANCE TYPE -->
-
+                <!-- Assistance type -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
@@ -124,7 +111,7 @@
                         android:background="@drawable/bg_emergency_info_icon"
                         android:padding="11dp"
                         android:src="@drawable/ic_emergency_type"
-                        android:contentDescription="Assistance type" />
+                        android:contentDescription="@string/emergency_request_type_icon_description" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -136,7 +123,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Assistance Type"
+                            android:text="@string/emergency_request_assistance_type_label"
                             android:textColor="#0B1F3A"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -146,25 +133,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
-                            android:text="Emergency Assistance"
+                            android:text="@string/emergency_request_default_type"
                             android:textColor="#667085"
                             android:textSize="13sp" />
-
                     </LinearLayout>
-
                 </LinearLayout>
-
-
-                <!-- DIVIDER -->
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#D8E3F0" />
 
-
-                <!-- STATUS -->
-
+                <!-- Synchronisation and location status -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
@@ -177,7 +157,7 @@
                         android:background="@drawable/bg_emergency_info_icon"
                         android:padding="11dp"
                         android:src="@drawable/ic_emergency_status"
-                        android:contentDescription="Request status" />
+                        android:contentDescription="@string/emergency_request_status_icon_description" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -189,7 +169,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Request Status"
+                            android:text="@string/emergency_request_status_label"
                             android:textColor="#0B1F3A"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -199,26 +179,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
-                            android:text="Request Sent"
                             android:textColor="#1976D2"
                             android:textSize="13sp"
                             android:textStyle="bold" />
-
                     </LinearLayout>
-
                 </LinearLayout>
-
-
-                <!-- DIVIDER -->
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#D8E3F0" />
 
-
-                <!-- LOCATION -->
-
+                <!-- Location information -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
@@ -231,7 +203,7 @@
                         android:background="@drawable/bg_emergency_info_icon"
                         android:padding="11dp"
                         android:src="@drawable/ic_location"
-                        android:contentDescription="Location" />
+                        android:contentDescription="@string/emergency_request_location_icon_description" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -243,7 +215,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Location"
+                            android:text="@string/emergency_request_location_label"
                             android:textColor="#0B1F3A"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -252,19 +224,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
-                            android:text="Share your location if possible."
+                            android:text="@string/emergency_request_location_description"
                             android:textColor="#667085"
                             android:textSize="13sp" />
-
                     </LinearLayout>
-
                 </LinearLayout>
-
             </LinearLayout>
 
-
-            <!-- ================= EMERGENCY SERVICES ================= -->
-
+            <!-- Opens the phone dialler; does not place a call automatically -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnEmergencyServices"
                 android:layout_width="match_parent"
@@ -278,15 +245,13 @@
                 android:gravity="center"
                 android:drawableStart="@drawable/ic_phone_white"
                 android:drawablePadding="10dp"
-                android:text="Call Emergency Services"
+                android:text="@string/emergency_request_call_button"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-
-            <!-- ================= SHARE LOCATION ================= -->
-
+            <!-- Opens Android's sharing chooser with a Maps link -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnShareLocation"
                 android:layout_width="match_parent"
@@ -300,15 +265,13 @@
                 android:gravity="center"
                 android:drawableStart="@drawable/ic_location_white"
                 android:drawablePadding="10dp"
-                android:text="Share Location"
+                android:text="@string/emergency_request_share_location_button"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-
-            <!-- ================= RETURN HOME ================= -->
-
+            <!-- Returns to the personal home screen -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnReturnHome"
                 android:layout_width="match_parent"
@@ -322,14 +285,12 @@
                 android:gravity="center"
                 android:drawableStart="@drawable/ic_home_white"
                 android:drawablePadding="10dp"
-                android:text="Return to Home"
+                android:text="@string/emergency_request_return_home_button"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>

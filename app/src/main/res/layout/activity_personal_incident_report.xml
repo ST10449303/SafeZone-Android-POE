@@ -6,8 +6,6 @@
     android:orientation="vertical"
     android:background="#F5F7FA">
 
-    <!-- ================= HEADER ================= -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="62dp"
@@ -27,7 +25,7 @@
             android:textSize="38sp"
             android:clickable="true"
             android:focusable="true"
-            android:contentDescription="Back" />
+            android:contentDescription="@string/personal_incident_back" />
 
         <TextView
             android:layout_width="0dp"
@@ -45,9 +43,6 @@
 
     </LinearLayout>
 
-
-    <!-- ================= CONTENT ================= -->
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -64,9 +59,6 @@
             android:paddingTop="22dp"
             android:paddingBottom="30dp">
 
-
-            <!-- ================= REPORT ICON ================= -->
-
             <ImageView
                 android:layout_width="78dp"
                 android:layout_height="78dp"
@@ -74,17 +66,14 @@
                 android:background="@drawable/bg_report_icon"
                 android:padding="20dp"
                 android:src="@drawable/ic_report"
-                android:contentDescription="Report incident" />
-
-
-            <!-- ================= TITLE ================= -->
+                android:contentDescription="@string/personal_incident_icon_description" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="17dp"
                 android:gravity="center"
-                android:text="Report a Personal Incident"
+                android:text="@string/personal_incident_title"
                 android:textColor="#0B1F3A"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -94,12 +83,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:gravity="center"
-                android:text="Help us keep our community safe by reporting incidents."
+                android:text="@string/personal_incident_subtitle"
                 android:textColor="#667085"
                 android:textSize="14sp" />
 
-
-            <!-- ================= INCIDENT TYPE ================= -->
+            <!-- INCIDENT TYPE -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -116,7 +104,7 @@
                     android:background="@drawable/bg_report_info_icon"
                     android:padding="11dp"
                     android:src="@drawable/ic_report_type"
-                    android:contentDescription="Incident type" />
+                    android:contentDescription="@string/personal_incident_type_description" />
 
                 <Spinner
                     android:id="@+id/spIncidentType"
@@ -131,8 +119,7 @@
 
             </LinearLayout>
 
-
-            <!-- ================= DESCRIPTION ================= -->
+            <!-- DESCRIPTION -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -149,7 +136,7 @@
                     android:background="@drawable/bg_report_info_icon"
                     android:padding="11dp"
                     android:src="@drawable/ic_description"
-                    android:contentDescription="Description" />
+                    android:contentDescription="@string/personal_incident_description_label" />
 
                 <EditText
                     android:id="@+id/etDescription"
@@ -159,7 +146,7 @@
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
                     android:gravity="top"
-                    android:hint="Describe what happened..."
+                    android:hint="@string/personal_incident_description_hint"
                     android:inputType="textMultiLine"
                     android:maxLines="5"
                     android:padding="5dp"
@@ -169,8 +156,7 @@
 
             </LinearLayout>
 
-
-            <!-- ================= LOCATION ================= -->
+            <!-- LOCATION -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -187,7 +173,7 @@
                     android:background="@drawable/bg_report_info_icon"
                     android:padding="11dp"
                     android:src="@drawable/ic_location"
-                    android:contentDescription="Location" />
+                    android:contentDescription="@string/personal_incident_location_label" />
 
                 <EditText
                     android:id="@+id/etLocation"
@@ -196,7 +182,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
-                    android:hint="Current Location"
+                    android:hint="@string/personal_incident_current_location"
                     android:inputType="text"
                     android:paddingStart="5dp"
                     android:textColor="#172033"
@@ -205,8 +191,7 @@
 
             </LinearLayout>
 
-
-            <!-- ================= DATE / TIME ================= -->
+            <!-- DATE AND TIME -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -223,7 +208,7 @@
                     android:background="@drawable/bg_report_info_icon"
                     android:padding="11dp"
                     android:src="@drawable/ic_calendar"
-                    android:contentDescription="Date and time" />
+                    android:contentDescription="@string/personal_incident_datetime_label" />
 
                 <EditText
                     android:id="@+id/etDateTime"
@@ -232,7 +217,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
-                    android:hint="Automatically recorded"
+                    android:hint="@string/personal_incident_datetime_hint"
                     android:inputType="none"
                     android:focusable="false"
                     android:paddingStart="5dp"
@@ -242,14 +227,13 @@
 
             </LinearLayout>
 
-
-            <!-- ================= EVIDENCE ================= -->
+            <!-- EVIDENCE -->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Add Evidence"
+                android:text="@string/personal_incident_evidence_title"
                 android:textColor="#0B1F3A"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -258,12 +242,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="Optional — photos, videos or files can support your report."
+                android:text="@string/personal_incident_evidence_subtitle"
                 android:textColor="#667085"
                 android:textSize="13sp" />
 
-
-            <!-- ================= EVIDENCE BUTTONS ================= -->
+            <!-- EVIDENCE BUTTONS -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -286,7 +269,7 @@
                     android:gravity="center"
                     android:drawableTop="@drawable/ic_camera"
                     android:drawablePadding="8dp"
-                    android:text="Add Photo"
+                    android:text="@string/personal_incident_add_photo"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="13sp"
@@ -308,7 +291,7 @@
                     android:gravity="center"
                     android:drawableTop="@drawable/ic_video"
                     android:drawablePadding="8dp"
-                    android:text="Add Video"
+                    android:text="@string/personal_incident_add_video"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="13sp"
@@ -329,14 +312,13 @@
                     android:gravity="center"
                     android:drawableTop="@drawable/ic_file"
                     android:drawablePadding="8dp"
-                    android:text="Add File"
+                    android:text="@string/personal_incident_add_file"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
-
 
             <!-- EVIDENCE STATUS -->
 
@@ -345,12 +327,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="No evidence selected"
+                android:text="@string/personal_incident_no_evidence"
                 android:textColor="#667085"
                 android:textSize="13sp" />
 
-
-            <!-- ================= SUBMIT ================= -->
+            <!-- SUBMIT -->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSubmitReport"
@@ -363,7 +344,7 @@
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:gravity="center"
-                android:text="Submit Report   →"
+                android:text="@string/personal_incident_submit"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="17sp"

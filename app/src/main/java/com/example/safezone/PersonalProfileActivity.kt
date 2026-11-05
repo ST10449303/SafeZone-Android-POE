@@ -1,3 +1,4 @@
+
 package com.example.safezone
 
 import android.content.Intent
@@ -27,172 +28,87 @@ class PersonalProfileActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
-
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(
-            R.layout.activity_personal_profile
-        )
+        setContentView(R.layout.activity_personal_profile)
 
-        auth =
-            FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
-        db =
-            FirebaseFirestore.getInstance()
+        // Bind existing views
+        tvBack = findViewById(R.id.tvBack)
+        tvProfileName = findViewById(R.id.tvProfileName)
+        tvEmail = findViewById(R.id.tvEmail)
+        tvPhone = findViewById(R.id.tvPhone)
+        tvAccountType = findViewById(R.id.tvAccountType)
 
-        // ==========================================
-        // VIEWS
-        // ==========================================
+        btnEditProfile = findViewById(R.id.btnEditProfile)
+        btnTrustedContacts = findViewById(R.id.btnTrustedContacts)
+        btnMyReports = findViewById(R.id.btnMyReports)
+        btnSettings = findViewById(R.id.btnSettings)
+        btnLogout = findViewById(R.id.btnLogout)
 
-        tvBack =
-            findViewById(R.id.tvBack)
-
-        tvProfileName =
-            findViewById(R.id.tvProfileName)
-
-        tvEmail =
-            findViewById(R.id.tvEmail)
-
-        tvPhone =
-            findViewById(R.id.tvPhone)
-
-        tvAccountType =
-            findViewById(R.id.tvAccountType)
-
-        btnEditProfile =
-            findViewById(R.id.btnEditProfile)
-
-        btnTrustedContacts =
-            findViewById(R.id.btnTrustedContacts)
-
-        btnMyReports =
-            findViewById(R.id.btnMyReports)
-
-        btnSettings =
-            findViewById(R.id.btnSettings)
-
-        btnLogout =
-            findViewById(R.id.btnLogout)
-
-        // ==========================================
-        // LOGIN CHECK
-        // ==========================================
-
-        val currentUser =
-            auth.currentUser
-
-        if (currentUser == null) {
-
+        // Check whether a user is signed in
+        if (auth.currentUser == null) {
             goToLogin()
-
             return
         }
 
-        // ==========================================
-        // BACK
-        // ==========================================
-
+        // Back navigation
         tvBack.setOnClickListener {
-
             finish()
         }
 
-        // ==========================================
-        // EDIT PROFILE
-        // ==========================================
-
+        // Edit Profile
         btnEditProfile.setOnClickListener {
-
-            openActivity(
-                EditProfileActivity::class.java
-            )
+            openActivity(EditProfileActivity::class.java)
         }
 
-        // ==========================================
-        // TRUSTED CONTACTS
-        // ==========================================
-
+        // Trusted Contacts
         btnTrustedContacts.setOnClickListener {
-
-            openActivity(
-                TrustedContactsActivity::class.java
-            )
+            openActivity(TrustedContactsActivity::class.java)
         }
 
-        // ==========================================
-        // MY REPORTS
-        // ==========================================
-
+        // My Reports
         btnMyReports.setOnClickListener {
-
-            openActivity(
-                PersonalReportsActivity::class.java
-            )
+            openActivity(PersonalReportsActivity::class.java)
         }
 
-        // ==========================================
-        // SETTINGS
-        // ==========================================
-
+        // Settings
         btnSettings.setOnClickListener {
-
-            openActivity(
-                PersonalSettingsActivity::class.java
-            )
+            openActivity(PersonalSettingsActivity::class.java)
         }
 
-        // ==========================================
-        // LOGOUT
-        // ==========================================
-
+        // Logout
         btnLogout.setOnClickListener {
-
             logoutUser()
         }
     }
 
-    // ==========================================
-    // REFRESH PROFILE
-    // ==========================================
-
+    // Refresh the profile whenever this screen resumes
     override fun onResume() {
-
         super.onResume()
 
-        val currentUser =
-            auth.currentUser
-
-        if (currentUser != null) {
-
-            loadUserProfile(
-                currentUser.uid
-            )
+        auth.currentUser?.let { user ->
+            loadUserProfile(user.uid)
         }
     }
 
-    // ==========================================
-    // LOAD PROFILE
-    // ==========================================
-
-    private fun loadUserProfile(
-        userId: String
-    ) {
+    // Load profile information from the existing Firestore Users collection
+    private fun loadUserProfile(userId: String) {
 
         tvProfileName.text =
-            "SafeZone User"
+            getString(R.string.personal_profile_default_name)
 
-        tvEmail.text =
-            auth.currentUser?.email
-                ?: "Not available"
+        tvEmail.text = auth.currentUser?.email
+            ?: getString(R.string.personal_profile_not_available)
 
         tvPhone.text =
-            "Not available"
+            getString(R.string.personal_profile_not_available)
 
         tvAccountType.text =
-            "Personal"
+            getString(R.string.personal_profile_default_account_type)
 
         db.collection("Users")
             .document(userId)
@@ -200,118 +116,83 @@ class PersonalProfileActivity : AppCompatActivity() {
             .addOnSuccessListener { document ->
 
                 if (!document.exists()) {
-
                     return@addOnSuccessListener
                 }
 
-                document.getString(
-                    "fullName"
-                )?.let {
-
-                    if (it.isNotEmpty()) {
-                        tvProfileName.text = it
+                document.getString("fullName")?.let { fullName ->
+                    if (fullName.isNotEmpty()) {
+                        tvProfileName.text = fullName
                     }
                 }
 
-                document.getString(
-                    "email"
-                )?.let {
-
-                    if (it.isNotEmpty()) {
-                        tvEmail.text = it
+                document.getString("email")?.let { email ->
+                    if (email.isNotEmpty()) {
+                        tvEmail.text = email
                     }
                 }
 
-                document.getString(
-                    "phone"
-                )?.let {
-
-                    if (it.isNotEmpty()) {
-                        tvPhone.text = it
+                document.getString("phone")?.let { phone ->
+                    if (phone.isNotEmpty()) {
+                        tvPhone.text = phone
                     }
                 }
 
-                document.getString(
-                    "accountType"
-                )?.let {
-
-                    if (it.isNotEmpty()) {
-                        tvAccountType.text = it
+                document.getString("accountType")?.let { accountType ->
+                    if (accountType.isNotEmpty()) {
+                        tvAccountType.text = accountType
                     }
                 }
             }
             .addOnFailureListener {
-
                 Toast.makeText(
                     this,
-                    "Unable to load some profile information.",
+                    getString(R.string.personal_profile_load_failed),
                     Toast.LENGTH_SHORT
                 ).show()
             }
     }
 
-    // ==========================================
-    // OPEN ACTIVITY
-    // ==========================================
-
-    private fun openActivity(
-        activityClass: Class<*>
-    ) {
-
+    // Open another activity
+    private fun openActivity(activityClass: Class<*>) {
         try {
-
             startActivity(
-                Intent(
-                    this,
-                    activityClass
-                )
+                Intent(this, activityClass)
             )
-
         } catch (e: Exception) {
-
             Toast.makeText(
                 this,
-                "Unable to open this screen.",
+                getString(R.string.personal_profile_open_failed),
                 Toast.LENGTH_LONG
             ).show()
         }
     }
 
-    // ==========================================
-    // LOGOUT
-    // ==========================================
-
+    // Sign out the current user
     private fun logoutUser() {
 
         auth.signOut()
 
         Toast.makeText(
             this,
-            "You have been logged out.",
+            getString(R.string.personal_profile_logged_out),
             Toast.LENGTH_SHORT
         ).show()
 
         goToLogin()
     }
 
-    // ==========================================
-    // LOGIN
-    // ==========================================
-
+    // Redirect to login and clear the previous activity stack
     private fun goToLogin() {
 
-        val intent =
-            Intent(
-                this,
-                PersonalLoginActivity::class.java
-            )
+        val intent = Intent(
+            this,
+            PersonalLoginActivity::class.java
+        )
 
-        intent.flags =
-            Intent.FLAG_ACTIVITY_NEW_TASK or
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                Intent.FLAG_ACTIVITY_CLEAR_TASK
 
         startActivity(intent)
-
         finish()
     }
 }

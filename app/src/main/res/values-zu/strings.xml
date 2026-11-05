@@ -1,0 +1,1359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App -->
+    <string name="app_name">SafeZone</string>
+
+    <!-- Language Settings -->
+    <string name="language">Ulimi</string>
+    <string name="select_language">Khetha ulimi lwakho</string>
+    <string name="language_settings">Izilungiselelo zolimi</string>
+    <string name="language_description">Khetha ulimi oluthandayo lwe-SafeZone.</string>
+    <string name="english">IsiNgisi</string>
+    <string name="isizulu">isiZulu</string>
+    <string name="setswana">Setswana</string>
+    <string name="save_language">Londoloza ulimi</string>
+    <string name="language_saved">Ulimi lulondoloziwe</string>
+
+    <!-- Navigation -->
+    <string name="home">Ikhaya</string>
+    <string name="settings">Izilungiselelo</string>
+    <string name="login">Ngena ngemvume</string>
+    <string name="logout">Phuma</string>
+    <string name="register">Bhalisa</string>
+    <string name="cancel">Khansela</string>
+    <string name="save">Londoloza</string>
+    <string name="submit">Thumela</string>
+    <string name="back">Emuva</string>
+
+    <!-- Account -->
+    <string name="email">I-imeyili</string>
+    <string name="password">Iphasiwedi</string>
+    <string name="edit_profile">Hlela iphrofayela</string>
+    <string name="change_password">Shintsha iphasiwedi</string>
+
+    <!-- Welcome and Panels -->
+    <string name="welcome">Siyakwamukela ku-SafeZone</string>
+    <string name="personal_panel">Indawo yomuntu siqu</string>
+    <string name="campus_panel">Indawo yekhempasi</string>
+
+    <!-- Safety -->
+    <string name="safety_alerts">Izaziso zokuphepha</string>
+    <string name="emergency">Isimo esiphuthumayo</string>
+    <string name="location">Indawo</string>
+    <string name="trusted_contacts">Abantu obathembayo</string>
+    <string name="location_sharing">Ukwabelana ngendawo</string>
+    <string name="emergency_preferences">Izilungiselelo zesimo esiphuthumayo</string>
+
+    <!-- Choose Panel Screen -->
+    <string name="safezone_logo_description">Uphawu lwe-SafeZone</string>
+    <string name="choose_safety_panel">Khetha indawo yakho yokuphepha</string>
+    <string name="personal_safety">Ukuphepha komuntu siqu</string>
+    <string name="personal_safety_description">Hlala uphephile noma ngabe ukuphi</string>
+    <string name="campus_safety">Ukuphepha kwekhampasi</string>
+    <string name="campus_safety_description">Xhumana nezinsizakalo zokuphepha zekhempasi yakho</string>
+    <string name="emergency_assistance">Udinga usizo? Usizo oluphuthumayo</string>
+    <string name="emergency_assistance_selected">Usizo oluphuthumayo lukhethiwe</string>
+
+    <!-- Personal Login Screen -->
+    <string name="personal_login_title">Ukungena Kwezokuphepha Komuntu Siqu</string>
+    <string name="personal_login_subtitle">Ngena ukuze ufinyelele i-akhawunti yakho yezokuphepha.</string>
+    <string name="email_address_hint">Ikheli le-imeyili</string>
+    <string name="remember_me">Ngikhumbule</string>
+    <string name="forgot_password">Ukhohlwe iphasiwedi?</string>
+    <string name="or">NOMA</string>
+    <string name="continue_with_google">Qhubeka nge-Google</string>
+    <string name="no_personal_account">Awunayo i-akhawunti yomuntu siqu?</string>
+
+    <!-- Login Validation and Messages -->
+    <string name="enter_email_error">Faka ikheli lakho le-imeyili</string>
+    <string name="valid_email_error">Faka ikheli le-imeyili elivumelekile</string>
+    <string name="enter_password_error">Faka iphasiwedi yakho</string>
+    <string name="internet_required_reset">Kudingeka i-inthanethi ukuze usethe kabusha iphasiwedi yakho.</string>
+    <string name="internet_required_google">Xhuma ku-inthanethi ukuze ungene nge-Google.</string>
+    <string name="valid_google_account">Khetha i-akhawunti ye-Google evumelekile.</string>
+    <string name="google_signin_cancelled">Ukungena nge-Google kukhanseliwe noma akukwazanga ukuqala. Zama futhi.</string>
+    <string name="google_signin_failed">Ukungena nge-Google kuhlulekile. Zama futhi.</string>
+    <string name="unable_verify_account">Ayikwazanga ukuqinisekisa i-akhawunti yakho.</string>
+    <string name="unable_verify_google">Ayikwazanga ukuqinisekisa i-akhawunti yakho ye-Google.</string>
+    <string name="google_auth_failed">Ukuqinisekiswa kwe-Google kuhlulekile. Zama futhi.</string>
+    <string name="personal_profile_not_found">Iphrofayela ye-SafeZone Personal ayitholakalanga. Sicela ubhalise kuqala.</string>
+    <string name="wrong_account_type">Le akhawunti ayibhalisiwe njenge-akhawunti ye-Personal. Sebenzisa indawo yokungena efanele.</string>
+    <string name="offline_setup_failed">Ungene ku-inthanethi ngempumelelo, kodwa ukusetha ukungena ngaphandle kwe-inthanethi kuhlulekile. Hlola i-Logcat.</string>
+    <string name="personal_login_offline_ready">Ungene ku-SafeZone Personal ngempumelelo. Ukungena ngaphandle kwe-inthanethi sekulungile.</string>
+    <string name="personal_login_success">Ungene ku-SafeZone Personal ngempumelelo!</string>
+    <string name="connection_lost_verify">Uxhumano luphelile ngaphambi kokuqinisekiswa kwephrofayela yakho. Zama futhi uma usuxhumeke ku-inthanethi.</string>
+    <string name="profile_verification_failed">Ayikwazanga ukuqinisekisa iphrofayela yakho. Zama futhi.</string>
+    <string name="offline_login_failed">Ukungena ngaphandle kwe-inthanethi kuhlulekile. Qala ngokungena ngempumelelo ku-inthanethi kule divayisi bese uqinisekisa ukuthi ukusetha kuphumelele.</string>
+    <string name="offline_wrong_account_type">Lokhu kungena akubhalisiwe njenge-akhawunti ye-Personal.</string>
+    <string name="offline_personal_enabled">Ukufinyelela ku-Personal ngaphandle kwe-inthanethi kuvuliwe. Ezinye izinsiza ze-inthanethi zingase zingatholakali.</string>
+    <string name="unable_open_personal_home">Ayikwazanga ukuvula ikhasi lasekhaya le-Personal: %1$s</string>
+    <string name="signing_in">Kuyangena...</string>
+    <string name="please_wait">Sicela ulinde...</string>
+    <string name="incorrect_credentials">I-imeyili noma iphasiwedi ayilungile.</string>
+    <string name="account_not_found">Ayikho i-akhawunti etholakele enaleli kheli le-imeyili.</string>
+    <string name="too_many_login_attempts">Imizamo yokungena miningi kakhulu. Zama futhi kamuva.</string>
+    <string name="network_error">Iphutha lenethiwekhi. Hlola uxhumano lwakho lwe-inthanethi.</string>
+    <string name="login_failed">Ukungena kuhlulekile. Hlola i-imeyili nephasiwedi yakho.</string>
+
+    <!-- Personal Registration Screen -->
+    <string name="create_personal_account">Dala I-akhawunti Yomuntu Siqu</string>
+    <string name="create_personal_account_subtitle">Dala i-akhawunti yakho yezokuphepha ye-SafeZone.</string>
+    <string name="full_name">Amagama aphelele</string>
+    <string name="confirm_password">Qinisekisa iphasiwedi</string>
+    <string name="create_account">Dala I-akhawunti</string>
+    <string name="already_have_personal_account">Usunayo i-akhawunti yomuntu siqu?</string>
+    <string name="password_visibility_description">Iphasiwedi. Thinta uphawu lweso ukuze uyibonise noma uyifihle.</string>
+    <string name="confirm_password_visibility_description">Qinisekisa iphasiwedi. Thinta uphawu lweso ukuze uyibonise noma uyifihle.</string>
+
+    <!-- Registration Validation and Results -->
+    <string name="enter_full_name_error">Faka amagama akho aphelele.</string>
+    <string name="enter_registration_email_error">Faka ikheli lakho le-imeyili.</string>
+    <string name="valid_registration_email_error">Faka ikheli le-imeyili elivumelekile.</string>
+    <string name="enter_registration_password_error">Faka iphasiwedi.</string>
+    <string name="password_min_length_error">Iphasiwedi kufanele ibe nezinhlamvu okungenani eziyisi-6.</string>
+    <string name="confirm_password_error">Qinisekisa iphasiwedi yakho.</string>
+    <string name="passwords_do_not_match">Amaphasiwedi awafani.</string>
+    <string name="registration_success">I-akhawunti yomuntu siqu idalwe ngempumelelo.</string>
+    <string name="registration_failed">Ukubhalisa kuhlulekile. Zama futhi.</string>
+    <string name="email_already_registered">Leli kheli le-imeyili selibhalisiwe.</string>
+    <string name="registration_network_error">Iphutha lenethiwekhi. Hlola uxhumano lwakho lwe-inthanethi bese uzama futhi.</string>
+
+    <!-- Personal Registration Password Validation -->
+    <string name="creating_account">Kwakhiwa i-akhawunti...</string>
+    <string name="create_password_error">Sicela udale iphasiwedi.</string>
+    <string name="password_min_eight_error">Iphasiwedi kufanele ibe nezinhlamvu okungenani eziyisi-8.</string>
+    <string name="password_uppercase_error">Iphasiwedi kufanele ibe nohlamvu olukhulu.</string>
+    <string name="password_lowercase_error">Iphasiwedi kufanele ibe nohlamvu oluncane.</string>
+    <string name="password_number_error">Iphasiwedi kufanele ibe nenombolo.</string>
+    <string name="password_special_character_error">Iphasiwedi kufanele ibe nophawu olukhethekile.</string>
+    <string name="account_creation_failed">Ukudalwa kwe-akhawunti kuhlulekile. Zama futhi.</string>
+    <string name="account_created_profile_failed">I-akhawunti idaliwe, kodwa iphrofayela ayikwazanga ukugcinwa: %1$s</string>
+
+    <!-- Forgot Password Screen -->
+    <string name="forgot_password_instructions">Faka ikheli lakho le-imeyili ukuze usethe kabusha iphasiwedi yakho ye-SafeZone.</string>
+    <string name="remember_password">Usayikhumbula iphasiwedi yakho?</string>
+    <string name="back_to_personal_login">Buyela Ekungeneni Komuntu Siqu</string>
+    <string name="forgot_enter_email">Sicela ufake ikheli lakho le-imeyili.</string>
+    <string name="forgot_invalid_email">Sicela ufake ikheli le-imeyili elivumelekile.</string>
+    <string name="password_reset_email_sent">I-imeyili yokusetha kabusha iphasiwedi ithunyelwe. Hlola ibhokisi lakho lokungenayo.</string>
+    <string name="password_reset_account_not_found">Ayikho i-akhawunti etholakele enaleli kheli le-imeyili.</string>
+    <string name="sending_reset_email">Iyathumela...</string>
+
+    <!-- Shared Password Reset Button and Messages -->
+    <string name="reset_password">SHINTSHA IPHASIWEDI</string>
+    <string name="password_reset_failed">Yehlulekile ukushintsha iphasiwedi. Zama futhi.</string>
+    <string name="password_reset_network_error">Iphutha lenethiwekhi. Hlola uxhumano lwakho lwe-inthanethi bese uzama futhi.</string>
+
+    <!-- Create New Password Screen -->
+    <string name="create_new_password">Dala Iphasiwedi Entsha</string>
+    <string name="create_new_password_instructions">Dala iphasiwedi entsha ye-akhawunti yakho ye-SafeZone.</string>
+    <string name="new_password">Iphasiwedi Entsha</string>
+    <string name="enter_new_password">Faka iphasiwedi entsha</string>
+    <string name="confirm_new_password">Qinisekisa Iphasiwedi Entsha</string>
+    <string name="confirm_new_password_hint">Qinisekisa iphasiwedi entsha</string>
+    <string name="password_reset_successful">✓ Iphasiwedi Ishintshwe Ngempumelelo!</string>
+    <string name="new_password_saved">Iphasiwedi yakho entsha igcinwe ngempumelelo.</string>
+    <string name="back_to_login">BUYELA EKUNGENENI</string>
+
+    <!-- Create New Password Validation and Status -->
+    <string name="password_reset_missing_email">Ikheli le-imeyili alikho. Sicela uqale futhi.</string>
+    <string name="enter_new_password_error">Faka iphasiwedi entsha.</string>
+    <string name="password_min_six_error">Iphasiwedi kufanele ibe nezinhlamvu okungenani eziyisi-6.</string>
+    <string name="confirm_new_password_error">Sicela uqinisekise iphasiwedi yakho entsha.</string>
+    <string name="resetting_password">Kushintshwa iphasiwedi...</string>
+
+
+    <!-- PERSONAL HOME SCREEN TRANSLATIONS - ISIZULU -->
+    <string name="notifications">Izaziso</string>
+    <string name="profile">Iphrofayela</string>
+    <string name="good_afternoon">Sawubona ntambama 👋</string>
+    <string name="stay_safe_message">Hlala uphephile. Silapha ukukusiza.</string>
+    <string name="safety_status">Isimo sokuphepha</string>
+    <string name="you_are_safe">Uphephile</string>
+    <string name="no_active_emergencies">Azikho izimo eziphuthumayo ezisebenzayo</string>
+    <string name="last_check_in_today">Ukuhlolwa kokugcina: Namuhla</string>
+    <string name="need_immediate_help">Udinga usizo oluphuthumayo?</string>
+    <string name="sos_emergency_help">SOS&#10;USIZO LWEZIMO EZIPHUTHUMAYO</string>
+    <string name="tap_for_emergency_assistance">Thepha ukuze uthole usizo oluphuthumayo</string>
+    <string name="quick_actions">Izenzo Ezisheshayo</string>
+    <string name="emergency_assistance_card">🏥&#10;Usizo&#10;Lwezimo Eziphuthumayo</string>
+    <string name="safety_check_in_card">✓&#10;Ukuhlola&#10;Ukuphepha</string>
+    <string name="trusted_contacts_card">👥&#10;Abantu&#10;Obathembayo</string>
+    <string name="find_help_card">📍&#10;Thola&#10;Usizo</string>
+    <string name="report_incident_card">⚠&#10;Bika&#10;Isigameko</string>
+    <string name="settings_card">⚙&#10;Izilungiselelo</string>
+    <string name="recent_alerts">Izaziso Zakamuva</string>
+    <string name="no_new_safety_alerts">Azikho izaziso ezintsha zokuphepha</string>
+    <string name="important_updates_appear_here">Izibuyekezo ezibalulekile zizovela lapha.</string>
+    <string name="safety_tip">Ithiphu Yokuphepha</string>
+    <string name="stay_aware_surroundings">Qaphela okukuzungezile</string>
+    <string name="keep_trusted_contacts_informed">Gcina abantu obathembayo benolwazi.</string>
+    <string name="nav_home">⌂&#10;Ikhaya</string>
+    <string name="nav_map">●&#10;Imephu</string>
+    <string name="nav_reports">▤&#10;Imibiko</string>
+    <string name="nav_alerts">🔔&#10;Izaziso</string>
+    <string name="nav_profile">●&#10;Iphrofayela</string>
+
+    <!-- PERSONAL HOME ACTIVITY MESSAGES - ISIZULU -->
+    <string name="default_user_name">Umsebenzisi we-SafeZone</string>
+    <string name="login_required">Sicela ungene ngemvume ukuze uqhubeke.</string>
+    <string name="already_on_home">Usuvele usekhasini lasekhaya.</string>
+    <string name="feature_unavailable">Lesi sici asikwazanga ukuvulwa.</string>
+    <string name="logged_out_successfully">Uphume ngemvume ngempumelelo.</string>
+
+    <!-- EMERGENCY ASSISTANCE SCREEN - ISIZULU -->
+
+    <!-- SCREEN TITLE AND DESCRIPTION -->
+    <string name="emergency_assistance_title">Udinga luphi uhlobo&#10;losizo?</string>
+    <string name="emergency_assistance_subtitle">Khetha uhlobo losizo oluphuthumayo oludingayo.</string>
+
+    <!-- EMERGENCY BUTTONS - EMOJIS PRESERVED -->
+    <string name="emergency_type_medical_card">✚&#10;&#10;Isimo&#10;Sezempilo</string>
+    <string name="emergency_type_injury_card">⚕&#10;&#10;Ukulimala / Ukuwa</string>
+    <string name="emergency_type_accident_card">🚗&#10;&#10;Ingozi</string>
+    <string name="emergency_type_fire_card">🔥&#10;&#10;Umlilo</string>
+    <string name="emergency_type_security_card">🛡&#10;&#10;Isimo&#10;Sokuphepha</string>
+    <string name="emergency_type_harassment_card">👥&#10;&#10;Ukuhlukumezeka</string>
+    <string name="emergency_type_other_card">•••    Olunye Usizo</string>
+
+    <!-- SELECTED ASSISTANCE -->
+    <string name="selected_assistance">Usizo Olukhethiwe</string>
+    <string name="no_assistance_selected">Akukho hlobo losizo olukhethiwe</string>
+    <string name="continue_with_arrow">Qhubeka  →</string>
+
+    <!-- EMERGENCY ASSISTANCE ACTIVITY -->
+    <string name="emergency_type_medical">Isimo Esiphuthumayo Sezempilo</string>
+    <string name="emergency_type_injury">Ukulimala / Ukuwa</string>
+    <string name="emergency_type_accident">Ingozi</string>
+    <string name="emergency_type_fire">Umlilo</string>
+    <string name="emergency_type_security">Isimo Esiphuthumayo Sokuphepha</string>
+    <string name="emergency_type_harassment">Ukuhlukumezeka</string>
+    <string name="emergency_type_other">Okunye</string>
+
+    <!-- VALIDATION AND STATUS MESSAGES -->
+    <string name="emergency_type_selected">Kukhethiwe: %1$s</string>
+    <string name="select_emergency_type_error">Sicela ukhethe uhlobo lwesimo esiphuthumayo.</string>
+    <string name="sign_in_emergency_required">Sicela ungene ngemvume ngaphambi kokudala isicelo sosizo oluphuthumayo.</string>
+    <string name="saving_emergency_request">Kulondolozwa isicelo...</string>
+    <string name="emergency_request_saved_pending">Isicelo silondoloziwe kule foni. Ukuvumelanisa kusalindile.</string>
+    <string name="emergency_request_save_failed">Isicelo asikwazanga ukulondolozwa kule foni. Sicela uzame futhi.</string>
+
+    <!-- SAFETY CHECK-IN -->
+    <string name="safety_check_in_title">Ukungena Ukuqinisekisa Ukuphepha</string>
+    <string name="safety_check_in_subtitle">Yazisa umuntu omethembayo ukuthi uphephile.</string>
+    <string name="check_in_duration">Isikhathi Sokuqinisekisa Ukuphepha</string>
+    <string name="check_in_duration_description">Khetha ukuthi ufuna ukuqinisekisa ukuphepha kuhlale isikhathi esingakanani.</string>
+    <string name="duration_30_minutes">Imizuzu engu-30</string>
+    <string name="duration_1_hour">Ihora elingu-1</string>
+    <string name="duration_2_hours">Amahora angu-2</string>
+    <string name="duration_custom">Ngokwezifiso</string>
+    <string name="selected_duration">Isikhathi Esikhethiwe</string>
+    <string name="duration_selected_default">Isikhathi: imizuzu engu-30</string>
+    <string name="duration_selected">Isikhathi: %1$s</string>
+    <string name="trusted_contact">Umuntu Omethembayo</string>
+    <string name="trusted_contact_description">Khetha umuntu okufanele athole isaziso sokuqinisekisa ukuphepha kwakho.</string>
+    <string name="select_trusted_contact">Khetha Umuntu Omethembayo</string>
+    <string name="share_location">Yabelana Ngendawo Okuyo</string>
+    <string name="share_location_description">Vumela umuntu omethembayo ukuthi abone indawo okuyo manje.</string>
+    <string name="start_safety_check">Qala Ukuqinisekisa Ukuphepha</string>
+    <string name="enter_minutes">Faka imizuzu</string>
+    <string name="custom_duration_title">Isikhathi Sokuqinisekisa Esingokwezifiso</string>
+    <string name="custom_duration_message">Faka isikhathi ngemizuzu.</string>
+    <string name="set">Setha</string>
+    <string name="duration_range_error">Faka inani eliphakathi kwemizuzu engu-5 no-1440.</string>
+    <string name="contacts_load_failed">Ayikwazanga ukulayisha abantu abagciniwe.</string>
+    <string name="contacts_cloud_unavailable">Kusetshenziswa abantu abagciniwe. Ukuvuselela kusuka efwini akutholakali.</string>
+    <string name="no_saved_contacts">Abekho abantu obathembayo abagciniwe. Faka umuntu ngesikhathi uxhumeke ku-inthanethi noma uhlole abantu abagciniwe.</string>
+    <string name="select_trusted_contact_error">Sicela ukhethe umuntu omethembayo ogciniwe.</string>
+    <string name="select_another_contact">Sicela ukhethe omunye umuntu omethembayo.</string>
+    <string name="saving">Kuyagcinwa...</string>
+    <string name="check_in_saved">Ukuqinisekisa ukuphepha kugcinwe kule divayisi.</string>
+    <string name="check_in_save_failed">Ayikwazanga ukugcina ukuqinisekisa ukuphepha kule divayisi. Sicela uzame futhi.</string>
+
+    <plurals name="duration_minutes">
+        <item quantity="one">%d umzuzu</item>
+        <item quantity="other">%d imizuzu</item>
+    </plurals>
+
+
+    <!-- ACTIVE SAFETY CHECK SCREEN -->
+    <string name="active_check_back">Emuva</string>
+    <string name="active_check_title">Ukuqinisekisa Ukuphepha Kuyasebenza</string>
+    <string name="active_check_initial_status">Ukuqinisekisa ukuphepha kwakho kuyasebenza.</string>
+    <string name="active_check_contact_default">Umuntu Omethembayo: --</string>
+    <string name="active_check_not_configured">Akukalungiselelwa</string>
+    <string name="active_check_trusted_contact">Umuntu Omethembayo: %1$s</string>
+    <string name="active_check_location_on">Ukwabelana Ngendawo: KUVALIWE</string>
+    <string name="active_check_location_off">Ukwabelana Ngendawo: KUVALIWE</string>
+    <string name="active_check_im_safe">NGIPHEPHILE</string>
+    <string name="active_check_cancel">Khansela Ukuqinisekisa</string>
+    <string name="active_check_status_active">Ukuqinisekisa ukuphepha kuyasebenza.</string>
+    <string name="active_check_status_pending_sync">Ukuqinisekisa ukuphepha kuyasebenza. Izinguquko zizovumelaniswa uma i-inthanethi isitholakala.</string>
+    <string name="active_check_still_active">Ukuqinisekisa ukuphepha kwakho kusasebenza.</string>
+    <string name="active_check_time_unavailable">Ayikwazanga ukunquma isikhathi sokuqinisekisa.</string>
+    <string name="active_check_information_missing">Ulwazi lokuqinisekisa ukuphepha alukho.</string>
+    <string name="active_check_updating">Kubuyekezwa ukuqinisekisa ukuphepha...</string>
+    <string name="active_check_local_update_failed">Ayikwazanga ukugcina isimo kule divayisi.</string>
+    <string name="active_check_local_save_error">Ayikwazanga ukugcina ukuqinisekisa ukuphepha. Sicela uzame futhi.</string>
+    <string name="active_check_cloud_update_failed">Ayikwazanga ukubuyekeza ukuqinisekisa ukuphepha. Sicela uzame futhi.</string>
+    <string name="active_check_connection_error">Ayikwazanga ukubuyekeza ukuqinisekisa ukuphepha. Hlola uxhumano lwakho.</string>
+    <string name="active_check_completed_status">Uqinisekisile ukuthi uphephile.</string>
+    <string name="active_check_cancelled_status">Ukuqinisekisa ukuphepha kwakho kukhanseliwe.</string>
+    <string name="active_check_expired_status">Isikhathi sokuqinisekisa ukuphepha sesiphelile.</string>
+    <string name="active_check_completed_pending">Ukuqinisekisa ukuphepha kuqediwe. Kulindwe ukuvumelanisa.</string>
+    <string name="active_check_cancelled_pending">Ukuqinisekisa ukuphepha kukhanseliwe. Kulindwe ukuvumelanisa.</string>
+    <string name="active_check_expired_pending">Isikhathi sokuqinisekisa siphelile. Kulindwe ukuvumelanisa.</string>
+    <string name="active_check_completed_message">Ukuqinisekisa ukuphepha kuqediwe.</string>
+    <string name="active_check_cancelled_message">Ukuqinisekisa ukuphepha kukhanseliwe.</string>
+    <string name="active_check_expired_message">Isikhathi sokuqinisekisa ukuphepha sesiphelile.</string>
+
+
+    <!-- ========================================== -->
+    <!-- TRUSTED CONTACTS SCREEN -->
+    <!-- ========================================== -->
+    <string name="trusted_contacts_back">Emuva</string>
+    <string name="trusted_contacts_app_name">SafeZone</string>
+    <string name="trusted_contacts_icon_description">Abantu obathembayo</string>
+    <string name="trusted_contacts_title">Abantu Obathembayo</string>
+    <string name="trusted_contacts_subtitle">Abantu obathembayo bangathintwa uma kunesimo esiphuthumayo.</string>
+    <string name="trusted_contacts_add_button">+  Engeza Umuntu Omethembayo</string>
+    <string name="trusted_contacts_section_title">Abantu Obathembayo</string>
+    <string name="trusted_contacts_section_description">Laba bantu bangathintwa uma udinga usizo.</string>
+    <string name="trusted_contacts_empty_icon_description">Abekho abantu obathembayo</string>
+    <string name="trusted_contacts_empty_title">Awukangezi Abantu Obathembayo</string>
+    <string name="trusted_contacts_empty_description">Engeza umuntu omethembayo ukuze athintwe uma kunesimo esiphuthumayo.</string>
+    <string name="trusted_contacts_add_first_button">Engeza Umuntu Wokuqala</string>
+    <string name="trusted_contacts_security_description">Ulwazi lokuphepha</string>
+    <string name="trusted_contacts_safety_notice">Abantu obathembayo basetshenziselwa ukukusekela kuphela ezimweni zokuphepha nezimo eziphuthumayo.</string>
+    <string name="trusted_contacts_login_required">Sicela ungene ku-akhawunti yakho kuqala.</string>
+    <string name="trusted_contacts_load_device_error">Ayikwazanga ukulayisha abantu abagcinwe kule divayisi.</string>
+    <string name="trusted_contacts_default_relationship">Umuntu Omethembayo</string>
+    <string name="trusted_contacts_cloud_unavailable">Kuboniswa abantu abagciniwe. Ukuvuselela kusuka efwini akutholakali.</string>
+    <string name="trusted_contacts_alerts_enabled">✓  Izexwayiso zezimo eziphuthumayo zivuliwe</string>
+    <string name="trusted_contacts_alerts_disabled">○  Izexwayiso zezimo eziphuthumayo zivaliwe</string>
+    <string name="trusted_contacts_sync_pending">Kugciniwe kule divayisi — ukuvumelanisa kusalindile</string>
+    <string name="trusted_contacts_call">Shayela</string>
+    <string name="trusted_contacts_delete">Susa</string>
+    <string name="trusted_contacts_no_phone">Ayikho inombolo yocingo etholakalayo.</string>
+    <string name="trusted_contacts_info_description">Imininingwane yokuxhumana</string>
+    <string name="trusted_contacts_dialer_error">Ayikwazanga ukuvula uhlelo lokudayela ucingo.</string>
+    <string name="trusted_contacts_login_again">Sicela ungene futhi ku-akhawunti yakho.</string>
+    <string name="trusted_contacts_not_found">Lo muntu akatholakalanga kule divayisi.</string>
+    <string name="trusted_contacts_removed_message">Umuntu ususiwe ohlwini lwakho. Ukususwa efwini kusengalindile.</string>
+    <string name="trusted_contacts_remove_error">Ayikwazanga ukususa lo muntu.</string>
+
+
+    <!-- ========================================== -->
+    <!-- ENGEZA ISIKRINI SOMUNTU OTHENJELWAYO -->
+    <!-- ========================================== -->
+
+    <!-- Isihloko sesikrini -->
+    <string name="add_trusted_contact_back">Buyela emuva</string>
+    <string name="add_trusted_contact_app_name">SafeZone</string>
+    <string name="add_trusted_contact_title">Engeza Umuntu Omethembayo</string>
+
+    <!-- Izinkambu zemininingwane -->
+    <string name="add_trusted_contact_full_name">Igama eligcwele</string>
+    <string name="add_trusted_contact_relationship">Ubudlelwano</string>
+    <string name="add_trusted_contact_phone">Inombolo yocingo</string>
+    <string name="add_trusted_contact_email">Ikheli le-imeyili</string>
+
+    <!-- Izaziso eziphuthumayo -->
+    <string name="add_trusted_contact_emergency_alerts">Thola izaziso eziphuthumayo</string>
+    <string name="add_trusted_contact_on_off">VULIWE / VALIWE</string>
+
+    <!-- Inkinobho yokugcina -->
+    <string name="add_trusted_contact_save">Gcina umuntu</string>
+    <string name="add_trusted_contact_saving">Kuyagcinwa...</string>
+
+    <!-- Imilayezo yokungena -->
+    <string name="add_trusted_contact_session_expired">Isikhathi sakho sokungena siphelile. Sicela ungene futhi.</string>
+
+    <!-- Ukuqinisekisa imininingwane -->
+    <string name="add_trusted_contact_invalid_name">Sicela ufake igama eligcwele elilungile.</string>
+    <string name="add_trusted_contact_relationship_required">Sicela ufake ubudlelwano.</string>
+    <string name="add_trusted_contact_phone_required">Sicela ufake inombolo yocingo.</string>
+    <string name="add_trusted_contact_invalid_phone">Sicela ufake inombolo yocingo elungile.</string>
+    <string name="add_trusted_contact_invalid_email">Sicela ufake ikheli le-imeyili elilungile.</string>
+
+    <!-- Imilayezo yokugcina nokuvumelanisa -->
+    <string name="add_trusted_contact_saved_pending">Umuntu ugcinwe kule divayisi. Ukuvumelanisa nefu kungase kusalindile.</string>
+    <string name="add_trusted_contact_save_failed">Akukwazekanga ukugcina umuntu kule divayisi. Sicela uzame futhi.</string>
+
+    <!-- ========================================== -->
+    <!-- ISIKRINI SOKUTHOLA USIZO -->
+    <!-- ========================================== -->
+
+    <!-- Isihloko nesingeniso -->
+    <string name="find_help_back">Emuva</string>
+    <string name="find_help_app_name">SafeZone</string>
+    <string name="find_help_title">Thola Usizo</string>
+    <string name="find_help_subtitle">Thola izinsizakalo eziphuthumayo nezokuphepha eziseduze.</string>
+
+    <!-- Indawo yamanje -->
+    <string name="find_help_current_location_icon">Indawo yamanje</string>
+    <string name="find_help_your_location">Indawo Yakho Yamanje</string>
+    <string name="find_help_finding_location">Kuseshwa indawo yakho...</string>
+    <string name="find_help_waiting_gps">Kulindwe i-GPS...</string>
+    <string name="find_help_refresh_location">Vuselela indawo</string>
+    <string name="find_help_nearby_services">Izinsizakalo Eziseduze</string>
+
+    <!-- Izinsizakalo zesibhedlela -->
+    <string name="find_help_hospital">Isibhedlela</string>
+    <string name="find_help_nearest_hospital">Isibhedlela Esiseduze</string>
+    <string name="find_help_calculating_distance">Kubalwa ibanga...</string>
+    <string name="find_help_get_directions">Thola Izikhombisi-ndlela</string>
+    <string name="find_help_call">Shayela</string>
+
+    <!-- Izinsizakalo eziphuthumayo -->
+    <string name="find_help_emergency_services">Izinsizakalo Eziphuthumayo</string>
+    <string name="find_help_emergency_nearby_description">Thola izinsizakalo eziphuthumayo eziseduze nawe</string>
+    <string name="find_help_find_nearby">Thola Eziseduze</string>
+    <string name="find_help_call_112">Shayela u-112</string>
+
+    <!-- Ukuphepha ekhampasi -->
+    <string name="find_help_campus_security">Ezokuphepha Zasekhampasi</string>
+    <string name="find_help_campus_security_description">Thola izinsizakalo zokuphepha zasekhampasi eziseduze</string>
+    <string name="find_help_find_campus_security">Thola Ezokuphepha Zasekhampasi Eziseduze</string>
+
+    <!-- Isaziso sokuphepha -->
+    <string name="find_help_safety_notice_icon">Isaziso sokuphepha</string>
+    <string name="find_help_immediate_emergency">Uma kunesimo esiphuthumayo, shayela u-112.</string>
+
+    <!-- Imilayezo yendawo -->
+    <string name="find_help_location_services_off">Izinsizakalo zendawo zivaliwe</string>
+    <string name="find_help_location_unavailable">Indawo ayitholakali</string>
+    <string name="find_help_turn_on_location">Vula izinsizakalo zendawo ukuze uthole usizo oluseduze.</string>
+    <string name="find_help_permission_required">Kudingeka imvume yokufinyelela indawo.</string>
+    <string name="find_help_live_location_updated">Indawo ebukhoma • Ivuselelwe manje</string>
+    <string name="find_help_distance_from_location">Ibanga lizobalwa kusukela endaweni yakho yamanje.</string>
+    <string name="find_help_location_not_ready">Indawo yakho yamanje ayikatholakali.</string>
+    <string name="find_help_allow_location">Vumela i-SafeZone ukuthi ifinyelele indawo yakho.</string>
+
+    <!-- Amaphutha amamephu nokushaya ucingo -->
+    <string name="find_help_no_map_app">Alukho uhlelo lwemephu olutholakalayo.</string>
+    <string name="find_help_dialer_error">Akukwazeki ukuvula uhlelo lokushaya ucingo.</string>
+
+
+        <!-- Imibiko Yami -->
+        <string name="personal_reports_back">Emuva</string>
+        <string name="personal_reports_image_description">Imibiko yami</string>
+        <string name="personal_reports_title">Imibiko Yami</string>
+        <string name="personal_reports_subtitle">Buka izehlakalo ozibikile.</string>
+        <string name="personal_reports_heading">Imibiko Yakho</string>
+        <string name="personal_reports_empty_image_description">Ayikho imibiko</string>
+        <string name="personal_reports_empty_title">Awukabi nayo imibiko</string>
+        <string name="personal_reports_empty_message">Awukabiki izigameko zakho okwamanje.</string>
+        <string name="personal_reports_report_incident">Bika Isigameko</string>
+
+        <!-- Ikhadi Lombiko -->
+        <string name="personal_reports_incident">Isigameko</string>
+        <string name="personal_reports_incident_id_placeholder">Inombolo yesigameko: -</string>
+        <string name="personal_reports_incident_id">Inombolo yesigameko: %1$s</string>
+        <string name="personal_reports_campus_placeholder">Ikhampasi: Ayinikezwanga</string>
+        <string name="personal_reports_campus">Ikhampasi: %1$s</string>
+        <string name="personal_reports_date_placeholder">Usuku: Alutholakali</string>
+        <string name="personal_reports_date">Usuku: %1$s</string>
+        <string name="personal_reports_time_placeholder">Isikhathi: Asitholakali</string>
+        <string name="personal_reports_time">Isikhathi: %1$s</string>
+        <string name="personal_reports_description_heading">Incazelo</string>
+        <string name="personal_reports_no_description">Ayikho incazelo enikeziwe.</string>
+        <string name="personal_reports_location_heading">Indawo</string>
+        <string name="personal_reports_location_placeholder">Indawo ayinikezwanga</string>
+        <string name="personal_reports_coordinates_placeholder">Izixhumanisi zendawo azitholakali</string>
+        <string name="personal_reports_coordinates">Izixhumanisi zendawo: %1$s, %2$s</string>
+        <string name="personal_reports_view_map">BHEKA INDAWO KUMEPU</string>
+        <string name="personal_reports_status_label">Isimo: </string>
+        <string name="personal_reports_submitted">Kuthunyelwe</string>
+        <string name="personal_reports_evidence_heading">Ubufakazi</string>
+        <string name="personal_reports_view_photo">📷 Buka Isithombe\n%1$s</string>
+        <string name="personal_reports_view_video">🎥 Buka Ividiyo\n%1$s</string>
+        <string name="personal_reports_view_file">📄 Vula Ifayela\n%1$s</string>
+
+        <!-- Ukulayisha Nemilayezo -->
+        <string name="personal_reports_loading">Ilayisha imibiko yakho...</string>
+        <string name="personal_reports_report_count_one">Umbiko o-1</string>
+        <string name="personal_reports_report_count_other">Imibiko engu-%1$d</string>
+        <string name="personal_reports_login_required">Sicela ungene kuqala.</string>
+        <string name="personal_reports_refresh_failed">Ayikwazanga ukuvuselela imibiko eku-inthanethi. Imibiko egcinwe ungaxhunyiwe izoqhubeka ibonakale.</string>
+        <string name="personal_reports_offline_fallback">Kuboniswa imibiko egciniwe. Ukuvuselela ku-inthanethi kuhlulekile.</string>
+        <string name="personal_reports_maps_unavailable">Alukho uhlelo lwamamephu olutholakalayo.</string>
+        <string name="personal_reports_evidence_unavailable">Ayikwazanga ukuvula lobu bufakazi. Kungenzeka butholakale kuphela kudivayisi obukhethwe kuyo.</string>
+        <string name="personal_reports_pending_sync">Ilinde ukuvumelaniswa</string>
+
+    <!-- Additional Personal Reports strings -->
+    <string name="personal_reports_not_specified">Akucaciswanga</string>
+    <string name="personal_reports_default_photo">Ubufakazi besithombe</string>
+    <string name="personal_reports_default_video">Ubufakazi bevidiyo</string>
+    <string name="personal_reports_default_file">Ifayela elinamathiselwe</string>
+    <string name="personal_reports_server_error">Ayikwazanga ukuvuselela imibiko evela kuseva.</string>
+    <string name="personal_reports_status_with_sync">%1$s • %2$s</string>
+
+    <plurals name="personal_reports_report_count">
+        <item quantity="one">Imibiko engu-%1$d</item>
+        <item quantity="other">Imibiko engu-%1$d</item>
+    </plurals>
+
+
+    <!-- Ukubika Isigameko Somuntu Siqu -->
+    <string name="personal_incident_back">Emuva</string>
+    <string name="personal_incident_icon_description">Bika isigameko</string>
+    <string name="personal_incident_title">Bika Isigameko Somuntu Siqu</string>
+    <string name="personal_incident_subtitle">Sisize sigcine umphakathi wethu uphephile ngokubika izehlakalo.</string>
+    <string name="personal_incident_type_description">Uhlobo lwesigameko</string>
+    <string name="personal_incident_description_label">Incazelo</string>
+    <string name="personal_incident_description_hint">Chaza okwenzekile...</string>
+    <string name="personal_incident_location_label">Indawo</string>
+    <string name="personal_incident_current_location">Indawo Yamanje</string>
+    <string name="personal_incident_datetime_label">Usuku nesikhathi</string>
+    <string name="personal_incident_datetime_hint">Kurekhodwa ngokuzenzakalelayo</string>
+    <string name="personal_incident_evidence_title">Engeza Ubufakazi</string>
+    <string name="personal_incident_evidence_subtitle">Akuphoqelekile — izithombe, amavidiyo noma amafayela angasekela umbiko wakho.</string>
+    <string name="personal_incident_add_photo">Engeza Isithombe</string>
+    <string name="personal_incident_add_video">Engeza Ividiyo</string>
+    <string name="personal_incident_add_file">Engeza Ifayela</string>
+    <string name="personal_incident_no_evidence">Abukho ubufakazi obukhethiwe</string>
+    <string name="personal_incident_submit">Thumela Umbiko   →</string>
+
+    <!-- Izinhlobo Zezehlakalo -->
+    <string name="personal_incident_type_select">Khetha uhlobo lwesigameko</string>
+    <string name="personal_incident_type_theft">Ukweba</string>
+    <string name="personal_incident_type_assault">Ukuhlaselwa</string>
+    <string name="personal_incident_type_harassment">Ukuhlukunyezwa</string>
+    <string name="personal_incident_type_accident">Ingozi</string>
+    <string name="personal_incident_type_suspicious">Umsebenzi Osolisayo</string>
+    <string name="personal_incident_type_property_damage">Ukulimala Kwempahla</string>
+    <string name="personal_incident_type_missing_person">Umuntu Olahlekile</string>
+    <string name="personal_incident_type_other">Okunye</string>
+
+    <!-- Ubufakazi -->
+    <string name="personal_incident_evidence_photo">Isithombe: %1$s</string>
+    <string name="personal_incident_evidence_video">Ividiyo: %1$s</string>
+    <string name="personal_incident_evidence_file">Ifayela: %1$s</string>
+    <string name="personal_incident_selected">Kukhethiwe</string>
+
+    <!-- Imilayezo Yendawo -->
+    <string name="personal_incident_location_services_off">Izinsiza zendawo zivaliwe</string>
+    <string name="personal_incident_enable_location">Sicela uvule izinsiza zendawo.</string>
+    <string name="personal_incident_location_unavailable">Indawo yamanje ayitholakali</string>
+    <string name="personal_incident_location_permission_denied">Imvume yendawo ayinikezwanga</string>
+    <string name="personal_incident_location_permission_required">Kudingeka imvume yendawo ukuze kurekhodwe indawo yesigameko.</string>
+
+    <!-- Ukuqinisekisa Nokulondoloza -->
+    <string name="personal_incident_login_required">Sicela ungene kuqala.</string>
+    <string name="personal_incident_select_type_error">Sicela ukhethe uhlobo lwesigameko.</string>
+    <string name="personal_incident_description_error">Sicela uchaze okwenzekile.</string>
+    <string name="personal_incident_valid_location_error">Sicela uthole indawo yesigameko efanele.</string>
+    <string name="personal_incident_coordinates_unavailable">Izixhumanisi ze-GPS azitholakali. Sicela uthole indawo yakho kuqala.</string>
+    <string name="personal_incident_saving">Kuyalondolozwa...</string>
+    <string name="personal_incident_saved_offline">Umbiko wesigameko ulondolozwe kule divayisi. Uzovumelaniswa uma i-inthanethi isitholakala.</string>
+    <string name="personal_incident_save_failed">Ayikwazanga ukulondoloza umbiko kule divayisi: %1$s</string>
+    <string name="personal_incident_unknown_error">Iphutha elingaziwa</string>
+    <string name="personal_incident_coordinates_display">I-latitude: %1$s\nI-longitude: %2$s</string>
+
+        <!-- ======================================= -->
+        <!-- IPHROFAYELA: ISIHLOKO NOKUBUYELELA      -->
+        <!-- ======================================= -->
+
+        <!-- Umbhalo wokubuyela emuva -->
+        <string name="personal_profile_back">Emuva</string>
+
+        <!-- Igama lohlelo -->
+        <string name="personal_profile_app_name">SafeZone</string>
+
+        <!-- Incazelo yesithonjana sephrofayela -->
+        <string name="personal_profile_avatar_description">Isithonjana sephrofayela</string>
+
+        <!-- Igama eliboniswa ngaphambi kokulayishwa kwedatha -->
+        <string name="personal_profile_default_name">Umsebenzisi we-SafeZone</string>
+
+        <!-- Incazelo yekhasi lephrofayela -->
+        <string name="personal_profile_subtitle">Phatha iphrofayela yakho nezilungiselelo ze-akhawunti.</string>
+
+
+        <!-- ======================================= -->
+        <!-- IPHROFAYELA: IMINININGWANE YE-AKHAUNTI  -->
+        <!-- ======================================= -->
+
+        <!-- Ilebula yekheli le-imeyili -->
+        <string name="personal_profile_email_label">I-imeyili</string>
+
+        <!-- Ilebula yenombolo yocingo -->
+        <string name="personal_profile_phone_label">Ucingo</string>
+
+        <!-- Ilebula yohlobo lwe-akhawunti -->
+        <string name="personal_profile_account_type_label">Uhlobo lwe-akhawunti</string>
+
+        <!-- Isetshenziswa uma imininingwane ingatholakali -->
+        <string name="personal_profile_not_available">Akutholakali</string>
+
+        <!-- Uhlobo lwe-akhawunti oluzenzakalelayo -->
+        <string name="personal_profile_default_account_type">Okomuntu siqu</string>
+
+
+        <!-- ======================================= -->
+        <!-- IPHROFAYELA: IZINKINOBHO ZOKUZULAZULA  -->
+        <!-- ======================================= -->
+
+        <!-- Inkinobho yokuhlela iphrofayela -->
+        <string name="personal_profile_edit">✎    Hlela iphrofayela    ›</string>
+
+        <!-- Inkinobho yoxhumana nabo abathembekile -->
+        <string name="personal_profile_trusted_contacts">👥    Oxhumana nabo abathembekile    ›</string>
+
+        <!-- Inkinobho yemibiko yomsebenzisi -->
+        <string name="personal_profile_my_reports">▤    Imibiko yami    ›</string>
+
+        <!-- Inkinobho yezilungiselelo -->
+        <string name="personal_profile_settings">⚙    Izilungiselelo    ›</string>
+
+        <!-- Inkinobho yokuphuma ku-akhawunti -->
+        <string name="personal_profile_logout">Phuma</string>
+
+
+        <!-- ======================================= -->
+        <!-- IPHROFAYELA: IMIYALEZO YOKWAZISA        -->
+        <!-- ======================================= -->
+
+        <!-- Iboniswa uma ukulayishwa kwephrofayela kwehluleka -->
+        <string name="personal_profile_load_failed">Ayikwazanga ukulayisha yonke imininingwane yephrofayela.</string>
+
+        <!-- Iboniswa uma isikrini singakwazi ukuvulwa -->
+        <string name="personal_profile_open_failed">Ayikwazanga ukuvula lesi sikrini.</string>
+
+        <!-- Umlayezo oboniswa ngemva kokuphuma -->
+        <string name="personal_profile_logged_out">Uphumile ku-akhawunti yakho.</string>
+
+
+        <!-- ============================================= -->
+        <!-- UKUHLELA IPHROFAYELA: ISIHLOKO NOLWAZI       -->
+        <!-- ============================================= -->
+
+        <!-- Incazelo yenkinobho yokubuyela emuva -->
+        <string name="edit_profile_back">Emuva</string>
+
+        <!-- Igama lohlelo -->
+        <string name="edit_profile_app_name">SafeZone</string>
+
+        <!-- Isihloko sesikrini -->
+        <string name="edit_profile_title">Hlela Iphrofayela</string>
+
+        <!-- Incazelo yesikrini -->
+        <string name="edit_profile_subtitle">Buyekeza imininingwane yakho siqu</string>
+
+
+        <!-- ============================================= -->
+        <!-- UKUHLELA IPHROFAYELA: AMALEBULA NAMACEBO      -->
+        <!-- ============================================= -->
+
+        <!-- Inkambu yegama eligcwele -->
+        <string name="edit_profile_full_name">Igama Eligcwele</string>
+        <string name="edit_profile_full_name_hint">Faka igama lakho eligcwele</string>
+
+        <!-- Inkambu ye-imeyili -->
+        <string name="edit_profile_email">Ikheli Le-imeyili</string>
+        <string name="edit_profile_email_hint">Faka i-imeyili yakho</string>
+
+        <!-- Inkambu yenombolo yocingo -->
+        <string name="edit_profile_phone">Inombolo Yocingo</string>
+        <string name="edit_profile_phone_hint">Faka inombolo yakho yocingo</string>
+
+
+        <!-- ============================================= -->
+        <!-- UKUHLELA IPHROFAYELA: IZINKINOBHO             -->
+        <!-- ============================================= -->
+
+        <!-- Inkinobho yokulondoloza -->
+        <string name="edit_profile_save_changes">Londoloza Izinguquko</string>
+
+        <!-- Iboniswa ngesikhathi kulondolozwa -->
+        <string name="edit_profile_saving">Iyalondoloza...</string>
+
+        <!-- Inkinobho yokukhansela -->
+        <string name="edit_profile_cancel">Khansela</string>
+
+
+        <!-- ============================================= -->
+        <!-- UKUHLELA IPHROFAYELA: UKUNGENA NOKULAYISHA    -->
+        <!-- ============================================= -->
+
+        <!-- Iboniswa uma isikhathi sokungena siphelile -->
+        <string name="edit_profile_session_expired">Isikhathi sakho sokungena siphelile. Sicela ungene futhi.</string>
+
+        <!-- Iboniswa uma ukulayisha iphrofayela kwehluleka.
+             %1$s ithathelwa indawo yimininingwane yephutha. -->
+        <string name="edit_profile_load_failed">Ayikwazanga ukulayisha iphrofayela yakho: %1$s</string>
+
+        <!-- Isetshenziswa uma imininingwane yephutha ingekho -->
+        <string name="edit_profile_unknown_error">Iphutha elingaziwa</string>
+
+
+        <!-- ============================================= -->
+        <!-- UKUHLELA IPHROFAYELA: UKUQINISEKISA          -->
+        <!-- ============================================= -->
+
+        <!-- Ukuqinisekisa igama eligcwele -->
+        <string name="edit_profile_name_required">Sicela ufake igama lakho eligcwele</string>
+
+        <!-- Ukuqinisekisa i-imeyili -->
+        <string name="edit_profile_email_required">Sicela ufake ikheli lakho le-imeyili</string>
+        <string name="edit_profile_email_invalid">Sicela ufake ikheli le-imeyili elivumelekile</string>
+
+        <!-- Ukuqinisekisa inombolo yocingo -->
+        <string name="edit_profile_phone_required">Sicela ufake inombolo yakho yocingo</string>
+        <string name="edit_profile_phone_invalid">Sicela ufake inombolo yocingo evumelekile</string>
+
+
+        <!-- ============================================= -->
+        <!-- UKUHLELA IPHROFAYELA: IMIPHUMELA YOKULONDOLOZA -->
+        <!-- ============================================= -->
+
+        <!-- Iboniswa uma iphrofayela igcinwe ngempumelelo -->
+        <string name="edit_profile_save_success">Iphrofayela ibuyekezwe ngempumelelo.</string>
+
+        <!-- Iboniswa uma ukulondoloza kwehluleka.
+             %1$s ithathelwa indawo yimininingwane yephutha. -->
+        <string name="edit_profile_save_failed">Kwehlulekile ukubuyekeza iphrofayela: %1$s</string>
+
+
+        <!-- Ukushintsha iphasiwedi: unhlokweni nokuqukethwe -->
+        <string name="change_password_back">‹</string>
+        <string name="change_password_back_description">Buyela emuva</string>
+        <string name="change_password_app_name">SafeZone</string>
+        <string name="change_password_logo_description">Ilogo ye-SafeZone</string>
+        <string name="change_password_title">Shintsha Iphasiwedi</string>
+        <string name="change_password_subtitle">Vikela i-akhawunti yakho ngephasiwedi eqinile.</string>
+        <string name="change_password_security_description">Ulwazi lokuphepha</string>
+        <string name="change_password_security_tip">Vikela i-akhawunti yakho. Ungalokothi wabelane ngephasiwedi yakho nanoma ubani.</string>
+
+        <!-- Amalebula nezinkomba zezinkambu -->
+        <string name="change_password_current_label">Iphasiwedi yamanje</string>
+        <string name="change_password_current_hint">Faka iphasiwedi yakho yamanje</string>
+        <string name="change_password_new_label">Iphasiwedi entsha</string>
+        <string name="change_password_new_hint">Faka iphasiwedi yakho entsha</string>
+        <string name="change_password_confirm_label">Qinisekisa iphasiwedi entsha</string>
+        <string name="change_password_confirm_hint">Faka iphasiwedi entsha futhi</string>
+
+        <!-- Izimfuneko zephasiwedi -->
+        <string name="change_password_requirements_title">Izimfuneko zephasiwedi</string>
+        <string name="change_password_requirements_list">• Sebenzisa okungenani izinhlamvu eziyisi-6.\n• Khetha iphasiwedi okunzima ukuyiqagela.\n• Qinisekisa ukuthi amaphasiwedi amasha ayafana.</string>
+
+        <!-- Imilayezo yokuqinisekisa nephutha -->
+        <string name="change_password_no_user">Ayikho i-akhawunti engenile etholakele.</string>
+        <string name="change_password_current_required">Sicela ufake iphasiwedi yakho yamanje.</string>
+        <string name="change_password_new_required">Sicela ufake iphasiwedi entsha.</string>
+        <string name="change_password_min_length">Iphasiwedi kufanele ibe nezinhlamvu okungenani eziyisi-6.</string>
+        <string name="change_password_confirm_required">Sicela uqinisekise iphasiwedi yakho entsha.</string>
+        <string name="change_password_mismatch">Amaphasiwedi awafani.</string>
+        <string name="change_password_same_as_current">Iphasiwedi entsha kufanele yehluke kweyamanje.</string>
+        <string name="change_password_email_missing">I-imeyili ye-akhawunti yakho ayitholakali.</string>
+        <string name="change_password_processing">KUSHINTSHWA IPHASIWEDI...</string>
+        <string name="change_password_button">SHINTSHA IPHASIWEDI</string>
+        <string name="change_password_success">Iphasiwedi ishintshwe ngempumelelo!</string>
+        <string name="change_password_unknown_error">Yehlulekile ukushintsha iphasiwedi.</string>
+        <string name="change_password_update_failed">Yehlulekile ukushintsha iphasiwedi: %1$s</string>
+        <string name="change_password_current_incorrect">Iphasiwedi yamanje ayilungile.</string>
+        <string name="change_password_back_to_settings">Buyela Kumasethingi</string>
+
+    <!-- Izintandokazi zezimo eziphuthumayo: unhlokweni nokuqukethwe -->
+    <string name="emergency_preferences_back">‹</string>
+    <string name="emergency_preferences_back_description">Emuva</string>
+    <string name="emergency_preferences_app_name">SafeZone</string>
+    <string name="emergency_preferences_logo_description">Ilogo ye-SafeZone</string>
+    <string name="emergency_preferences_title">Izintandokazi Zezimo Eziphuthumayo</string>
+    <string name="emergency_preferences_subtitle">Khetha ukuthi i-SafeZone kufanele yenzeni esimweni esiphuthumayo.</string>
+
+    <!-- Izinsizakalo eziphuthumayo -->
+    <string name="emergency_preferences_services">Izinsizakalo Eziphuthumayo</string>
+    <string name="emergency_preferences_services_description">Vumela ukufinyelela okusheshayo ezinsizakalweni eziphuthumayo.</string>
+
+    <!-- Ukwabelana ngendawo -->
+    <string name="emergency_preferences_location">Yabelana Ngendawo Esimweni Esiphuthumayo</string>
+    <string name="emergency_preferences_location_description">Vumela indawo yakho ukuthi yabelwane ngayo ukuze uthole usizo oluphuthumayo.</string>
+
+    <!-- Izaziso kubantu obathembayo -->
+    <string name="emergency_preferences_contacts">Izaziso Kubantu Obathembayo</string>
+    <string name="emergency_preferences_contacts_description">Yazisa abantu obathembayo lapho kucelwa usizo oluphuthumayo.</string>
+
+    <!-- Inombolo yezimo eziphuthumayo -->
+    <string name="emergency_preferences_number_label">Inombolo Yezinsizakalo Eziphuthumayo</string>
+    <string name="emergency_preferences_number_hint">Faka inombolo yezimo eziphuthumayo (isb. 112)</string>
+    <string name="emergency_preferences_number_required">Sicela ufake inombolo yezimo eziphuthumayo.</string>
+    <string name="emergency_preferences_number_invalid">Sicela ufake inombolo yezimo eziphuthumayo evumelekile.</string>
+    <string name="emergency_preferences_number_format">Sebenzisa izinombolo nezimpawu zocingo ezijwayelekile kuphela.</string>
+
+    <!-- Ukulondoloza nokuzulazula -->
+    <string name="emergency_preferences_save">Londoloza Izintandokazi</string>
+    <string name="emergency_preferences_saved">Izintandokazi zezimo eziphuthumayo zilondoloziwe.</string>
+    <string name="emergency_preferences_save_failed">Ayikwazanga ukulondoloza izintandokazi. Sicela uzame futhi.</string>
+    <string name="emergency_preferences_back_to_settings">Buyela Kumasethingi</string>
+
+    <!-- Isikrini sesicelo sosizo oluphuthumayo: isiZulu -->
+    <string name="emergency_request_back">Emuva</string>
+    <string name="emergency_request_icon_description">Kuceliwe usizo oluphuthumayo</string>
+    <string name="emergency_request_title">Kuceliwe Usizo Oluphuthumayo</string>
+    <string name="emergency_request_description">Isicelo sakho sosizo oluphuthumayo sirekhodiwe.</string>
+    <string name="emergency_request_type_icon_description">Isithonjana sohlobo losizo</string>
+    <string name="emergency_request_assistance_type_label">Uhlobo Losizo</string>
+    <string name="emergency_request_assistance_type_value">Uhlobo losizo: %1$s</string>
+    <string name="emergency_request_default_type">Usizo Oluphuthumayo</string>
+    <string name="emergency_request_status_icon_description">Isithonjana sesimo sesicelo</string>
+    <string name="emergency_request_status_label">Isimo Sesicelo</string>
+    <string name="emergency_request_location_icon_description">Isithonjana sendawo</string>
+    <string name="emergency_request_location_label">Indawo</string>
+    <string name="emergency_request_location_description">Yabelana ngendawo okuyo uma kungenzeka.</string>
+    <string name="emergency_request_call_button">Shayela Abosizo Oluphuthumayo</string>
+    <string name="emergency_request_share_location_button">Yabelana Ngendawo</string>
+    <string name="emergency_request_return_home_button">Buyela Ekhaya</string>
+
+    <string name="emergency_request_pending_sync">Ilinde Ukuvumelaniswa</string>
+    <string name="emergency_request_location_not_shared">Indawo ayabelwanga</string>
+    <string name="emergency_request_status_format">Isimo sokuvumelaniswa kwesicelo: %1$s\n%2$s</string>
+
+    <string name="emergency_request_location_permission_denied">Imvume yendawo inqatshiwe</string>
+    <string name="emergency_request_location_permission_required">Kudingeka imvume yendawo ukuze wabelane ngendawo okuyo.</string>
+    <string name="emergency_request_location_disabled">Ukwabelana ngendawo kuvaliwe kuzilungiselelo</string>
+    <string name="emergency_request_enable_location_first">Qala ngokuvumela ukwabelana ngendawo ephuthumayo kuzilungiselelo zakho.</string>
+    <string name="emergency_request_services_disabled">Izinsizakalo zezimo eziphuthumayo zivaliwe kuzilungiselelo zakho.</string>
+    <string name="emergency_request_set_emergency_number">Setha inombolo yezimo eziphuthumayo kuzilungiselelo zakho.</string>
+    <string name="emergency_request_dialler_error">Ayikwazanga ukuvula uhlelo lokudayela.</string>
+    <string name="emergency_request_requesting_permission">Kucelwa imvume yendawo</string>
+    <string name="emergency_request_location_services_off">Izinsizakalo zendawo zivaliwe</string>
+    <string name="emergency_request_turn_on_location">Vula izinsizakalo zendawo kuqala.</string>
+    <string name="emergency_request_enable_location_in_settings">Vumela izinsizakalo zendawo kokuthi Izilungiselelo.</string>
+    <string name="emergency_request_location_permission_required_status">Kudingeka imvume yendawo</string>
+    <string name="emergency_request_finding_location">Kufunwa indawo okuyo</string>
+    <string name="emergency_request_finding_location_toast">Kufunwa indawo okuyo...</string>
+    <string name="emergency_request_location_unavailable">Indawo ayitholakali</string>
+    <string name="emergency_request_location_try_again">Ayikwazanga ukuthola indawo okuyo. Zama futhi.</string>
+    <string name="emergency_request_share_message">🚨 Indawo Yesimo Esiphuthumayo ye-SafeZone\n\nNgidinga usizo oluphuthumayo.\n\nIndawo engikuyo njengamanje:\n%1$s\n\nSicela usebenzise le ndawo ukuze ungithole.</string>
+    <string name="emergency_request_share_chooser_title">Yabelana Ngendawo Yesimo Esiphuthumayo</string>
+    <string name="emergency_request_location_ready_to_share">Indawo isilungele ukwabelwana ngayo; ukuthunyelwa akuqinisekisiwe</string>
+    <string name="emergency_request_sharing_menu_error">Ayikwazanga ukuvula imenyu yokwabelana</string>
+    <string name="emergency_request_sharing_menu_error_toast">Ayikwazanga ukuvula imenyu yokwabelana.</string>
+
+    <!-- Izaziso Zokuphepha Komuntu Siqu: isiZulu -->
+
+    <string name="personal_alerts_back">Emuva</string>
+    <string name="personal_alerts_header">Izaziso Zokuphepha</string>
+    <string name="personal_alerts_notification_settings">Izilungiselelo Zezaziso</string>
+    <string name="personal_alerts_title">Izaziso Zokuphepha Komuntu Siqu</string>
+    <string name="personal_alerts_description">Hlala unolwazi olubalulekile lokuphepha endaweni oyikhethile.</string>
+    <string name="personal_alerts_location_label">Indawo</string>
+
+    <string name="personal_alerts_filter_all">Konke</string>
+    <string name="personal_alerts_filter_emergency">Isimo Esiphuthumayo</string>
+    <string name="personal_alerts_filter_safety">Ezokuphepha</string>
+    <string name="personal_alerts_filter_general">Okuvamile</string>
+    <string name="personal_alerts_filter_events">Imicimbi</string>
+
+    <string name="personal_alerts_enable_notifications">Vumela Izaziso</string>
+
+    <string name="personal_alerts_nav_home">⌂\nIkhaya</string>
+    <string name="personal_alerts_nav_map">⌖\nImephu</string>
+    <string name="personal_alerts_nav_reports">▤\nImibiko</string>
+    <string name="personal_alerts_nav_alerts">🔔\nIzaziso</string>
+    <string name="personal_alerts_nav_profile">●\nIphrofayela</string>
+
+    <string name="personal_alerts_location_selected">Kukhethwe i-%1$s.</string>
+    <string name="personal_alerts_empty_all">Azikho iziqondiso zokuphepha ezigciniwe ezitholakalayo e-%1$s.</string>
+    <string name="personal_alerts_empty_category">Azikho iziqondiso ze-%1$s ezitholakalayo e-%2$s.</string>
+    <string name="personal_alerts_card_location">Indawo: %1$s</string>
+    <string name="personal_alerts_datetime_unavailable">Usuku nesikhathi akutholakali</string>
+    <string name="personal_alerts_date_time_format">Usuku: %1$s  •  Isikhathi: %2$s</string>
+
+    <string name="personal_alerts_loading">Kulayishwa iziqondiso zokuphepha ezigciniwe...</string>
+    <string name="personal_alerts_server_error">Kuboniswa iziqondiso ezigciniwe. Iseva ibuyise iphutha elithi %1$d.</string>
+    <string name="personal_alerts_offline_notice">Imodi engaxhunyiwe ku-inthanethi: kuboniswa iziqondiso zokuphepha ezigciniwe. Izaziso zakamuva zingase zingabi zesikhathi samanje.</string>
+    <string name="personal_alerts_notification_settings_unavailable">Izilungiselelo zezaziso azitholakali.</string>
+
+    <!-- Campus Login: screen labels -->
+    <string name="campus_login_header">SafeZone</string>
+    <string name="campus_login_logo_description">Uphawu lwe-SafeZone</string>
+    <string name="campus_login_title">Ukungena Kokuphepha Kwasekhampasi</string>
+    <string name="campus_login_subtitle">Ngena ukuze usebenzise izinsizakalo zokuphepha zekhampasi yakho.</string>
+    <string name="campus_login_email_hint">Ikheli le-imeyili lomfundi</string>
+    <string name="campus_login_password_hint">Iphasiwedi</string>
+    <string name="campus_login_remember_me">Ngikhumbule</string>
+    <string name="campus_login_forgot_password">Ukhohlwe iphasiwedi?</string>
+    <string name="campus_login_button">NGENA</string>
+    <string name="campus_login_or">NOMA</string>
+    <string name="campus_login_google_button">Qhubeka nge-Google</string>
+    <string name="campus_login_no_account">Awunayo i-akhawunti yekhampasi?</string>
+    <string name="campus_login_register">Bhalisa</string>
+
+    <!-- Campus Login: loading states -->
+    <string name="campus_login_signing_in">Kuyangena...</string>
+    <string name="campus_login_google_wait">Sicela ulinde...</string>
+
+    <!-- Campus Login: input validation -->
+    <string name="campus_login_error_email_required">Faka i-imeyili yakho yomfundi.</string>
+    <string name="campus_login_error_email_invalid">Faka ikheli le-imeyili elivumelekile.</string>
+    <string name="campus_login_error_password_required">Faka iphasiwedi yakho.</string>
+
+    <!-- Campus Login: internet and Google sign-in -->
+    <string name="campus_login_internet_reset">Kudingeka i-inthanethi ukuze usethe kabusha iphasiwedi yakho.</string>
+    <string name="campus_login_google_internet">Xhuma ku-inthanethi ukuze ungene nge-Google.</string>
+    <string name="campus_login_google_invalid">Sicela ukhethe i-akhawunti ye-Google evumelekile.</string>
+    <string name="campus_login_google_cancelled">Ukungena nge-Google kukhanseliwe noma akukwazanga ukuqala. Zama futhi.</string>
+    <string name="campus_login_google_failed">Ukungena nge-Google kuhlulekile. Zama futhi.</string>
+    <string name="campus_login_google_verify">Ayikwazanga ukuqinisekisa i-akhawunti yakho ye-Google.</string>
+    <string name="campus_login_google_auth_failed">Ukuqinisekiswa nge-Google kuhlulekile. Hlola i-akhawunti yakho bese uzama futhi.</string>
+
+    <!-- Campus Login: campus profile verification -->
+    <string name="campus_login_error_account_verify">Ayikwazanga ukuqinisekisa i-akhawunti yakho.</string>
+    <string name="campus_login_profile_missing">Ayikho iphrofayela ye-SafeZone yekhampasi etholakele. Sicela ubhalise kuqala.</string>
+    <string name="campus_login_wrong_account_type">Le akhawunti ayibhalisiwe njenge-akhawunti yekhampasi.</string>
+    <string name="campus_login_default_name">Umsebenzisi Wekhampasi</string>
+    <string name="campus_login_online_offline_setup_failed">Ungene ngempumelelo ku-inthanethi, kodwa ukusetha ukungena ngaphandle kwe-inthanethi kuhlulekile. Hlola i-Logcat.</string>
+    <string name="campus_login_success_offline_ready">Ungene ngempumelelo. Ukungena ngaphandle kwe-inthanethi sekulungile.</string>
+    <string name="campus_login_success">Ungene ngempumelelo ku-SafeZone yekhampasi!</string>
+    <string name="campus_login_profile_connection_lost">Uxhumano lunqamukile ngaphambi kokuqinisekiswa kwephrofayela yakho. Zama futhi uma usuxhumekile ku-inthanethi.</string>
+    <string name="campus_login_profile_verify_failed">Ayikwazanga ukuqinisekisa iphrofayela yakho. Zama futhi.</string>
+
+    <!-- Campus Login: offline access -->
+    <string name="campus_login_offline_not_prepared">Ukungena ngaphandle kwe-inthanethi kuhlulekile. Qala ngokungena ngempumelelo ku-inthanethi kule divayisi bese uqinisekisa ukuthi ukulungiselela ukungena ngaphandle kwe-inthanethi kuyaphumelela.</string>
+    <string name="campus_login_offline_wrong_type">Lokhu kungena akubhalisiwe njenge-akhawunti yekhampasi.</string>
+    <string name="campus_login_offline_success">Ukufinyelela kwekhampasi ngaphandle kwe-inthanethi kuvuliwe. Ezinye izinsizakalo zingase zingatholakali.</string>
+
+    <!-- Campus Login: errors -->
+    <string name="campus_login_error_incorrect_credentials">I-imeyili noma iphasiwedi ayilungile.</string>
+    <string name="campus_login_error_user_not_found">Ayikho i-akhawunti etholakele enale imeyili.</string>
+    <string name="campus_login_error_too_many_attempts">Uzamile ukungena izikhathi eziningi kakhulu. Zama futhi kamuva.</string>
+    <string name="campus_login_error_network">Kunenkinga yenethiwekhi. Hlola uxhumano lwakho lwe-inthanethi.</string>
+    <string name="campus_login_error_generic">Ukungena kuhlulekile. Hlola i-imeyili nephasiwedi yakho.</string>
+    <string name="campus_login_open_home_failed">Ayikwazanga ukuvula ikhasi lasekhaya lekhampasi: %1$s</string>
+
+
+    <!-- Campus Home: headings and welcome -->
+    <string name="campus_home_header">SafeZone</string>
+    <string name="campus_home_title">Ukuphepha Kwekhampasi</string>
+    <string name="campus_home_welcome">Siyakwamukela, %1$s 👋</string>
+    <string name="campus_home_welcome_default">Siyakwamukela, mfundi 👋</string>
+    <string name="campus_home_tagline">Ukuphepha kwakho kubalulekile. Hlala unolwazi futhi uphephile.</string>
+    <string name="campus_home_default_name">Umsebenzisi Wekhampasi</string>
+    <string name="campus_home_default_learner">Umfundi</string>
+
+    <!-- Campus connection -->
+    <string name="campus_home_default_campus">Ikhampasi</string>
+    <string name="campus_home_campus_name_format">Ikhampasi yase-%1$s</string>
+    <string name="campus_home_campus_icon">Isakhiwo sekhampasi</string>
+    <string name="campus_home_connection_title">Uxhumano Lokuphepha Lwekhampasi</string>
+    <string name="campus_home_status_available">Isimo: Iyatholakala</string>
+    <string name="campus_home_status_offline">Isimo: Ayikho i-inthanethi</string>
+    <string name="campus_home_status_profile_outdated">Isimo: Ayikho i-inthanethi — iphrofayela ingase ingabi sesikhathini</string>
+    <string name="campus_home_hours_description">Amahora ekhampasi</string>
+    <string name="campus_home_hours">UMsombuluko – uLwesihlanu | 07:00 – 18:00</string>
+
+    <!-- Campus Home: action cards -->
+    <string name="campus_home_report_incident">Bika Isigameko Sekhampasi\nBika inkinga yokuphepha ekhampasini.</string>
+    <string name="campus_home_emergency">Isimo Esiphuthumayo Sekhampasi\nThola usizo olusheshayo ekhampasini.</string>
+    <string name="campus_home_safety_map">Imephu Yokuphepha Yekhampasi\nBuka izinsiza nezindawo zokuphepha.</string>
+    <string name="campus_home_alerts">Izaziso Zekhampasi\nHlala unolwazi ngezaziso ezibalulekile.</string>
+    <string name="campus_home_my_reports">Imibiko Yami Yekhampasi\nBuka futhi uphathe izigameko ozibikile.</string>
+    <string name="campus_home_logout">PHUMA</string>
+
+    <!-- Campus Home: bottom navigation -->
+    <string name="campus_home_nav_home">Ikhaya</string>
+    <string name="campus_home_nav_map">Imephu</string>
+    <string name="campus_home_nav_reports">Imibiko</string>
+    <string name="campus_home_nav_alerts">Izaziso</string>
+    <string name="campus_home_nav_profile">Iphrofayela</string>
+
+    <!-- Campus Home: messages -->
+    <string name="campus_home_login_required">Sicela ungene ukuze uqhubeke.</string>
+    <string name="campus_home_logout_success">Uphumile ku-akhawunti yakho.</string>
+    <string name="campus_home_feature_unavailable">%1$s ayitholakali okwamanje.</string>
+    <string name="campus_home_feature_incident">Ukubika izigameko zekhampasi</string>
+    <string name="campus_home_feature_emergency">Izinsizakalo zezimo eziphuthumayo</string>
+    <string name="campus_home_feature_map">Imephu yokuphepha yekhampasi</string>
+    <string name="campus_home_feature_alerts">Izaziso zekhampasi</string>
+    <string name="campus_home_feature_reports">Imibiko yekhampasi</string>
+    <string name="campus_home_feature_profile">Iphrofayela yekhampasi</string>
+
+    <string name="campus_alerts_back">Emuva</string>
+    <string name="campus_alerts_header">SafeZone</string>
+    <string name="campus_alerts_notifications">Izaziso</string>
+    <string name="campus_alerts_title">Izaziso Zasekhampasini</string>
+    <string name="campus_alerts_tagline">Yiba nolwazi. Hlala uphephile.</string>
+    <string name="campus_alerts_description">Thola izibuyekezo ezibalulekile, izaziso zokuphepha kanye nolwazi lwezimo eziphuthumayo zasekhampasini yakho.</string>
+    <string name="campus_alerts_campus">Ikhampasi</string>
+    <string name="campus_alerts_select_campus">Khetha ikhampasi</string>
+    <string name="campus_alerts_default_campus">Ikhampasi yasePitoli</string>
+    <string name="campus_alerts_filter_all">Konke</string>
+    <string name="campus_alerts_filter_emergency">Isimo Esiphuthumayo</string>
+    <string name="campus_alerts_filter_safety">Ukuphepha</string>
+    <string name="campus_alerts_filter_general">Okuvamile</string>
+    <string name="campus_alerts_filter_events">Imicimbi</string>
+    <string name="campus_alerts_enable_notifications">Vumela Izaziso</string>
+    <string name="campus_alerts_notification_description">Ungaphuthelwa izibuyekezo ezibalulekile zasekhampasini.</string>
+    <string name="campus_alerts_turn_on">Vula</string>
+    <string name="campus_alerts_nav_home">Ikhaya</string>
+    <string name="campus_alerts_nav_map">Imephu</string>
+    <string name="campus_alerts_nav_reports">Imibiko</string>
+    <string name="campus_alerts_nav_alerts">Izaziso</string>
+    <string name="campus_alerts_nav_profile">Iphrofayela</string>
+    <string name="campus_alerts_loading">Kulayishwa ulwazi olugciniwe lwasekhampasini...</string>
+    <string name="campus_alerts_empty_all">Azikho izaziso zokuphepha ezitholakalayo njengamanje eKhampasini yase-%1$s.</string>
+    <string name="campus_alerts_empty_filter">Azikho izaziso ze-%1$s ezitholakalayo njengamanje eKhampasini yase-%2$s.</string>
+    <string name="campus_alerts_location">Indawo: %1$s</string>
+    <string name="campus_alerts_campus_label">Ikhampasi: %1$s</string>
+    <string name="campus_alerts_datetime_unavailable">Usuku nesikhathi akutholakali</string>
+    <string name="campus_alerts_datetime">Usuku: %1$s • Isikhathi: %2$s</string>
+    <string name="campus_alerts_local_guidance_error">Ulwazi lokuphepha olugciniwe alukwazanga ukulayishwa.</string>
+    <string name="campus_alerts_no_live_alerts">Azikho izaziso ezibukhoma ezitholiwe. Ulwazi olugciniwe lusengatholakala.</string>
+    <string name="campus_alerts_refresh_error">Izaziso ezibukhoma azikwazanga ukuvuselelwa. Kuboniswa ulwazi lwasekhampasini olugciniwe uma lukhona.</string>
+    <string name="campus_alerts_offline_notice">Imodi yokungaxhunyiwe ku-inthanethi: kuboniswa ulwazi olugciniwe lwasekhampasini. Izaziso eziphuthumayo ezibukhoma zingase zingabi ezakamuva.</string>
+    <string name="campus_alerts_notification_settings_error">Izilungiselelo zezaziso azitholakali.</string>
+    <string name="campus_alerts_campus_selected">Ikhampasi yase-%1$s ikhethiwe.</string>
+    <string name="campus_alerts_map_unavailable">Imephu yekhampasi ayitholakali.</string>
+    <string name="campus_alerts_reports_unavailable">Imibiko yekhampasi ayitholakali.</string>
+    <string name="campus_alerts_profile_unavailable">Iphrofayela yekhampasi ayitholakali.</string>
+    <string name="campus_alerts_new_alert_title">Isaziso Esisha Sokuphepha Sasekhampasini</string>
+    <string name="campus_alerts_new_alert_message">Kuthunyelwe isaziso esisha eKhampasini yase-%1$s.</string>
+    <string name="campus_alerts_notification_channel">Izaziso Zokuphepha Zasekhampasini</string>
+    <string name="campus_alerts_notification_channel_description">Izaziso zokuphepha zesikhathi sangempela zekhampasi ekhethiwe</string>
+
+    <!-- Umbiko Wesigameko Sasekhampasini: isiZulu -->
+    <string name="cir_app_name">SafeZone</string>
+    <string name="cir_back">Buyela emuva</string>
+    <string name="cir_title">Bika Isigameko Sasekhampasini</string>
+    <string name="cir_subtitle">Sisize sigcine ikhampasi yethu iphephile. Nikeza imininingwane eminingi ngangokunokwenzeka.</string>
+
+    <string name="cir_incident_type_required">Uhlobo lwesigameko *</string>
+    <string name="cir_campus_required">Ikhampasi *</string>
+    <string name="cir_location_required">Indawo *</string>
+    <string name="cir_description_required">Incazelo *</string>
+
+    <string name="cir_incident_type">Uhlobo lwesigameko</string>
+    <string name="cir_campus">Ikhampasi</string>
+    <string name="cir_location">Indawo</string>
+    <string name="cir_description">Incazelo</string>
+    <string name="cir_location_hint">Faka indawo okuyo noma uyikhethe kumephu</string>
+    <string name="cir_use_current_location">Sebenzisa indawo okuyo manje</string>
+    <string name="cir_description_hint">Chaza okwenzekile...</string>
+    <string name="cir_initial_character_count">0/500</string>
+    <string name="cir_character_count">%1$d/500</string>
+
+    <string name="cir_evidence_title">Ubufakazi (Ongakukhetha)</string>
+    <string name="cir_evidence_description">Faka izithombe, amavidiyo, okuqoshiwe komsindo noma amafayela ukuze usekele umbiko wakho.</string>
+    <string name="cir_photo">Isithombe</string>
+    <string name="cir_video">Ividiyo</string>
+    <string name="cir_audio">Umsindo</string>
+    <string name="cir_file">Ifayela</string>
+    <string name="cir_submit_report">Thumela Umbiko Wasekhampasini</string>
+
+    <string name="cir_nav_home">Ikhaya</string>
+    <string name="cir_nav_map">Imephu</string>
+    <string name="cir_nav_reports">Imibiko</string>
+    <string name="cir_nav_alerts">Izexwayiso</string>
+    <string name="cir_nav_profile">Iphrofayela</string>
+
+    <string name="cir_location_permission_required">Imvume yendawo iyadingeka ukuze usebenzise indawo okuyo manje.</string>
+    <string name="cir_photo_saved">Isithombe silondolozwe ngempumelelo.</string>
+    <string name="cir_video_saved">Ividiyo ilondolozwe ngempumelelo.</string>
+    <string name="cir_audio_saved">Umsindo ulondolozwe ngempumelelo.</string>
+    <string name="cir_file_saved">Ifayela lilondolozwe ngempumelelo.</string>
+    <string name="cir_evidence_save_failed">Yehlulekile ukulondoloza ubufakazi obukhethiwe.</string>
+    <string name="cir_enable_location_services">Sicela uvule izinsiza zendawo.</string>
+    <string name="cir_getting_location">Kutholwa indawo okuyo manje...</string>
+    <string name="cir_location_failed">Yehlulekile ukuthola indawo okuyo.</string>
+
+    <string name="cir_login_required">Sicela ungene ngemvume ukuze uthumele umbiko wasekhampasini.</string>
+    <string name="cir_select_incident_type">Sicela ukhethe uhlobo lwesigameko.</string>
+    <string name="cir_select_campus">Sicela ukhethe ikhampasi.</string>
+    <string name="cir_enter_location">Sicela ufake noma ukhethe indawo yesigameko.</string>
+    <string name="cir_enter_description">Sicela uchaze okwenzekile.</string>
+    <string name="cir_description_too_short">Sicela unikeze imininingwane eyengeziwe ngesigameko.</string>
+    <string name="cir_description_too_long">Incazelo ayikwazi ukudlula izinhlamvu ezingu-500.</string>
+    <string name="cir_saving_report">Kulondolozwa umbiko...</string>
+    <string name="cir_synchronising">Kuvumelaniswa...</string>
+    <string name="cir_saved_offline">Umbiko ulondolozwe ngaphandle kwe-inthanethi. Ulindele ukuvumelaniswa.</string>
+    <string name="cir_local_save_failed">Yehlulekile ukulondoloza umbiko kudivayisi: %1$s</string>
+    <string name="cir_submission_success">Umbiko wasekhampasini uthunyelwe ngempumelelo.</string>
+    <string name="cir_sync_pending">Umbiko ulondolozwe kule divayisi. Ukuvumelaniswa kusalindile.</string>
+
+    <string name="cir_navigation_map">Ukuya kumephu akukaxhunywa okwamanje.</string>
+    <string name="cir_navigation_reports">Ukuya emibikweni akukaxhunywa okwamanje.</string>
+    <string name="cir_navigation_alerts">Ukuya ezexwayisweni akukaxhunywa okwamanje.</string>
+    <string name="cir_navigation_profile">Ukuya kuphrofayela akukaxhunywa okwamanje.</string>
+
+    <string-array name="cir_incident_types">
+        <item>Khetha uhlobo lwesigameko</item>
+        <item>Isimo Esiphuthumayo Sezempilo</item>
+        <item>Ukuhlaselwa</item>
+        <item>Ukuhlukumezwa</item>
+        <item>Ukweba</item>
+        <item>Umlilo</item>
+        <item>Ingozi</item>
+        <item>Umsebenzi Osolisayo</item>
+        <item>Indawo Engaphephile</item>
+        <item>Okunye</item>
+    </string-array>
+
+    <string-array name="cir_campuses">
+        <item>Khetha ikhampasi</item>
+        <item>Ikhampasi yasePitoli</item>
+        <item>Ikhampasi yaseGoli</item>
+        <item>Ikhampasi yasePolokwane</item>
+        <item>Ikhampasi yaseThekwini</item>
+        <item>Ikhampasi yaseBloemfontein</item>
+    </string-array>
+
+    <!-- Izilungiselelo Zekhempasi: isiZulu -->
+
+    <string name="campus_settings_app_name">SafeZone</string>
+    <string name="campus_settings_back">‹</string>
+    <string name="campus_settings_title">Izilungiselelo Zekhempasi</string>
+    <string name="campus_settings_subtitle">Phatha i-akhawunti yakho nezilungiselelo zokuphepha.</string>
+
+    <!-- Isigaba se-akhawunti -->
+    <string name="campus_settings_account">I-akhawunti</string>
+    <string name="campus_settings_edit_profile">Hlela Iphrofayela</string>
+    <string name="campus_settings_change_password">Shintsha Iphasiwedi</string>
+    <string name="campus_settings_language">Ulimi</string>
+    <string name="campus_settings_language_english">isiNgisi</string>
+    <string name="campus_settings_logout">Phuma</string>
+
+    <!-- Isigaba sokuphepha kwekhempasi -->
+    <string name="campus_settings_campus_safety">Ukuphepha Kwekhempasi</string>
+    <string name="campus_settings_campus_alerts">Izexwayiso Zekhempasi</string>
+    <string name="campus_settings_emergency_preferences">Izilungiselelo Zezimo Eziphuthumayo</string>
+    <string name="campus_settings_location_sharing">Ukwabelana Ngendawo</string>
+
+    <!-- Isigaba sosizo -->
+    <string name="campus_settings_support">Usizo</string>
+    <string name="campus_settings_help_support">Usizo Nokwesekwa</string>
+    <string name="campus_settings_about_safezone">Mayelana ne-SafeZone</string>
+
+    <!-- Ukuzulazula ngezansi -->
+    <string name="campus_settings_home">Ekhaya</string>
+    <string name="campus_settings_map">Imephu</string>
+    <string name="campus_settings_reports">Imibiko</string>
+    <string name="campus_settings_alerts">Izexwayiso</string>
+    <string name="campus_settings_profile">Iphrofayela</string>
+
+    <!-- Iwindi lokukhetha ulimi -->
+    <string name="campus_settings_choose_language">Khetha Ulimi</string>
+    <string name="campus_settings_cancel">Khansela</string>
+    <string name="campus_settings_language_saved">Ulimi lulondolozwe ngempumelelo.</string>
+    <string name="campus_settings_open">Vula</string>
+
+    <!-- Imilayezo yamaphutha nesimo -->
+    <string name="campus_settings_edit_profile_unavailable">Ayikwazi ukuvula ukuhlela iphrofayela.</string>
+    <string name="campus_settings_change_password_unavailable">Ayikwazi ukuvula ukushintsha iphasiwedi.</string>
+    <string name="campus_settings_alerts_unavailable">Ayikwazi ukuvula izexwayiso zekhempasi.</string>
+    <string name="campus_settings_emergency_unavailable">Ayikwazi ukuvula izilungiselelo zezimo eziphuthumayo.</string>
+    <string name="campus_settings_location_unavailable">Ayikwazi ukuvula ukwabelana ngendawo.</string>
+    <string name="campus_settings_help_unavailable">Ayikwazi ukuvula usizo nokwesekwa.</string>
+    <string name="campus_settings_about_unavailable">Ayikwazi ukuvula ulwazi nge-SafeZone.</string>
+    <string name="campus_settings_reports_unavailable">Ayikwazi ukuvula imibiko.</string>
+    <string name="campus_settings_profile_unavailable">Ayikwazi ukuvula iphrofayela.</string>
+    <string name="campus_settings_map_unavailable">Imephu ayitholakali kule divayisi.</string>
+    <string name="campus_settings_logout_success">Uphumile ku-akhawunti yakho.</string>
+
+    <!-- Iphrofayela Yekhempasi: isiZulu -->
+
+    <string name="campus_profile_app_name">SafeZone</string>
+    <string name="campus_profile_back">‹</string>
+    <string name="campus_profile_back_description">Buyela emuva</string>
+    <string name="campus_profile_default_name">Umfundi</string>
+    <string name="campus_profile_student_details_default">Umfundi • Ikhempasi</string>
+    <string name="campus_profile_student_details">Umfundi • %1$s — %2$s</string>
+
+    <!-- Ulwazi lwephrofayela -->
+    <string name="campus_profile_photo_description">Isithombe sephrofayela</string>
+    <string name="campus_profile_change_photo">Shintsha isithombe sephrofayela</string>
+    <string name="campus_profile_email_label">I-imeyili</string>
+    <string name="campus_profile_phone_label">Ucingo</string>
+    <string name="campus_profile_institution_label">Isikhungo</string>
+    <string name="campus_profile_campus_label">Ikhempasi</string>
+    <string name="campus_profile_no_email">Ayikho i-imeyili enikeziwe</string>
+    <string name="campus_profile_phone_missing">Inombolo yocingo ayinikezwanga</string>
+    <string name="campus_profile_institution_missing">Isikhungo asicacisiwe</string>
+    <string name="campus_profile_campus_missing">Ikhempasi ayicacisiwe</string>
+
+    <!-- Izinketho zephrofayela -->
+    <string name="campus_profile_edit">Hlela Iphrofayela</string>
+    <string name="campus_profile_trusted_contacts">Abantu Engibathembayo</string>
+    <string name="campus_profile_my_reports">Imibiko Yami</string>
+    <string name="campus_profile_settings">Izilungiselelo</string>
+    <string name="campus_profile_logout">Phuma</string>
+    <string name="campus_profile_open">Vula</string>
+
+    <!-- Ukuzulazula -->
+    <string name="campus_profile_home">Ekhaya</string>
+    <string name="campus_profile_map">Imephu</string>
+    <string name="campus_profile_alerts">Izexwayiso</string>
+    <string name="campus_profile_profile">Iphrofayela</string>
+
+    <!-- Imilayezo yesimo namaphutha -->
+    <string name="campus_profile_not_found">Ulwazi lwephrofayela yekhempasi alutholakalanga.</string>
+    <string name="campus_profile_load_failed">Ayikwazanga ukulayisha iphrofayela yekhempasi.</string>
+    <string name="campus_profile_photo_coming_soon">Ukukhetha isithombe sephrofayela kuzongezwa lapha.</string>
+    <string name="campus_profile_edit_unavailable">Ukuhlela iphrofayela akutholakali.</string>
+    <string name="campus_profile_trusted_contacts_unavailable">Abantu obathembayo abatholakali.</string>
+    <string name="campus_profile_settings_unavailable">Izilungiselelo azitholakali.</string>
+    <string name="campus_profile_map_unavailable">Imephu yokuphepha yekhempasi ayitholakali.</string>
+    <string name="campus_profile_reports_unavailable">Imibiko ayitholakali.</string>
+    <string name="campus_profile_alerts_unavailable">Izexwayiso zekhempasi azitholakali.</string>
+    <string name="campus_profile_current_profile">Ubuka iphrofayela yakho.</string>
+    <string name="campus_profile_logout_success">Uphumile ku-akhawunti yakho.</string>
+
+
+    <!-- Imephu Yokuphepha Yekhampasi: isiZulu -->
+
+    <string name="campus_map_default_campus">Ikhampasi</string>
+    <string name="campus_map_select_campus">Khetha Ikhampasi</string>
+    <string name="campus_map_location_permission_denied">Imvume yendawo yenqatshiwe. Yivumele kokuthi Izilungiselelo ukuze usebenzise indawo yakho.</string>
+    <string name="campus_map_building_selected">Kukhethiwe: %1$s</string>
+    <string name="campus_map_load_campus_failed">Ayikwazanga ukulayisha ulwazi lwekhampasi.</string>
+    <string name="campus_map_zoom_level">Ukusondeza imephu: %1$d%%</string>
+    <string name="campus_map_orientation_reset">Ukuqondiswa kwemephu kubuyiselwe esimweni sokuqala.</string>
+    <string name="campus_map_enter_location">Faka igama lesakhiwo noma lendawo ozoyicinga.</string>
+    <string name="campus_map_location_found">Isakhiwo sitholakele: %1$s</string>
+    <string name="campus_map_location_not_on_illustration">I-%1$s ayiboniswa kule mephu. Zama ukuthola izikhombisi-ndlela kwenye imephu.</string>
+    <string name="campus_map_campus_selected">Ikhampasi ekhethiwe: %1$s</string>
+    <string name="campus_map_no_maps_app">Alukho uhlelo lwamamephu oluhambisanayo olutholakele.</string>
+    <string name="campus_map_open_home_failed">Ayikwazanga ukuvula ikhasi lasekhaya lekhampasi.</string>
+    <string name="campus_map_open_reports_failed">Ayikwazanga ukuvula imibiko yekhampasi.</string>
+    <string name="campus_map_open_alerts_failed">Ayikwazanga ukuvula izexwayiso zekhampasi.</string>
+    <string name="campus_map_open_profile_failed">Ayikwazanga ukuvula iphrofayela yekhampasi.</string>
+    <string name="campus_map_cancel">Khansela</string>
+
+
+    <!-- Amalebula Emephu Yokuphepha Yekhampasi: isiZulu -->
+
+    <string name="campus_map_back">Emuva</string>
+    <string name="campus_map_app_title">SafeZone</string>
+    <string name="campus_map_notifications">Izaziso</string>
+    <string name="campus_map_location">Indawo yekhampasi</string>
+    <string name="campus_map_title">Imephu Yokuphepha Yekhampasi</string>
+    <string name="campus_map_subtitle">Hlola ikhampasi yakho futhi uthole indlela ngokuphepha.</string>
+    <string name="campus_map_campus">Ikhampasi</string>
+    <string name="campus_map_search">Sesha</string>
+    <string name="campus_map_search_hint">Sesha isakhiwo noma indawo...</string>
+    <string name="campus_map_library">Umtapo Wezincwadi</string>
+    <string name="campus_map_student_centre">Isikhungo\nSabafundi</string>
+    <string name="campus_map_lecture_halls">Amahholo\nEzifundo</string>
+    <string name="campus_map_admin_block">Ihhovisi\nLokuphatha</string>
+    <string name="campus_map_main_entrance">Isango\nElikhulu</string>
+    <string name="campus_map_illustrated_location">Inkomba yendawo ebonisiwe; akuyona indawo yakho ye-GPS ebukhoma</string>
+    <string name="campus_map_compass">Buyisela imephu esimweni sayo sokuqala</string>
+    <string name="campus_map_zoom_in">Sondeza</string>
+    <string name="campus_map_zoom_out">Hlehlisa</string>
+    <string name="campus_map_my_location">Bonisa indawo yami kuhlelo lwamamephu</string>
+    <string name="campus_map_information">Ulwazi</string>
+    <string name="campus_map_explore_title">Hlola Ikhampasi Yakho</string>
+    <string name="campus_map_explore_description">Thola izakhiwo, izindlela nezindawo ezibalulekile zekhampasi.</string>
+    <string name="campus_map_get_directions">Thola\nIzikhombisi-ndlela</string>
+    <string name="campus_map_home">Ikhaya</string>
+    <string name="campus_map_nav_map">Imephu</string>
+    <string name="campus_map_reports">Imibiko</string>
+    <string name="campus_map_alerts">Izexwayiso</string>
+    <string name="campus_map_profile">Iphrofayela</string>
+
+    <!-- Imibiko Yekhampasi: isiZulu -->
+
+    <string name="campus_reports_back">Emuva</string>
+    <string name="campus_reports_title">Imibiko Yekhampasi</string>
+    <string name="campus_reports_refresh">Vuselela imibiko</string>
+    <string name="campus_reports_heading">Imibiko Yami Yezehlakalo</string>
+    <string name="campus_reports_description">Buka izehlakalo ozibike ekhampasini.</string>
+    <string name="campus_reports_count_zero">Imibiko engu-0</string>
+    <string name="campus_reports_count">Imibiko engu-%1$d</string>
+    <string name="campus_reports_empty">Awukathumeli mibiko yezehlakalo zekhampasi.</string>
+    <string name="campus_reports_description_label">Incazelo</string>
+    <string name="campus_reports_location_label">Indawo</string>
+    <string name="campus_reports_view_location">Buka Indawo Kumephu</string>
+    <string name="campus_reports_status_label">Isimo Sombiko</string>
+    <string name="campus_reports_sync_status">Ukuvumelanisa: %1$s</string>
+    <string name="campus_reports_evidence">Ubufakazi</string>
+    <string name="campus_reports_view_photo">Buka Isithombe</string>
+    <string name="campus_reports_view_video">Buka Ividiyo</string>
+    <string name="campus_reports_view_audio">Lalela Umsindo</string>
+    <string name="campus_reports_view_file">Vula Ifayela</string>
+    <string name="campus_reports_incident_id">Inombolo Yesigameko: SZ-%1$s</string>
+    <string name="campus_reports_campus">Ikhampasi: %1$s</string>
+    <string name="campus_reports_date">Usuku: %1$s</string>
+    <string name="campus_reports_time">Isikhathi: %1$s</string>
+    <string name="campus_reports_gps">I-GPS: %1$.6f, %2$.6f</string>
+    <string name="campus_reports_status">Isimo: %1$s</string>
+    <string name="campus_reports_pending_sync">Ayikavumelaniswa</string>
+    <string name="campus_reports_synced">Ivumelanisiwe</string>
+    <string name="campus_reports_not_available">Akutholakali</string>
+    <string name="campus_reports_campus_not_provided">Ikhampasi ayicacisiwe</string>
+    <string name="campus_reports_no_description">Ayikho incazelo enikeziwe.</string>
+    <string name="campus_reports_location_not_provided">Indawo ayicacisiwe.</string>
+    <string name="campus_reports_login_required">Sicela ungene kuqala.</string>
+    <string name="campus_reports_local_save_warning">Eminye imibiko ayikwazanga ukugcinwa kudivayisi.</string>
+    <string name="campus_reports_map_unavailable">Ayikwazanga ukuvula imephu.</string>
+    <string name="campus_reports_file_missing">Leli fayela lobufakazi alisatholakali kule divayisi.</string>
+    <string name="campus_reports_file_inaccessible">Leli fayela lobufakazi alisafinyeleleki.</string>
+    <string name="campus_reports_invalid_evidence">Ifayela lobufakazi alivumelekile.</string>
+    <string name="campus_reports_open_evidence_failed">Ayikwazanga ukuvula lobu bufakazi.</string>
+    <string name="campus_reports_no_evidence_app">Alukho uhlelo olungavula lolu hlobo lwefayela lobufakazi.</string>
+    <string name="campus_reports_open_evidence">Vula Ubufakazi</string>
+    <string name="campus_reports_refresh_failed">Ayikwazanga ukuvuselela imibiko. Imibiko egciniwe isatholakala.</string>
+    <string name="cir_navigation_failed">Ayikwazanga ukuvula lesi sikrini.</string>
+
+
+    <!-- Campus Emergency Screen -->
+    <string name="campus_emergency_back">Emuva</string>
+    <string name="campus_emergency_app_name">SafeZone</string>
+    <string name="campus_emergency_title">Isimo Esiphuthumayo Ekhempasini</string>
+    <string name="campus_emergency_subtitle">Thola usizo ngokushesha noma uthinte abezokuphepha basekhempasini uma kunesimo esiphuthumayo.</string>
+
+    <string name="campus_emergency_content_description_warning">Isexwayiso sesimo esiphuthumayo</string>
+    <string name="campus_emergency_warning_message">Uma usengozini esheshayo, shayela abezimo eziphuthumayo manje.</string>
+
+    <string name="campus_emergency_content_description_phone">Ucingo</string>
+    <string name="campus_emergency_call_services">Shayela Abosizo Lwezimo Eziphuthumayo</string>
+    <string name="campus_emergency_emergency_number">112</string>
+    <string name="campus_emergency_services_list">Amaphoyisa • I-ambulensi • Abacimi bomlilo</string>
+
+    <string name="campus_emergency_contacts_title">Izinombolo Zabezokuphepha ZaseKhempasini</string>
+    <string name="campus_emergency_content_description_security">Abezokuphepha BaseKhempasini</string>
+    <string name="campus_emergency_security">Abezokuphepha BaseKhempasini</string>
+    <string name="campus_emergency_available_24_7">Bayatholakala amahora angu-24, izinsuku ezingu-7</string>
+    <string name="campus_emergency_call_security">Shayela Abezokuphepha BaseKhempasini</string>
+
+    <string name="campus_emergency_content_description_campus_control">Abaphathi BaseKhempasini</string>
+    <string name="campus_emergency_campus_control">Abaphathi Bekhempasi YasePitoli</string>
+    <string name="campus_emergency_campus_control_number">012 345 6789</string>
+    <string name="campus_emergency_call_campus_control">Shayela Abaphathi BaseKhempasini</string>
+
+    <string name="campus_emergency_content_description_health">Isikhungo Sezempilo SaseKhempasini</string>
+    <string name="campus_emergency_health_centre">Isikhungo Sezempilo SaseKhempasini</string>
+    <string name="campus_emergency_health_number">012 345 6790</string>
+    <string name="campus_emergency_call_health">Shayela Isikhungo Sezempilo</string>
+
+    <string name="campus_emergency_content_description_support">Usizo Lwabafundi</string>
+    <string name="campus_emergency_student_support">Usizo Lwabafundi</string>
+    <string name="campus_emergency_support_number">012 345 6791</string>
+    <string name="campus_emergency_call_student_support">Shayela Usizo Lwabafundi</string>
+
+    <string name="campus_emergency_content_description_location">Indawo</string>
+    <string name="campus_emergency_stay_safe">Hlala Uphephile</string>
+    <string name="campus_emergency_share_location_description">Yabelana ngendawo okuyo nabezokuphepha basekhempasini ngesikhathi sesimo esiphuthumayo ukuze uthole usizo ngokushesha.</string>
+    <string name="campus_emergency_share_location_button">➤   Yabelana Ngendawo Yami</string>
+
+    <!-- Bottom Navigation -->
+    <string name="campus_emergency_nav_home">Ikhaya</string>
+    <string name="campus_emergency_nav_map">Imephu</string>
+    <string name="campus_emergency_nav_reports">Imibiko</string>
+    <string name="campus_emergency_nav_alerts">Izexwayiso</string>
+    <string name="campus_emergency_nav_profile">Iphrofayela</string>
+
+
+        <!-- Residential Location -->
+        <string name="edit_profile_location">Indawo yokuhlala / Indawo ohlala kuyo</string>
+        <string name="edit_profile_location_hint">Isib. Hammanskraal, Pretoria</string>
+        <string name="edit_profile_location_description">Indawo oyigcinile ingasetshenziselwa ukukuthumelela izexwayiso zokuphepha uma i-GPS ingatholakali.</string>
+
+        <!-- Residential Location Validation -->
+        <string name="edit_profile_location_required">Sicela ufake indawo ohlala kuyo.</string>
+        <string name="edit_profile_location_invalid">Sicela ufake indawo yokuhlala evumelekile.</string>
+
+</resources>

@@ -7,9 +7,7 @@
     android:orientation="vertical"
     android:background="#F5F7FA">
 
-    <!-- ===================================================== -->
     <!-- HEADER -->
-    <!-- ===================================================== -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,8 +17,6 @@
         android:background="@color/safezone_navy"
         android:paddingStart="18dp"
         android:paddingEnd="18dp">
-
-        <!-- BACK BUTTON -->
 
         <TextView
             android:id="@+id/tvBack"
@@ -32,32 +28,33 @@
             android:textSize="34sp"
             android:clickable="true"
             android:focusable="true"
-            android:contentDescription="Back"/>
-
-        <!-- HEADER TITLE -->
+            android:contentDescription="@string/campus_reports_back" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Campus Reports"
+            android:text="@string/campus_reports_title"
             android:textColor="@android:color/white"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
-        <!-- HEADER SPACER -->
-
-        <View
+        <TextView
+            android:id="@+id/btnRefreshReports"
             android:layout_width="40dp"
-            android:layout_height="40dp"/>
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="↻"
+            android:textColor="@android:color/white"
+            android:textSize="28sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/campus_reports_refresh" />
 
     </LinearLayout>
 
-
-    <!-- ===================================================== -->
     <!-- PAGE TITLE -->
-    <!-- ===================================================== -->
 
     <TextView
         android:layout_width="match_parent"
@@ -65,15 +62,12 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:text="My Incident Reports"
+        android:text="@string/campus_reports_heading"
         android:textColor="#172033"
         android:textSize="24sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
-
-    <!-- ===================================================== -->
-    <!-- PAGE DESCRIPTION -->
-    <!-- ===================================================== -->
+    <!-- DESCRIPTION -->
 
     <TextView
         android:layout_width="match_parent"
@@ -81,14 +75,25 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        android:text="View incidents you have reported on campus."
+        android:text="@string/campus_reports_description"
         android:textColor="#667085"
-        android:textSize="15sp"/>
+        android:textSize="15sp" />
 
+    <!-- REPORT SUMMARY -->
 
-    <!-- ===================================================== -->
+    <TextView
+        android:id="@+id/tvReportCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/campus_reports_count_zero"
+        android:textColor="#1976D2"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
     <!-- REPORT AREA -->
-    <!-- ===================================================== -->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -106,10 +111,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <!-- ================================================= -->
             <!-- EMPTY STATE -->
-            <!-- ================================================= -->
 
             <TextView
                 android:id="@+id/tvNoReports"
@@ -118,21 +120,19 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"
                 android:gravity="center"
-                android:text="You have not submitted any campus reports yet."
+                android:padding="20dp"
+                android:text="@string/campus_reports_empty"
                 android:textColor="#667085"
                 android:textSize="16sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
-
-            <!-- ================================================= -->
             <!-- DYNAMIC REPORT CARDS -->
-            <!-- ================================================= -->
 
             <LinearLayout
                 android:id="@+id/reportsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"/>
+                android:orientation="vertical" />
 
         </LinearLayout>
 

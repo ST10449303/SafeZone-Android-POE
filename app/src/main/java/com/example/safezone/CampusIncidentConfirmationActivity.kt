@@ -2,32 +2,20 @@ package com.example.safezone
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 class CampusIncidentConfirmationActivity : AppCompatActivity() {
-
-    // =========================================================
-    // FIREBASE
-    // =========================================================
-
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
 
     // =========================================================
     // VIEWS
     // =========================================================
 
-    private lateinit var tvBack: ImageView
-
+    private lateinit var tvBack: TextView
     private lateinit var tvReportSubmitted: TextView
-
     private lateinit var tvIncidentId: TextView
     private lateinit var tvIncidentType: TextView
     private lateinit var tvCampus: TextView
@@ -38,7 +26,7 @@ class CampusIncidentConfirmationActivity : AppCompatActivity() {
     private lateinit var btnBackToCampusHome: AppCompatButton
 
     // =========================================================
-    // DATA
+    // REPORT INFORMATION
     // =========================================================
 
     private var reportId: String = ""
@@ -46,6 +34,8 @@ class CampusIncidentConfirmationActivity : AppCompatActivity() {
     private var campus: String = ""
     private var location: String = ""
     private var dateTime: String = ""
+
+    private var isOfflineReport: Boolean = false
 
     // =========================================================
     // ON CREATE
@@ -58,31 +48,11 @@ class CampusIncidentConfirmationActivity : AppCompatActivity() {
             R.layout.activity_campus_incident_confirmation
         )
 
-        // Firebase
-        auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
+        // -----------------------------------------------------
+        // INITIALISE VIEWS
+        // -----------------------------------------------------
 
-        // Initialize screen
-        initializeViews()
-
-        // Get submitted report information
-        getReportData()
-
-        // Setup buttons
-        setupButtons()
-
-        // Setup modern Android back navigation
-        setupBackNavigation()
-    }
-
-    // =========================================================
-    // INITIALIZE VIEWS
-    // =========================================================
-
-    private fun initializeViews() {
-
-        tvBack =
-            findViewById(R.id.tvBack)
+        tvBack = findViewById(R.id.tvBack)
 
         tvReportSubmitted =
             findViewById(R.id.tvReportSubmitted)
@@ -107,13 +77,49 @@ class CampusIncidentConfirmationActivity : AppCompatActivity() {
 
         btnBackToCampusHome =
             findViewById(R.id.btnBackToCampusHome)
+
+        // -----------------------------------------------------
+        // GET REPORT DETAILS
+        // -----------------------------------------------------
+
+        getReportDetails()
+
+        // -----------------------------------------------------
+        // DISPLAY CONFIRMATION
+        // -----------------------------------------------------
+
+        displayConfirmation()
+
+        // -----------------------------------------------------
+        // BACK BUTTON
+        // -----------------------------------------------------
+
+        tvBack.setOnClickListener {
+            goBackToCampusHome()
+        }
+
+        // -----------------------------------------------------
+        // TRACK REPORT
+        // -----------------------------------------------------
+
+        btnTrackReport.setOnClickListener {
+            openCampusReports()
+        }
+
+        // -----------------------------------------------------
+        // BACK TO CAMPUS HOME
+        // -----------------------------------------------------
+
+        btnBackToCampusHome.setOnClickListener {
+            goBackToCampusHome()
+        }
     }
 
     // =========================================================
-    // GET REPORT DATA
+    // GET REPORT DETAILS
     // =========================================================
 
-    private fun getReportData() {
+    private fun getReportDetails() {
 
         reportId =
             intent.getStringExtra("reportId")
@@ -121,152 +127,127 @@ class CampusIncidentConfirmationActivity : AppCompatActivity() {
 
         incidentType =
             intent.getStringExtra("incidentType")
-                ?: "Unknown"
+                ?: "Incident Report"
 
         campus =
             intent.getStringExtra("campus")
-                ?: "Unknown Campus"
+                ?: "Campus not provided"
 
         location =
             intent.getStringExtra("location")
-                ?: "Not available"
+                ?: "Location not provided"
 
         dateTime =
             intent.getStringExtra("dateTime")
-                ?: "Not available"
+                ?: ""
 
-        // =====================================================
-        // DISPLAY REPORT INFORMATION
-        // =====================================================
+        // -----------------------------------------------------
+        // DETERMINE WHETHER THE REPORT IS OFFLINE
+        // -----------------------------------------------------
 
-        tvIncidentId.text =
-            createShortIncidentId(reportId)
+        isOfflineReport =
+            intent.getBooleanExtra(
+                "offlineReport",
+                false
+            )
+    }
+
+    // =========================================================
+    // DISPLAY CONFIRMATION
+    // =========================================================
+
+    private fun displayConfirmation() {
+
+        // -----------------------------------------------------
+        // REPORT ID
+        // -----------------------------------------------------
+
+        if (reportId.isNotBlank()) {
+
+            val shortenedId =
+                if (reportId.length > 6) {
+                    reportId.takeLast(6)
+                        .uppercase()
+                } else {
+                    reportId.uppercase()
+                }
+
+            tvIncidentId.text =
+                "Incident ID: SZ-$shortenedId"
+
+        } else {
+
+            tvIncidentId.text =
+                "Incident ID: Not available"
+        }
+
+        // -----------------------------------------------------
+        // INCIDENT DETAILS
+        // -----------------------------------------------------
 
         tvIncidentType.text =
             incidentType
 
         tvCampus.text =
-            campus
+            "Campus: $campus"
 
         tvLocation.text =
-            location
+            "Location: $location"
 
         tvTime.text =
-            dateTime
-    }
-
-    // =========================================================
-    // CREATE SHORT INCIDENT ID
-    // =========================================================
-
-    private fun createShortIncidentId(
-        firestoreId: String
-    ): String {
-
-        if (firestoreId.isEmpty()) {
-            return "SZ-REPORT"
-        }
-
-        val shortId =
-            if (firestoreId.length > 6) {
-                firestoreId.takeLast(6)
+            if (dateTime.isNotBlank()) {
+                "Date and time: $dateTime"
             } else {
-                firestoreId
+                "Date and time: Not available"
             }
 
-        return "SZ-${shortId.uppercase()}"
-    }
+        // -----------------------------------------------------
+        // ONLINE OR OFFLINE CONFIRMATION
+        // -----------------------------------------------------
 
-    // =========================================================
-    // SETUP BUTTONS
-    // =========================================================
+        if (isOfflineReport) {
 
-    private fun setupButtons() {
+            // ---------------------------------------------
+            // OFFLINE REPORT
+            // ---------------------------------------------
 
-        // =====================================================
-        // BACK ARROW
-        // =====================================================
-
-        tvBack.setOnClickListener {
-
-            goBackToCampusHome()
-        }
-
-        // =====================================================
-        // TRACK REPORT
-        // =====================================================
-
-        btnTrackReport.setOnClickListener {
-
-            trackReport()
-        }
-
-        // =====================================================
-        // BACK TO CAMPUS HOME
-        // =====================================================
-
-        btnBackToCampusHome.setOnClickListener {
-
-            goBackToCampusHome()
-        }
-    }
-
-    // =========================================================
-    // MODERN BACK NAVIGATION
-    // =========================================================
-
-    private fun setupBackNavigation() {
-
-        onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-
-                override fun handleOnBackPressed() {
-
-                    goBackToCampusHome()
-                }
-            }
-        )
-    }
-
-    // =========================================================
-    // TRACK REPORT
-    // =========================================================
-
-    private fun trackReport() {
-
-        if (reportId.isEmpty()) {
+            tvReportSubmitted.text =
+                "Report saved on this device"
 
             Toast.makeText(
                 this,
-                "Report information is unavailable.",
-                Toast.LENGTH_SHORT
+                "Your report is saved and waiting to synchronise.",
+                Toast.LENGTH_LONG
             ).show()
 
-            return
+        } else {
+
+            // ---------------------------------------------
+            // ONLINE REPORT
+            // ---------------------------------------------
+
+            tvReportSubmitted.text =
+                "Report submitted successfully"
         }
+    }
+
+    // =========================================================
+    // OPEN CAMPUS REPORTS
+    // =========================================================
+
+    private fun openCampusReports() {
 
         val intent =
             Intent(
                 this,
-                PersonalReportsActivity::class.java
+                CampusReportsActivity::class.java
             )
-
-        intent.putExtra(
-            "reportId",
-            reportId
-        )
-
-        intent.putExtra(
-            "campusReport",
-            true
-        )
 
         startActivity(intent)
     }
 
     // =========================================================
-    // BACK TO CAMPUS HOME
+    // RETURN TO CAMPUS HOME
     // =========================================================
 
     private fun goBackToCampusHome() {

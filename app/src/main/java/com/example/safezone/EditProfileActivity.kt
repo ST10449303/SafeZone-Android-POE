@@ -1,3 +1,4 @@
+
 package com.example.safezone
 
 import android.os.Bundle
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -19,6 +21,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var etFullName: EditText
     private lateinit var etEmail: EditText
     private lateinit var etPhone: EditText
+    private lateinit var etLocation: EditText
 
     // ==========================================
     // BUTTONS
@@ -40,111 +43,63 @@ class EditProfileActivity : AppCompatActivity() {
     // ==========================================
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
-        setContentView(
-            R.layout.activity_edit_profile
-        )
+        setContentView(R.layout.activity_edit_profile)
 
-        // ==========================================
-        // INITIALISE FIREBASE
-        // ==========================================
-
+        // Initialise Firebase
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // ==========================================
-        // CONNECT EDIT TEXT FIELDS
-        // ==========================================
+        // Connect edit text fields
+        etFullName = findViewById(R.id.etFullName)
+        etEmail = findViewById(R.id.etEmail)
+        etPhone = findViewById(R.id.etPhone)
+        etLocation = findViewById(R.id.etLocation)
 
-        etFullName =
-            findViewById(R.id.etFullName)
+        // Connect buttons
+        btnSaveChanges = findViewById(R.id.btnSaveChanges)
+        tvBack = findViewById(R.id.tvBack)
+        tvCancel = findViewById(R.id.tvCancel)
 
-        etEmail =
-            findViewById(R.id.etEmail)
-
-        etPhone =
-            findViewById(R.id.etPhone)
-
-        // ==========================================
-        // CONNECT BUTTONS
-        // ==========================================
-
-        btnSaveChanges =
-            findViewById(R.id.btnSaveChanges)
-
-        tvBack =
-            findViewById(R.id.tvBack)
-
-        tvCancel =
-            findViewById(R.id.tvCancel)
-
-        // ==========================================
-        // CHECK CURRENT USER
-        // ==========================================
-
-        val currentUser =
-            auth.currentUser
+        // Check current user
+        val currentUser = auth.currentUser
 
         if (currentUser == null) {
-
             Toast.makeText(
                 this,
-                "Your session has expired. Please log in again.",
+                getString(R.string.edit_profile_session_expired),
                 Toast.LENGTH_LONG
             ).show()
 
             finish()
-
             return
         }
 
-        // ==========================================
-        // LOAD EXISTING PROFILE
-        // ==========================================
+        // Load existing profile
+        loadProfile(currentUser.uid)
 
-        loadProfile(
-            currentUser.uid
-        )
-
-        // ==========================================
-        // BACK BUTTON
-        // ==========================================
-
+        // Back button
         tvBack.setOnClickListener {
-
             finish()
         }
 
-        // ==========================================
-        // CANCEL
-        // ==========================================
-
+        // Cancel editing
         tvCancel.setOnClickListener {
-
             finish()
         }
 
-        // ==========================================
-        // SAVE CHANGES
-        // ==========================================
-
+        // Save changes
         btnSaveChanges.setOnClickListener {
-
-            saveProfile(
-                currentUser.uid
-            )
+            saveProfile(currentUser.uid)
         }
     }
 
-    // ==================================================
+    // ==========================================
     // LOAD PROFILE
-    // ==================================================
+    // ==========================================
 
-    private fun loadProfile(
-        userId: String
-    ) {
+    private fun loadProfile(userId: String) {
 
         db.collection("Users")
             .document(userId)
@@ -153,234 +108,174 @@ class EditProfileActivity : AppCompatActivity() {
 
                 if (document.exists()) {
 
-                    // ----------------------------------
-                    // FULL NAME
-                    // ----------------------------------
-
+                    // Full name
                     val fullName =
-                        document.getString(
-                            "fullName"
-                        ) ?: ""
+                        document.getString("fullName") ?: ""
 
-                    // ----------------------------------
-                    // EMAIL
-                    // ----------------------------------
-
+                    // Email
                     val email =
-                        document.getString(
-                            "email"
-                        )
+                        document.getString("email")
                             ?: auth.currentUser?.email
                             ?: ""
 
-                    // ----------------------------------
-                    // PHONE
-                    // ----------------------------------
-
+                    // Phone
                     val phone =
-                        document.getString(
-                            "phone"
-                        ) ?: ""
+                        document.getString("phone") ?: ""
 
-                    // ----------------------------------
-                    // DISPLAY VALUES
-                    // ----------------------------------
+                    // Residential area / suburb
+                    val location =
+                        document.getString("location") ?: ""
 
-                    etFullName.setText(
-                        fullName
-                    )
+                    // Display existing values
+                    etFullName.setText(fullName)
+                    etEmail.setText(email)
+                    etPhone.setText(phone)
+                    etLocation.setText(location)
 
-                    etEmail.setText(
-                        email
-                    )
+                } else {
 
-                    etPhone.setText(
-                        phone
-                    )
-                }
-                else {
-
-                    // ----------------------------------
-                    // FIRESTORE DOCUMENT DOES NOT EXIST
-                    // ----------------------------------
-
+                    // Firestore document does not exist
                     etFullName.setText("")
-
                     etEmail.setText(
                         auth.currentUser?.email ?: ""
                     )
-
                     etPhone.setText("")
+                    etLocation.setText("")
                 }
             }
             .addOnFailureListener { exception ->
 
                 Toast.makeText(
                     this,
-                    "Unable to load your profile: ${exception.message}",
+                    getString(
+                        R.string.edit_profile_load_failed,
+                        exception.message
+                            ?: getString(
+                                R.string.edit_profile_unknown_error
+                            )
+                    ),
                     Toast.LENGTH_LONG
                 ).show()
             }
     }
 
-    // ==================================================
+    // ==========================================
     // SAVE PROFILE
-    // ==================================================
+    // ==========================================
 
-    private fun saveProfile(
-        userId: String
-    ) {
+    private fun saveProfile(userId: String) {
 
-        // ==========================================
-        // GET VALUES
-        // ==========================================
+        // Get values
+        val fullName = etFullName.text.toString().trim()
+        val email = etEmail.text.toString().trim()
+        val phone = etPhone.text.toString().trim()
+        val location = etLocation.text.toString().trim()
 
-        val fullName =
-            etFullName.text
-                .toString()
-                .trim()
-
-        val email =
-            etEmail.text
-                .toString()
-                .trim()
-
-        val phone =
-            etPhone.text
-                .toString()
-                .trim()
-
-        // ==========================================
-        // VALIDATE FULL NAME
-        // ==========================================
-
+        // Validate full name
         if (fullName.isEmpty()) {
-
             etFullName.error =
-                "Please enter your full name"
+                getString(R.string.edit_profile_name_required)
 
             etFullName.requestFocus()
-
             return
         }
 
-        // ==========================================
-        // VALIDATE EMAIL
-        // ==========================================
-
+        // Validate email
         if (email.isEmpty()) {
-
             etEmail.error =
-                "Please enter your email address"
+                getString(R.string.edit_profile_email_required)
 
             etEmail.requestFocus()
-
             return
         }
 
-        if (!Patterns.EMAIL_ADDRESS
-                .matcher(email)
-                .matches()
-        ) {
-
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.error =
-                "Please enter a valid email address"
+                getString(R.string.edit_profile_email_invalid)
 
             etEmail.requestFocus()
-
             return
         }
 
-        // ==========================================
-        // VALIDATE PHONE
-        // ==========================================
-
+        // Validate phone
         if (phone.isEmpty()) {
-
             etPhone.error =
-                "Please enter your phone number"
+                getString(R.string.edit_profile_phone_required)
 
             etPhone.requestFocus()
-
             return
         }
 
         if (phone.length < 10) {
-
             etPhone.error =
-                "Please enter a valid phone number"
+                getString(R.string.edit_profile_phone_invalid)
 
             etPhone.requestFocus()
-
             return
         }
 
-        // ==========================================
-        // PREPARE FIRESTORE DATA
-        // ==========================================
+        // Validate residential location
+        if (location.isEmpty()) {
+            etLocation.error =
+                getString(R.string.edit_profile_location_required)
 
-        val updates =
-            hashMapOf<String, Any>(
-                "fullName" to fullName,
-                "email" to email,
-                "phone" to phone
-            )
+            etLocation.requestFocus()
+            return
+        }
 
-        // ==========================================
-        // DISABLE BUTTON WHILE SAVING
-        // ==========================================
+        if (location.length < 3) {
+            etLocation.error =
+                getString(R.string.edit_profile_location_invalid)
 
+            etLocation.requestFocus()
+            return
+        }
+
+        // Prepare Firestore data
+        val updates = hashMapOf<String, Any>(
+            "fullName" to fullName,
+            "email" to email,
+            "phone" to phone,
+            "location" to location
+        )
+
+        // Disable button while saving
         btnSaveChanges.isEnabled = false
-
         btnSaveChanges.text =
-            "Saving..."
+            getString(R.string.edit_profile_saving)
 
-        // ==========================================
-        // UPDATE FIRESTORE
-        // ==========================================
-
+        // Update existing Firestore document
         db.collection("Users")
             .document(userId)
-            .set(
-                updates,
-                com.google.firebase.firestore.SetOptions.merge()
-            )
+            .set(updates, SetOptions.merge())
             .addOnSuccessListener {
-
-                // ==================================
-                // SUCCESS
-                // ==================================
 
                 Toast.makeText(
                     this,
-                    "Profile updated successfully.",
+                    getString(R.string.edit_profile_save_success),
                     Toast.LENGTH_SHORT
                 ).show()
 
-                // ==================================
-                // RETURN TO PROFILE
-                // ==================================
-
+                // Return to profile
                 finish()
             }
             .addOnFailureListener { exception ->
 
-                // ==================================
-                // RESTORE BUTTON
-                // ==================================
-
+                // Restore button after failure
                 btnSaveChanges.isEnabled = true
-
                 btnSaveChanges.text =
-                    "Save Changes"
+                    getString(R.string.edit_profile_save_changes)
 
-                // ==================================
-                // ERROR MESSAGE
-                // ==================================
-
+                // Display error
                 Toast.makeText(
                     this,
-                    "Failed to update profile: ${exception.message}",
+                    getString(
+                        R.string.edit_profile_save_failed,
+                        exception.message
+                            ?: getString(
+                                R.string.edit_profile_unknown_error
+                            )
+                    ),
                     Toast.LENGTH_LONG
                 ).show()
             }

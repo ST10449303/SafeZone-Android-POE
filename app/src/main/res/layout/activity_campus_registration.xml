@@ -138,6 +138,32 @@
                 android:textColorHint="#8A94A6"
                 android:textSize="15sp" />
 
+            <!-- STUDENT NUMBER -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Student Number"
+                android:textColor="#172033"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etStudentNumber"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_login_input"
+                android:drawableStart="@drawable/ic_person"
+                android:drawablePadding="12dp"
+                android:hint="Enter your student number"
+                android:inputType="text"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:textColor="#172033"
+                android:textColorHint="#8A94A6"
+                android:textSize="15sp" />
+
             <!-- INSTITUTION -->
             <TextView
                 android:layout_width="match_parent"

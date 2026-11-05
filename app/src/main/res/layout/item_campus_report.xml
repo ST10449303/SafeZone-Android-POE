@@ -9,15 +9,12 @@
     android:layout_marginBottom="16dp"
     android:background="@drawable/bg_report_card">
 
-    <!-- ===================================================== -->
     <!-- INCIDENT INFORMATION -->
-    <!-- ===================================================== -->
 
     <TextView
         android:id="@+id/tvReportId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Incident ID: SZ-000001"
         android:textColor="#1976D2"
         android:textSize="13sp"
         android:textStyle="bold" />
@@ -27,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Fire"
         android:textColor="#0B1F3A"
         android:textSize="21sp"
         android:textStyle="bold" />
@@ -37,15 +33,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Campus: Pretoria Campus"
         android:textColor="#1976D2"
         android:textSize="15sp"
         android:textStyle="bold" />
 
-
-    <!-- ===================================================== -->
     <!-- DATE AND TIME -->
-    <!-- ===================================================== -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,7 +49,6 @@
             android:id="@+id/tvReportDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date: 19 Sep 2026"
             android:textColor="#667085"
             android:textSize="14sp" />
 
@@ -66,22 +57,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Time: 14:30"
             android:textColor="#667085"
             android:textSize="14sp" />
 
     </LinearLayout>
 
-
-    <!-- ===================================================== -->
     <!-- DESCRIPTION -->
-    <!-- ===================================================== -->
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:text="Description"
+        android:text="@string/campus_reports_description_label"
         android:textColor="#172033"
         android:textSize="15sp"
         android:textStyle="bold" />
@@ -91,21 +78,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Incident description"
         android:textColor="#667085"
         android:textSize="15sp"
         android:lineSpacingExtra="2dp" />
 
-
-    <!-- ===================================================== -->
     <!-- LOCATION -->
-    <!-- ===================================================== -->
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:text="Location"
+        android:text="@string/campus_reports_location_label"
         android:textColor="#172033"
         android:textSize="15sp"
         android:textStyle="bold" />
@@ -115,25 +98,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Pretoria Campus"
         android:textColor="#667085"
         android:textSize="14sp" />
 
-    <!-- GPS -->
     <TextView
         android:id="@+id/tvReportCoordinates"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="GPS: -25.123456, 28.123456"
         android:textColor="#667085"
         android:textSize="13sp"
         android:visibility="gone" />
 
-
-    <!-- ===================================================== -->
     <!-- VIEW LOCATION -->
-    <!-- ===================================================== -->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnViewLocation"
@@ -143,22 +120,20 @@
         android:background="@drawable/bg_secondary_button"
         android:backgroundTint="@null"
         android:stateListAnimator="@null"
-        android:text="View Location on Map"
+        android:text="@string/campus_reports_view_location"
         android:textAllCaps="false"
         android:textColor="#0B1F3A"
         android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
-
-    <!-- ===================================================== -->
     <!-- REPORT STATUS -->
-    <!-- ===================================================== -->
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:text="Report Status"
+        android:text="@string/campus_reports_status_label"
         android:textColor="#172033"
         android:textSize="15sp"
         android:textStyle="bold" />
@@ -173,31 +148,33 @@
         android:paddingEnd="14dp"
         android:paddingBottom="7dp"
         android:background="@drawable/bg_secondary_button"
-        android:text="Submitted"
         android:textColor="#1976D2"
         android:textSize="14sp"
         android:textStyle="bold" />
 
+    <!-- SYNCHRONIZATION STATUS -->
 
-    <!-- ===================================================== -->
+    <TextView
+        android:id="@+id/tvSyncStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#667085"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
     <!-- EVIDENCE -->
-    <!-- ===================================================== -->
 
     <TextView
         android:id="@+id/tvEvidenceTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Evidence"
+        android:text="@string/campus_reports_evidence"
         android:textColor="#172033"
         android:textSize="15sp"
         android:textStyle="bold"
         android:visibility="gone" />
-
-
-    <!-- ===================================================== -->
-    <!-- PHOTO -->
-    <!-- ===================================================== -->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnViewPhoto"
@@ -207,16 +184,11 @@
         android:background="@drawable/bg_secondary_button"
         android:backgroundTint="@null"
         android:stateListAnimator="@null"
-        android:text="View Photo"
+        android:text="@string/campus_reports_view_photo"
         android:textAllCaps="false"
         android:textColor="#0B1F3A"
         android:textSize="15sp"
         android:visibility="gone" />
-
-
-    <!-- ===================================================== -->
-    <!-- VIDEO -->
-    <!-- ===================================================== -->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnViewVideo"
@@ -226,16 +198,11 @@
         android:background="@drawable/bg_secondary_button"
         android:backgroundTint="@null"
         android:stateListAnimator="@null"
-        android:text="View Video"
+        android:text="@string/campus_reports_view_video"
         android:textAllCaps="false"
         android:textColor="#0B1F3A"
         android:textSize="15sp"
         android:visibility="gone" />
-
-
-    <!-- ===================================================== -->
-    <!-- AUDIO -->
-    <!-- ===================================================== -->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnViewAudio"
@@ -245,16 +212,11 @@
         android:background="@drawable/bg_secondary_button"
         android:backgroundTint="@null"
         android:stateListAnimator="@null"
-        android:text="View Audio"
+        android:text="@string/campus_reports_view_audio"
         android:textAllCaps="false"
         android:textColor="#0B1F3A"
         android:textSize="15sp"
         android:visibility="gone" />
-
-
-    <!-- ===================================================== -->
-    <!-- FILE -->
-    <!-- ===================================================== -->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnViewFile"
@@ -264,7 +226,7 @@
         android:background="@drawable/bg_secondary_button"
         android:backgroundTint="@null"
         android:stateListAnimator="@null"
-        android:text="View File"
+        android:text="@string/campus_reports_view_file"
         android:textAllCaps="false"
         android:textColor="#0B1F3A"
         android:textSize="15sp"

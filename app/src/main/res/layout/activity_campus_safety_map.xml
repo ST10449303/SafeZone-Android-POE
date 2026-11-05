@@ -8,9 +8,7 @@
     android:orientation="vertical"
     android:background="#F5F7FA">
 
-    <!-- ===================================================== -->
     <!-- SAFEZONE HEADER -->
-    <!-- ===================================================== -->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,8 +16,6 @@
         android:background="#0B1F3A"
         android:paddingStart="16dp"
         android:paddingEnd="16dp">
-
-        <!-- Back -->
 
         <ImageView
             android:id="@+id/tvBack"
@@ -29,23 +25,19 @@
             android:padding="8dp"
             android:src="@drawable/ic_back"
             app:tint="#FFFFFF"
-            android:contentDescription="Back"
+            android:contentDescription="@string/campus_map_back"
             android:clickable="true"
             android:focusable="true" />
-
-        <!-- SafeZone -->
 
         <TextView
             android:id="@+id/tvHeaderTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="SafeZone"
+            android:text="@string/campus_map_app_title"
             android:textColor="#FFFFFF"
             android:textSize="25sp"
             android:textStyle="bold" />
-
-        <!-- Notification -->
 
         <ImageView
             android:id="@+id/tvNotification"
@@ -56,16 +48,13 @@
             android:padding="8dp"
             android:src="@drawable/ic_notifications"
             app:tint="#FFFFFF"
-            android:contentDescription="Notifications"
+            android:contentDescription="@string/campus_map_notifications"
             android:clickable="true"
             android:focusable="true" />
 
     </RelativeLayout>
 
-
-    <!-- ===================================================== -->
     <!-- MAIN CONTENT -->
-    <!-- ===================================================== -->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -80,9 +69,7 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- ================================================= -->
             <!-- TITLE -->
-            <!-- ================================================= -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,10 +88,9 @@
                         android:layout_height="32dp"
                         android:src="@drawable/ic_location_pin"
                         app:tint="#1976D2"
-                        android:contentDescription="Campus location" />
+                        android:contentDescription="@string/campus_map_location" />
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -116,7 +102,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Campus Safety Map"
+                        android:text="@string/campus_map_title"
                         android:textColor="#0B1F3A"
                         android:textSize="27sp"
                         android:textStyle="bold" />
@@ -125,7 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="Explore your campus and find your way around safely."
+                        android:text="@string/campus_map_subtitle"
                         android:textColor="#60708A"
                         android:textSize="15sp" />
 
@@ -133,10 +119,7 @@
 
             </LinearLayout>
 
-
-            <!-- ================================================= -->
             <!-- CAMPUS SELECTOR -->
-            <!-- ================================================= -->
 
             <LinearLayout
                 android:id="@+id/layoutCampusSelector"
@@ -148,14 +131,15 @@
                 android:paddingEnd="14dp"
                 android:background="@drawable/bg_map_selector"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/ic_campus_building"
                     app:tint="#1976D2"
-                    android:contentDescription="Campus" />
+                    android:contentDescription="@string/campus_map_campus" />
 
                 <TextView
                     android:id="@+id/tvSelectedCampus"
@@ -163,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
-                    android:text="Pretoria Campus"
+                    android:text="@string/campus_map_default_campus"
                     android:textColor="#0B1F3A"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -173,16 +157,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="⌄"
+                    android:contentDescription="@string/campus_map_select_campus"
                     android:textColor="#0B1F3A"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true" />
 
             </LinearLayout>
 
-
-            <!-- ================================================= -->
             <!-- SEARCH -->
-            <!-- ================================================= -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -198,7 +182,7 @@
                     android:layout_height="25dp"
                     android:src="@drawable/ic_search"
                     app:tint="#60708A"
-                    android:contentDescription="Search" />
+                    android:contentDescription="@string/campus_map_search" />
 
                 <EditText
                     android:id="@+id/etSearchLocation"
@@ -207,20 +191,19 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
-                    android:hint="Search for a building or location..."
+                    android:hint="@string/campus_map_search_hint"
                     android:textColor="#172033"
                     android:textColorHint="#7C8DA5"
                     android:textSize="15sp"
                     android:singleLine="true"
                     android:inputType="text"
-                    android:padding="0dp" />
+                    android:imeOptions="actionSearch"
+                    android:padding="0dp"
+                    android:importantForAutofill="no" />
 
             </LinearLayout>
 
-
-            <!-- ================================================= -->
-            <!-- CAMPUS MAP -->
-            <!-- ================================================= -->
+            <!-- ILLUSTRATED CAMPUS MAP -->
 
             <FrameLayout
                 android:id="@+id/mapContainer"
@@ -230,7 +213,7 @@
                 android:background="@drawable/bg_campus_map"
                 android:clipToOutline="true">
 
-                <!-- ROAD 1 -->
+                <!-- ROADS AND PATHWAYS -->
 
                 <View
                     android:layout_width="520dp"
@@ -239,18 +222,12 @@
                     android:background="#D5DCE5"
                     android:rotation="-8" />
 
-
-                <!-- ROAD 2 -->
-
                 <View
                     android:layout_width="500dp"
                     android:layout_height="28dp"
                     android:layout_gravity="center"
                     android:background="#DDE3EA"
                     android:rotation="42" />
-
-
-                <!-- ROAD 3 -->
 
                 <View
                     android:layout_width="430dp"
@@ -259,9 +236,6 @@
                     android:background="#D8E0E8"
                     android:rotation="-38" />
 
-
-                <!-- PATH -->
-
                 <View
                     android:layout_width="420dp"
                     android:layout_height="8dp"
@@ -269,10 +243,7 @@
                     android:background="#FFFFFF"
                     android:rotation="15" />
 
-
-                <!-- ================================================= -->
                 <!-- LIBRARY -->
-                <!-- ================================================= -->
 
                 <TextView
                     android:id="@+id/mapLibrary"
@@ -282,15 +253,15 @@
                     android:layout_marginTop="90dp"
                     android:gravity="center"
                     android:background="@drawable/bg_map_building"
-                    android:text="Library"
+                    android:text="@string/campus_map_library"
                     android:textColor="#17385F"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground" />
 
-
-                <!-- ================================================= -->
                 <!-- STUDENT CENTRE -->
-                <!-- ================================================= -->
 
                 <TextView
                     android:id="@+id/mapStudentCentre"
@@ -299,15 +270,15 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:background="@drawable/bg_map_building"
-                    android:text="Student&#10;Centre"
+                    android:text="@string/campus_map_student_centre"
                     android:textColor="#17385F"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground" />
 
-
-                <!-- ================================================= -->
                 <!-- LECTURE HALLS -->
-                <!-- ================================================= -->
 
                 <TextView
                     android:id="@+id/mapLectureHalls"
@@ -318,15 +289,15 @@
                     android:layout_marginEnd="30dp"
                     android:gravity="center"
                     android:background="@drawable/bg_map_building"
-                    android:text="Lecture&#10;Halls"
+                    android:text="@string/campus_map_lecture_halls"
                     android:textColor="#17385F"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground" />
 
-
-                <!-- ================================================= -->
                 <!-- ADMIN BLOCK -->
-                <!-- ================================================= -->
 
                 <TextView
                     android:id="@+id/mapAdmin"
@@ -336,15 +307,15 @@
                     android:layout_marginTop="245dp"
                     android:gravity="center"
                     android:background="@drawable/bg_map_building"
-                    android:text="Admin&#10;Block"
+                    android:text="@string/campus_map_admin_block"
                     android:textColor="#17385F"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground" />
 
-
-                <!-- ================================================= -->
                 <!-- MAIN ENTRANCE -->
-                <!-- ================================================= -->
 
                 <TextView
                     android:id="@+id/mapMainEntrance"
@@ -355,22 +326,24 @@
                     android:layout_marginEnd="50dp"
                     android:gravity="center"
                     android:background="@drawable/bg_map_building"
-                    android:text="Main&#10;Entrance"
+                    android:text="@string/campus_map_main_entrance"
                     android:textColor="#17385F"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground" />
 
-
-                <!-- ================================================= -->
-                <!-- CURRENT LOCATION -->
-                <!-- ================================================= -->
+                <!-- ILLUSTRATED LOCATION INDICATOR -->
 
                 <LinearLayout
+                    android:id="@+id/mapLocationMarker"
                     android:layout_width="72dp"
                     android:layout_height="72dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:background="@drawable/bg_location_accuracy">
+                    android:background="@drawable/bg_location_accuracy"
+                    android:contentDescription="@string/campus_map_illustrated_location">
 
                     <View
                         android:layout_width="20dp"
@@ -379,31 +352,28 @@
 
                 </LinearLayout>
 
-
-                <!-- ================================================= -->
                 <!-- COMPASS -->
-                <!-- ================================================= -->
 
                 <ImageView
                     android:id="@+id/btnCompass"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
+                    android:layout_gravity="top|start"
                     android:layout_margin="14dp"
                     android:padding="10dp"
                     android:background="@drawable/bg_map_control"
                     android:src="@drawable/ic_compass"
                     app:tint="#0B1F3A"
-                    android:contentDescription="Compass" />
+                    android:contentDescription="@string/campus_map_compass"
+                    android:clickable="true"
+                    android:focusable="true" />
 
-
-                <!-- ================================================= -->
-                <!-- MAP CONTROLS -->
-                <!-- ================================================= -->
+                <!-- ZOOM CONTROLS -->
 
                 <LinearLayout
                     android:layout_width="55dp"
                     android:layout_height="110dp"
-                    android:layout_gravity="end"
+                    android:layout_gravity="top|end"
                     android:layout_marginTop="95dp"
                     android:layout_marginEnd="14dp"
                     android:orientation="vertical"
@@ -419,7 +389,8 @@
                         android:textSize="28sp"
                         android:textStyle="bold"
                         android:clickable="true"
-                        android:focusable="true" />
+                        android:focusable="true"
+                        android:contentDescription="@string/campus_map_zoom_in" />
 
                     <View
                         android:layout_width="match_parent"
@@ -436,14 +407,12 @@
                         android:textSize="28sp"
                         android:textStyle="bold"
                         android:clickable="true"
-                        android:focusable="true" />
+                        android:focusable="true"
+                        android:contentDescription="@string/campus_map_zoom_out" />
 
                 </LinearLayout>
 
-
-                <!-- ================================================= -->
-                <!-- MY LOCATION BUTTON -->
-                <!-- ================================================= -->
+                <!-- MY LOCATION -->
 
                 <ImageView
                     android:id="@+id/btnMyLocation"
@@ -455,16 +424,13 @@
                     android:background="@drawable/bg_map_control"
                     android:src="@drawable/ic_my_location"
                     app:tint="#1976D2"
-                    android:contentDescription="My location"
+                    android:contentDescription="@string/campus_map_my_location"
                     android:clickable="true"
                     android:focusable="true" />
 
             </FrameLayout>
 
-
-            <!-- ================================================= -->
             <!-- EXPLORE CARD -->
-            <!-- ================================================= -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -486,10 +452,9 @@
                         android:layout_height="30dp"
                         android:src="@drawable/ic_info"
                         app:tint="#1976D2"
-                        android:contentDescription="Information" />
+                        android:contentDescription="@string/campus_map_information" />
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -501,7 +466,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Explore Your Campus"
+                        android:text="@string/campus_map_explore_title"
                         android:textColor="#0B1F3A"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -510,12 +475,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Find buildings, pathways and important campus locations."
+                        android:text="@string/campus_map_explore_description"
                         android:textColor="#60708A"
                         android:textSize="13sp" />
 
                 </LinearLayout>
-
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnGetDirections"
@@ -524,7 +488,7 @@
                     android:background="@drawable/bg_directions_button"
                     android:backgroundTint="@null"
                     android:stateListAnimator="@null"
-                    android:text="Get&#10;Directions"
+                    android:text="@string/campus_map_get_directions"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="13sp"
@@ -532,9 +496,6 @@
                     android:padding="5dp" />
 
             </LinearLayout>
-
-
-            <!-- Bottom spacing -->
 
             <View
                 android:layout_width="match_parent"
@@ -544,10 +505,7 @@
 
     </ScrollView>
 
-
-    <!-- ===================================================== -->
     <!-- BOTTOM NAVIGATION -->
-    <!-- ===================================================== -->
 
     <LinearLayout
         android:id="@+id/bottomNavigation"
@@ -558,9 +516,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <!-- ================================================= -->
         <!-- HOME -->
-        <!-- ================================================= -->
 
         <LinearLayout
             android:id="@+id/navHome"
@@ -578,22 +534,19 @@
                 android:layout_height="27dp"
                 android:src="@drawable/ic_home"
                 app:tint="#344B68"
-                android:contentDescription="Home" />
+                android:contentDescription="@string/campus_map_home" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="Home"
+                android:text="@string/campus_map_home"
                 android:textColor="#344B68"
                 android:textSize="12sp" />
 
         </LinearLayout>
 
-
-        <!-- ================================================= -->
         <!-- MAP -->
-        <!-- ================================================= -->
 
         <LinearLayout
             android:id="@+id/navMap"
@@ -612,23 +565,20 @@
                 android:layout_height="29dp"
                 android:src="@drawable/ic_location_pin"
                 app:tint="#1976D2"
-                android:contentDescription="Map" />
+                android:contentDescription="@string/campus_map_nav_map" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="Map"
+                android:text="@string/campus_map_nav_map"
                 android:textColor="#1976D2"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
-
-        <!-- ================================================= -->
         <!-- REPORTS -->
-        <!-- ================================================= -->
 
         <LinearLayout
             android:id="@+id/navReports"
@@ -646,22 +596,19 @@
                 android:layout_height="27dp"
                 android:src="@drawable/ic_reports"
                 app:tint="#344B68"
-                android:contentDescription="Reports" />
+                android:contentDescription="@string/campus_map_reports" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="Reports"
+                android:text="@string/campus_map_reports"
                 android:textColor="#344B68"
                 android:textSize="12sp" />
 
         </LinearLayout>
 
-
-        <!-- ================================================= -->
         <!-- ALERTS -->
-        <!-- ================================================= -->
 
         <LinearLayout
             android:id="@+id/navNotifications"
@@ -680,23 +627,20 @@
                 android:layout_height="29dp"
                 android:src="@drawable/ic_notifications"
                 app:tint="#344B68"
-                android:contentDescription="Alerts" />
+                android:contentDescription="@string/campus_map_alerts" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="Alerts"
+                android:text="@string/campus_map_alerts"
                 android:textColor="#344B68"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
-
-        <!-- ================================================= -->
         <!-- PROFILE -->
-        <!-- ================================================= -->
 
         <LinearLayout
             android:id="@+id/navProfile"
@@ -715,13 +659,13 @@
                 android:layout_height="29dp"
                 android:src="@drawable/ic_profile"
                 app:tint="#344B68"
-                android:contentDescription="Profile" />
+                android:contentDescription="@string/campus_map_profile" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="Profile"
+                android:text="@string/campus_map_profile"
                 android:textColor="#344B68"
                 android:textSize="12sp"
                 android:textStyle="bold" />

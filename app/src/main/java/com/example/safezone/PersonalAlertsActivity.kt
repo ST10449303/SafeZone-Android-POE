@@ -1,6 +1,7 @@
 package com.example.safezone
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -16,7 +17,12 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.lifecycleScope
 import com.example.safezone.api.RetrofitClient
 import com.example.safezone.api.SafetyAlert
+import com.example.safezone.data.SafeZoneDatabase
+import com.example.safezone.data.SafetyAlertEntity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.security.MessageDigest
 
 class PersonalAlertsActivity : AppCompatActivity() {
 
@@ -24,10 +30,7 @@ class PersonalAlertsActivity : AppCompatActivity() {
         private const val TAG = "SafeZonePersonalAlerts"
     }
 
-    // =========================================================
-    // VIEWS
-    // =========================================================
-
+    // Views from activity_personal_alerts.xml
     private lateinit var alertsContainer: LinearLayout
     private lateinit var tvSelectedLocation: TextView
 
@@ -36,26 +39,33 @@ class PersonalAlertsActivity : AppCompatActivity() {
     private lateinit var btnFilterSafety: AppCompatButton
     private lateinit var btnFilterGeneral: AppCompatButton
     private lateinit var btnFilterEvents: AppCompatButton
-
     private lateinit var btnEnableNotifications: AppCompatButton
 
-    // =========================================================
-    // DATA
-    // =========================================================
+    // Room database access
+    private val alertDao by lazy {
+        SafeZoneDatabase
+            .getDatabase(applicationContext)
+            .safetyAlertDao()
+    }
 
-    private var apiAlerts: List<SafetyAlert> = emptyList()
+    // Model used to display saved and API alerts.
+    private data class AlertDisplay(
+        val alertId: String,
+        val alertType: String,
+        val title: String,
+        val message: String,
+        val location: String,
+        val createdAt: String
+    )
 
-    // Default Personal Alerts location
+    private var apiAlerts: List<AlertDisplay> = emptyList()
+
+    // These are actual location/category values, not translated labels.
     private var selectedLocation = "Pretoria"
-
     private var selectedFilter = "All"
-
-    // =========================================================
-    // ON CREATE
-    // =========================================================
+    private var requestNumber = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
         Log.d(TAG, "Personal Alerts screen opened")
@@ -63,1132 +73,693 @@ class PersonalAlertsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_personal_alerts)
 
         initialiseViews()
-
         setupClickListeners()
 
-        Log.d(
-            TAG,
-            "Personal Alerts controls initialized successfully"
-        )
-
-        // Default location
         tvSelectedLocation.text = selectedLocation
 
-        loadAlertsFromApi()
-    }
+        updateFilterButtons(selectedFilter)
 
-    // =========================================================
-    // INITIALISE VIEWS
-    // =========================================================
+        Log.d(TAG, "Personal Alerts initialized successfully")
+    }
 
     private fun initialiseViews() {
+        alertsContainer = findViewById(R.id.alertsContainer)
+        tvSelectedLocation = findViewById(R.id.tvSelectedLocation)
 
-        alertsContainer =
-            findViewById(R.id.alertsContainer)
+        btnFilterAll = findViewById(R.id.btnFilterAll)
+        btnFilterEmergency = findViewById(R.id.btnFilterEmergency)
+        btnFilterSafety = findViewById(R.id.btnFilterSafety)
+        btnFilterGeneral = findViewById(R.id.btnFilterGeneral)
+        btnFilterEvents = findViewById(R.id.btnFilterEvents)
 
-        tvSelectedLocation =
-            findViewById(R.id.tvSelectedLocation)
+        btnEnableNotifications = findViewById(R.id.btnEnableNotifications)
 
-        btnFilterAll =
-            findViewById(R.id.btnFilterAll)
-
-        btnFilterEmergency =
-            findViewById(R.id.btnFilterEmergency)
-
-        btnFilterSafety =
-            findViewById(R.id.btnFilterSafety)
-
-        btnFilterGeneral =
-            findViewById(R.id.btnFilterGeneral)
-
-        btnFilterEvents =
-            findViewById(R.id.btnFilterEvents)
-
-        btnEnableNotifications =
-            findViewById(R.id.btnEnableNotifications)
-
-        Log.d(
-            TAG,
-            "All Personal Alerts views connected successfully"
-        )
+        Log.d(TAG, "All Personal Alerts views connected")
     }
 
-    // =========================================================
-    // CLICK LISTENERS
-    // =========================================================
-
     private fun setupClickListeners() {
-
-        // =====================================================
-        // BACK
-        // =====================================================
-
         findViewById<View>(R.id.tvBack).setOnClickListener {
-
-            Log.d(
-                TAG,
-                "Back button clicked"
-            )
-
             finish()
         }
 
-        // =====================================================
-        // NOTIFICATION SETTINGS
-        // =====================================================
-
         findViewById<View>(R.id.ivNotification).setOnClickListener {
-
-            Log.d(
-                TAG,
-                "Notification settings icon clicked"
-            )
-
             openNotificationSettings()
         }
 
-        // =====================================================
-        // LOCATION SELECTOR
-        // =====================================================
-
         findViewById<View>(R.id.locationSelector).setOnClickListener {
-
-            Log.d(
-                TAG,
-                "Personal location selector clicked"
-            )
-
             showLocationSelector()
         }
 
-        // =====================================================
-        // FILTER - ALL
-        // =====================================================
-
+        // Internal filter values remain consistent with API/database values.
         btnFilterAll.setOnClickListener {
-
-            Log.d(
-                TAG,
-                "All alerts filter selected"
-            )
-
             selectedFilter = "All"
-
             showAlerts()
         }
-
-        // =====================================================
-        // FILTER - EMERGENCY
-        // =====================================================
 
         btnFilterEmergency.setOnClickListener {
-
-            Log.d(
-                TAG,
-                "Emergency alerts filter selected"
-            )
-
             selectedFilter = "Emergency"
-
             showAlerts()
         }
-
-        // =====================================================
-        // FILTER - SAFETY
-        // =====================================================
 
         btnFilterSafety.setOnClickListener {
-
-            Log.d(
-                TAG,
-                "Safety alerts filter selected"
-            )
-
             selectedFilter = "Safety"
-
             showAlerts()
         }
-
-        // =====================================================
-        // FILTER - GENERAL
-        // =====================================================
 
         btnFilterGeneral.setOnClickListener {
-
-            Log.d(
-                TAG,
-                "General alerts filter selected"
-            )
-
             selectedFilter = "General"
-
             showAlerts()
         }
-
-        // =====================================================
-        // FILTER - EVENTS
-        // =====================================================
 
         btnFilterEvents.setOnClickListener {
-
-            Log.d(
-                TAG,
-                "Events alerts filter selected"
-            )
-
             selectedFilter = "Events"
-
             showAlerts()
         }
 
-        // =====================================================
-        // ENABLE NOTIFICATIONS
-        // =====================================================
-
         btnEnableNotifications.setOnClickListener {
-
-            Log.d(
-                TAG,
-                "Enable notifications button clicked"
-            )
-
             openNotificationSettings()
         }
 
-        // =====================================================
-        // BOTTOM NAVIGATION
-        // =====================================================
-
         setupBottomNavigation()
 
-        Log.d(
-            TAG,
-            "Personal Alerts click listeners configured"
-        )
+        Log.d(TAG, "Personal Alerts click listeners configured")
     }
 
-    // =========================================================
-    // LOCATION SELECTOR
-    // =========================================================
-
+    // Location selector: translated UI, unchanged location values.
     private fun showLocationSelector() {
-
-        Log.d(
-            TAG,
-            "Opening personal location selection menu"
-        )
-
         val popup = PopupMenu(
             this,
             findViewById(R.id.locationSelector)
         )
 
-        // Personal Alerts locations
-        popup.menu.add("Pretoria")
-        popup.menu.add("Johannesburg")
-        popup.menu.add("Durban")
-        popup.menu.add("Bloemfontein")
-        popup.menu.add("Cape Town")
-        popup.menu.add("Polokwane")
+        val locations = listOf(
+            "Pretoria",
+            "Johannesburg",
+            "Durban",
+            "Bloemfontein",
+            "Cape Town",
+            "Polokwane"
+        )
+
+        locations.forEach { location ->
+            popup.menu.add(location)
+        }
 
         popup.setOnMenuItemClickListener { item ->
+            selectedLocation = item.title.toString()
+            tvSelectedLocation.text = selectedLocation
 
-            selectedLocation =
-                item.title.toString()
-
-            tvSelectedLocation.text =
-                selectedLocation
-
-            // Reset filter whenever location changes
             selectedFilter = "All"
-
-            Log.d(
-                TAG,
-                "Personal location changed to: $selectedLocation"
-            )
+            updateFilterButtons(selectedFilter)
 
             Toast.makeText(
                 this,
-                "$selectedLocation selected.",
+                getString(
+                    R.string.personal_alerts_location_selected,
+                    selectedLocation
+                ),
                 Toast.LENGTH_SHORT
             ).show()
 
             loadAlertsFromApi()
-
             true
         }
 
         popup.show()
     }
 
-    // =========================================================
-    // LOAD PERSONAL ALERTS FROM REST API
-    // =========================================================
-
-    private fun loadAlertsFromApi() {
-
-        Log.d(
-            TAG,
-            "Starting REST API request for Personal Alerts"
+    // Preload general safety guidance for offline use.
+    // These are guidance items, not verified live alerts.
+    private suspend fun seedDefaultOfflineAlerts() {
+        val locations = listOf(
+            "Pretoria",
+            "Johannesburg",
+            "Durban",
+            "Bloemfontein",
+            "Cape Town",
+            "Polokwane"
         )
 
-        Log.d(
-            TAG,
-            "Selected personal location: $selectedLocation"
+        val defaultGuidance = listOf(
+            Triple(
+                "Safety",
+                "Protect your personal information",
+                "Avoid sharing your home address, live location, passwords, or other sensitive information with strangers."
+            ),
+            Triple(
+                "Safety",
+                "Plan your journey",
+                "Plan your route in advance, keep your phone charged, and let someone you trust know when you expect to arrive."
+            ),
+            Triple(
+                "General",
+                "Know how to get help",
+                "Keep important emergency contact numbers accessible. If you are in immediate danger, contact the appropriate emergency services."
+            )
         )
 
-        alertsContainer.removeAllViews()
+        for (location in locations) {
+            val existingAlerts = alertDao.getAlertsForLocationOnce(location)
 
-        showLoadingMessage()
+            // Do not overwrite existing cached alerts during seeding.
+            if (existingAlerts.isNotEmpty()) continue
 
-        lifecycleScope.launch {
+            val locationKey = location
+                .lowercase()
+                .replace(" ", "-")
 
-            try {
-
-                Log.d(
-                    TAG,
-                    "Sending Personal Alerts request to SafeZone REST API"
-                )
-
-                // =================================================
-                // IMPORTANT:
-                // Personal Alerts use LOCATION, not CAMPUS.
-                //
-                // Example:
-                // /api/SafetyAlerts/location/Pretoria
-                // =================================================
-
-                val response =
-                    RetrofitClient.apiService
-                        .getAlertsByLocation(
-                            selectedLocation
-                        )
-
-                if (response.isSuccessful) {
-
-                    Log.d(
-                        TAG,
-                        "Personal Alerts API request completed successfully"
-                    )
-
-                    apiAlerts =
-                        response.body()
-                            ?: emptyList()
-
-                    Log.d(
-                        TAG,
-                        "Number of Personal Alerts received: ${apiAlerts.size}"
-                    )
-
-                    showAlerts()
-
-                } else {
-
-                    apiAlerts =
-                        emptyList()
-
-                    Log.e(
-                        TAG,
-                        "Personal Alerts API returned unsuccessful response: ${response.code()}"
-                    )
-
-                    showErrorMessage(
-                        "Unable to load safety alerts.\n" +
-                                "Server response: ${response.code()}"
-                    )
-                }
-
-            } catch (e: Exception) {
-
-                apiAlerts =
-                    emptyList()
-
-                Log.e(
-                    TAG,
-                    "Unable to connect to SafeZone Personal Alerts API",
-                    e
-                )
-
-                showErrorMessage(
-                    "Unable to connect to the SafeZone API.\n\n" +
-                            "Make sure SafeZoneAPI is running and " +
-                            "your phone is connected to the same Wi-Fi."
+            val defaultEntities = defaultGuidance.mapIndexed { index, guidance ->
+                SafetyAlertEntity(
+                    alertId = "offline-$locationKey-${index + 1}",
+                    location = location,
+                    alertType = guidance.first,
+                    title = "Offline Guidance: ${guidance.second}",
+                    message = guidance.third,
+                    createdAt = "2026-10-11T00:00:00"
                 )
             }
-        }
-    }
 
-    // =========================================================
-    // DISPLAY ALERTS
-    // =========================================================
-
-    private fun showAlerts() {
-
-        Log.d(
-            TAG,
-            "Displaying Personal Alerts using filter: $selectedFilter"
-        )
-
-        alertsContainer.removeAllViews()
-
-        val filteredAlerts =
-            if (selectedFilter == "All") {
-
-                apiAlerts
-
-            } else {
-
-                apiAlerts.filter {
-
-                    it.alertType.equals(
-                        selectedFilter,
-                        ignoreCase = true
-                    )
-                }
-            }
-
-        Log.d(
-            TAG,
-            "Personal Alerts after filtering: ${filteredAlerts.size}"
-        )
-
-        updateFilterButtons(selectedFilter)
-
-        // =====================================================
-        // NO ALERTS
-        // =====================================================
-
-        if (filteredAlerts.isEmpty()) {
+            alertDao.insertAll(defaultEntities)
 
             Log.d(
                 TAG,
-                "No Personal Alerts available for selected filter"
+                "Preloaded ${defaultEntities.size} guidance items for $location"
             )
+        }
+    }
 
-            val emptyMessage =
-                TextView(this)
+    // Load local data first, then try to refresh from the API.
+    private fun loadAlertsFromApi() {
+        val requestedLocation = selectedLocation
+        val currentRequest = ++requestNumber
 
-            emptyMessage.text =
-                if (selectedFilter == "All") {
+        Log.d(TAG, "Loading alerts for $requestedLocation")
 
-                    "No safety alerts are currently available for $selectedLocation."
+        alertsContainer.removeAllViews()
+        showLoadingMessage()
 
-                } else {
-
-                    "No $selectedFilter alerts are currently available for $selectedLocation."
+        lifecycleScope.launch {
+            // STEP 1: Seed and read local database.
+            try {
+                withContext(Dispatchers.IO) {
+                    seedDefaultOfflineAlerts()
                 }
 
-            emptyMessage.textSize = 15f
+                val cachedAlerts = withContext(Dispatchers.IO) {
+                    alertDao.getAlertsForLocationOnce(requestedLocation)
+                }
 
-            emptyMessage.setTextColor(
-                android.graphics.Color.parseColor(
-                    "#637A98"
+                if (
+                    currentRequest != requestNumber ||
+                    requestedLocation != selectedLocation
+                ) {
+                    return@launch
+                }
+
+                apiAlerts = cachedAlerts.map { cached ->
+                    AlertDisplay(
+                        alertId = cached.alertId,
+                        alertType = cached.alertType,
+                        title = cached.title,
+                        message = cached.message,
+                        location = cached.location,
+                        createdAt = cached.createdAt
+                    )
+                }
+
+                showAlerts()
+
+                Log.d(
+                    TAG,
+                    "Loaded ${apiAlerts.size} saved alerts for $requestedLocation"
                 )
-            )
+            } catch (e: Exception) {
+                Log.e(TAG, "Unable to seed or load local alerts", e)
 
-            emptyMessage.gravity =
-                Gravity.CENTER
+                if (
+                    currentRequest != requestNumber ||
+                    requestedLocation != selectedLocation
+                ) {
+                    return@launch
+                }
 
-            emptyMessage.setPadding(
-                16,
-                50,
-                16,
-                50
-            )
+                apiAlerts = emptyList()
+                showAlerts()
+            }
 
-            alertsContainer.addView(
-                emptyMessage
-            )
+            // STEP 2: Fetch latest alerts from REST API.
+            try {
+                val response = RetrofitClient.apiService
+                    .getAlertsByLocation(requestedLocation)
 
+                if (
+                    currentRequest != requestNumber ||
+                    requestedLocation != selectedLocation
+                ) {
+                    return@launch
+                }
+
+                if (response.isSuccessful) {
+                    val receivedAlerts = response.body() ?: emptyList()
+
+                    val entities = receivedAlerts.map { alert ->
+                        SafetyAlertEntity(
+                            alertId = createAlertId(alert),
+                            location = alert.location,
+                            alertType = alert.alertType,
+                            title = alert.title,
+                            message = alert.message,
+                            createdAt = alert.createdAt
+                        )
+                    }
+
+                    // Update the cache only after a successful API response.
+                    withContext(Dispatchers.IO) {
+                        alertDao.deleteAlertsForLocation(requestedLocation)
+
+                        if (entities.isNotEmpty()) {
+                            alertDao.insertAll(entities)
+                        }
+                    }
+
+                    if (
+                        currentRequest != requestNumber ||
+                        requestedLocation != selectedLocation
+                    ) {
+                        return@launch
+                    }
+
+                    apiAlerts = if (receivedAlerts.isNotEmpty()) {
+                        receivedAlerts.map { alert ->
+                            AlertDisplay(
+                                alertId = createAlertId(alert),
+                                alertType = alert.alertType,
+                                title = alert.title,
+                                message = alert.message,
+                                location = alert.location,
+                                createdAt = alert.createdAt
+                            )
+                        }
+                    } else {
+                        // Keep locally stored guidance if the server returns no alerts.
+                        val savedAlerts = withContext(Dispatchers.IO) {
+                            alertDao.getAlertsForLocationOnce(requestedLocation)
+                        }
+
+                        savedAlerts.map { cached ->
+                            AlertDisplay(
+                                alertId = cached.alertId,
+                                alertType = cached.alertType,
+                                title = cached.title,
+                                message = cached.message,
+                                location = cached.location,
+                                createdAt = cached.createdAt
+                            )
+                        }
+                    }
+
+                    showAlerts()
+
+                    Log.d(TAG, "Alerts refreshed successfully")
+                } else {
+                    Log.e(TAG, "API returned HTTP ${response.code()}")
+
+                    if (
+                        currentRequest == requestNumber &&
+                        requestedLocation == selectedLocation
+                    ) {
+                        showOfflineNotice(
+                            getString(
+                                R.string.personal_alerts_server_error,
+                                response.code()
+                            )
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "API unavailable; keeping saved guidance", e)
+
+                if (
+                    currentRequest != requestNumber ||
+                    requestedLocation != selectedLocation
+                ) {
+                    return@launch
+                }
+
+                showOfflineNotice(
+                    getString(R.string.personal_alerts_offline_notice)
+                )
+            }
+        }
+    }
+
+    // Generate a stable ID from the alert's content.
+    private fun createAlertId(alert: SafetyAlert): String {
+        val source = listOf(
+            alert.location.trim(),
+            alert.alertType.trim(),
+            alert.title.trim(),
+            alert.message.trim(),
+            alert.createdAt.trim()
+        ).joinToString("|")
+
+        val bytes = MessageDigest
+            .getInstance("SHA-256")
+            .digest(source.toByteArray(Charsets.UTF_8))
+
+        return bytes.joinToString("") { byte ->
+            "%02x".format(byte)
+        }
+    }
+
+    // Filter using the original API/database category values.
+    private fun showAlerts() {
+        alertsContainer.removeAllViews()
+
+        val filteredAlerts = if (selectedFilter == "All") {
+            apiAlerts
+        } else {
+            apiAlerts.filter { alert ->
+                alert.alertType.equals(selectedFilter, ignoreCase = true)
+            }
+        }
+
+        updateFilterButtons(selectedFilter)
+
+        if (filteredAlerts.isEmpty()) {
+            val emptyMessage = TextView(this)
+
+            emptyMessage.text = if (selectedFilter == "All") {
+                getString(
+                    R.string.personal_alerts_empty_all,
+                    selectedLocation
+                )
+            } else {
+                getString(
+                    R.string.personal_alerts_empty_category,
+                    getTranslatedCategory(selectedFilter),
+                    selectedLocation
+                )
+            }
+
+            emptyMessage.textSize = 15f
+            emptyMessage.setTextColor(Color.parseColor("#637A98"))
+            emptyMessage.gravity = Gravity.CENTER
+            emptyMessage.setPadding(16, 50, 16, 50)
+
+            alertsContainer.addView(emptyMessage)
             return
         }
 
-        // =====================================================
-        // ADD ALERT CARDS
-        // =====================================================
-
         for (alert in filteredAlerts) {
-
             addAlertCard(alert)
         }
 
-        Log.d(
-            TAG,
-            "Personal alert cards displayed successfully"
-        )
+        Log.d(TAG, "Displayed ${filteredAlerts.size} alerts")
     }
 
-    // =========================================================
-    // ALERT CARD
-    // =========================================================
+    // Create a card without changing the existing card drawable.
+    private fun addAlertCard(alert: AlertDisplay) {
+        val card = LinearLayout(this)
 
-    private fun addAlertCard(
-        alert: SafetyAlert
-    ) {
+        card.orientation = LinearLayout.VERTICAL
+        card.setPadding(18, 16, 18, 16)
+        card.setBackgroundResource(R.drawable.bg_alert_card)
 
-        Log.d(
-            TAG,
-            "Displaying Personal Alert: ${alert.title}"
+        val cardParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
-        val card =
-            LinearLayout(this)
+        cardParams.setMargins(0, 0, 0, 14)
+        card.layoutParams = cardParams
 
-        card.orientation =
-            LinearLayout.VERTICAL
+        // Category label.
+        val typeText = TextView(this)
+        typeText.text = getTranslatedCategory(alert.alertType).uppercase()
+        typeText.textSize = 12f
+        typeText.setTypeface(null, android.graphics.Typeface.BOLD)
+        typeText.setTextColor(getAlertTypeColor(alert.alertType))
+        card.addView(typeText)
 
-        card.setPadding(
-            18,
-            16,
-            18,
-            16
+        // Alert title from the API or database.
+        val titleText = TextView(this)
+        titleText.text = alert.title
+        titleText.textSize = 18f
+        titleText.setTypeface(null, android.graphics.Typeface.BOLD)
+        titleText.setTextColor(Color.parseColor("#12345A"))
+
+        val titleParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
-        card.background =
-            getDrawable(
-                R.drawable.bg_alert_card
-            )
+        titleParams.setMargins(0, 6, 0, 0)
+        titleText.layoutParams = titleParams
+        card.addView(titleText)
 
-        val cardParams =
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
+        // Alert message from the API or database.
+        val messageText = TextView(this)
+        messageText.text = alert.message
+        messageText.textSize = 14f
+        messageText.setTextColor(Color.parseColor("#526B8D"))
 
-        cardParams.setMargins(
-            0,
-            0,
-            0,
-            14
+        val messageParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
-        card.layoutParams =
-            cardParams
+        messageParams.setMargins(0, 8, 0, 0)
+        messageText.layoutParams = messageParams
+        card.addView(messageText)
 
-        // =====================================================
-        // ALERT TYPE
-        // =====================================================
+        // Location label is localized; the actual place name is unchanged.
+        val locationText = TextView(this)
+        locationText.text = getString(
+            R.string.personal_alerts_card_location,
+            alert.location
+        )
+        locationText.textSize = 13f
+        locationText.setTextColor(Color.parseColor("#526B8D"))
 
-        val typeText =
-            TextView(this)
-
-        typeText.text =
-            alert.alertType.uppercase()
-
-        typeText.textSize =
-            12f
-
-        typeText.setTypeface(
-            null,
-            android.graphics.Typeface.BOLD
+        val locationParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
-        typeText.setTextColor(
-            getAlertTypeColor(
-                alert.alertType
-            )
+        locationParams.setMargins(0, 8, 0, 0)
+        locationText.layoutParams = locationParams
+        card.addView(locationText)
+
+        // Date and time.
+        val timeText = TextView(this)
+        timeText.text = formatDateTime(alert.createdAt)
+        timeText.textSize = 12f
+        timeText.setTextColor(Color.parseColor("#7B8EA8"))
+
+        val timeParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
-        card.addView(
-            typeText
-        )
+        timeParams.setMargins(0, 12, 0, 0)
+        timeText.layoutParams = timeParams
+        card.addView(timeText)
 
-        // =====================================================
-        // TITLE
-        // =====================================================
-
-        val titleText =
-            TextView(this)
-
-        titleText.text =
-            alert.title
-
-        titleText.textSize =
-            18f
-
-        titleText.setTypeface(
-            null,
-            android.graphics.Typeface.BOLD
-        )
-
-        titleText.setTextColor(
-            android.graphics.Color.parseColor(
-                "#12345A"
-            )
-        )
-
-        val titleParams =
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-
-        titleParams.setMargins(
-            0,
-            6,
-            0,
-            0
-        )
-
-        titleText.layoutParams =
-            titleParams
-
-        card.addView(
-            titleText
-        )
-
-        // =====================================================
-        // MESSAGE
-        // =====================================================
-
-        val messageText =
-            TextView(this)
-
-        messageText.text =
-            alert.message
-
-        messageText.textSize =
-            14f
-
-        messageText.setTextColor(
-            android.graphics.Color.parseColor(
-                "#526B8D"
-            )
-        )
-
-        val messageParams =
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-
-        messageParams.setMargins(
-            0,
-            8,
-            0,
-            0
-        )
-
-        messageText.layoutParams =
-            messageParams
-
-        card.addView(
-            messageText
-        )
-
-        // =====================================================
-        // LOCATION
-        // =====================================================
-
-        val locationText =
-            TextView(this)
-
-        locationText.text =
-            "Location: ${alert.location}"
-
-        locationText.textSize =
-            13f
-
-        locationText.setTextColor(
-            android.graphics.Color.parseColor(
-                "#526B8D"
-            )
-        )
-
-        val locationParams =
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-
-        locationParams.setMargins(
-            0,
-            8,
-            0,
-            0
-        )
-
-        locationText.layoutParams =
-            locationParams
-
-        card.addView(
-            locationText
-        )
-
-        // =====================================================
-        // DATE / TIME
-        // =====================================================
-
-        val timeText =
-            TextView(this)
-
-        timeText.text =
-            formatDateTime(
-                alert.createdAt
-            )
-
-        timeText.textSize =
-            12f
-
-        timeText.setTextColor(
-            android.graphics.Color.parseColor(
-                "#7B8EA8"
-            )
-        )
-
-        val timeParams =
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-
-        timeParams.setMargins(
-            0,
-            12,
-            0,
-            0
-        )
-
-        timeText.layoutParams =
-            timeParams
-
-        card.addView(
-            timeText
-        )
-
-        alertsContainer.addView(
-            card
-        )
+        alertsContainer.addView(card)
     }
 
-    // =========================================================
-    // FORMAT DATE/TIME
-    // =========================================================
-
-    private fun formatDateTime(
-        createdAt: String
-    ): String {
-
+    private fun formatDateTime(createdAt: String): String {
         if (createdAt.isBlank()) {
-
-            return "Date and time unavailable"
+            return getString(R.string.personal_alerts_datetime_unavailable)
         }
 
         return try {
-
-            val parts =
-                createdAt.split("T")
+            val parts = createdAt.split("T")
 
             if (parts.size >= 2) {
+                val date = parts[0]
+                val time = parts[1].take(5)
 
-                val date =
-                    parts[0]
-
-                val time =
-                    parts[1]
-                        .take(5)
-
-                "Date: $date  •  Time: $time"
-
+                getString(
+                    R.string.personal_alerts_date_time_format,
+                    date,
+                    time
+                )
             } else {
-
                 createdAt
             }
-
         } catch (e: Exception) {
-
-            Log.e(
-                TAG,
-                "Error formatting alert date/time",
-                e
-            )
-
+            Log.e(TAG, "Error formatting date/time", e)
             createdAt
         }
     }
 
-    // =========================================================
-    // ALERT TYPE COLOUR
-    // =========================================================
-
-    private fun getAlertTypeColor(
-        type: String
-    ): Int {
-
+    // Translate known categories for display without changing their stored values.
+    private fun getTranslatedCategory(type: String): String {
         return when {
+            type.equals("Emergency", ignoreCase = true) ->
+                getString(R.string.personal_alerts_filter_emergency)
 
-            type.equals(
-                "Emergency",
-                ignoreCase = true
-            ) ->
+            type.equals("Safety", ignoreCase = true) ->
+                getString(R.string.personal_alerts_filter_safety)
 
-                android.graphics.Color.parseColor(
-                    "#C62828"
-                )
+            type.equals("General", ignoreCase = true) ->
+                getString(R.string.personal_alerts_filter_general)
 
-            type.equals(
-                "Safety",
-                ignoreCase = true
-            ) ->
+            type.equals("Events", ignoreCase = true) ->
+                getString(R.string.personal_alerts_filter_events)
 
-                android.graphics.Color.parseColor(
-                    "#1976D2"
-                )
-
-            type.equals(
-                "Events",
-                ignoreCase = true
-            ) ->
-
-                android.graphics.Color.parseColor(
-                    "#7B1FA2"
-                )
-
-            else ->
-
-                android.graphics.Color.parseColor(
-                    "#526B8D"
-                )
+            else -> type
         }
     }
 
-    // =========================================================
-    // FILTER BUTTONS
-    // =========================================================
+    private fun getAlertTypeColor(type: String): Int {
+        return when {
+            type.equals("Emergency", ignoreCase = true) ->
+                Color.parseColor("#C62828")
 
-    private fun updateFilterButtons(
-        selectedFilter: String
-    ) {
+            type.equals("Safety", ignoreCase = true) ->
+                Color.parseColor("#1976D2")
 
+            type.equals("Events", ignoreCase = true) ->
+                Color.parseColor("#7B1FA2")
+
+            else -> Color.parseColor("#526B8D")
+        }
+    }
+
+    private fun updateFilterButtons(selectedFilter: String) {
         resetFilterButton(btnFilterAll)
-
         resetFilterButton(btnFilterEmergency)
-
         resetFilterButton(btnFilterSafety)
-
         resetFilterButton(btnFilterGeneral)
-
         resetFilterButton(btnFilterEvents)
 
         when (selectedFilter) {
-
-            "All" ->
-                selectFilterButton(
-                    btnFilterAll
-                )
-
-            "Emergency" ->
-                selectFilterButton(
-                    btnFilterEmergency
-                )
-
-            "Safety" ->
-                selectFilterButton(
-                    btnFilterSafety
-                )
-
-            "General" ->
-                selectFilterButton(
-                    btnFilterGeneral
-                )
-
-            "Events" ->
-                selectFilterButton(
-                    btnFilterEvents
-                )
+            "All" -> selectFilterButton(btnFilterAll)
+            "Emergency" -> selectFilterButton(btnFilterEmergency)
+            "Safety" -> selectFilterButton(btnFilterSafety)
+            "General" -> selectFilterButton(btnFilterGeneral)
+            "Events" -> selectFilterButton(btnFilterEvents)
         }
     }
 
-    private fun resetFilterButton(
-        button: AppCompatButton
-    ) {
-
-        button.setBackgroundResource(
-            R.drawable.bg_alert_filter
-        )
-
-        button.setTextColor(
-            android.graphics.Color.parseColor(
-                "#243B5A"
-            )
-        )
+    private fun resetFilterButton(button: AppCompatButton) {
+        button.setBackgroundResource(R.drawable.bg_alert_filter)
+        button.setTextColor(Color.parseColor("#243B5A"))
     }
 
-    private fun selectFilterButton(
-        button: AppCompatButton
-    ) {
-
-        button.setBackgroundResource(
-            R.drawable.bg_alert_filter_selected
-        )
-
-        button.setTextColor(
-            android.graphics.Color.WHITE
-        )
+    private fun selectFilterButton(button: AppCompatButton) {
+        button.setBackgroundResource(R.drawable.bg_alert_filter_selected)
+        button.setTextColor(Color.WHITE)
     }
-
-    // =========================================================
-    // LOADING MESSAGE
-    // =========================================================
 
     private fun showLoadingMessage() {
+        val text = TextView(this)
 
-        val text =
-            TextView(this)
+        text.text = getString(R.string.personal_alerts_loading)
+        text.textSize = 15f
+        text.gravity = Gravity.CENTER
+        text.setTextColor(Color.parseColor("#637A98"))
+        text.setPadding(16, 40, 16, 40)
 
-        text.text =
-            "Loading safety alerts..."
-
-        text.textSize =
-            15f
-
-        text.gravity =
-            Gravity.CENTER
-
-        text.setTextColor(
-            android.graphics.Color.parseColor(
-                "#637A98"
-            )
-        )
-
-        text.setPadding(
-            16,
-            40,
-            16,
-            40
-        )
-
-        alertsContainer.addView(
-            text
-        )
+        alertsContainer.addView(text)
     }
 
-    // =========================================================
-    // ERROR MESSAGE
-    // =========================================================
+    private fun showOfflineNotice(message: String) {
+        val notice = TextView(this)
 
-    private fun showErrorMessage(
-        message: String
-    ) {
+        notice.text = message
+        notice.textSize = 13f
+        notice.setTextColor(Color.parseColor("#7B5E00"))
+        notice.setBackgroundColor(Color.parseColor("#FFF4CC"))
+        notice.setPadding(14, 12, 14, 12)
 
-        val errorText =
-            TextView(this)
-
-        errorText.text =
-            message
-
-        errorText.textSize =
-            15f
-
-        errorText.gravity =
-            Gravity.CENTER
-
-        errorText.setTextColor(
-            android.graphics.Color.parseColor(
-                "#C62828"
-            )
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
-        errorText.setPadding(
-            20,
-            40,
-            20,
-            40
-        )
+        params.setMargins(0, 0, 0, 14)
+        notice.layoutParams = params
 
-        alertsContainer.addView(
-            errorText
-        )
+        // Insert the notice above the alert cards.
+        alertsContainer.addView(notice, 0)
     }
 
-    // =========================================================
-    // NOTIFICATION SETTINGS
-    // =========================================================
+    private fun showErrorMessage(message: String) {
+        val errorText = TextView(this)
+
+        errorText.text = message
+        errorText.textSize = 15f
+        errorText.gravity = Gravity.CENTER
+        errorText.setTextColor(Color.parseColor("#C62828"))
+        errorText.setPadding(20, 40, 20, 40)
+
+        alertsContainer.addView(errorText)
+    }
 
     private fun openNotificationSettings() {
-
-        Log.d(
-            TAG,
-            "Opening Android notification settings"
-        )
-
         try {
+            val intent = Intent()
 
-            val intent =
-                Intent()
-
-            if (
-                Build.VERSION.SDK_INT >=
-                Build.VERSION_CODES.O
-            ) {
-
-                intent.action =
-                    Settings.ACTION_APP_NOTIFICATION_SETTINGS
-
-                intent.putExtra(
-                    Settings.EXTRA_APP_PACKAGE,
-                    packageName
-                )
-
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                intent.action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                intent.putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
             } else {
-
-                intent.action =
-                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-
-                intent.data =
-                    android.net.Uri.parse(
-                        "package:$packageName"
-                    )
+                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                intent.data = android.net.Uri.parse("package:$packageName")
             }
 
             startActivity(intent)
-
         } catch (e: Exception) {
-
-            Log.e(
-                TAG,
-                "Unable to open notification settings",
-                e
-            )
+            Log.e(TAG, "Unable to open notification settings", e)
 
             Toast.makeText(
                 this,
-                "Notification settings are unavailable.",
+                R.string.personal_alerts_notification_settings_unavailable,
                 Toast.LENGTH_SHORT
             ).show()
         }
     }
 
-    // =========================================================
-    // BOTTOM NAVIGATION
-    // =========================================================
-
     private fun setupBottomNavigation() {
-
-        // =====================================================
         // HOME
-        // =====================================================
-
-        findViewById<View>(
-            R.id.navHome
-        ).setOnClickListener {
-
-            Log.d(
-                TAG,
-                "Bottom navigation: Home selected"
-            )
-
-            val intent =
-                Intent(
-                    this,
-                    PersonalHomeActivity::class.java
-                )
-
-            intent.flags =
-                Intent.FLAG_ACTIVITY_CLEAR_TOP
-
+        findViewById<View>(R.id.navHome).setOnClickListener {
+            val intent = Intent(this, PersonalHomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
-
             finish()
         }
 
-        // =====================================================
         // MAP
-        // =====================================================
-
-        findViewById<View>(
-            R.id.navMap
-        ).setOnClickListener {
-
-            Log.d(
-                TAG,
-                "Bottom navigation: Map selected"
-            )
-
-            startActivity(
-                Intent(
-                    this,
-                    FindHelpActivity::class.java
-                )
-            )
+        findViewById<View>(R.id.navMap).setOnClickListener {
+            startActivity(Intent(this, FindHelpActivity::class.java))
         }
 
-        // =====================================================
         // REPORTS
-        // =====================================================
-
-        findViewById<View>(
-            R.id.navReports
-        ).setOnClickListener {
-
-            Log.d(
-                TAG,
-                "Bottom navigation: Reports selected"
-            )
-
-            startActivity(
-                Intent(
-                    this,
-                    PersonalReportsActivity::class.java
-                )
-            )
+        findViewById<View>(R.id.navReports).setOnClickListener {
+            startActivity(Intent(this, PersonalReportsActivity::class.java))
         }
 
-        // =====================================================
         // ALERTS
-        // =====================================================
-
-        findViewById<View>(
-            R.id.navNotifications
-        ).setOnClickListener {
-
-            Log.d(
-                TAG,
-                "Bottom navigation: Alerts selected"
-            )
-
+        findViewById<View>(R.id.navNotifications).setOnClickListener {
             selectedFilter = "All"
-
             showAlerts()
         }
 
-        // =====================================================
         // PROFILE
-        // =====================================================
-
-        findViewById<View>(
-            R.id.navProfile
-        ).setOnClickListener {
-
-            Log.d(
-                TAG,
-                "Bottom navigation: Profile selected"
-            )
-
-            startActivity(
-                Intent(
-                    this,
-                    PersonalProfileActivity::class.java
-                )
-            )
+        findViewById<View>(R.id.navProfile).setOnClickListener {
+            startActivity(Intent(this, PersonalProfileActivity::class.java))
         }
     }
 
-    // =========================================================
-    // REFRESH WHEN RETURNING
-    // =========================================================
-
+    // Refresh cached/API alerts when returning to the screen.
     override fun onResume() {
-
         super.onResume()
 
-        Log.d(
-            TAG,
-            "Personal Alerts screen resumed"
-        )
-
         if (::alertsContainer.isInitialized) {
-
             loadAlertsFromApi()
         }
     }

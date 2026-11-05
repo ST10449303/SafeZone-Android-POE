@@ -24,14 +24,15 @@
             android:textColor="@android:color/white"
             android:textSize="36sp"
             android:clickable="true"
-            android:focusable="true" />
+            android:focusable="true"
+            android:contentDescription="@string/edit_profile_back" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="SafeZone"
+            android:text="@string/edit_profile_app_name"
             android:textColor="@android:color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -58,16 +59,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit Profile"
+                android:text="@string/edit_profile_title"
                 android:textColor="#172033"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
+            <!-- Subtitle -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="Update your personal information"
+                android:text="@string/edit_profile_subtitle"
                 android:textColor="#667085"
                 android:textSize="15sp" />
 
@@ -84,7 +86,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Full Name"
+                    android:text="@string/edit_profile_full_name"
                     android:textColor="#172033"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -95,7 +97,7 @@
                     android:layout_height="52dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/rounded_login_input"
-                    android:hint="Enter your full name"
+                    android:hint="@string/edit_profile_full_name_hint"
                     android:inputType="textPersonName"
                     android:paddingStart="14dp"
                     android:paddingEnd="14dp"
@@ -108,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Email Address"
+                    android:text="@string/edit_profile_email"
                     android:textColor="#172033"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -119,7 +121,7 @@
                     android:layout_height="52dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/rounded_login_input"
-                    android:hint="Enter your email"
+                    android:hint="@string/edit_profile_email_hint"
                     android:inputType="textEmailAddress"
                     android:paddingStart="14dp"
                     android:paddingEnd="14dp"
@@ -132,7 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Phone Number"
+                    android:text="@string/edit_profile_phone"
                     android:textColor="#172033"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -143,13 +145,46 @@
                     android:layout_height="52dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/rounded_login_input"
-                    android:hint="Enter your phone number"
+                    android:hint="@string/edit_profile_phone_hint"
                     android:inputType="phone"
                     android:paddingStart="14dp"
                     android:paddingEnd="14dp"
                     android:textColor="#172033"
                     android:textColorHint="#98A2B3"
                     android:textSize="16sp" />
+
+                <!-- Residential Area / Suburb -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/edit_profile_location"
+                    android:textColor="#172033"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/rounded_login_input"
+                    android:hint="@string/edit_profile_location_hint"
+                    android:inputType="textPostalAddress"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:textColor="#172033"
+                    android:textColorHint="#98A2B3"
+                    android:textSize="16sp" />
+
+                <!-- Location Description -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/edit_profile_location_description"
+                    android:textColor="#667085"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -162,7 +197,7 @@
                 android:background="@drawable/bg_continue_button"
                 android:backgroundTint="@null"
                 android:stateListAnimator="@null"
-                android:text="Save Changes"
+                android:text="@string/edit_profile_save_changes"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
@@ -175,7 +210,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="Cancel"
+                android:text="@string/edit_profile_cancel"
                 android:textColor="#1976D2"
                 android:textSize="15sp"
                 android:textStyle="bold"

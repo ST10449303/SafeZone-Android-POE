@@ -27,14 +27,14 @@
             android:textSize="38sp"
             android:clickable="true"
             android:focusable="true"
-            android:contentDescription="Back" />
+            android:contentDescription="@string/back" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="SafeZone"
+            android:text="@string/app_name"
             android:textColor="#FFFFFF"
             android:textSize="23sp"
             android:textStyle="bold" />
@@ -44,7 +44,6 @@
             android:layout_height="50dp" />
 
     </LinearLayout>
-
 
     <!-- ================= CONTENT ================= -->
 
@@ -64,7 +63,6 @@
             android:paddingTop="22dp"
             android:paddingBottom="28dp">
 
-
             <!-- MEDICAL ICON -->
 
             <TextView
@@ -78,7 +76,6 @@
                 android:textSize="42sp"
                 android:textStyle="bold" />
 
-
             <!-- TITLE -->
 
             <TextView
@@ -86,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:gravity="center"
-                android:text="What type of assistance&#10;do you need?"
+                android:text="@string/emergency_assistance_title"
                 android:textColor="#0B1F3A"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -96,10 +93,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="Select the type of emergency assistance you need."
+                android:text="@string/emergency_assistance_subtitle"
                 android:textColor="#667085"
                 android:textSize="14sp" />
-
 
             <!-- ================= OPTION ROW 1 ================= -->
 
@@ -124,7 +120,7 @@
                     android:minHeight="0dp"
                     android:padding="12dp"
                     android:gravity="center"
-                    android:text="✚&#10;&#10;Medical&#10;Emergency"
+                    android:text="@string/emergency_type_medical_card"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="14sp"
@@ -145,14 +141,13 @@
                     android:minHeight="0dp"
                     android:padding="12dp"
                     android:gravity="center"
-                    android:text="⚕&#10;&#10;Injury / Fall"
+                    android:text="@string/emergency_type_injury_card"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
-
 
             <!-- ================= OPTION ROW 2 ================= -->
 
@@ -177,7 +172,7 @@
                     android:minHeight="0dp"
                     android:padding="12dp"
                     android:gravity="center"
-                    android:text="🚗&#10;&#10;Accident"
+                    android:text="@string/emergency_type_accident_card"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="14sp"
@@ -198,14 +193,13 @@
                     android:minHeight="0dp"
                     android:padding="12dp"
                     android:gravity="center"
-                    android:text="🔥&#10;&#10;Fire"
+                    android:text="@string/emergency_type_fire_card"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
-
 
             <!-- ================= OPTION ROW 3 ================= -->
 
@@ -230,7 +224,7 @@
                     android:minHeight="0dp"
                     android:padding="12dp"
                     android:gravity="center"
-                    android:text="🛡&#10;&#10;Security&#10;Emergency"
+                    android:text="@string/emergency_type_security_card"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="14sp"
@@ -251,14 +245,13 @@
                     android:minHeight="0dp"
                     android:padding="12dp"
                     android:gravity="center"
-                    android:text="👥&#10;&#10;Harassment"
+                    android:text="@string/emergency_type_harassment_card"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
-
 
             <!-- ================= OTHER ================= -->
 
@@ -274,12 +267,11 @@
                 android:minHeight="0dp"
                 android:gravity="center_vertical"
                 android:paddingStart="22dp"
-                android:text="•••    Other Assistance"
+                android:text="@string/emergency_type_other_card"
                 android:textAllCaps="false"
                 android:textColor="#172033"
                 android:textSize="15sp"
                 android:textStyle="bold" />
-
 
             <!-- ================= SELECTED ASSISTANCE ================= -->
 
@@ -311,7 +303,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Selected Assistance"
+                        android:text="@string/selected_assistance"
                         android:textColor="#0B1F3A"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -321,14 +313,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="No assistance type selected"
+                        android:text="@string/no_assistance_selected"
                         android:textColor="#667085"
                         android:textSize="13sp" />
 
                 </LinearLayout>
 
             </LinearLayout>
-
 
             <!-- ================= CONTINUE ================= -->
 
@@ -343,7 +334,7 @@
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:gravity="center"
-                android:text="Continue  →"
+                android:text="@string/continue_with_arrow"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="17sp"

@@ -1,8 +1,10 @@
+
 package com.example.safezone
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,34 +14,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import android.content.Context
 
 class CampusHomeActivity : AppCompatActivity() {
 
-    // =========================================================
-    // FIREBASE
-    // =========================================================
-
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-
-    // =========================================================
-    // USER INFORMATION
-    // =========================================================
 
     private lateinit var tvWelcome: TextView
     private lateinit var tvCampusName: TextView
     private lateinit var tvCampusStatus: TextView
 
-    // =========================================================
-    // HEADER ICONS
-    // =========================================================
-
     private lateinit var tvNotification: ImageView
     private lateinit var tvProfile: ImageView
-
-    // =========================================================
-    // CAMPUS HOME BUTTONS
-    // =========================================================
 
     private lateinit var btnReportCampusIncident: AppCompatButton
     private lateinit var btnCampusEmergency: AppCompatButton
@@ -48,59 +35,52 @@ class CampusHomeActivity : AppCompatActivity() {
     private lateinit var btnMyCampusReports: AppCompatButton
     private lateinit var btnLogout: AppCompatButton
 
-    // =========================================================
-    // ON CREATE
-    // =========================================================
+    private var offlineMode = false
+    private var savedFullName = ""
+    private var savedEmail = ""
+
+    companion object {
+        private const val TAG = "CampusHomeActivity"
+        const val EXTRA_OFFLINE_MODE = "offlineMode"
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(
+            SafeZoneLanguageManager.wrapContext(newBase)
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_campus_home)
 
-        // Firebase
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Initialize views
+        offlineMode = intent.getBooleanExtra(EXTRA_OFFLINE_MODE, false)
+
+        savedFullName = intent.getStringExtra("fullName")
+            ?.takeIf { it.isNotBlank() }
+            ?: getString(R.string.campus_home_default_name)
+
+        savedEmail = intent.getStringExtra("email").orEmpty()
+
         initializeViews()
-
-        // Setup buttons
         setupButtons()
-
-        // Modern Android back navigation
         setupBackNavigation()
 
-        // Load campus user
-        loadCampusUser()
+        if (checkLogin()) {
+            loadCampusUser()
+        }
     }
 
-    // =========================================================
-    // INITIALIZE VIEWS
-    // =========================================================
-
     private fun initializeViews() {
-
-        // -----------------------------------------------------
-        // USER INFORMATION
-        // -----------------------------------------------------
-
         tvWelcome = findViewById(R.id.tvWelcome)
-
         tvCampusName = findViewById(R.id.tvCampusName)
-
         tvCampusStatus = findViewById(R.id.tvCampusStatus)
 
-        // -----------------------------------------------------
-        // HEADER ICONS
-        // -----------------------------------------------------
-
         tvNotification = findViewById(R.id.tvNotification)
-
         tvProfile = findViewById(R.id.tvProfile)
-
-        // -----------------------------------------------------
-        // CAMPUS HOME ACTIONS
-        // -----------------------------------------------------
 
         btnReportCampusIncident =
             findViewById(R.id.btnReportCampusIncident)
@@ -117,361 +97,189 @@ class CampusHomeActivity : AppCompatActivity() {
         btnMyCampusReports =
             findViewById(R.id.btnMyCampusReports)
 
-        // -----------------------------------------------------
-        // LOGOUT
-        // -----------------------------------------------------
-
-        btnLogout =
-            findViewById(R.id.btnLogout)
+        btnLogout = findViewById(R.id.btnLogout)
     }
 
-    // =========================================================
-    // CHECK LOGIN
-    // =========================================================
-
+    // Allow locally verified offline sessions without Firebase.
     private fun checkLogin(): Boolean {
-
-        val currentUser = auth.currentUser
-
-        if (currentUser == null) {
-
-            Toast.makeText(
-                this,
-                "Please login to continue.",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            val intent = Intent(
-                this,
-                CampusLoginActivity::class.java
-            )
-
-            intent.flags =
-                Intent.FLAG_ACTIVITY_NEW_TASK or
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-            startActivity(intent)
-
-            finish()
-
-            return false
+        if (offlineMode) {
+            Log.d(TAG, "Offline Campus session accepted")
+            return true
         }
 
-        return true
+        if (auth.currentUser != null) {
+            return true
+        }
+
+        showMessage(getString(R.string.campus_home_login_required))
+
+        val loginIntent = Intent(
+            this,
+            CampusLoginActivity::class.java
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        startActivity(loginIntent)
+        finish()
+        return false
     }
 
-    // =========================================================
-    // LOAD CAMPUS USER
-    // =========================================================
-
     private fun loadCampusUser() {
+        tvWelcome.text = getString(
+            R.string.campus_home_welcome,
+            getFirstName(savedFullName)
+        )
 
-        if (!checkLogin()) {
+        tvCampusName.text = getString(R.string.campus_home_default_campus)
+        updateCampusStatus()
+
+        // Firestore cannot be relied upon while offline.
+        if (offlineMode) {
+            Log.d(TAG, "Using saved Campus profile while offline")
             return
         }
 
-        val currentUser =
-            auth.currentUser ?: return
-
-        // -----------------------------------------------------
-        // DEFAULT INFORMATION
-        // -----------------------------------------------------
-
-        tvWelcome.text =
-            "Welcome, Learner"
-
-        tvCampusName.text =
-            "Campus"
-
-        tvCampusStatus.text =
-            "Status: Available"
-
-        // -----------------------------------------------------
-        // FIRESTORE
-        // -----------------------------------------------------
+        val currentUser = auth.currentUser ?: return
 
         db.collection("Users")
             .document(currentUser.uid)
             .get()
             .addOnSuccessListener { document ->
+                if (isFinishing || isDestroyed) return@addOnSuccessListener
 
                 if (!document.exists()) {
-
-                    Toast.makeText(
-                        this,
-                        "Campus profile information not found.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
+                    Log.w(TAG, "Campus profile document not found")
                     return@addOnSuccessListener
                 }
 
-                // -------------------------------------------------
-                // FULL NAME
-                // -------------------------------------------------
+                val fullName = document.getString("fullName")
+                    ?.takeIf { it.isNotBlank() }
+                    ?: savedFullName
 
-                val fullName =
-                    document.getString("fullName")
+                savedFullName = fullName
 
-                if (!fullName.isNullOrBlank()) {
+                tvWelcome.text = getString(
+                    R.string.campus_home_welcome,
+                    getFirstName(fullName)
+                )
 
-                    val firstName =
-                        getFirstName(fullName)
-
-                    tvWelcome.text =
-                        "Welcome, $firstName"
-                }
-
-                // -------------------------------------------------
-                // CAMPUS
-                // -------------------------------------------------
-
-                val campus =
-                    document.getString("campus")
-
+                val campus = document.getString("campus")
                 if (!campus.isNullOrBlank()) {
-
-                    tvCampusName.text =
-                        formatCampusName(campus)
+                    tvCampusName.text = formatCampusName(campus)
                 }
 
-                // -------------------------------------------------
-                // STATUS
-                // -------------------------------------------------
-
-                tvCampusStatus.text =
-                    "Status: Available"
+                updateCampusStatus()
             }
-            .addOnFailureListener {
+            .addOnFailureListener { exception ->
+                Log.w(
+                    TAG,
+                    "Unable to load profile; displaying saved information",
+                    exception
+                )
 
-                Toast.makeText(
-                    this,
-                    "Unable to load campus information.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (!isFinishing && !isDestroyed) {
+                    tvWelcome.text = getString(
+                        R.string.campus_home_welcome,
+                        getFirstName(savedFullName)
+                    )
+
+                    tvCampusStatus.text = getString(
+                        R.string.campus_home_status_profile_outdated
+                    )
+                }
             }
     }
 
-    // =========================================================
-    // FORMAT CAMPUS NAME
-    // =========================================================
+    private fun updateCampusStatus() {
+        tvCampusStatus.text = getString(
+            if (offlineMode) {
+                R.string.campus_home_status_offline
+            } else {
+                R.string.campus_home_status_available
+            }
+        )
+    }
 
-    private fun formatCampusName(
-        campus: String
-    ): String {
+    private fun formatCampusName(campus: String): String {
+        val cleaned = campus.trim()
 
-        val cleanedCampus =
-            campus.trim()
-
-        if (cleanedCampus.isEmpty()) {
-            return "Campus"
+        if (cleaned.isEmpty()) {
+            return getString(R.string.campus_home_default_campus)
         }
 
-        return if (
-            cleanedCampus.endsWith(
-                "Campus",
-                ignoreCase = true
-            )
-        ) {
-            cleanedCampus
+        return if (cleaned.endsWith("Campus", ignoreCase = true)) {
+            cleaned
         } else {
-            "$cleanedCampus Campus"
+            getString(R.string.campus_home_campus_name_format, cleaned)
         }
     }
 
-    // =========================================================
-    // GET FIRST NAME
-    // =========================================================
-
-    private fun getFirstName(
-        fullName: String
-    ): String {
-
-        val cleanedName =
-            fullName.trim()
-
-        if (cleanedName.isEmpty()) {
-            return "Learner"
-        }
-
-        return cleanedName
+    private fun getFirstName(fullName: String): String {
+        return fullName.trim()
             .split("\\s+".toRegex())
             .firstOrNull()
-            ?: "Learner"
+            ?.takeIf { it.isNotBlank() }
+            ?: getString(R.string.campus_home_default_learner)
     }
 
-    // =========================================================
-    // SETUP BUTTONS
-    // =========================================================
-
     private fun setupButtons() {
-
-        // =====================================================
-        // HEADER NOTIFICATION
-        // =====================================================
-
-        tvNotification.setOnClickListener {
-
-            openCampusAlerts()
-        }
-
-        // =====================================================
-        // HEADER PROFILE
-        // =====================================================
-
-        tvProfile.setOnClickListener {
-
-            openProfile()
-        }
-
-        // =====================================================
-        // REPORT CAMPUS INCIDENT
-        // =====================================================
+        tvNotification.setOnClickListener { openCampusAlerts() }
+        tvProfile.setOnClickListener { openProfile() }
 
         btnReportCampusIncident.setOnClickListener {
-
             openCampusIncidentReport()
         }
 
-        // =====================================================
-        // CAMPUS EMERGENCY
-        // =====================================================
-
         btnCampusEmergency.setOnClickListener {
-
             openCampusEmergency()
         }
 
-        // =====================================================
-        // CAMPUS SAFETY MAP
-        // =====================================================
-
         btnCampusSafetyMap.setOnClickListener {
-
             openCampusSafetyMap()
         }
 
-        // =====================================================
-        // CAMPUS ALERTS
-        // =====================================================
-
         btnCampusAlerts.setOnClickListener {
-
             openCampusAlerts()
         }
 
-        // =====================================================
-        // MY CAMPUS REPORTS
-        // =====================================================
-
         btnMyCampusReports.setOnClickListener {
-
             openCampusReports(false)
         }
 
-        // =====================================================
-        // LOGOUT
-        // =====================================================
-
         btnLogout.setOnClickListener {
-
             logoutUser()
         }
 
-        // =====================================================
-        // BOTTOM NAVIGATION
-        // =====================================================
+        findViewById<View>(R.id.navHome).setOnClickListener {}
 
-        // -----------------------------------------------------
-        // HOME
-        // -----------------------------------------------------
-
-        findViewById<View>(
-            R.id.navHome
-        ).setOnClickListener {
-
-            // Already on Campus Home
-        }
-
-        // -----------------------------------------------------
-        // MAP
-        // -----------------------------------------------------
-
-        findViewById<View>(
-            R.id.navMap
-        ).setOnClickListener {
-
+        findViewById<View>(R.id.navMap).setOnClickListener {
             openCampusSafetyMap()
         }
 
-        // -----------------------------------------------------
-        // REPORTS
-        // -----------------------------------------------------
-
-        findViewById<View>(
-            R.id.navReports
-        ).setOnClickListener {
-
+        findViewById<View>(R.id.navReports).setOnClickListener {
             openCampusReports(false)
         }
 
-        // -----------------------------------------------------
-        // ALERTS
-        //
-        // IMPORTANT:
-        // Use navNotifications.
-        // DO NOT use navAlerts.
-        // -----------------------------------------------------
-
-        findViewById<View>(
-            R.id.navNotifications
-        ).setOnClickListener {
-
+        findViewById<View>(R.id.navNotifications).setOnClickListener {
             openCampusAlerts()
         }
 
-        // -----------------------------------------------------
-        // PROFILE
-        // -----------------------------------------------------
-
-        findViewById<View>(
-            R.id.navProfile
-        ).setOnClickListener {
-
+        findViewById<View>(R.id.navProfile).setOnClickListener {
             openProfile()
         }
-
-        // =====================================================
-        // OPTIONAL MANAGE REPORTS BUTTON
-        // =====================================================
-        //
-        // If your Campus Home XML contains:
-        //
-        // @+id/btnManageReports
-        //
-        // this button will open CampusReportsActivity
-        // in Manage Reports mode.
-        //
-        // If the button does not exist, nothing happens and
-        // the app will continue normally.
-        // =====================================================
 
         setupOptionalManageReportsButton()
     }
 
-    // =========================================================
-    // OPTIONAL MANAGE REPORTS BUTTON
-    // =========================================================
-
     private fun setupOptionalManageReportsButton() {
-
         val possibleIds = listOf(
             "btnManageReports",
             "btnManageCampusReports"
         )
 
         for (idName in possibleIds) {
-
             val id = resources.getIdentifier(
                 idName,
                 "id",
@@ -479,273 +287,148 @@ class CampusHomeActivity : AppCompatActivity() {
             )
 
             if (id != 0) {
-
-                val manageButton =
-                    findViewById<View>(id)
-
-                manageButton?.setOnClickListener {
-
+                findViewById<View>(id)?.setOnClickListener {
                     openCampusReports(true)
                 }
             }
         }
     }
 
-    // =========================================================
-    // LOGOUT
-    // =========================================================
-
     private fun logoutUser() {
-
         auth.signOut()
 
-        Toast.makeText(
-            this,
-            "You have been logged out.",
-            Toast.LENGTH_SHORT
-        ).show()
+        // Saved offline credentials are not deleted by logout.
+        showMessage(getString(R.string.campus_home_logout_success))
 
         val intent = Intent(
             this,
             ChoosePanelActivity::class.java
-        )
-
-        intent.flags =
-            Intent.FLAG_ACTIVITY_NEW_TASK or
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                     Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
 
         startActivity(intent)
-
         finish()
     }
 
-    // =========================================================
-    // BACK NAVIGATION
-    // =========================================================
-
     private fun setupBackNavigation() {
-
         onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {
-
                 override fun handleOnBackPressed() {
-
                     finish()
                 }
             }
         )
     }
 
-    // =========================================================
-    // CAMPUS INCIDENT REPORT
-    // =========================================================
-
     private fun openCampusIncidentReport() {
-
         try {
-
-            val intent = Intent(
-                this,
-                CampusIncidentReportActivity::class.java
+            startActivity(
+                Intent(this, CampusIncidentReportActivity::class.java)
             )
-
-            startActivity(intent)
-
         } catch (e: Exception) {
-
-            Toast.makeText(
-                this,
-                "Campus incident reporting is not available.",
-                Toast.LENGTH_SHORT
-            ).show()
+            Log.e(TAG, "Cannot open incident reporting", e)
+            showUnavailable(getString(R.string.campus_home_feature_incident))
         }
     }
-
-    // =========================================================
-    // CAMPUS EMERGENCY
-    // =========================================================
 
     private fun openCampusEmergency() {
-
         try {
-
-            val intent = Intent(
-                this,
-                CampusEmergencyActivity::class.java
+            startActivity(
+                Intent(this, CampusEmergencyActivity::class.java)
             )
-
-            startActivity(intent)
-
         } catch (e: Exception) {
-
             try {
-
-                val dialIntent = Intent(
-                    Intent.ACTION_DIAL
-                )
-
-                dialIntent.data =
-                    Uri.parse("tel:112")
-
-                startActivity(dialIntent)
-
-            } catch (dialException: Exception) {
-
-                Toast.makeText(
-                    this,
-                    "Emergency services are not available.",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
-    }
-
-    // =========================================================
-    // CAMPUS SAFETY MAP
-    // =========================================================
-
-    private fun openCampusSafetyMap() {
-
-        try {
-
-            val intent = Intent(
-                this,
-                CampusSafetyMapActivity::class.java
-            )
-
-            startActivity(intent)
-
-        } catch (e: Exception) {
-
-            try {
-
-                val mapIntent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(
-                        "geo:0,0?q=Pretoria Campus"
+                startActivity(
+                    Intent(
+                        Intent.ACTION_DIAL,
+                        Uri.parse("tel:112")
                     )
                 )
-
-                startActivity(mapIntent)
-
-            } catch (mapException: Exception) {
-
-                Toast.makeText(
-                    this,
-                    "Campus safety map is not available.",
-                    Toast.LENGTH_SHORT
-                ).show()
+            } catch (dialException: Exception) {
+                Log.e(TAG, "Cannot open emergency dialler", dialException)
+                showUnavailable(getString(R.string.campus_home_feature_emergency))
             }
         }
     }
 
-    // =========================================================
-    // CAMPUS ALERTS
-    // =========================================================
-
-    private fun openCampusAlerts() {
-
+    private fun openCampusSafetyMap() {
         try {
-
-            val intent = Intent(
-                this,
-                CampusAlertsActivity::class.java
+            startActivity(
+                Intent(this, CampusSafetyMapActivity::class.java)
             )
-
-            startActivity(intent)
-
         } catch (e: Exception) {
-
-            Toast.makeText(
-                this,
-                "Campus alerts are not available.",
-                Toast.LENGTH_SHORT
-            ).show()
+            try {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("geo:0,0?q=Pretoria Campus")
+                    )
+                )
+            } catch (mapException: Exception) {
+                Log.e(TAG, "Cannot open safety map", mapException)
+                showUnavailable(getString(R.string.campus_home_feature_map))
+            }
         }
     }
 
-    // =========================================================
-    // CAMPUS REPORTS
-    // =========================================================
-
-    private fun openCampusReports(
-        manageReports: Boolean
-    ) {
-
+    private fun openCampusAlerts() {
         try {
+            startActivity(
+                Intent(this, CampusAlertsActivity::class.java)
+            )
+        } catch (e: Exception) {
+            Log.e(TAG, "Cannot open Campus Alerts", e)
+            showUnavailable(getString(R.string.campus_home_feature_alerts))
+        }
+    }
 
+    private fun openCampusReports(manageReports: Boolean) {
+        try {
             val intent = Intent(
                 this,
                 CampusReportsActivity::class.java
-            )
-
-            // -------------------------------------------------
-            // false = My Campus Reports
-            // true  = Manage Campus Reports
-            // -------------------------------------------------
-
-            intent.putExtra(
-                "manageReports",
-                manageReports
-            )
+            ).apply {
+                putExtra("manageReports", manageReports)
+            }
 
             startActivity(intent)
-
         } catch (e: Exception) {
-
-            Toast.makeText(
-                this,
-                "Campus reports are not available.",
-                Toast.LENGTH_SHORT
-            ).show()
+            Log.e(TAG, "Cannot open Campus Reports", e)
+            showUnavailable(getString(R.string.campus_home_feature_reports))
         }
     }
-
-    // =========================================================
-    // CAMPUS PROFILE
-    // =========================================================
 
     private fun openProfile() {
-
         try {
-
-            val intent = Intent(
-                this,
-                CampusProfileActivity::class.java
+            startActivity(
+                Intent(this, CampusProfileActivity::class.java)
             )
-
-            startActivity(intent)
-
         } catch (e: Exception) {
-
-            Toast.makeText(
-                this,
-                "Campus profile is not available.",
-                Toast.LENGTH_SHORT
-            ).show()
+            Log.e(TAG, "Cannot open Campus Profile", e)
+            showUnavailable(getString(R.string.campus_home_feature_profile))
         }
     }
 
-    // =========================================================
-    // ON RESUME
-    // =========================================================
+    private fun showUnavailable(feature: String) {
+        showMessage(
+            getString(R.string.campus_home_feature_unavailable, feature)
+        )
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 
     override fun onResume() {
-
         super.onResume()
 
-        if (!::auth.isInitialized) {
-            return
-        }
-
-        if (auth.currentUser == null) {
-
+        if (::auth.isInitialized && !offlineMode &&
+            auth.currentUser == null
+        ) {
             checkLogin()
-
-        } else {
-
-            loadCampusUser()
         }
     }
 }

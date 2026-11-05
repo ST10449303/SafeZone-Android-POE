@@ -1,0 +1,1355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App -->
+    <string name="app_name">SafeZone</string>
+
+    <!-- Language Settings -->
+    <string name="language">Puo</string>
+    <string name="select_language">Tlhopha puo ya gago</string>
+    <string name="language_settings">Dipeakanyo tsa puo</string>
+    <string name="language_description">Tlhopha puo e o e ratang mo SafeZone.</string>
+    <string name="english">Seesemane</string>
+    <string name="isizulu">Sezulu</string>
+    <string name="setswana">Setswana</string>
+    <string name="save_language">Boloka puo</string>
+    <string name="language_saved">Puo e bolokilwe</string>
+
+    <!-- Navigation -->
+    <string name="home">Gae</string>
+    <string name="settings">Dipeakanyo</string>
+    <string name="login">Tsena</string>
+    <string name="logout">Tswa</string>
+    <string name="register">Ikwadise</string>
+    <string name="cancel">Khansela</string>
+    <string name="save">Boloka</string>
+    <string name="submit">Romela</string>
+    <string name="back">Morago</string>
+
+    <!-- Account -->
+    <string name="email">Imeile</string>
+    <string name="password">Phasewete</string>
+    <string name="edit_profile">Baakanya porofaele</string>
+    <string name="change_password">Fetola phasewete</string>
+
+    <!-- Welcome and Panels -->
+    <string name="welcome">Re a go amogela mo SafeZone</string>
+    <string name="personal_panel">Karolo ya motho</string>
+    <string name="campus_panel">Karolo ya khampase</string>
+
+    <!-- Safety -->
+    <string name="safety_alerts">Ditlhagiso tsa pabalesego</string>
+    <string name="emergency">Tshoganyetso</string>
+    <string name="location">Lefelo</string>
+    <string name="trusted_contacts">Batho ba o ba ikanyang</string>
+    <string name="location_sharing">Go abelana ka lefelo</string>
+    <string name="emergency_preferences">Dipeakanyo tsa tshoganyetso</string>
+
+    <!-- Choose Panel Screen -->
+    <string name="safezone_logo_description">Letshwao la SafeZone</string>
+    <string name="choose_safety_panel">Tlhopha karolo ya gago ya pabalesego</string>
+    <string name="personal_safety">Pabalesego ya motho ka nosi</string>
+    <string name="personal_safety_description">Nna o sireletsegile gongwe le gongwe kwa o leng teng</string>
+    <string name="campus_safety">Pabalesego ya khampase</string>
+    <string name="campus_safety_description">Golagana le ditirelo tsa pabalesego tsa khampase ya gago</string>
+    <string name="emergency_assistance">O tlhoka thuso? Thuso ya tshoganyetso</string>
+    <string name="emergency_assistance_selected">Thuso ya tshoganyetso e tlhophilwe</string>
+
+    <!-- Personal Login Screen -->
+    <string name="personal_login_title">Go tsena mo Tshireletsong ya Motho</string>
+    <string name="personal_login_subtitle">Tsena go fitlhelela akhaonto ya gago ya tshireletso.</string>
+    <string name="email_address_hint">Aterese ya imeile</string>
+    <string name="remember_me">Nkgopole</string>
+    <string name="forgot_password">O lebetse khunololamoraba?</string>
+    <string name="or">KGOTSA</string>
+    <string name="continue_with_google">Tswelela ka Google</string>
+    <string name="no_personal_account">Ga o na akhaonto ya gago?</string>
+
+    <!-- Login Validation and Messages -->
+    <string name="enter_email_error">Tsweetswee, tsenya aterese ya gago ya imeile</string>
+    <string name="valid_email_error">Tsweetswee, tsenya aterese ya imeile e e siameng</string>
+    <string name="enter_password_error">Tsweetswee, tsenya khunololamoraba ya gago</string>
+    <string name="internet_required_reset">O tlhoka inthanete go seta khunololamoraba ya gago sesha.</string>
+    <string name="internet_required_google">Golagana le inthanete go tsena ka Google.</string>
+    <string name="valid_google_account">Tsweetswee, tlhopha akhaonto ya Google e e siameng.</string>
+    <string name="google_signin_cancelled">Go tsena ka Google go phimotswe kgotsa ga go a kgona go simolola. Leka gape.</string>
+    <string name="google_signin_failed">Go tsena ka Google go paletswe. Leka gape.</string>
+    <string name="unable_verify_account">Ga go a kgonega go netefatsa akhaonto ya gago.</string>
+    <string name="unable_verify_google">Ga go a kgonega go netefatsa akhaonto ya gago ya Google.</string>
+    <string name="google_auth_failed">Go netefatsa ka Google go paletswe. Leka gape.</string>
+    <string name="personal_profile_not_found">Ga go a bonwa porofaele ya SafeZone Personal. Tsweetswee, kwadisa pele.</string>
+    <string name="wrong_account_type">Akhaonto eno ga e a kwadisiwa jaaka akhaonto ya Personal. Dirisa lefelo le le siameng la go tsena.</string>
+    <string name="offline_setup_failed">O tsene ka inthanete ka katlego, mme go baakanyetsa go tsena ntle le inthanete go paletswe. Tlhola Logcat.</string>
+    <string name="personal_login_offline_ready">O tsene mo akhaontong ya Personal ka katlego. Go tsena ntle le inthanete go baakantswe.</string>
+    <string name="personal_login_success">O tsene mo akhaontong ya Personal ka katlego!</string>
+    <string name="connection_lost_verify">Kgokagano e kgaogile pele porofaele ya gago e netefadiwa. Leka gape fa o na le inthanete.</string>
+    <string name="profile_verification_failed">Ga go a kgonega go netefatsa porofaele ya gago. Leka gape.</string>
+    <string name="offline_login_failed">Go tsena ntle le inthanete go paletswe. Tsena ka katlego o dirisa inthanete mo sedirisiweng seno pele, mme o netefatse gore paakanyo e atlegile.</string>
+    <string name="offline_wrong_account_type">Tseno ga di a kwadisiwa jaaka akhaonto ya Personal.</string>
+    <string name="offline_personal_enabled">Go tsena mo Personal ntle le inthanete go a kgonega. Ditirelo dingwe tsa inthanete di ka nna tsa se nne teng.</string>
+    <string name="unable_open_personal_home">Ga go a kgonega go bula tsebe ya gae ya Personal: %1$s</string>
+    <string name="signing_in">Go a tsena...</string>
+    <string name="please_wait">Tsweetswee leta...</string>
+    <string name="incorrect_credentials">Imeile kgotsa khunololamoraba ga e a siama.</string>
+    <string name="account_not_found">Ga go a bonwa akhaonto e e nang le imeile eno.</string>
+    <string name="too_many_login_attempts">O lekile go tsena makgetlo a mantsi. Leka gape moragonyana.</string>
+    <string name="network_error">Bothata jwa netweke. Tsweetswee, tlhola kgokagano ya gago ya inthanete.</string>
+    <string name="login_failed">Go tsena go paletswe. Tsweetswee, tlhola imeile le khunololamoraba ya gago.</string>
+
+    <!-- Personal Registration Screen -->
+    <string name="create_personal_account">Tlhama Akhaonto ya Motho ka Namana</string>
+    <string name="create_personal_account_subtitle">Tlhama akhaonto ya gago ya tshireletso ya SafeZone.</string>
+    <string name="full_name">Maina a a feletseng</string>
+    <string name="confirm_password">Netefatsa khunololamoraba</string>
+    <string name="create_account">Tlhama Akhaonto</string>
+    <string name="already_have_personal_account">A o setse o na le akhaonto ya gago?</string>
+    <string name="password_visibility_description">Khunololamoraba. Tobetsa letshwao la leitlho go e bontsha kgotsa go e fitlha.</string>
+    <string name="confirm_password_visibility_description">Netefatsa khunololamoraba. Tobetsa letshwao la leitlho go e bontsha kgotsa go e fitlha.</string>
+
+    <!-- Registration Validation and Results -->
+    <string name="enter_full_name_error">Tsweetswee, tsenya maina a gago a a feletseng.</string>
+    <string name="enter_registration_email_error">Tsweetswee, tsenya aterese ya gago ya imeile.</string>
+    <string name="valid_registration_email_error">Tsweetswee, tsenya aterese ya imeile e e siameng.</string>
+    <string name="enter_registration_password_error">Tsweetswee, tsenya khunololamoraba.</string>
+    <string name="password_min_length_error">Khunololamoraba e tshwanetse go nna le ditlhaka di le 6 kgotsa go feta.</string>
+    <string name="confirm_password_error">Tsweetswee, netefatsa khunololamoraba ya gago.</string>
+    <string name="passwords_do_not_match">Dikhunololamoraba ga di tshwane.</string>
+    <string name="registration_success">Akhaonto ya gago e tlhamilwe ka katlego.</string>
+    <string name="registration_failed">Go ikwadisa go paletswe. Leka gape.</string>
+    <string name="email_already_registered">Aterese eno ya imeile e setse e kwadisitswe.</string>
+    <string name="registration_network_error">Bothata jwa netweke. Tlhola kgokagano ya gago ya inthanete mme o leke gape.</string>
+
+    <!-- Personal Registration Password Validation -->
+    <string name="creating_account">Akhaonto e a tlhamiwa...</string>
+    <string name="create_password_error">Tsweetswee, tlhama khunololamoraba.</string>
+    <string name="password_min_eight_error">Khunololamoraba e tshwanetse go nna le ditlhaka di le 8 kgotsa go feta.</string>
+    <string name="password_uppercase_error">Khunololamoraba e tshwanetse go nna le tlhaka e kgolo.</string>
+    <string name="password_lowercase_error">Khunololamoraba e tshwanetse go nna le tlhaka e nnye.</string>
+    <string name="password_number_error">Khunololamoraba e tshwanetse go nna le nomoro.</string>
+    <string name="password_special_character_error">Khunololamoraba e tshwanetse go nna le letshwao le le kgethegileng.</string>
+    <string name="account_creation_failed">Go tlhama akhaonto go paletswe. Leka gape.</string>
+    <string name="account_created_profile_failed">Akhaonto e tlhamilwe, mme porofaele ga e a kgona go bolokwa: %1$s</string>
+
+    <!-- Forgot Password Screen -->
+    <string name="forgot_password_instructions">Tsenya aterese ya gago ya imeile go seta khunololamoraba ya gago ya SafeZone sesha.</string>
+    <string name="remember_password">A o sa ntse o gopola khunololamoraba ya gago?</string>
+    <string name="back_to_personal_login">Boela kwa Go Tsena ga Motho</string>
+    <string name="forgot_enter_email">Tsweetswee, tsenya aterese ya gago ya imeile.</string>
+    <string name="forgot_invalid_email">Tsweetswee, tsenya aterese ya imeile e e siameng.</string>
+    <string name="password_reset_email_sent">Imeile ya go seta khunololamoraba sesha e rometswe. Tlhola imeile ya gago.</string>
+    <string name="password_reset_account_not_found">Ga go a bonwa akhaonto e e nang le aterese eno ya imeile.</string>
+    <string name="sending_reset_email">E a romela...</string>
+
+    <!-- Shared Password Reset Button and Messages -->
+    <string name="reset_password">FETOLA PHASEWETE</string>
+    <string name="password_reset_failed">Go paletswe go fetola phasewete. Tsweetswee leka gape.</string>
+    <string name="password_reset_network_error">Bothata jwa netweke. Tlhola kgokagano ya gago ya inthanete mme o leke gape.</string>
+
+    <!-- Create New Password Screen -->
+    <string name="create_new_password">Tlhama Phasewete e Ntšha</string>
+    <string name="create_new_password_instructions">Tlhama phasewete e ntšha ya akhaonto ya gago ya SafeZone.</string>
+    <string name="new_password">Phasewete e Ntšha</string>
+    <string name="enter_new_password">Tsenya phasewete e ntšha</string>
+    <string name="confirm_new_password">Netefatsa Phasewete e Ntšha</string>
+    <string name="confirm_new_password_hint">Netefatsa phasewete e ntšha</string>
+    <string name="password_reset_successful">✓ Phasewete e Fetotswe ka Katlego!</string>
+    <string name="new_password_saved">Phasewete ya gago e ntšha e bolokilwe ka katlego.</string>
+    <string name="back_to_login">BOELA GO TSENA</string>
+
+    <!-- Create New Password Validation and Status -->
+    <string name="password_reset_missing_email">Aterese ya imeile ga e yo. Tsweetswee simolola gape.</string>
+    <string name="enter_new_password_error">Tsweetswee tsenya phasewete e ntšha.</string>
+    <string name="password_min_six_error">Phasewete e tshwanetse go nna le ditlhaka di le 6 kgotsa go feta.</string>
+    <string name="confirm_new_password_error">Tsweetswee netefatsa phasewete ya gago e ntšha.</string>
+    <string name="resetting_password">Go fetolwa phasewete...</string>
+
+
+    <!-- PERSONAL HOME SCREEN TRANSLATIONS - SETSWANA -->
+    <string name="notifications">Dikitsiso</string>
+    <string name="profile">Porofaele</string>
+    <string name="good_afternoon">Thobela, motshegare 👋</string>
+    <string name="stay_safe_message">Nna o babalesegile. Re fano go go thusa.</string>
+    <string name="safety_status">Maemo a pabalesego</string>
+    <string name="you_are_safe">O babalesegile</string>
+    <string name="no_active_emergencies">Ga go na maemo a tshoganyetso a a diragalang</string>
+    <string name="last_check_in_today">Tlhahlobo ya bofelo: Gompieno</string>
+    <string name="need_immediate_help">A o tlhoka thuso ya tshoganyetso?</string>
+    <string name="sos_emergency_help">SOS&#10;THUSO YA TSHOGANYETSO</string>
+    <string name="tap_for_emergency_assistance">Tobetsa go bona thuso ya tshoganyetso</string>
+    <string name="quick_actions">Ditiro tse di Bonako</string>
+    <string name="emergency_assistance_card">🏥&#10;Thuso ya&#10;Tshoganyetso</string>
+    <string name="safety_check_in_card">✓&#10;Tlhahlobo ya&#10;Pabalesego</string>
+    <string name="trusted_contacts_card">👥&#10;Batho ba o ba&#10;Ikanyang</string>
+    <string name="find_help_card">📍&#10;Batla&#10;Thuso</string>
+    <string name="report_incident_card">⚠&#10;Bega&#10;Tiragalo</string>
+    <string name="settings_card">⚙&#10;Dithulaganyo</string>
+    <string name="recent_alerts">Dikitsiso tsa Bosheng</string>
+    <string name="no_new_safety_alerts">Ga go na dikitsiso tse disha tsa pabalesego</string>
+    <string name="important_updates_appear_here">Dikitsiso tsa botlhokwa di tla tlhagelela fano.</string>
+    <string name="safety_tip">Kgakololo ya Pabalesego</string>
+    <string name="stay_aware_surroundings">Ela tlhoko se se go dikologileng</string>
+    <string name="keep_trusted_contacts_informed">Itsise batho ba o ba ikanyang.</string>
+    <string name="nav_home">⌂&#10;Gae</string>
+    <string name="nav_map">●&#10;Mmapa</string>
+    <string name="nav_reports">▤&#10;Dipego</string>
+    <string name="nav_alerts">🔔&#10;Dikitsiso</string>
+    <string name="nav_profile">●&#10;Porofaele</string>
+
+    <!-- PERSONAL HOME ACTIVITY MESSAGES - SETSWANA -->
+    <string name="default_user_name">Modirisi wa SafeZone</string>
+    <string name="login_required">Tsweetswee tsena go tswelela.</string>
+    <string name="already_on_home">O setse o le mo tsebeng ya gae.</string>
+    <string name="feature_unavailable">Karolo eno ga e a kgona go bulwa.</string>
+    <string name="logged_out_successfully">O tswile mo akhaontong ka katlego.</string>
+
+    <!-- EMERGENCY ASSISTANCE SCREEN - SETSWANA -->
+
+    <!-- SCREEN TITLE AND DESCRIPTION -->
+    <string name="emergency_assistance_title">O tlhoka thuso ya mofuta ofe?</string>
+    <string name="emergency_assistance_subtitle">Tlhopha mofuta wa thuso ya tshoganyetso o o o tlhokang.</string>
+
+    <!-- EMERGENCY BUTTONS - EMOJIS PRESERVED -->
+    <string name="emergency_type_medical_card">✚&#10;&#10;Tshoganyetso&#10;ya Kalafi</string>
+    <string name="emergency_type_injury_card">⚕&#10;&#10;Kgobalo / Go Wa</string>
+    <string name="emergency_type_accident_card">🚗&#10;&#10;Kotsi</string>
+    <string name="emergency_type_fire_card">🔥&#10;&#10;Molelo</string>
+    <string name="emergency_type_security_card">🛡&#10;&#10;Tshoganyetso&#10;ya Pabalesego</string>
+    <string name="emergency_type_harassment_card">👥&#10;&#10;Tshotlako</string>
+    <string name="emergency_type_other_card">•••    Thuso e Nngwe</string>
+
+    <!-- SELECTED ASSISTANCE -->
+    <string name="selected_assistance">Thuso e e Tlhophilweng</string>
+    <string name="no_assistance_selected">Ga go na mofuta wa thuso o o tlhophilweng</string>
+    <string name="continue_with_arrow">Tswelela  →</string>
+
+    <!-- EMERGENCY ASSISTANCE ACTIVITY -->
+    <string name="emergency_type_medical">Tshoganyetso ya Kalafi</string>
+    <string name="emergency_type_injury">Kgobalo / Go Wa</string>
+    <string name="emergency_type_accident">Kotsi</string>
+    <string name="emergency_type_fire">Molelo</string>
+    <string name="emergency_type_security">Tshoganyetso ya Pabalesego</string>
+    <string name="emergency_type_harassment">Tshotlako</string>
+    <string name="emergency_type_other">Tse Dingwe</string>
+
+    <!-- VALIDATION AND STATUS MESSAGES -->
+    <string name="emergency_type_selected">Go tlhophilwe: %1$s</string>
+    <string name="select_emergency_type_error">Tsweetswee tlhopha mofuta wa tshoganyetso.</string>
+    <string name="sign_in_emergency_required">Tsweetswee tsena mo akhaontong pele o dira kopo ya thuso ya tshoganyetso.</string>
+    <string name="saving_emergency_request">Kopo e a bolokwa...</string>
+    <string name="emergency_request_saved_pending">Kopo e bolokilwe mo fonong eno. Go nyalantsha go sa ntse go emetswe.</string>
+    <string name="emergency_request_save_failed">Kopo ga e a kgona go bolokwa mo fonong. Tsweetswee leka gape.</string>
+
+    <!-- SAFETY CHECK-IN -->
+    <string name="safety_check_in_title">Netefatso ya Pabalesego</string>
+    <string name="safety_check_in_subtitle">Itsise motho yo o mo tshepang gore o babalesegile.</string>
+    <string name="check_in_duration">Nako ya Netefatso</string>
+    <string name="check_in_duration_description">Tlhopha gore o batla netefatso ya pabalesego e nna teng lobaka lo lo kae.</string>
+    <string name="duration_30_minutes">Metsotso e le 30</string>
+    <string name="duration_1_hour">Ura e le 1</string>
+    <string name="duration_2_hours">Diura di le 2</string>
+    <string name="duration_custom">Nako e o e tlhophang</string>
+    <string name="selected_duration">Nako e e Tlhophilweng</string>
+    <string name="duration_selected_default">Nako: metsotso e le 30</string>
+    <string name="duration_selected">Nako: %1$s</string>
+    <string name="trusted_contact">Motho yo o mo Tshepang</string>
+    <string name="trusted_contact_description">Tlhopha motho yo o tshwanetseng go amogela netefatso ya pabalesego.</string>
+    <string name="select_trusted_contact">Tlhopha Motho yo o mo Tshepang</string>
+    <string name="share_location">Abelana ka Lefelo</string>
+    <string name="share_location_description">Letla motho yo o mo tshepang go bona lefelo le o leng mo go lone jaanong.</string>
+    <string name="start_safety_check">Simolola Netefatso ya Pabalesego</string>
+    <string name="enter_minutes">Tsenya metsotso</string>
+    <string name="custom_duration_title">Nako ya Netefatso e e Tlhophilweng</string>
+    <string name="custom_duration_message">Tsenya nako ka metsotso.</string>
+    <string name="set">Tlhoma</string>
+    <string name="duration_range_error">Tsenya palo e e magareng ga metsotso e le 5 le e le 1440.</string>
+    <string name="contacts_load_failed">Ga go a kgonega go laisa batho ba ba bolokilweng.</string>
+    <string name="contacts_cloud_unavailable">Go dirisiwa batho ba ba bolokilweng. Ga go kgonege go ntšhwafatsa go tswa mo lerung.</string>
+    <string name="no_saved_contacts">Ga go na batho ba o ba tshepang ba ba bolokilweng. Tsenya motho fa o na le inthanete kgotsa o tlhole batho ba ba bolokilweng.</string>
+    <string name="select_trusted_contact_error">Tsweetswee tlhopha motho yo o mo tshepang yo o bolokilweng.</string>
+    <string name="select_another_contact">Tsweetswee tlhopha motho yo mongwe yo o mo tshepang.</string>
+    <string name="saving">E a bolokwa...</string>
+    <string name="check_in_saved">Netefatso ya pabalesego e bolokilwe mo sedirisweng seno.</string>
+    <string name="check_in_save_failed">Ga go a kgonega go boloka netefatso mo sedirisweng seno. Tsweetswee leka gape.</string>
+
+    <plurals name="duration_minutes">
+        <item quantity="one">%d motsotso</item>
+        <item quantity="other">%d metsotso</item>
+    </plurals>
+
+
+    <!-- ACTIVE SAFETY CHECK SCREEN -->
+    <string name="active_check_back">Morago</string>
+    <string name="active_check_title">Netefatso ya Pabalesego e a Diragadiwa</string>
+    <string name="active_check_initial_status">Netefatso ya gago ya pabalesego e a diragadiwa.</string>
+    <string name="active_check_contact_default">Motho yo o mo Tshepang: --</string>
+    <string name="active_check_not_configured">Ga go a rulaganngwa</string>
+    <string name="active_check_trusted_contact">Motho yo o mo Tshepang: %1$s</string>
+    <string name="active_check_location_on">Go Abelana ka Lefelo: GO BULETSWE</string>
+    <string name="active_check_location_off">Go Abelana ka Lefelo: GO TIMILWE</string>
+    <string name="active_check_im_safe">KE BABALASEGILE</string>
+    <string name="active_check_cancel">Khansela Netefatso</string>
+    <string name="active_check_status_active">Netefatso ya pabalesego e a diragadiwa.</string>
+    <string name="active_check_status_pending_sync">Netefatso ya pabalesego e a diragadiwa. Diphetogo di tla nyalantshiwa fa inthanete e le teng.</string>
+    <string name="active_check_still_active">Netefatso ya gago ya pabalesego e sa ntse e diragadiwa.</string>
+    <string name="active_check_time_unavailable">Ga go kgonege go bona nako ya netefatso.</string>
+    <string name="active_check_information_missing">Tshedimosetso ya netefatso ya pabalesego ga e yo.</string>
+    <string name="active_check_updating">Go ntšhwafadiwa netefatso ya pabalesego...</string>
+    <string name="active_check_local_update_failed">Ga go a kgonega go boloka seemo mo sedirisweng seno.</string>
+    <string name="active_check_local_save_error">Ga go a kgonega go boloka netefatso ya pabalesego. Tsweetswee leka gape.</string>
+    <string name="active_check_cloud_update_failed">Ga go a kgonega go ntšhwafatsa netefatso ya pabalesego. Tsweetswee leka gape.</string>
+    <string name="active_check_connection_error">Ga go a kgonega go ntšhwafatsa netefatso ya pabalesego. Tlhola kgolagano ya gago.</string>
+    <string name="active_check_completed_status">O netefaditse gore o babalesegile.</string>
+    <string name="active_check_cancelled_status">Netefatso ya gago ya pabalesego e khansetswe.</string>
+    <string name="active_check_expired_status">Nako ya netefatso ya pabalesego e fedile.</string>
+    <string name="active_check_completed_pending">Netefatso ya pabalesego e feditswe. Go emetswe go nyalantsha.</string>
+    <string name="active_check_cancelled_pending">Netefatso ya pabalesego e khansetswe. Go emetswe go nyalantsha.</string>
+    <string name="active_check_expired_pending">Nako ya netefatso ya pabalesego e fedile. Go emetswe go nyalantsha.</string>
+    <string name="active_check_completed_message">Netefatso ya pabalesego e feditswe.</string>
+    <string name="active_check_cancelled_message">Netefatso ya pabalesego e khansetswe.</string>
+    <string name="active_check_expired_message">Nako ya netefatso ya pabalesego e fedile.</string>
+
+
+    <!-- ========================================== -->
+    <!-- TRUSTED CONTACTS SCREEN -->
+    <!-- ========================================== -->
+    <string name="trusted_contacts_back">Morago</string>
+    <string name="trusted_contacts_app_name">SafeZone</string>
+    <string name="trusted_contacts_icon_description">Batho ba o ba ikanyang</string>
+    <string name="trusted_contacts_title">Batho Ba O Ba Ikanyang</string>
+    <string name="trusted_contacts_subtitle">Batho ba o ba ikanyang ba ka ikgolaganngwa le bone fa go na le tshoganyetso.</string>
+    <string name="trusted_contacts_add_button">+  Tsenya Motho Yo O Mo Ikanyang</string>
+    <string name="trusted_contacts_section_title">Batho Ba Gago Ba O Ba Ikanyang</string>
+    <string name="trusted_contacts_section_description">Batho bano ba ka ikgolaganngwa le bone fa o tlhoka thuso.</string>
+    <string name="trusted_contacts_empty_icon_description">Ga go na batho ba o ba ikanyang</string>
+    <string name="trusted_contacts_empty_title">Ga O Na Batho Ba O Ba Ikanyang</string>
+    <string name="trusted_contacts_empty_description">Tsenya motho yo o mo ikanyang gore a kgone go ikgolaganngwa le ene fa go na le tshoganyetso.</string>
+    <string name="trusted_contacts_add_first_button">Tsenya Motho Wa Ntlha</string>
+    <string name="trusted_contacts_security_description">Tshedimosetso ya tshireletsego</string>
+    <string name="trusted_contacts_safety_notice">Batho ba o ba ikanyang ba dirisediwa go go thusa fela mo maemong a tshireletsego le a tshoganyetso.</string>
+    <string name="trusted_contacts_login_required">Tsweetswee tsena mo akhaonteng ya gago pele.</string>
+    <string name="trusted_contacts_load_device_error">Ga go a kgonega go laisa batho ba ba bolokilweng mo sedirisiweng seno.</string>
+    <string name="trusted_contacts_default_relationship">Motho Yo O Mo Ikanyang</string>
+    <string name="trusted_contacts_cloud_unavailable">Go bontshiwa batho ba ba bolokilweng. Go ntšhwafatsa go tswa mo lerung ga go teng.</string>
+    <string name="trusted_contacts_alerts_enabled">✓  Dikitsiso tsa tshoganyetso di butswe</string>
+    <string name="trusted_contacts_alerts_disabled">○  Dikitsiso tsa tshoganyetso di timilwe</string>
+    <string name="trusted_contacts_sync_pending">E bolokilwe mo sedirisiweng seno — go nyalantsha go sa ntse go letetswe</string>
+    <string name="trusted_contacts_call">Letsa</string>
+    <string name="trusted_contacts_delete">Phimola</string>
+    <string name="trusted_contacts_no_phone">Ga go na nomoro ya mogala e e teng.</string>
+    <string name="trusted_contacts_info_description">Tshedimosetso ya kgolagano</string>
+    <string name="trusted_contacts_dialer_error">Ga go a kgonega go bula sediriswa sa go letsa mogala.</string>
+    <string name="trusted_contacts_login_again">Tsweetswee tsena gape mo akhaonteng ya gago.</string>
+    <string name="trusted_contacts_not_found">Motho ga a bonwa mo sedirisiweng seno.</string>
+    <string name="trusted_contacts_removed_message">Motho o tlositswe mo lenaaneng la gago. Go phimolwa mo lerung go ka tswa go sa ntse go letetswe.</string>
+    <string name="trusted_contacts_remove_error">Ga go a kgonega go tlosa motho yono.</string>
+
+
+    <!-- ========================================== -->
+    <!-- SEBOPEGO SA GO OKETSA MOTHO YO O MO TSHEPANG -->
+    <!-- ========================================== -->
+
+    <!-- Setlhogo sa skrine -->
+    <string name="add_trusted_contact_back">Boela morago</string>
+    <string name="add_trusted_contact_app_name">SafeZone</string>
+    <string name="add_trusted_contact_title">Oketša Motho Yo O Mo Tshepang</string>
+
+    <!-- Dikarolo tsa tshedimosetso -->
+    <string name="add_trusted_contact_full_name">Leina le le feletseng</string>
+    <string name="add_trusted_contact_relationship">Kamano</string>
+    <string name="add_trusted_contact_phone">Nomoro ya mogala</string>
+    <string name="add_trusted_contact_email">Aterese ya imeile</string>
+
+    <!-- Ditsiboso tsa tshoganyetso -->
+    <string name="add_trusted_contact_emergency_alerts">Amogela ditsiboso tsa tshoganyetso</string>
+    <string name="add_trusted_contact_on_off">BULETSWE / TIMILWE</string>
+
+    <!-- Konopo ya go boloka -->
+    <string name="add_trusted_contact_save">Boloka motho</string>
+    <string name="add_trusted_contact_saving">E a bolokwa...</string>
+
+    <!-- Melaetsa ya go tsena mo akhaontong -->
+    <string name="add_trusted_contact_session_expired">Nako ya gago ya go tsena e fedile. Tsweetswee tsena gape.</string>
+
+    <!-- Go netefatsa tshedimosetso -->
+    <string name="add_trusted_contact_invalid_name">Tsweetswee tsenya leina le le feletseng le le nepagetseng.</string>
+    <string name="add_trusted_contact_relationship_required">Tsweetswee tsenya kamano.</string>
+    <string name="add_trusted_contact_phone_required">Tsweetswee tsenya nomoro ya mogala.</string>
+    <string name="add_trusted_contact_invalid_phone">Tsweetswee tsenya nomoro ya mogala e e nepagetseng.</string>
+    <string name="add_trusted_contact_invalid_email">Tsweetswee tsenya aterese ya imeile e e nepagetseng.</string>
+
+    <!-- Melaetsa ya go boloka le go nyalantsha -->
+    <string name="add_trusted_contact_saved_pending">Motho o bolokilwe mo sedirisiweng seno. Go nyalantsha le leru go ka tswa go sa ntse go emetswe.</string>
+    <string name="add_trusted_contact_save_failed">Ga go a kgonega go boloka motho mo sedirisiweng seno. Tsweetswee leka gape.</string>
+
+    <!-- ========================================== -->
+    <!-- SKRINE YA GO BATLA THUSO -->
+    <!-- ========================================== -->
+
+    <!-- Setlhogo le matseno -->
+    <string name="find_help_back">Morago</string>
+    <string name="find_help_app_name">SafeZone</string>
+    <string name="find_help_title">Batla Thuso</string>
+    <string name="find_help_subtitle">Batla ditirelo tsa tshoganyetso le polokesego tse di gaufi.</string>
+
+    <!-- Lefelo la jaanong -->
+    <string name="find_help_current_location_icon">Lefelo la jaanong</string>
+    <string name="find_help_your_location">Lefelo la Gago la Jaanong</string>
+    <string name="find_help_finding_location">Go batliwa lefelo la gago...</string>
+    <string name="find_help_waiting_gps">Go emetswe GPS...</string>
+    <string name="find_help_refresh_location">Ntšhwafatsa lefelo</string>
+    <string name="find_help_nearby_services">Ditirelo tse di Gaufi</string>
+
+    <!-- Ditirelo tsa bookelo -->
+    <string name="find_help_hospital">Bookelo</string>
+    <string name="find_help_nearest_hospital">Bookelo jo bo Gaufi</string>
+    <string name="find_help_calculating_distance">Go balwa sekgala...</string>
+    <string name="find_help_get_directions">Bona Ditaelo tsa Tsela</string>
+    <string name="find_help_call">Letsa</string>
+
+    <!-- Ditirelo tsa tshoganyetso -->
+    <string name="find_help_emergency_services">Ditirelo tsa Tshoganyetso</string>
+    <string name="find_help_emergency_nearby_description">Batla ditirelo tsa tshoganyetso tse di gaufi le wena</string>
+    <string name="find_help_find_nearby">Batla tse di Gaufi</string>
+    <string name="find_help_call_112">Letsa 112</string>
+
+    <!-- Polokesego ya khampase -->
+    <string name="find_help_campus_security">Polokesego ya Khampase</string>
+    <string name="find_help_campus_security_description">Batla ditirelo tsa polokesego ya khampase tse di gaufi</string>
+    <string name="find_help_find_campus_security">Batla Polokesego ya Khampase e e Gaufi</string>
+
+    <!-- Kitsiso ya polokesego -->
+    <string name="find_help_safety_notice_icon">Kitsiso ya polokesego</string>
+    <string name="find_help_immediate_emergency">Fa go na le tshoganyetso, letsetsa 112.</string>
+
+    <!-- Melaetsa ya lefelo -->
+    <string name="find_help_location_services_off">Ditirelo tsa lefelo di timilwe</string>
+    <string name="find_help_location_unavailable">Lefelo ga le teng</string>
+    <string name="find_help_turn_on_location">Bulela ditirelo tsa lefelo go bona thuso e e gaufi.</string>
+    <string name="find_help_permission_required">Go tlhokega tetla ya go bona lefelo.</string>
+    <string name="find_help_live_location_updated">Lefelo la jaanong • Le ntšhwafaditswe jaanong</string>
+    <string name="find_help_distance_from_location">Sekgala se tla balwa go tswa mo lefelong la gago la jaanong.</string>
+    <string name="find_help_location_not_ready">Lefelo la gago la jaanong ga le ise le nne teng.</string>
+    <string name="find_help_allow_location">Letla SafeZone go bona lefelo la gago.</string>
+
+    <!-- Diphoso tsa dimmapa le megala -->
+    <string name="find_help_no_map_app">Ga go na app ya mmapa e e teng.</string>
+    <string name="find_help_dialer_error">Ga go kgonege go bula app ya go letsa mogala.</string>
+
+
+        <!-- Dipego tsa Me -->
+        <string name="personal_reports_back">Morago</string>
+        <string name="personal_reports_image_description">Dipego tsa me</string>
+        <string name="personal_reports_title">Dipego tsa Me</string>
+        <string name="personal_reports_subtitle">Bona ditiragalo tsa gago tse o di begileng.</string>
+        <string name="personal_reports_heading">Dipego tsa Gago</string>
+        <string name="personal_reports_empty_image_description">Ga go na dipego</string>
+        <string name="personal_reports_empty_title">Ga go na dipego</string>
+        <string name="personal_reports_empty_message">Ga o ise o bege tiragalo epe ya gago.</string>
+        <string name="personal_reports_report_incident">Bega Tiragalo</string>
+
+        <!-- Karata ya Pegelo -->
+        <string name="personal_reports_incident">Tiragalo</string>
+        <string name="personal_reports_incident_id_placeholder">Nomoro ya tiragalo: -</string>
+        <string name="personal_reports_incident_id">Nomoro ya tiragalo: %1$s</string>
+        <string name="personal_reports_campus_placeholder">Khamphase: Ga e a newa</string>
+        <string name="personal_reports_campus">Khamphase: %1$s</string>
+        <string name="personal_reports_date_placeholder">Letlha: Ga le teng</string>
+        <string name="personal_reports_date">Letlha: %1$s</string>
+        <string name="personal_reports_time_placeholder">Nako: Ga e teng</string>
+        <string name="personal_reports_time">Nako: %1$s</string>
+        <string name="personal_reports_description_heading">Tlhaloso</string>
+        <string name="personal_reports_no_description">Ga go na tlhaloso e e neilweng.</string>
+        <string name="personal_reports_location_heading">Lefelo</string>
+        <string name="personal_reports_location_placeholder">Lefelo ga le a newa</string>
+        <string name="personal_reports_coordinates_placeholder">Dikgokagano tsa lefelo ga di teng</string>
+        <string name="personal_reports_coordinates">Dikgokagano tsa lefelo: %1$s, %2$s</string>
+        <string name="personal_reports_view_map">BONA LEFELO MO MAPHENG</string>
+        <string name="personal_reports_status_label">Maemo: </string>
+        <string name="personal_reports_submitted">E rometswe</string>
+        <string name="personal_reports_evidence_heading">Bosupi</string>
+        <string name="personal_reports_view_photo">📷 Bona Setshwantsho\n%1$s</string>
+        <string name="personal_reports_view_video">🎥 Bona Bidio\n%1$s</string>
+        <string name="personal_reports_view_file">📄 Bula Faele\n%1$s</string>
+
+        <!-- Go Laola le Melaetsa -->
+        <string name="personal_reports_loading">Go laisiwa dipego tsa gago...</string>
+        <string name="personal_reports_report_count_one">Pegelo e le 1</string>
+        <string name="personal_reports_report_count_other">Dipego di le %1$d</string>
+        <string name="personal_reports_login_required">Tsweetswee tsena pele.</string>
+        <string name="personal_reports_refresh_failed">Ga go a kgonega go ntšhwafatsa dipego tsa mo inthaneteng. Dipego tse di bolokilweng ntle le inthanete di sa ntse di tla bonala.</string>
+        <string name="personal_reports_offline_fallback">Go bontshiwa dipego tse di bolokilweng. Go ntšhwafatsa mo inthaneteng go paletswe.</string>
+        <string name="personal_reports_maps_unavailable">Ga go na porokerama ya dimapa e e leng teng.</string>
+        <string name="personal_reports_evidence_unavailable">Ga go a kgonega go bula bosupi jono. Bo ka tswa bo le teng fela mo sedirisiweng se bo tlhophilweng mo go sona.</string>
+        <string name="personal_reports_pending_sync">E emetse go nyalantshiwa</string>
+
+    <!-- Dithapo tse dingwe tsa Dipego tsa Me -->
+    <string name="personal_reports_not_specified">Ga go a tlhalosiwa</string>
+    <string name="personal_reports_default_photo">Bosupi jwa setshwantsho</string>
+    <string name="personal_reports_default_video">Bosupi jwa bidio</string>
+    <string name="personal_reports_default_file">Faele e e mametleletsweng</string>
+    <string name="personal_reports_server_error">Ga go a kgonega go ntšhwafatsa dipego go tswa mo sevareng.</string>
+    <string name="personal_reports_status_with_sync">%1$s • %2$s</string>
+
+    <plurals name="personal_reports_report_count">
+        <item quantity="one">Pegelo e le 1</item>
+        <item quantity="other">Dipego di le %1$d</item>
+    </plurals>
+
+
+    <!-- Go Bega Tiragalo ya Motho -->
+    <string name="personal_incident_back">Morago</string>
+    <string name="personal_incident_icon_description">Bega tiragalo</string>
+    <string name="personal_incident_title">Bega Tiragalo ya Gago</string>
+    <string name="personal_incident_subtitle">Re thuse go boloka setšhaba sa rona se sireletsegile ka go bega ditiragalo.</string>
+    <string name="personal_incident_type_description">Mofuta wa tiragalo</string>
+    <string name="personal_incident_description_label">Tlhaloso</string>
+    <string name="personal_incident_description_hint">Tlhalosa se se diragetseng...</string>
+    <string name="personal_incident_location_label">Lefelo</string>
+    <string name="personal_incident_current_location">Lefelo la Jaanong</string>
+    <string name="personal_incident_datetime_label">Letlha le nako</string>
+    <string name="personal_incident_datetime_hint">Di rekotiwa ka bo tsona</string>
+    <string name="personal_incident_evidence_title">Tsenya Bosupi</string>
+    <string name="personal_incident_evidence_subtitle">Ga go patelediwe — ditshwantsho, dibidio kgotsa difaele di ka tshegetsa pegelo ya gago.</string>
+    <string name="personal_incident_add_photo">Tsenya Setshwantsho</string>
+    <string name="personal_incident_add_video">Tsenya Bidio</string>
+    <string name="personal_incident_add_file">Tsenya Faele</string>
+    <string name="personal_incident_no_evidence">Ga go na bosupi jo bo tlhophilweng</string>
+    <string name="personal_incident_submit">Romela Pegelo   →</string>
+
+    <!-- Mefuta ya Ditiragalo -->
+    <string name="personal_incident_type_select">Tlhopha mofuta wa tiragalo</string>
+    <string name="personal_incident_type_theft">Bogodu</string>
+    <string name="personal_incident_type_assault">Go tlhaselwa</string>
+    <string name="personal_incident_type_harassment">Go tshwenngwa</string>
+    <string name="personal_incident_type_accident">Kotsi</string>
+    <string name="personal_incident_type_suspicious">Tiro e e belaetsang</string>
+    <string name="personal_incident_type_property_damage">Tshenyo ya dithoto</string>
+    <string name="personal_incident_type_missing_person">Motho yo o timetseng</string>
+    <string name="personal_incident_type_other">Tse dingwe</string>
+
+    <!-- Bosupi -->
+    <string name="personal_incident_evidence_photo">Setshwantsho: %1$s</string>
+    <string name="personal_incident_evidence_video">Bidio: %1$s</string>
+    <string name="personal_incident_evidence_file">Faele: %1$s</string>
+    <string name="personal_incident_selected">E tlhophilwe</string>
+
+    <!-- Melaetsa ya Lefelo -->
+    <string name="personal_incident_location_services_off">Ditirelo tsa lefelo di timilwe</string>
+    <string name="personal_incident_enable_location">Tsweetswee bulela ditirelo tsa lefelo.</string>
+    <string name="personal_incident_location_unavailable">Lefelo la jaanong ga le teng</string>
+    <string name="personal_incident_location_permission_denied">Tetla ya lefelo ga e a newa</string>
+    <string name="personal_incident_location_permission_required">Go tlhokega tetla ya lefelo go rekota lefelo la tiragalo.</string>
+
+    <!-- Netefatso le Go Boloka -->
+    <string name="personal_incident_login_required">Tsweetswee tsena pele.</string>
+    <string name="personal_incident_select_type_error">Tsweetswee tlhopha mofuta wa tiragalo.</string>
+    <string name="personal_incident_description_error">Tsweetswee tlhalosa se se diragetseng.</string>
+    <string name="personal_incident_valid_location_error">Tsweetswee bona lefelo le le siameng la tiragalo.</string>
+    <string name="personal_incident_coordinates_unavailable">Dikhouditenete tsa GPS ga di teng. Tsweetswee bona lefelo la gago pele.</string>
+    <string name="personal_incident_saving">Go a bolokwa...</string>
+    <string name="personal_incident_saved_offline">Pegelo ya tiragalo e bolokilwe mo sedirisiweng seno. E tla nyalantshiwa fa inthanete e nna teng.</string>
+    <string name="personal_incident_save_failed">Ga go a kgonega go boloka pegelo mo sedirisiweng: %1$s</string>
+    <string name="personal_incident_unknown_error">Phoso e e sa itsiweng</string>
+    <string name="personal_incident_coordinates_display">Latitude: %1$s\nLongitude: %2$s</string>
+
+        <!-- ======================================= -->
+        <!-- PROFAELE: SETLHOGO LE GO BOELA MORAGO   -->
+        <!-- ======================================= -->
+
+        <!-- Mafoko a go boela morago -->
+        <string name="personal_profile_back">Morago</string>
+
+        <!-- Leina la app -->
+        <string name="personal_profile_app_name">SafeZone</string>
+
+        <!-- Tlhaloso ya setshwantsho sa profaele -->
+        <string name="personal_profile_avatar_description">Setshwantsho sa profaele</string>
+
+        <!-- Leina la nakwana pele tshedimosetso e tsenngwa -->
+        <string name="personal_profile_default_name">Modirisi wa SafeZone</string>
+
+        <!-- Tlhaloso ya tsebe ya profaele -->
+        <string name="personal_profile_subtitle">Laola profaele ya gago le di-setting tsa akhaonto.</string>
+
+
+        <!-- ======================================= -->
+        <!-- PROFAELE: TSHEDIMOSETSO YA AKHAONTO     -->
+        <!-- ======================================= -->
+
+        <!-- Leibole ya imeile -->
+        <string name="personal_profile_email_label">Imeile</string>
+
+        <!-- Leibole ya mogala -->
+        <string name="personal_profile_phone_label">Mogala</string>
+
+        <!-- Leibole ya mofuta wa akhaonto -->
+        <string name="personal_profile_account_type_label">Mofuta wa akhaonto</string>
+
+        <!-- E dirisiwa fa tshedimosetso e seyo -->
+        <string name="personal_profile_not_available">Ga e teng</string>
+
+        <!-- Mofuta wa akhaonto wa nakwana -->
+        <string name="personal_profile_default_account_type">Ya botho</string>
+
+
+        <!-- ======================================= -->
+        <!-- PROFAELE: DITLHAKANELO TSA GO TSAMAYA   -->
+        <!-- ======================================= -->
+
+        <!-- Konopo ya go baakanya profaele -->
+        <string name="personal_profile_edit">✎    Baakanya profaele    ›</string>
+
+        <!-- Konopo ya batho ba o ba ikanyang -->
+        <string name="personal_profile_trusted_contacts">👥    Batho ba o ba ikanyang    ›</string>
+
+        <!-- Konopo ya dipegelo tsa modirisi -->
+        <string name="personal_profile_my_reports">▤    Dipegelo tsa me    ›</string>
+
+        <!-- Konopo ya di-setting -->
+        <string name="personal_profile_settings">⚙    Di-setting    ›</string>
+
+        <!-- Konopo ya go tswa mo akhaonteng -->
+        <string name="personal_profile_logout">Tswa</string>
+
+
+        <!-- ======================================= -->
+        <!-- PROFAELE: MELAETSA YA TSEBISO           -->
+        <!-- ======================================= -->
+
+        <!-- E bontshiwa fa go palelwa ke go tsenya profaele -->
+        <string name="personal_profile_load_failed">Ga go a kgonagala go tsenya tshedimosetso yotlhe ya profaele.</string>
+
+        <!-- E bontshiwa fa skrine e sa kgone go bulwa -->
+        <string name="personal_profile_open_failed">Ga go a kgonagala go bula skrine eno.</string>
+
+        <!-- Molaetsa o bontshiwa morago ga go tswa -->
+        <string name="personal_profile_logged_out">O tswile mo akhaonteng ya gago.</string>
+
+        <!-- ============================================= -->
+        <!-- GO BAAKANYA PROFAELE: SETLHOGO LE TSHEDIMOSETSO -->
+        <!-- ============================================= -->
+
+        <!-- Tlhaloso ya konopo ya go boela morago -->
+        <string name="edit_profile_back">Morago</string>
+
+        <!-- Leina la app -->
+        <string name="edit_profile_app_name">SafeZone</string>
+
+        <!-- Setlhogo sa skrine -->
+        <string name="edit_profile_title">Baakanya Profaele</string>
+
+        <!-- Tlhaloso ya skrine -->
+        <string name="edit_profile_subtitle">Ntšhafatsa tshedimosetso ya gago ya botho</string>
+
+
+        <!-- ============================================= -->
+        <!-- GO BAAKANYA PROFAELE: MABOKOSO LE DITAELO     -->
+        <!-- ============================================= -->
+
+        <!-- Lebokoso la leina le le feletseng -->
+        <string name="edit_profile_full_name">Leina le le Feletseng</string>
+        <string name="edit_profile_full_name_hint">Tsenya leina la gago le le feletseng</string>
+
+        <!-- Lebokoso la imeile -->
+        <string name="edit_profile_email">Aterese ya Imeile</string>
+        <string name="edit_profile_email_hint">Tsenya imeile ya gago</string>
+
+        <!-- Lebokoso la nomoro ya mogala -->
+        <string name="edit_profile_phone">Nomoro ya Mogala</string>
+        <string name="edit_profile_phone_hint">Tsenya nomoro ya mogala ya gago</string>
+
+
+        <!-- ============================================= -->
+        <!-- GO BAAKANYA PROFAELE: DIKONOPO                -->
+        <!-- ============================================= -->
+
+        <!-- Konopo ya go boloka diphetogo -->
+        <string name="edit_profile_save_changes">Boloka Diphetogo</string>
+
+        <!-- E bontshiwa fa diphetogo di bolokwa -->
+        <string name="edit_profile_saving">E a boloka...</string>
+
+        <!-- Konopo ya go khansela -->
+        <string name="edit_profile_cancel">Khansela</string>
+
+
+        <!-- ============================================= -->
+        <!-- GO BAAKANYA PROFAELE: GO TSENA LE GO LAISA    -->
+        <!-- ============================================= -->
+
+        <!-- E bontshiwa fa nako ya go tsena e fedile -->
+        <string name="edit_profile_session_expired">Nako ya gago ya go tsena e fedile. Tsweetswee tsena gape.</string>
+
+        <!-- E bontshiwa fa go palelwa ke go laisa profaele.
+             %1$s e emela dintlha tsa phoso. -->
+        <string name="edit_profile_load_failed">Ga go a kgonagala go tsenya profaele ya gago: %1$s</string>
+
+        <!-- E dirisiwa fa dintlha tsa phoso di seyo -->
+        <string name="edit_profile_unknown_error">Phoso e e sa itsiweng</string>
+
+
+        <!-- ============================================= -->
+        <!-- GO BAAKANYA PROFAELE: GO TLHATLHOBA           -->
+        <!-- ============================================= -->
+
+        <!-- Go tlhatlhoba leina le le feletseng -->
+        <string name="edit_profile_name_required">Tsweetswee tsenya leina la gago le le feletseng</string>
+
+        <!-- Go tlhatlhoba imeile -->
+        <string name="edit_profile_email_required">Tsweetswee tsenya aterese ya imeile ya gago</string>
+        <string name="edit_profile_email_invalid">Tsweetswee tsenya aterese ya imeile e e siameng</string>
+
+        <!-- Go tlhatlhoba nomoro ya mogala -->
+        <string name="edit_profile_phone_required">Tsweetswee tsenya nomoro ya mogala ya gago</string>
+        <string name="edit_profile_phone_invalid">Tsweetswee tsenya nomoro ya mogala e e siameng</string>
+
+
+        <!-- ============================================= -->
+        <!-- GO BAAKANYA PROFAELE: MATSENO A GO BOLoka    -->
+        <!-- ============================================= -->
+
+        <!-- E bontshiwa fa profaele e bolokilwe ka katlego -->
+        <string name="edit_profile_save_success">Profaele e ntšhafaditswe ka katlego.</string>
+
+        <!-- E bontshiwa fa go boloka go palelwa.
+             %1$s e emela dintlha tsa phoso. -->
+        <string name="edit_profile_save_failed">Go paletswe ke go ntšhafatsa profaele: %1$s</string>
+
+
+        <!-- Go fetola phasewete: tlhogo le diteng -->
+        <string name="change_password_back">‹</string>
+        <string name="change_password_back_description">Boela morago</string>
+        <string name="change_password_app_name">SafeZone</string>
+        <string name="change_password_logo_description">Letshwao la SafeZone</string>
+        <string name="change_password_title">Fetola Phasewete</string>
+        <string name="change_password_subtitle">Sireletsa akhaonto ya gago ka phasewete e e nonofileng.</string>
+        <string name="change_password_security_description">Tshedimosetso ya tshireletsego</string>
+        <string name="change_password_security_tip">Sireletsa akhaonto ya gago. O se ka wa abelana phasewete ya gago le ope.</string>
+
+        <!-- Maina le ditaelo tsa dikarolo -->
+        <string name="change_password_current_label">Phasewete ya ga jaana</string>
+        <string name="change_password_current_hint">Tsenya phasewete ya gago ya ga jaana</string>
+        <string name="change_password_new_label">Phasewete e ntšha</string>
+        <string name="change_password_new_hint">Tsenya phasewete ya gago e ntšha</string>
+        <string name="change_password_confirm_label">Netefatsa phasewete e ntšha</string>
+        <string name="change_password_confirm_hint">Tsenya phasewete e ntšha gape</string>
+
+        <!-- Dilo tse di tlhokegang mo phaseweteng -->
+        <string name="change_password_requirements_title">Dilo tse di tlhokegang mo phaseweteng</string>
+        <string name="change_password_requirements_list">• Dirisa bonnye ditlhaka di le 6.\n• Tlhopha phasewete e go leng thata go e fopholetsa.\n• Netefatsa gore diphasewete tse dintšha di a tshwana.</string>
+
+        <!-- Melaetsa ya netefatso le diphoso -->
+        <string name="change_password_no_user">Ga go na akhaonto e e tsentsweng e e bonweng.</string>
+        <string name="change_password_current_required">Tsweetswee tsenya phasewete ya gago ya ga jaana.</string>
+        <string name="change_password_new_required">Tsweetswee tsenya phasewete e ntšha.</string>
+        <string name="change_password_min_length">Phasewete e tshwanetse go nna le bonnye ditlhaka di le 6.</string>
+        <string name="change_password_confirm_required">Tsweetswee netefatsa phasewete ya gago e ntšha.</string>
+        <string name="change_password_mismatch">Diphasewete ga di tshwane.</string>
+        <string name="change_password_same_as_current">Phasewete e ntšha e tshwanetse go farologana le ya ga jaana.</string>
+        <string name="change_password_email_missing">Imeile ya akhaonto ya gago ga e bonale.</string>
+        <string name="change_password_processing">GO FETOLWA PHASEWETE...</string>
+        <string name="change_password_button">FETOLA PHASEWETE</string>
+        <string name="change_password_success">Phasewete e fetotswe ka katlego!</string>
+        <string name="change_password_unknown_error">Go paletswe go fetola phasewete.</string>
+        <string name="change_password_update_failed">Go paletswe go fetola phasewete: %1$s</string>
+        <string name="change_password_current_incorrect">Phasewete ya ga jaana ga e a siama.</string>
+        <string name="change_password_back_to_settings">Boela kwa Diseting</string>
+
+
+    <!-- Dikgetho tsa tshoganyetso: tlhogo le diteng -->
+    <string name="emergency_preferences_back">‹</string>
+    <string name="emergency_preferences_back_description">Morago</string>
+    <string name="emergency_preferences_app_name">SafeZone</string>
+    <string name="emergency_preferences_logo_description">Letshwao la SafeZone</string>
+    <string name="emergency_preferences_title">Dikgetho tsa Maemo a Tshoganyetso</string>
+    <string name="emergency_preferences_subtitle">Tlhopha se SafeZone e tshwanetseng go se dira mo tshoganyetsong.</string>
+
+    <!-- Ditirelo tsa tshoganyetso -->
+    <string name="emergency_preferences_services">Ditirelo tsa Tshoganyetso</string>
+    <string name="emergency_preferences_services_description">Letla go fitlhelela ditirelo tsa tshoganyetso ka bonako.</string>
+
+    <!-- Go abelana ka lefelo -->
+    <string name="emergency_preferences_location">Abelana ka Lefelo mo Tshoganyetsong</string>
+    <string name="emergency_preferences_location_description">Letla gore lefelo la gago le abelanwe go thusa mo tshoganyetsong.</string>
+
+    <!-- Ditsebiso go batho ba o ba tshepang -->
+    <string name="emergency_preferences_contacts">Ditsebiso go Batho ba o ba Tshepang</string>
+    <string name="emergency_preferences_contacts_description">Itsise batho ba o ba tshepang fa thuso ya tshoganyetso e kopiwa.</string>
+
+    <!-- Nomoro ya ditirelo tsa tshoganyetso -->
+    <string name="emergency_preferences_number_label">Nomoro ya Ditirelo tsa Tshoganyetso</string>
+    <string name="emergency_preferences_number_hint">Tsenya nomoro ya tshoganyetso (sekai, 112)</string>
+    <string name="emergency_preferences_number_required">Tsweetswee tsenya nomoro ya tshoganyetso.</string>
+    <string name="emergency_preferences_number_invalid">Tsweetswee tsenya nomoro ya tshoganyetso e e siameng.</string>
+    <string name="emergency_preferences_number_format">Dirisa dinomoro le matshwao a mogala a a tlwaelegileng fela.</string>
+
+    <!-- Go boloka le go boela kwa diseting -->
+    <string name="emergency_preferences_save">Boloka Dikgetho</string>
+    <string name="emergency_preferences_saved">Dikgetho tsa tshoganyetso di bolokilwe.</string>
+    <string name="emergency_preferences_save_failed">Go paletswe go boloka dikgetho. Tsweetswee leka gape.</string>
+    <string name="emergency_preferences_back_to_settings">Boela kwa Diseting</string>
+
+    <!-- Sekirini sa kopo ya thuso ya tshoganyetso: Setswana -->
+    <string name="emergency_request_back">Morago</string>
+    <string name="emergency_request_icon_description">Go kopilwe thuso ya tshoganyetso</string>
+    <string name="emergency_request_title">Go Kopilwe Thuso ya Tshoganyetso</string>
+    <string name="emergency_request_description">Kopo ya gago ya thuso ya tshoganyetso e kwadisitswe.</string>
+    <string name="emergency_request_type_icon_description">Setshwantsho sa mofuta wa thuso</string>
+    <string name="emergency_request_assistance_type_label">Mofuta wa Thuso</string>
+    <string name="emergency_request_assistance_type_value">Mofuta wa thuso: %1$s</string>
+    <string name="emergency_request_default_type">Thuso ya Tshoganyetso</string>
+    <string name="emergency_request_status_icon_description">Setshwantsho sa maemo a kopo</string>
+    <string name="emergency_request_status_label">Maemo a Kopo</string>
+    <string name="emergency_request_location_icon_description">Setshwantsho sa lefelo</string>
+    <string name="emergency_request_location_label">Lefelo</string>
+    <string name="emergency_request_location_description">Abelana ka lefelo la gago fa go kgonega.</string>
+    <string name="emergency_request_call_button">Letsetsa Ditirelo tsa Tshoganyetso</string>
+    <string name="emergency_request_share_location_button">Abelana ka Lefelo</string>
+    <string name="emergency_request_return_home_button">Boela Gae</string>
+
+    <string name="emergency_request_pending_sync">E Emetse Kamahanyo</string>
+    <string name="emergency_request_location_not_shared">Lefelo ga le a abelanwa</string>
+    <string name="emergency_request_status_format">Maemo a kamahanyo ya kopo: %1$s\n%2$s</string>
+
+    <string name="emergency_request_location_permission_denied">Tetla ya lefelo e gannwe</string>
+    <string name="emergency_request_location_permission_required">Tetla ya lefelo e a tlhokega gore o abelane ka lefelo la gago.</string>
+    <string name="emergency_request_location_disabled">Go abelana ka lefelo go timilwe mo di-setting</string>
+    <string name="emergency_request_enable_location_first">Tsweetswee, simolola ka go letlelela go abelana ka lefelo la tshoganyetso mo di-setting.</string>
+    <string name="emergency_request_services_disabled">Ditirelo tsa tshoganyetso di timilwe mo di-setting tsa gago.</string>
+    <string name="emergency_request_set_emergency_number">Tsweetswee, seta nomoro ya tshoganyetso mo di-setting tsa gago.</string>
+    <string name="emergency_request_dialler_error">Ga go kgonege go bula sedirisiwa sa go letsetsa.</string>
+    <string name="emergency_request_requesting_permission">Go kopiwa tetla ya lefelo</string>
+    <string name="emergency_request_location_services_off">Ditirelo tsa lefelo di timilwe</string>
+    <string name="emergency_request_turn_on_location">Tsweetswee, bulela ditirelo tsa lefelo pele.</string>
+    <string name="emergency_request_enable_location_in_settings">Tsweetswee, letlelela ditirelo tsa lefelo mo Di-setting.</string>
+    <string name="emergency_request_location_permission_required_status">Tetla ya lefelo e a tlhokega</string>
+    <string name="emergency_request_finding_location">Go batliwa lefelo la gago</string>
+    <string name="emergency_request_finding_location_toast">Go batliwa lefelo la gago...</string>
+    <string name="emergency_request_location_unavailable">Lefelo ga le bonale</string>
+    <string name="emergency_request_location_try_again">Ga go kgonege go bona lefelo la gago. Tsweetswee, leka gape.</string>
+    <string name="emergency_request_share_message">🚨 Lefelo la Tshoganyetso la SafeZone\n\nKe tlhoka thuso ya tshoganyetso.\n\nLefelo le ke leng mo go lone jaanong:\n%1$s\n\nTsweetswee, dirisa lefelo leno go mpona.</string>
+    <string name="emergency_request_share_chooser_title">Abelana ka Lefelo la Tshoganyetso</string>
+    <string name="emergency_request_location_ready_to_share">Lefelo le siametse go abelanwa; ga go ise go netefadiwe gore molaetsa o rometswe</string>
+    <string name="emergency_request_sharing_menu_error">Ga go kgonege go bula lenane la go abelana</string>
+    <string name="emergency_request_sharing_menu_error_toast">Ga go kgonege go bula lenane la go abelana.</string>
+
+    <!-- Ditsebiso tsa Polokesego ya Motho: Setswana -->
+
+    <string name="personal_alerts_back">Morago</string>
+    <string name="personal_alerts_header">Ditsebiso tsa Polokesego</string>
+    <string name="personal_alerts_notification_settings">Dithulaganyo tsa Ditsebiso</string>
+    <string name="personal_alerts_title">Ditsebiso tsa Polokesego ya Motho</string>
+    <string name="personal_alerts_description">Nna o itse ka tshedimosetso ya botlhokwa ya polokesego mo lefelong le o le tlhophileng.</string>
+    <string name="personal_alerts_location_label">Lefelo</string>
+
+    <string name="personal_alerts_filter_all"> Tsotlhe</string>
+    <string name="personal_alerts_filter_emergency">Tshoganyetso</string>
+    <string name="personal_alerts_filter_safety">Polokesego</string>
+    <string name="personal_alerts_filter_general">Kakaretso</string>
+    <string name="personal_alerts_filter_events">Ditiragalo</string>
+
+    <string name="personal_alerts_enable_notifications">Dumelela Ditsebiso</string>
+
+    <string name="personal_alerts_nav_home">⌂\nGae</string>
+    <string name="personal_alerts_nav_map">⌖\nMmapa</string>
+    <string name="personal_alerts_nav_reports">▤\nDipego</string>
+    <string name="personal_alerts_nav_alerts">🔔\nDitsebiso</string>
+    <string name="personal_alerts_nav_profile">●\nPorofaele</string>
+
+    <string name="personal_alerts_location_selected">Go tlhophilwe %1$s.</string>
+    <string name="personal_alerts_empty_all">Ga go na kaelo ya polokesego e e bolokilweng e e leng teng mo %1$s.</string>
+    <string name="personal_alerts_empty_category">Ga go na kaelo ya %1$s e e leng teng mo %2$s.</string>
+    <string name="personal_alerts_card_location">Lefelo: %1$s</string>
+    <string name="personal_alerts_datetime_unavailable">Letlha le nako ga di teng</string>
+    <string name="personal_alerts_date_time_format">Letlha: %1$s  •  Nako: %2$s</string>
+
+    <string name="personal_alerts_loading">Go laisiwa kaelo ya polokesego e e bolokilweng...</string>
+    <string name="personal_alerts_server_error">Go bontshiwa kaelo e e bolokilweng. Serara e busitse phoso ya %1$d.</string>
+    <string name="personal_alerts_offline_notice">Mokgwa wa go sa golaganngwa le inthanete: go bontshiwa kaelo ya polokesego e e bolokilweng. Ditsebiso tsa jaanong di ka tswa di sa ntšhwa.</string>
+    <string name="personal_alerts_notification_settings_unavailable">Dithulaganyo tsa ditsebiso ga di teng.</string>
+
+    <!-- Campus Login: screen labels -->
+    <string name="campus_login_header">SafeZone</string>
+    <string name="campus_login_logo_description">Letshwao la SafeZone</string>
+    <string name="campus_login_title">Go Tsena mo Polokesegong ya Khampase</string>
+    <string name="campus_login_subtitle">Tsena go dirisa ditirelo tsa polokesego tsa khampase ya gago.</string>
+    <string name="campus_login_email_hint">Aterese ya imeile ya moithuti</string>
+    <string name="campus_login_password_hint">Phasewete</string>
+    <string name="campus_login_remember_me">Nkgakologelwe</string>
+    <string name="campus_login_forgot_password">O lebetse phasewete?</string>
+    <string name="campus_login_button">TSENA</string>
+    <string name="campus_login_or">KGOTSA</string>
+    <string name="campus_login_google_button">Tswelela ka Google</string>
+    <string name="campus_login_no_account">Ga o na akhaonto ya khampase?</string>
+    <string name="campus_login_register">Ikwadise</string>
+
+    <!-- Campus Login: loading states -->
+    <string name="campus_login_signing_in">Go a tsenngwa...</string>
+    <string name="campus_login_google_wait">Tsweetswee leta...</string>
+
+    <!-- Campus Login: input validation -->
+    <string name="campus_login_error_email_required">Tsweetswee tsenya imeile ya gago ya moithuti.</string>
+    <string name="campus_login_error_email_invalid">Tsweetswee tsenya aterese ya imeile e e siameng.</string>
+    <string name="campus_login_error_password_required">Tsweetswee tsenya phasewete ya gago.</string>
+
+    <!-- Campus Login: internet and Google sign-in -->
+    <string name="campus_login_internet_reset">Go tlhokega inthanete go seta phasewete ya gago sesha.</string>
+    <string name="campus_login_google_internet">Golagana le inthanete go tsena ka Google.</string>
+    <string name="campus_login_google_invalid">Tsweetswee tlhopha akhaonto ya Google e e siameng.</string>
+    <string name="campus_login_google_cancelled">Go tsena ka Google go khansetswe kgotsa ga go a kgona go simolola. Leka gape.</string>
+    <string name="campus_login_google_failed">Go tsena ka Google go paletswe. Leka gape.</string>
+    <string name="campus_login_google_verify">Ga go a kgonega go netefatsa akhaonto ya gago ya Google.</string>
+    <string name="campus_login_google_auth_failed">Go netefatsa ka Google go paletswe. Tlhola akhaonto ya gago mme o leke gape.</string>
+
+    <!-- Campus Login: campus profile verification -->
+    <string name="campus_login_error_account_verify">Ga go a kgonega go netefatsa akhaonto ya gago.</string>
+    <string name="campus_login_profile_missing">Ga go a bonwa profaele ya khampase ya SafeZone. Tsweetswee ikwadise pele.</string>
+    <string name="campus_login_wrong_account_type">Akhaonto eno ga e a ikwadisiwa jaaka akhaonto ya Khampase.</string>
+    <string name="campus_login_default_name">Modirisi wa Khampase</string>
+    <string name="campus_login_online_offline_setup_failed">O tsene ka katlego o dirisa inthanete, mme go baakanyetsa go tsena ntle le inthanete go paletswe. Tlhola Logcat.</string>
+    <string name="campus_login_success_offline_ready">O tsene ka katlego. Go tsena ntle le inthanete go baakantswe.</string>
+    <string name="campus_login_success">O tsene mo SafeZone ya khampase ka katlego!</string>
+    <string name="campus_login_profile_connection_lost">Kgokagano e kgaogane pele profaele ya gago e netefadiwa. Leka gape fa o na le inthanete.</string>
+    <string name="campus_login_profile_verify_failed">Ga go a kgonega go netefatsa profaele ya gago. Leka gape.</string>
+
+    <!-- Campus Login: offline access -->
+    <string name="campus_login_offline_not_prepared">Go tsena ntle le inthanete go paletswe. Tsena pele ka katlego o dirisa inthanete mo sedirisweng seno mme o tlhomamise gore go baakanyetsa go tsena ntle le inthanete go a atlega.</string>
+    <string name="campus_login_offline_wrong_type">Go tsena gono ga go a ikwadisiwa jaaka akhaonto ya Khampase.</string>
+    <string name="campus_login_offline_success">Phitlhelelo ya Khampase ntle le inthanete e a dira. Ditirelo tse dingwe di ka nna tsa se nne teng.</string>
+
+    <!-- Campus Login: errors -->
+    <string name="campus_login_error_incorrect_credentials">Imeile kgotsa phasewete ga e a siama.</string>
+    <string name="campus_login_error_user_not_found">Ga go a bonwa akhaonto e e dirisang imeile eno.</string>
+    <string name="campus_login_error_too_many_attempts">O lekile go tsena makgetlo a le mantsi. Leka gape moragonyana.</string>
+    <string name="campus_login_error_network">Go na le bothata jwa netweke. Tlhola kgokagano ya gago ya inthanete.</string>
+    <string name="campus_login_error_generic">Go tsena go paletswe. Tlhola imeile le phasewete ya gago.</string>
+    <string name="campus_login_open_home_failed">Ga go a kgonega go bula tsebe ya gae ya Khampase: %1$s</string>
+
+    <!-- Campus Home: headings and welcome -->
+    <string name="campus_home_header">SafeZone</string>
+    <string name="campus_home_title">Polokesego ya Khampase</string>
+    <string name="campus_home_welcome">O amogetswe, %1$s 👋</string>
+    <string name="campus_home_welcome_default">O amogetswe, moithuti 👋</string>
+    <string name="campus_home_tagline">Polokesego ya gago e botlhokwa. Nna le tshedimosetso mme o nne o sireletsegile.</string>
+    <string name="campus_home_default_name">Modirisi wa Khampase</string>
+    <string name="campus_home_default_learner">Moithuti</string>
+
+    <!-- Campus connection -->
+    <string name="campus_home_default_campus">Khampase</string>
+    <string name="campus_home_campus_name_format">Khampase ya %1$s</string>
+    <string name="campus_home_campus_icon">Kago ya khampase</string>
+    <string name="campus_home_connection_title">Kgokagano ya Polokesego ya Khampase</string>
+    <string name="campus_home_status_available">Maemo: E a fitlhelelega</string>
+    <string name="campus_home_status_offline">Maemo: Ga go na inthanete</string>
+    <string name="campus_home_status_profile_outdated">Maemo: Ga go na inthanete — tshedimosetso ya profaele e ka tswa e siilwe ke nako</string>
+    <string name="campus_home_hours_description">Dihora tsa khampase</string>
+    <string name="campus_home_hours">Mosupologo – Labotlhano | 07:00 – 18:00</string>
+
+    <!-- Campus Home: action cards -->
+    <string name="campus_home_report_incident">Bega Tiragalo ya Khampase\nBega bothata jwa polokesego mo khampaseng.</string>
+    <string name="campus_home_emergency">Tiragalo ya Tshoganyetso ya Khampase\nBona thuso ka bonako mo khampaseng.</string>
+    <string name="campus_home_safety_map">Mmapa wa Polokesego ya Khampase\nLeba ditirelo le mafelo a polokesego.</string>
+    <string name="campus_home_alerts">Ditlhagiso tsa Khampase\nNna le tshedimosetso ka ditlhagiso tsa botlhokwa.</string>
+    <string name="campus_home_my_reports">Dipego tsa Me tsa Khampase\nLeba le go laola ditiragalo tse o di begileng.</string>
+    <string name="campus_home_logout">TSWA</string>
+
+    <!-- Campus Home: bottom navigation -->
+    <string name="campus_home_nav_home">Gae</string>
+    <string name="campus_home_nav_map">Mmapa</string>
+    <string name="campus_home_nav_reports">Dipego</string>
+    <string name="campus_home_nav_alerts">Ditlhagiso</string>
+    <string name="campus_home_nav_profile">Profaele</string>
+
+    <!-- Campus Home: messages -->
+    <string name="campus_home_login_required">Tsweetswee tsena go tswelela.</string>
+    <string name="campus_home_logout_success">O tswile mo akhaontong ya gago.</string>
+    <string name="campus_home_feature_unavailable">%1$s ga e teng mo nakong eno.</string>
+    <string name="campus_home_feature_incident">Go bega ditiragalo tsa khampase</string>
+    <string name="campus_home_feature_emergency">Ditirelo tsa tshoganyetso</string>
+    <string name="campus_home_feature_map">Mmapa wa polokesego ya khampase</string>
+    <string name="campus_home_feature_alerts">Ditlhagiso tsa khampase</string>
+    <string name="campus_home_feature_reports">Dipego tsa khampase</string>
+    <string name="campus_home_feature_profile">Profaele ya khampase</string>
+
+    <string name="campus_alerts_back">Morago</string>
+    <string name="campus_alerts_header">SafeZone</string>
+    <string name="campus_alerts_notifications">Ditlhagiso</string>
+    <string name="campus_alerts_title">Ditlhagiso tsa Khamphase</string>
+    <string name="campus_alerts_tagline">Nna le kitso. Nna o sireletsegile.</string>
+    <string name="campus_alerts_description">Amogela tshedimosetso e ntšha, ditlhagiso tsa pabalesego le tshedimosetso ya maemo a tshoganyetso ya khamphase ya gago.</string>
+    <string name="campus_alerts_campus">Khamphase</string>
+    <string name="campus_alerts_select_campus">Tlhopha khamphase</string>
+    <string name="campus_alerts_default_campus">Khamphase ya Pretoria</string>
+    <string name="campus_alerts_filter_all">Tsotlhe</string>
+    <string name="campus_alerts_filter_emergency">Tshoganyetso</string>
+    <string name="campus_alerts_filter_safety">Pabalesego</string>
+    <string name="campus_alerts_filter_general">Kakaretso</string>
+    <string name="campus_alerts_filter_events">Ditiragalo</string>
+    <string name="campus_alerts_enable_notifications">Dumella Ditlhagiso</string>
+    <string name="campus_alerts_notification_description">O se ka wa fetwa ke tshedimosetso e e botlhokwa ya khamphase.</string>
+    <string name="campus_alerts_turn_on">Bulela</string>
+    <string name="campus_alerts_nav_home">Gae</string>
+    <string name="campus_alerts_nav_map">Mmapa</string>
+    <string name="campus_alerts_nav_reports">Dipego</string>
+    <string name="campus_alerts_nav_alerts">Ditlhagiso</string>
+    <string name="campus_alerts_nav_profile">Porofaele</string>
+    <string name="campus_alerts_loading">Go laisiwa tshedimosetso ya khamphase e e bolokilweng...</string>
+    <string name="campus_alerts_empty_all">Ga go na tshedimosetso ya pabalesego e e leng teng jaanong mo Khamphaseng ya %1$s.</string>
+    <string name="campus_alerts_empty_filter">Ga go na tshedimosetso ya %1$s e e leng teng jaanong mo Khamphaseng ya %2$s.</string>
+    <string name="campus_alerts_location">Lefelo: %1$s</string>
+    <string name="campus_alerts_campus_label">Khamphase: %1$s</string>
+    <string name="campus_alerts_datetime_unavailable">Letlha le nako ga di teng</string>
+    <string name="campus_alerts_datetime">Letlha: %1$s • Nako: %2$s</string>
+    <string name="campus_alerts_local_guidance_error">Tshedimosetso ya pabalesego e e bolokilweng ga e a kgona go laisiwa.</string>
+    <string name="campus_alerts_no_live_alerts">Ga go a amogelwa ditlhagiso tsa jaanong. Tshedimosetso e e bolokilweng e ka nna ya bo e sa ntse e le teng.</string>
+    <string name="campus_alerts_refresh_error">Ga go a kgonagala go ntšhwafatsa ditlhagiso tsa jaanong. Go bontshiwa tshedimosetso e e bolokilweng fa e le teng.</string>
+    <string name="campus_alerts_offline_notice">Mokgwa wa go sa golagana le inthanete: go bontshiwa tshedimosetso e e bolokilweng. Ditlhagiso tsa tshoganyetso tsa jaanong di ka tswa di sa ntšhwa.</string>
+    <string name="campus_alerts_notification_settings_error">Dipeakanyo tsa ditlhagiso ga di teng.</string>
+    <string name="campus_alerts_campus_selected">Khamphase ya %1$s e tlhophilwe.</string>
+    <string name="campus_alerts_map_unavailable">Mmapa wa khamphase ga o teng.</string>
+    <string name="campus_alerts_reports_unavailable">Dipego tsa khamphase ga di teng.</string>
+    <string name="campus_alerts_profile_unavailable">Porofaele ya khamphase ga e teng.</string>
+    <string name="campus_alerts_new_alert_title">Tlhagiso e Ntšha ya Pabalesego ya Khamphase</string>
+    <string name="campus_alerts_new_alert_message">Tlhagiso e ntšha e rometswe mo Khamphaseng ya %1$s.</string>
+    <string name="campus_alerts_notification_channel">Ditlhagiso tsa Pabalesego tsa Khamphase</string>
+    <string name="campus_alerts_notification_channel_description">Ditlhagiso tsa pabalesego tsa nako ya nnete tsa khamphase e e tlhophilweng</string>
+
+    <!-- Pego ya Tiragalo ya Khamphase: Setswana -->
+    <string name="cir_app_name">SafeZone</string>
+    <string name="cir_back">Boela morago</string>
+    <string name="cir_title">Bega Tiragalo ya Khamphase</string>
+    <string name="cir_subtitle">Re thuse go boloka khamphase ya rona e sireletsegile. Neela dintlha tse dintsi ka mo go kgonegang.</string>
+
+    <string name="cir_incident_type_required">Mofuta wa tiragalo *</string>
+    <string name="cir_campus_required">Khamphase *</string>
+    <string name="cir_location_required">Lefelo *</string>
+    <string name="cir_description_required">Tlhaloso *</string>
+
+    <string name="cir_incident_type">Mofuta wa tiragalo</string>
+    <string name="cir_campus">Khamphase</string>
+    <string name="cir_location">Lefelo</string>
+    <string name="cir_description">Tlhaloso</string>
+    <string name="cir_location_hint">Tsenya lefelo le o leng mo go lone kgotsa o le tlhophe mo mmapeng</string>
+    <string name="cir_use_current_location">Dirisa lefelo la ga jaana</string>
+    <string name="cir_description_hint">Tlhalosa se se diragetseng...</string>
+    <string name="cir_initial_character_count">0/500</string>
+    <string name="cir_character_count">%1$d/500</string>
+
+    <string name="cir_evidence_title">Bosupi (Ga go patelediwe)</string>
+    <string name="cir_evidence_description">Tsenya ditshwantsho, dibidio, direkoto tsa modumo kgotsa difaele go tshegetsa pego ya gago.</string>
+    <string name="cir_photo">Setshwantsho</string>
+    <string name="cir_video">Bidio</string>
+    <string name="cir_audio">Modumo</string>
+    <string name="cir_file">Faele</string>
+    <string name="cir_submit_report">Romela Pego ya Khamphase</string>
+
+    <string name="cir_nav_home">Gae</string>
+    <string name="cir_nav_map">Mmapa</string>
+    <string name="cir_nav_reports">Dipego</string>
+    <string name="cir_nav_alerts">Ditlhagiso</string>
+    <string name="cir_nav_profile">Porofaele</string>
+
+    <string name="cir_location_permission_required">Tetla ya lefelo e a tlhokega go dirisa lefelo la gago la ga jaana.</string>
+    <string name="cir_photo_saved">Setshwantsho se bolokilwe ka katlego.</string>
+    <string name="cir_video_saved">Bidio e bolokilwe ka katlego.</string>
+    <string name="cir_audio_saved">Modumo o bolokilwe ka katlego.</string>
+    <string name="cir_file_saved">Faele e bolokilwe ka katlego.</string>
+    <string name="cir_evidence_save_failed">Ga go a kgonega go boloka bosupi jo bo tlhophilweng.</string>
+    <string name="cir_enable_location_services">Tsweetswee, bulela ditirelo tsa lefelo.</string>
+    <string name="cir_getting_location">Go batliwa lefelo la gago la ga jaana...</string>
+    <string name="cir_location_failed">Ga go a kgonega go bona lefelo la gago.</string>
+
+    <string name="cir_login_required">Tsweetswee, tsena mo akhaonteng go romela pego ya khamphase.</string>
+    <string name="cir_select_incident_type">Tsweetswee, tlhopha mofuta wa tiragalo.</string>
+    <string name="cir_select_campus">Tsweetswee, tlhopha khamphase.</string>
+    <string name="cir_enter_location">Tsweetswee, tsenya kgotsa tlhopha lefelo la tiragalo.</string>
+    <string name="cir_enter_description">Tsweetswee, tlhalosa se se diragetseng.</string>
+    <string name="cir_description_too_short">Tsweetswee, neela dintlha tse dingwe ka tiragalo.</string>
+    <string name="cir_description_too_long">Tlhaloso ga e a tshwanela go feta ditlhaka di le 500.</string>
+    <string name="cir_saving_report">Go bolokwa pego...</string>
+    <string name="cir_synchronising">Go nyalantshiwa...</string>
+    <string name="cir_saved_offline">Pego e bolokilwe ntle le inthanete. E emetse go nyalantshiwa.</string>
+    <string name="cir_local_save_failed">Ga go a kgonega go boloka pego mo sedirisiweng: %1$s</string>
+    <string name="cir_submission_success">Pego ya khamphase e rometswe ka katlego.</string>
+    <string name="cir_sync_pending">Pego e bolokilwe mo sedirisiweng seno. Go nyalantshiwa go sa ntse go emetswe.</string>
+
+    <string name="cir_navigation_map">Go ya mmapeng ga go ise go golaganngwe.</string>
+    <string name="cir_navigation_reports">Go ya kwa dipegong ga go ise go golaganngwe.</string>
+    <string name="cir_navigation_alerts">Go ya kwa ditlhagisong ga go ise go golaganngwe.</string>
+    <string name="cir_navigation_profile">Go ya kwa porofaeleng ga go ise go golaganngwe.</string>
+
+    <string-array name="cir_incident_types">
+        <item>Tlhopha mofuta wa tiragalo</item>
+        <item>Bothata jwa Kalafi jwa Tshoganyetso</item>
+        <item>Go Tlhaselwa</item>
+        <item>Go Tshwenngwa</item>
+        <item>Bogodu</item>
+        <item>Molelo</item>
+        <item>Kotsi</item>
+        <item>Tiro e e Belaetsang</item>
+        <item>Lefelo le le sa Sireletsegang</item>
+        <item>Tse Dingwe</item>
+    </string-array>
+
+    <string-array name="cir_campuses">
+        <item>Tlhopha khamphase</item>
+        <item>Khamphase ya Pretoria</item>
+        <item>Khamphase ya Johannesburg</item>
+        <item>Khamphase ya Polokwane</item>
+        <item>Khamphase ya Durban</item>
+        <item>Khamphase ya Bloemfontein</item>
+    </string-array>
+
+    <!-- Di-setting tsa Khampase: Setswana -->
+
+    <string name="campus_settings_app_name">SafeZone</string>
+    <string name="campus_settings_back">‹</string>
+    <string name="campus_settings_title">Di-setting tsa Khampase</string>
+    <string name="campus_settings_subtitle">Laola akhaonto ya gago le di-setting tsa pabalesego.</string>
+
+    <!-- Karolo ya akhaonto -->
+    <string name="campus_settings_account">Akhaonto</string>
+    <string name="campus_settings_edit_profile">Baakanya Porofaele</string>
+    <string name="campus_settings_change_password">Fetola Phasewete</string>
+    <string name="campus_settings_language">Puo</string>
+    <string name="campus_settings_language_english">Seesemane</string>
+    <string name="campus_settings_logout">Tswa</string>
+
+    <!-- Karolo ya pabalesego ya khampase -->
+    <string name="campus_settings_campus_safety">Pabalesego ya Khampase</string>
+    <string name="campus_settings_campus_alerts">Ditlhagiso tsa Khampase</string>
+    <string name="campus_settings_emergency_preferences">Di-setting tsa Maemo a Tshoganyetso</string>
+    <string name="campus_settings_location_sharing">Go Abelana ka Lefelo</string>
+
+    <!-- Karolo ya thuso -->
+    <string name="campus_settings_support">Tshegetso</string>
+    <string name="campus_settings_help_support">Thuso le Tshegetso</string>
+    <string name="campus_settings_about_safezone">Ka ga SafeZone</string>
+
+    <!-- Tsamaiso ya kwa tlase -->
+    <string name="campus_settings_home">Gae</string>
+    <string name="campus_settings_map">Mmapa</string>
+    <string name="campus_settings_reports">Dipego</string>
+    <string name="campus_settings_alerts">Ditlhagiso</string>
+    <string name="campus_settings_profile">Porofaele</string>
+
+    <!-- Fensetere ya go tlhopha puo -->
+    <string name="campus_settings_choose_language">Tlhopha Puo</string>
+    <string name="campus_settings_cancel">Khansela</string>
+    <string name="campus_settings_language_saved">Puo e bolokilwe ka katlego.</string>
+    <string name="campus_settings_open">Bula</string>
+
+    <!-- Melaetsa ya diphoso le maemo -->
+    <string name="campus_settings_edit_profile_unavailable">Ga go kgonege go bula go baakanya porofaele.</string>
+    <string name="campus_settings_change_password_unavailable">Ga go kgonege go bula go fetola phasewete.</string>
+    <string name="campus_settings_alerts_unavailable">Ga go kgonege go bula ditlhagiso tsa khampase.</string>
+    <string name="campus_settings_emergency_unavailable">Ga go kgonege go bula di-setting tsa maemo a tshoganyetso.</string>
+    <string name="campus_settings_location_unavailable">Ga go kgonege go bula go abelana ka lefelo.</string>
+    <string name="campus_settings_help_unavailable">Ga go kgonege go bula thuso le tshegetso.</string>
+    <string name="campus_settings_about_unavailable">Ga go kgonege go bula tshedimosetso ka SafeZone.</string>
+    <string name="campus_settings_reports_unavailable">Ga go kgonege go bula dipego.</string>
+    <string name="campus_settings_profile_unavailable">Ga go kgonege go bula porofaele.</string>
+    <string name="campus_settings_map_unavailable">Mmapa ga o teng mo sedirisiweng seno.</string>
+    <string name="campus_settings_logout_success">O tswile mo akhaontong ya gago.</string>
+
+    <!-- Porofaele ya Khampase: Setswana -->
+
+    <string name="campus_profile_app_name">SafeZone</string>
+    <string name="campus_profile_back">‹</string>
+    <string name="campus_profile_back_description">Boela morago</string>
+    <string name="campus_profile_default_name">Moithuti</string>
+    <string name="campus_profile_student_details_default">Moithuti • Khampase</string>
+    <string name="campus_profile_student_details">Moithuti • %1$s — %2$s</string>
+
+    <!-- Tshedimosetso ya porofaele -->
+    <string name="campus_profile_photo_description">Setshwantsho sa porofaele</string>
+    <string name="campus_profile_change_photo">Fetola setshwantsho sa porofaele</string>
+    <string name="campus_profile_email_label">Imeile</string>
+    <string name="campus_profile_phone_label">Mogala</string>
+    <string name="campus_profile_institution_label">Setheo</string>
+    <string name="campus_profile_campus_label">Khampase</string>
+    <string name="campus_profile_no_email">Ga go na imeile e e neilweng</string>
+    <string name="campus_profile_phone_missing">Nomoro ya mogala ga e a neelwa</string>
+    <string name="campus_profile_institution_missing">Setheo ga se a tlhalosiwa</string>
+    <string name="campus_profile_campus_missing">Khampase ga e a tlhalosiwa</string>
+
+    <!-- Ditiragalo tsa porofaele -->
+    <string name="campus_profile_edit">Baakanya Porofaele</string>
+    <string name="campus_profile_trusted_contacts">Batho Ba ke Ba Ikanyang</string>
+    <string name="campus_profile_my_reports">Dipego Tsa Me</string>
+    <string name="campus_profile_settings">Di-setting</string>
+    <string name="campus_profile_logout">Tswa</string>
+    <string name="campus_profile_open">Bula</string>
+
+    <!-- Tsamaiso ya app -->
+    <string name="campus_profile_home">Gae</string>
+    <string name="campus_profile_map">Mmapa</string>
+    <string name="campus_profile_alerts">Ditlhagiso</string>
+    <string name="campus_profile_profile">Porofaele</string>
+
+    <!-- Melaetsa ya maemo le diphoso -->
+    <string name="campus_profile_not_found">Tshedimosetso ya porofaele ya khampase ga e a bonwa.</string>
+    <string name="campus_profile_load_failed">Ga go kgonege go laisa porofaele ya khampase.</string>
+    <string name="campus_profile_photo_coming_soon">Go tlhopha setshwantsho sa porofaele go tla tsenngwa fano.</string>
+    <string name="campus_profile_edit_unavailable">Go baakanya porofaele ga go teng.</string>
+    <string name="campus_profile_trusted_contacts_unavailable">Batho ba o ba ikanyang ga ba teng.</string>
+    <string name="campus_profile_settings_unavailable">Di-setting ga di teng.</string>
+    <string name="campus_profile_map_unavailable">Mmapa wa pabalesego ya khampase ga o teng.</string>
+    <string name="campus_profile_reports_unavailable">Dipego ga di teng.</string>
+    <string name="campus_profile_alerts_unavailable">Ditlhagiso tsa khampase ga di teng.</string>
+    <string name="campus_profile_current_profile">O leba porofaele ya gago.</string>
+    <string name="campus_profile_logout_success">O tswile mo akhaontong ya gago.</string>
+
+    <!-- Dileibole tsa Mmapa wa Polokesego ya Khamphase: Setswana -->
+
+    <string name="campus_map_back">Morago</string>
+    <string name="campus_map_app_title">SafeZone</string>
+    <string name="campus_map_notifications">Ditsebeletso tsa ditlhagiso</string>
+    <string name="campus_map_location">Lefelo la khamphase</string>
+    <string name="campus_map_title">Mmapa wa Polokesego ya Khamphase</string>
+    <string name="campus_map_subtitle">Sekaseka khamphase ya gago mme o bone tsela ka pabalesego.</string>
+    <string name="campus_map_campus">Khamphase</string>
+    <string name="campus_map_search">Batla</string>
+    <string name="campus_map_search_hint">Batla kago kgotsa lefelo...</string>
+    <string name="campus_map_library">Laeborari</string>
+    <string name="campus_map_student_centre">Lefelo la\nBaithuti</string>
+    <string name="campus_map_lecture_halls">Diholo tsa\nDithuto</string>
+    <string name="campus_map_admin_block">Kago ya\nBotsamaisi</string>
+    <string name="campus_map_main_entrance">Kgoro e\nKgolo</string>
+    <string name="campus_map_illustrated_location">Letshwao la lefelo le le tshwantshitsweng; ga se lefelo la gago la GPS la jaanong</string>
+    <string name="campus_map_compass">Busetsa mmapa mo tshupetsong ya one ya ntlha</string>
+    <string name="campus_map_zoom_in">Godisa</string>
+    <string name="campus_map_zoom_out">Fokotsa</string>
+    <string name="campus_map_my_location">Bontsha lefelo la me mo app ya mmapa</string>
+    <string name="campus_map_information">Tshedimosetso</string>
+    <string name="campus_map_explore_title">Sekaseka Khamphase ya Gago</string>
+    <string name="campus_map_explore_description">Bona dikago, ditselana le mafelo a botlhokwa a khamphase.</string>
+    <string name="campus_map_get_directions">Bona\nDitaelo</string>
+    <string name="campus_map_home">Gae</string>
+    <string name="campus_map_nav_map">Mmapa</string>
+    <string name="campus_map_reports">Dipego</string>
+    <string name="campus_map_alerts">Ditlhagiso</string>
+    <string name="campus_map_profile">Profaele</string>
+
+
+    <string name="campus_map_location_permission_denied">Tetla ya lefelo e ganetswe. Letla phitlhelelo ya lefelo go dirisa karolo eno.</string>
+    <string name="campus_map_building_selected">Kago e e tlhophilweng: %1$s</string>
+    <string name="campus_map_load_campus_failed">Ga go a kgonega go laisa tshedimosetso ya khampase ya gago.</string>
+    <string name="campus_map_default_campus">Khampase ya tlwaelo</string>
+    <string name="campus_map_zoom_level">Go godisa mmapa: %1$d%%</string>
+    <string name="campus_map_orientation_reset">Tlhagiso ya mmapa e buseditswe kwa tshimologong.</string>
+    <string name="campus_map_enter_location">Tsweetswee tsenya lefelo le o batlang go le batla.</string>
+    <string name="campus_map_location_found">Lefelo le bonwe: %1$s</string>
+    <string name="campus_map_location_not_on_illustration">%1$s ga e bontshiwe mo setshwantshong sa khampase. O sa ntse o ka kopa ditaelo tsa tsela.</string>
+    <string name="campus_map_select_campus">Tlhopha khampase</string>
+    <string name="campus_map_campus_selected">Khampase e e tlhophilweng: %1$s</string>
+    <string name="campus_map_cancel">Khansela</string>
+    <string name="campus_map_no_maps_app">Ga go na app ya mmapa e e fitlhelelwang mo sedirisiweng seno.</string>
+    <string name="campus_map_open_home_failed">Ga go a kgonega go bula tsebe ya gae.</string>
+    <string name="campus_map_open_reports_failed">Ga go a kgonega go bula dipegelo tsa khampase.</string>
+    <string name="campus_map_open_alerts_failed">Ga go a kgonega go bula ditlhagiso tsa khampase.</string>
+    <string name="campus_map_open_profile_failed">Ga go a kgonega go bula profaele ya gago.</string>
+
+    <!-- Dipego tsa Khamphase: Setswana -->
+
+    <string name="campus_reports_back">Morago</string>
+    <string name="campus_reports_title">Dipego tsa Khamphase</string>
+    <string name="campus_reports_refresh">Ntšhwafatsa dipego</string>
+    <string name="campus_reports_heading">Dipego tsa Me tsa Ditiragalo</string>
+    <string name="campus_reports_description">Leba ditiragalo tse o di begileng mo khamphaseng.</string>
+    <string name="campus_reports_count_zero">Dipego di le 0</string>
+    <string name="campus_reports_count">Dipego di le %1$d</string>
+    <string name="campus_reports_empty">Ga o ise o romele pego ya tiragalo ya khamphase.</string>
+    <string name="campus_reports_description_label">Tlhaloso</string>
+    <string name="campus_reports_location_label">Lefelo</string>
+    <string name="campus_reports_view_location">Bona Lefelo mo Mmapeng</string>
+    <string name="campus_reports_status_label">Maemo a Pego</string>
+    <string name="campus_reports_sync_status">Kopanyo: %1$s</string>
+    <string name="campus_reports_evidence">Bosupi</string>
+    <string name="campus_reports_view_photo">Bona Setshwantsho</string>
+    <string name="campus_reports_view_video">Bona Bidio</string>
+    <string name="campus_reports_view_audio">Reetsa Modumo</string>
+    <string name="campus_reports_view_file">Bula Faele</string>
+    <string name="campus_reports_incident_id">Nomoro ya Tiragalo: SZ-%1$s</string>
+    <string name="campus_reports_campus">Khamphase: %1$s</string>
+    <string name="campus_reports_date">Letlha: %1$s</string>
+    <string name="campus_reports_time">Nako: %1$s</string>
+    <string name="campus_reports_gps">GPS: %1$.6f, %2$.6f</string>
+    <string name="campus_reports_status">Maemo: %1$s</string>
+    <string name="campus_reports_pending_sync">Ga e ise e kopanngwe</string>
+    <string name="campus_reports_synced">E kopantswe</string>
+    <string name="campus_reports_not_available">Ga e teng</string>
+    <string name="campus_reports_campus_not_provided">Khamphase ga e a tlhalosiwa</string>
+    <string name="campus_reports_no_description">Ga go na tlhaloso e e filweng.</string>
+    <string name="campus_reports_location_not_provided">Lefelo ga le a tlhalosiwa.</string>
+    <string name="campus_reports_login_required">Tsweetswee tsena pele.</string>
+    <string name="campus_reports_local_save_warning">Dipego dingwe ga di a kgona go bolokwa mo sedirisweng.</string>
+    <string name="campus_reports_map_unavailable">Ga go a kgonega go bula mmapa.</string>
+    <string name="campus_reports_file_missing">Faele eno ya bosupi ga e tlhole e le teng mo sedirisweng seno.</string>
+    <string name="campus_reports_file_inaccessible">Ga go tlhole go kgonega go fitlhelela faele eno ya bosupi.</string>
+    <string name="campus_reports_invalid_evidence">Faele ya bosupi ga e a siama.</string>
+    <string name="campus_reports_open_evidence_failed">Ga go a kgonega go bula bosupi jono.</string>
+    <string name="campus_reports_no_evidence_app">Ga go na app e e ka bulang mofuta ono wa faele ya bosupi.</string>
+    <string name="campus_reports_open_evidence">Bula Bosupi</string>
+    <string name="campus_reports_refresh_failed">Ga go a kgonega go ntšhwafatsa dipego. Dipego tse di bolokilweng di sa ntse di le teng.</string>
+    <string name="cir_navigation_failed">Ga go kgonege go bula sekirini seno.</string>
+
+
+    <!-- Campus Emergency Screen -->
+    <string name="campus_emergency_back">Morago</string>
+    <string name="campus_emergency_app_name">SafeZone</string>
+    <string name="campus_emergency_title">Maemo a Tshoganyetso mo Khamphaseng</string>
+    <string name="campus_emergency_subtitle">Bona thuso ka bonako kgotsa ikgolaganye le badiredi ba tshireletso ba khamphase fa go na le maemo a tshoganyetso.</string>
+
+    <string name="campus_emergency_content_description_warning">Tlhagiso ya maemo a tshoganyetso</string>
+    <string name="campus_emergency_warning_message">Fa o le mo kotsing gone jaanong, letsetsa ditirelo tsa tshoganyetso ka bonako.</string>
+
+    <string name="campus_emergency_content_description_phone">Mogala</string>
+    <string name="campus_emergency_call_services">Letsa Ditirelo tsa Tshoganyetso</string>
+    <string name="campus_emergency_emergency_number">112</string>
+    <string name="campus_emergency_services_list">Sepodisi • Ambulense • Batimamolelo</string>
+
+    <string name="campus_emergency_contacts_title">Dinomoro tsa Tshireletso tsa Khamphase</string>
+    <string name="campus_emergency_content_description_security">Tshireletso ya Khamphase</string>
+    <string name="campus_emergency_security">Tshireletso ya Khamphase</string>
+    <string name="campus_emergency_available_24_7">E teng diura di le 24, malatsi a le 7</string>
+    <string name="campus_emergency_call_security">Letsa Tshireletso ya Khamphase</string>
+
+    <string name="campus_emergency_content_description_campus_control">Taolo ya Khamphase</string>
+    <string name="campus_emergency_campus_control">Taolo ya Khamphase ya Pretoria</string>
+    <string name="campus_emergency_campus_control_number">012 345 6789</string>
+    <string name="campus_emergency_call_campus_control">Letsa Taolo ya Khamphase</string>
+
+    <string name="campus_emergency_content_description_health">Lefelo la Boitekanelo la Khamphase</string>
+    <string name="campus_emergency_health_centre">Lefelo la Boitekanelo la Khamphase</string>
+    <string name="campus_emergency_health_number">012 345 6790</string>
+    <string name="campus_emergency_call_health">Letsa Lefelo la Boitekanelo</string>
+
+    <string name="campus_emergency_content_description_support">Tshegetso ya Baithuti</string>
+    <string name="campus_emergency_student_support">Tshegetso ya Baithuti</string>
+    <string name="campus_emergency_support_number">012 345 6791</string>
+    <string name="campus_emergency_call_student_support">Letsa Tshegetso ya Baithuti</string>
+
+    <string name="campus_emergency_content_description_location">Lefelo</string>
+    <string name="campus_emergency_stay_safe">Nna o Babalesegile</string>
+    <string name="campus_emergency_share_location_description">Abelana ka lefelo la gago le badiredi ba tshireletso ba khamphase fa go na le maemo a tshoganyetso gore o bone thuso ka bonako.</string>
+    <string name="campus_emergency_share_location_button">➤   Abelana ka Lefelo la Me</string>
+
+    <!-- Bottom Navigation -->
+    <string name="campus_emergency_nav_home">Gae</string>
+    <string name="campus_emergency_nav_map">Mmepe</string>
+    <string name="campus_emergency_nav_reports">Dipego</string>
+    <string name="campus_emergency_nav_alerts">Ditlhagiso</string>
+    <string name="campus_emergency_nav_profile">Porofaele</string>
+
+
+        <!-- Residential Location -->
+        <string name="edit_profile_location">Lefelo la bonno / Tikologo</string>
+        <string name="edit_profile_location_hint">Sekai: Hammanskraal, Pretoria</string>
+        <string name="edit_profile_location_description">Lefelo le o le bolokileng le ka dirisiwa go go romelela ditemoso tsa pabalesego fa GPS e sa bonagale.</string>
+
+        <!-- Residential Location Validation -->
+        <string name="edit_profile_location_required">Tsweetswee, tsenya lefelo la bonno jwa gago.</string>
+        <string name="edit_profile_location_invalid">Tsweetswee, tsenya lefelo la bonno le le siameng.</string>
+
+</resources>

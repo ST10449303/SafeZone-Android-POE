@@ -24,13 +24,8 @@ class PersonalRegistrationActivity : AppCompatActivity() {
     private lateinit var btnCreateAccount: Button
     private lateinit var tvLogin: TextView
 
-    // Firebase
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-
-    // --------------------------------------------------
-    // LOGGING
-    // --------------------------------------------------
 
     companion object {
         private const val TAG = "SafeZonePersonalRegistration"
@@ -38,15 +33,11 @@ class PersonalRegistrationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_personal_registration)
 
         Log.d(TAG, "Personal Registration screen opened")
 
-        // --------------------------------------------------
         // CONNECT XML CONTROLS
-        // --------------------------------------------------
-
         etFullName = findViewById(R.id.etFullName)
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
@@ -54,37 +45,15 @@ class PersonalRegistrationActivity : AppCompatActivity() {
         btnCreateAccount = findViewById(R.id.btnCreateAccount)
         tvLogin = findViewById(R.id.tvLogin)
 
-        Log.d(TAG, "Registration screen controls connected successfully")
-
-        // --------------------------------------------------
         // INITIALISE FIREBASE
-        // --------------------------------------------------
-
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        Log.d(TAG, "Firebase Authentication and Firestore initialized")
+        // PASSWORD VISIBILITY
+        setupPasswordToggle(etPassword, "Password")
+        setupPasswordToggle(etConfirmPassword, "Confirm Password")
 
-        // --------------------------------------------------
-        // PASSWORD EYE TOGGLES
-        // --------------------------------------------------
-
-        setupPasswordToggle(
-            editText = etPassword,
-            fieldName = "Password"
-        )
-
-        setupPasswordToggle(
-            editText = etConfirmPassword,
-            fieldName = "Confirm Password"
-        )
-
-        Log.d(TAG, "Password visibility controls initialized")
-
-        // --------------------------------------------------
-        // CREATE ACCOUNT BUTTON
-        // --------------------------------------------------
-
+        // CREATE ACCOUNT
         btnCreateAccount.setOnClickListener {
 
             Log.d(TAG, "Create Account button clicked")
@@ -94,211 +63,95 @@ class PersonalRegistrationActivity : AppCompatActivity() {
             val password = etPassword.text.toString()
             val confirmPassword = etConfirmPassword.text.toString()
 
-            // --------------------------------------------------
             // CHECK FULL NAME
-            // --------------------------------------------------
-
             if (fullName.isEmpty()) {
-
-                Log.w(
-                    TAG,
-                    "Registration validation failed: full name is empty"
-                )
-
-                etFullName.error = "Please enter your full name"
+                etFullName.error =
+                    getString(R.string.enter_full_name_error)
                 etFullName.requestFocus()
-
                 return@setOnClickListener
             }
 
-            Log.d(TAG, "Full name validation successful")
-
-            // --------------------------------------------------
             // CHECK EMAIL
-            // --------------------------------------------------
-
             if (email.isEmpty()) {
-
-                Log.w(
-                    TAG,
-                    "Registration validation failed: email is empty"
-                )
-
-                etEmail.error = "Please enter your email address"
+                etEmail.error =
+                    getString(R.string.enter_registration_email_error)
                 etEmail.requestFocus()
-
                 return@setOnClickListener
             }
 
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-
-                Log.w(
-                    TAG,
-                    "Registration validation failed: invalid email format"
-                )
-
-                etEmail.error = "Please enter a valid email address"
+                etEmail.error =
+                    getString(R.string.valid_registration_email_error)
                 etEmail.requestFocus()
-
                 return@setOnClickListener
             }
 
-            Log.d(TAG, "Email validation successful")
-
-            // --------------------------------------------------
             // CHECK PASSWORD
-            // --------------------------------------------------
-
             if (password.isEmpty()) {
-
-                Log.w(
-                    TAG,
-                    "Registration validation failed: password is empty"
-                )
-
-                etPassword.error = "Please create a password"
+                etPassword.error =
+                    getString(R.string.create_password_error)
                 etPassword.requestFocus()
-
                 return@setOnClickListener
             }
 
-            // Password length
             if (password.length < 8) {
-
-                Log.w(
-                    TAG,
-                    "Registration validation failed: password is shorter than 8 characters"
-                )
-
                 etPassword.error =
-                    "Password must be at least 8 characters"
-
+                    getString(R.string.password_min_eight_error)
                 etPassword.requestFocus()
-
                 return@setOnClickListener
             }
 
-            // Uppercase
             if (!password.any { it.isUpperCase() }) {
-
-                Log.w(
-                    TAG,
-                    "Registration validation failed: password has no uppercase letter"
-                )
-
                 etPassword.error =
-                    "Password needs an uppercase letter"
-
+                    getString(R.string.password_uppercase_error)
                 etPassword.requestFocus()
-
                 return@setOnClickListener
             }
 
-            // Lowercase
             if (!password.any { it.isLowerCase() }) {
-
-                Log.w(
-                    TAG,
-                    "Registration validation failed: password has no lowercase letter"
-                )
-
                 etPassword.error =
-                    "Password needs a lowercase letter"
-
+                    getString(R.string.password_lowercase_error)
                 etPassword.requestFocus()
-
                 return@setOnClickListener
             }
 
-            // Number
             if (!password.any { it.isDigit() }) {
-
-                Log.w(
-                    TAG,
-                    "Registration validation failed: password has no number"
-                )
-
                 etPassword.error =
-                    "Password needs a number"
-
+                    getString(R.string.password_number_error)
                 etPassword.requestFocus()
-
                 return@setOnClickListener
             }
 
-            // Special character
             if (!password.any { !it.isLetterOrDigit() }) {
-
-                Log.w(
-                    TAG,
-                    "Registration validation failed: password has no special character"
-                )
-
                 etPassword.error =
-                    "Password needs a special character"
-
+                    getString(R.string.password_special_character_error)
                 etPassword.requestFocus()
-
                 return@setOnClickListener
             }
 
-            Log.d(TAG, "Password security validation successful")
-
-            // --------------------------------------------------
             // CHECK CONFIRM PASSWORD
-            // --------------------------------------------------
-
             if (confirmPassword.isEmpty()) {
-
-                Log.w(
-                    TAG,
-                    "Registration validation failed: confirmation password is empty"
-                )
-
                 etConfirmPassword.error =
-                    "Please confirm your password"
-
+                    getString(R.string.confirm_password_error)
                 etConfirmPassword.requestFocus()
-
                 return@setOnClickListener
             }
 
-            // Compare passwords
             if (password != confirmPassword) {
-
-                Log.w(
-                    TAG,
-                    "Registration validation failed: passwords do not match"
-                )
-
                 etConfirmPassword.error =
-                    "Passwords do not match"
-
+                    getString(R.string.passwords_do_not_match)
                 etConfirmPassword.requestFocus()
-
                 return@setOnClickListener
             }
 
-            Log.d(TAG, "Password confirmation successful")
-
-            // --------------------------------------------------
             // DISABLE BUTTON WHILE REGISTERING
-            // --------------------------------------------------
-
             btnCreateAccount.isEnabled = false
-            btnCreateAccount.text = "Creating Account..."
-
-            Log.d(
-                TAG,
-                "Create Account button disabled while registration is processing"
-            )
-
-            // --------------------------------------------------
-            // CREATE FIREBASE AUTHENTICATION ACCOUNT
-            // --------------------------------------------------
+            btnCreateAccount.text =
+                getString(R.string.creating_account)
 
             Log.d(TAG, "Starting Firebase account creation")
 
+            // CREATE FIREBASE AUTHENTICATION ACCOUNT
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
 
@@ -309,45 +162,24 @@ class PersonalRegistrationActivity : AppCompatActivity() {
                             "Firebase Authentication account created successfully"
                         )
 
-                        // Get the newly created Firebase user
                         val firebaseUser = auth.currentUser
 
                         if (firebaseUser == null) {
+                            Log.e(TAG, "Firebase user is null")
 
-                            Log.e(
-                                TAG,
-                                "Account creation reported success but current Firebase user is null"
+                            resetCreateAccountButton()
+
+                            showMessage(
+                                getString(
+                                    R.string.account_creation_failed
+                                )
                             )
-
-                            btnCreateAccount.isEnabled = true
-                            btnCreateAccount.text = "Create Account"
-
-                            Toast.makeText(
-                                this,
-                                "Account creation failed. Please try again.",
-                                Toast.LENGTH_LONG
-                            ).show()
-
                             return@addOnCompleteListener
                         }
 
-                        // Firebase automatically gives the user a unique ID
                         val userId = firebaseUser.uid
 
-                        Log.d(
-                            TAG,
-                            "Firebase user created successfully with unique user ID"
-                        )
-
-                        // --------------------------------------------------
                         // CREATE USER PROFILE FOR FIRESTORE
-                        // --------------------------------------------------
-
-                        Log.d(
-                            TAG,
-                            "Preparing personal user profile for Firestore"
-                        )
-
                         val user = hashMapOf(
                             "userId" to userId,
                             "fullName" to fullName,
@@ -356,15 +188,7 @@ class PersonalRegistrationActivity : AppCompatActivity() {
                             "createdAt" to System.currentTimeMillis()
                         )
 
-                        // --------------------------------------------------
                         // SAVE USER PROFILE TO FIRESTORE
-                        // --------------------------------------------------
-
-                        Log.d(
-                            TAG,
-                            "Saving personal user profile to Firestore"
-                        )
-
                         db.collection("Users")
                             .document(userId)
                             .set(user)
@@ -372,60 +196,44 @@ class PersonalRegistrationActivity : AppCompatActivity() {
 
                                 Log.d(
                                     TAG,
-                                    "Personal user profile saved successfully to Firestore"
+                                    "Personal user profile saved successfully"
                                 )
 
-                                Toast.makeText(
-                                    this,
-                                    "Account created successfully!",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                showMessage(
+                                    getString(R.string.registration_success)
+                                )
 
-                                // --------------------------------------------------
                                 // OPEN PERSONAL LOGIN
-                                // --------------------------------------------------
-
-                                Log.d(
-                                    TAG,
-                                    "Opening Personal Login screen after successful registration"
-                                )
-
                                 val intent = Intent(
                                     this,
                                     PersonalLoginActivity::class.java
                                 )
 
-                                // Pass registered email to login screen
                                 intent.putExtra(
                                     "registeredEmail",
                                     email
                                 )
 
                                 startActivity(intent)
-
-                                Log.d(
-                                    TAG,
-                                    "Personal Login screen opened successfully"
-                                )
-
                                 finish()
                             }
                             .addOnFailureListener { exception ->
 
                                 Log.e(
                                     TAG,
-                                    "Failed to save personal user profile to Firestore",
+                                    "Failed to save personal user profile",
                                     exception
                                 )
 
-                                btnCreateAccount.isEnabled = true
-                                btnCreateAccount.text = "Create Account"
+                                resetCreateAccountButton()
 
-                                Toast.makeText(
-                                    this,
-                                    "Account created, but profile could not be saved: ${exception.message}",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                showMessage(
+                                    getString(
+                                        R.string.account_created_profile_failed,
+                                        exception.localizedMessage
+                                            ?: "Unknown error"
+                                    )
+                                )
                             }
 
                     } else {
@@ -436,106 +244,91 @@ class PersonalRegistrationActivity : AppCompatActivity() {
                             task.exception
                         )
 
-                        btnCreateAccount.isEnabled = true
-                        btnCreateAccount.text = "Create Account"
+                        resetCreateAccountButton()
 
-                        // --------------------------------------------------
-                        // FIREBASE REGISTRATION ERROR
-                        // --------------------------------------------------
+                        val firebaseError =
+                            task.exception?.message.orEmpty()
 
                         val errorMessage = when {
-                            task.exception?.message?.contains(
+                            firebaseError.contains(
                                 "email address is already in use",
                                 ignoreCase = true
-                            ) == true -> {
-
-                                Log.w(
-                                    TAG,
-                                    "Registration failed because the email address is already registered"
+                            ) ||
+                                    firebaseError.contains(
+                                        "email-already-in-use",
+                                        ignoreCase = true
+                                    ) -> {
+                                getString(
+                                    R.string.email_already_registered
                                 )
-
-                                "This email address is already registered."
                             }
 
-                            task.exception?.message?.contains(
+                            firebaseError.contains(
                                 "badly formatted",
                                 ignoreCase = true
-                            ) == true -> {
-
-                                Log.w(
-                                    TAG,
-                                    "Registration failed because the email address was badly formatted"
+                            ) ||
+                                    firebaseError.contains(
+                                        "invalid-email",
+                                        ignoreCase = true
+                                    ) -> {
+                                getString(
+                                    R.string.valid_registration_email_error
                                 )
-
-                                "Please enter a valid email address."
                             }
 
-                            task.exception?.message?.contains(
+                            firebaseError.contains(
                                 "network",
                                 ignoreCase = true
-                            ) == true -> {
-
-                                Log.w(
-                                    TAG,
-                                    "Registration failed because of a network error"
+                            ) -> {
+                                getString(
+                                    R.string.registration_network_error
                                 )
-
-                                "Network error. Please check your internet connection."
                             }
 
                             else -> {
-
-                                Log.w(
-                                    TAG,
-                                    "Registration failed with an unspecified Firebase error"
-                                )
-
-                                "Registration failed. Please try again."
+                                getString(R.string.registration_failed)
                             }
                         }
 
-                        Toast.makeText(
-                            this,
-                            errorMessage,
-                            Toast.LENGTH_LONG
-                        ).show()
+                        showMessage(errorMessage)
                     }
                 }
         }
 
-        // --------------------------------------------------
         // LOGIN LINK
-        // --------------------------------------------------
-
         tvLogin.setOnClickListener {
 
             Log.d(TAG, "Login link selected")
 
-            val intent = Intent(
-                this,
-                PersonalLoginActivity::class.java
-            )
-
-            startActivity(intent)
-
-            Log.d(
-                TAG,
-                "Personal Login screen opened from registration"
+            startActivity(
+                Intent(this, PersonalLoginActivity::class.java)
             )
 
             finish()
         }
     }
 
-    // --------------------------------------------------
-    // PASSWORD VISIBILITY TOGGLE
-    // --------------------------------------------------
+    // RESET CREATE ACCOUNT BUTTON
+    private fun resetCreateAccountButton() {
+        btnCreateAccount.isEnabled = true
+        btnCreateAccount.text =
+            getString(R.string.create_account)
+    }
 
+    // DISPLAY MESSAGE
+    private fun showMessage(message: String) {
+        Toast.makeText(
+            this,
+            message,
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    // PASSWORD VISIBILITY TOGGLE
     private fun setupPasswordToggle(
         editText: EditText,
         fieldName: String
     ) {
-
         var passwordVisible = false
 
         editText.setOnTouchListener { _, event ->
@@ -561,7 +354,6 @@ class PersonalRegistrationActivity : AppCompatActivity() {
 
                         if (passwordVisible) {
 
-                            // Show password
                             editText.transformationMethod =
                                 HideReturnsTransformationMethod.getInstance()
 
@@ -579,7 +371,6 @@ class PersonalRegistrationActivity : AppCompatActivity() {
 
                         } else {
 
-                            // Hide password
                             editText.transformationMethod =
                                 PasswordTransformationMethod.getInstance()
 

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="#F5F7FA">
 
-    <!-- ================= HEADER ================= -->
+    <!-- HEADER -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,14 +27,14 @@
             android:textSize="38sp"
             android:clickable="true"
             android:focusable="true"
-            android:contentDescription="Back" />
+            android:contentDescription="@string/personal_profile_back" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="SafeZone"
+            android:text="@string/personal_profile_app_name"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -45,8 +45,7 @@
 
     </LinearLayout>
 
-
-    <!-- ================= MAIN CONTENT ================= -->
+    <!-- MAIN CONTENT -->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -64,8 +63,7 @@
             android:paddingTop="22dp"
             android:paddingBottom="30dp">
 
-
-            <!-- ================= PROFILE ICON ================= -->
+            <!-- PROFILE ICON -->
 
             <TextView
                 android:layout_width="88dp"
@@ -76,10 +74,10 @@
                 android:text="●"
                 android:textColor="#1976D2"
                 android:textSize="45sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:contentDescription="@string/personal_profile_avatar_description" />
 
-
-            <!-- ================= PROFILE NAME ================= -->
+            <!-- PROFILE NAME -->
 
             <TextView
                 android:id="@+id/tvProfileName"
@@ -87,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:text="Personal User"
+                android:text="@string/personal_profile_default_name"
                 android:textColor="#0B1F3A"
                 android:textSize="27sp"
                 android:textStyle="bold" />
@@ -97,12 +95,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:text="Manage your profile and account settings."
+                android:text="@string/personal_profile_subtitle"
                 android:textColor="#667085"
                 android:textSize="14sp" />
 
-
-            <!-- ================= ACCOUNT INFORMATION ================= -->
+            <!-- ACCOUNT INFORMATION -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -111,7 +108,6 @@
                 android:background="@drawable/bg_profile_information"
                 android:orientation="vertical"
                 android:padding="16dp">
-
 
                 <!-- EMAIL -->
 
@@ -128,7 +124,8 @@
                         android:gravity="center"
                         android:text="✉"
                         android:textColor="#1976D2"
-                        android:textSize="23sp" />
+                        android:textSize="23sp"
+                        android:contentDescription="@string/personal_profile_email_label" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -140,7 +137,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Email"
+                            android:text="@string/personal_profile_email_label"
                             android:textColor="#0B1F3A"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -150,7 +147,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
-                            android:text="Not available"
+                            android:text="@string/personal_profile_not_available"
                             android:textColor="#667085"
                             android:textSize="13sp" />
 
@@ -158,14 +155,10 @@
 
                 </LinearLayout>
 
-
-                <!-- DIVIDER -->
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#D8E3F0" />
-
 
                 <!-- PHONE -->
 
@@ -182,7 +175,8 @@
                         android:gravity="center"
                         android:text="☎"
                         android:textColor="#1976D2"
-                        android:textSize="22sp" />
+                        android:textSize="22sp"
+                        android:contentDescription="@string/personal_profile_phone_label" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -194,7 +188,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Phone"
+                            android:text="@string/personal_profile_phone_label"
                             android:textColor="#0B1F3A"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -204,7 +198,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
-                            android:text="Not available"
+                            android:text="@string/personal_profile_not_available"
                             android:textColor="#667085"
                             android:textSize="13sp" />
 
@@ -212,14 +206,10 @@
 
                 </LinearLayout>
 
-
-                <!-- DIVIDER -->
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#D8E3F0" />
-
 
                 <!-- ACCOUNT TYPE -->
 
@@ -237,7 +227,8 @@
                         android:text="✓"
                         android:textColor="#1976D2"
                         android:textSize="23sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:contentDescription="@string/personal_profile_account_type_label" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -249,7 +240,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Account Type"
+                            android:text="@string/personal_profile_account_type_label"
                             android:textColor="#0B1F3A"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -259,7 +250,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
-                            android:text="Personal"
+                            android:text="@string/personal_profile_default_account_type"
                             android:textColor="#667085"
                             android:textSize="13sp" />
 
@@ -269,8 +260,7 @@
 
             </LinearLayout>
 
-
-            <!-- ================= EDIT PROFILE ================= -->
+            <!-- EDIT PROFILE -->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnEditProfile"
@@ -285,14 +275,13 @@
                 android:gravity="center_vertical"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
-                android:text="✎    Edit Profile                              ›"
+                android:text="@string/personal_profile_edit"
                 android:textAllCaps="false"
                 android:textColor="#0B1F3A"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-
-            <!-- ================= TRUSTED CONTACTS ================= -->
+            <!-- TRUSTED CONTACTS -->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnTrustedContacts"
@@ -307,14 +296,13 @@
                 android:gravity="center_vertical"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
-                android:text="👥    Trusted Contacts                         ›"
+                android:text="@string/personal_profile_trusted_contacts"
                 android:textAllCaps="false"
                 android:textColor="#0B1F3A"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-
-            <!-- ================= REPORTS ================= -->
+            <!-- MY REPORTS -->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnMyReports"
@@ -329,14 +317,13 @@
                 android:gravity="center_vertical"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
-                android:text="▤    My Reports                              ›"
+                android:text="@string/personal_profile_my_reports"
                 android:textAllCaps="false"
                 android:textColor="#0B1F3A"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-
-            <!-- ================= SETTINGS ================= -->
+            <!-- SETTINGS -->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSettings"
@@ -351,14 +338,13 @@
                 android:gravity="center_vertical"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
-                android:text="⚙    Settings                                  ›"
+                android:text="@string/personal_profile_settings"
                 android:textAllCaps="false"
                 android:textColor="#0B1F3A"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-
-            <!-- ================= LOGOUT ================= -->
+            <!-- LOGOUT -->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnLogout"
@@ -371,7 +357,7 @@
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:gravity="center"
-                android:text="Logout"
+                android:text="@string/personal_profile_logout"
                 android:textAllCaps="false"
                 android:textColor="#D32F2F"
                 android:textSize="16sp"

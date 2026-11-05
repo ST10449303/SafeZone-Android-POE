@@ -8,11 +8,6 @@
     android:orientation="vertical"
     android:background="#F5F7FA">
 
-
-    <!-- =====================================================
-         HEADER
-         ===================================================== -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="62dp"
@@ -32,14 +27,14 @@
             android:textSize="38sp"
             android:clickable="true"
             android:focusable="true"
-            android:contentDescription="Back" />
+            android:contentDescription="@string/trusted_contacts_back" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="SafeZone"
+            android:text="@string/trusted_contacts_app_name"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -49,11 +44,6 @@
             android:layout_height="50dp" />
 
     </LinearLayout>
-
-
-    <!-- =====================================================
-         CONTENT
-         ===================================================== -->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -71,11 +61,6 @@
             android:paddingTop="22dp"
             android:paddingBottom="30dp">
 
-
-            <!-- =================================================
-                 HEADER ICON
-                 ================================================= -->
-
             <ImageView
                 android:layout_width="76dp"
                 android:layout_height="76dp"
@@ -83,19 +68,14 @@
                 android:background="@drawable/bg_trusted_contacts_icon"
                 android:padding="19dp"
                 android:src="@drawable/ic_trusted_contact"
-                android:contentDescription="Trusted contacts" />
-
-
-            <!-- =================================================
-                 TITLE
-                 ================================================= -->
+                android:contentDescription="@string/trusted_contacts_icon_description" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text="Trusted Contacts"
+                android:text="@string/trusted_contacts_title"
                 android:textColor="#0B1F3A"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -105,14 +85,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:gravity="center"
-                android:text="People you trust can be contacted during an emergency."
+                android:text="@string/trusted_contacts_subtitle"
                 android:textColor="#667085"
                 android:textSize="13sp" />
-
-
-            <!-- =================================================
-                 ADD CONTACT
-                 ================================================= -->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnAddContact"
@@ -125,22 +100,17 @@
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:gravity="center"
-                android:text="+  Add Trusted Contact"
+                android:text="@string/trusted_contacts_add_button"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
-
-            <!-- =================================================
-                 CONTACTS SECTION TITLE
-                 ================================================= -->
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:text="Your Trusted Contacts"
+                android:text="@string/trusted_contacts_section_title"
                 android:textColor="#0B1F3A"
                 android:textSize="19sp"
                 android:textStyle="bold" />
@@ -149,14 +119,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="These people can be contacted when you need support."
+                android:text="@string/trusted_contacts_section_description"
                 android:textColor="#667085"
                 android:textSize="12sp" />
-
-
-            <!-- =================================================
-                 CONTACT LIST
-                 ================================================= -->
 
             <LinearLayout
                 android:id="@+id/contactsList"
@@ -164,11 +129,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="vertical" />
-
-
-            <!-- =================================================
-                 EMPTY STATE
-                 ================================================= -->
 
             <LinearLayout
                 android:id="@+id/emptyState"
@@ -189,14 +149,14 @@
                     android:background="@drawable/bg_trusted_contacts_empty_icon"
                     android:padding="15dp"
                     android:src="@drawable/ic_person"
-                    android:contentDescription="No trusted contacts" />
+                    android:contentDescription="@string/trusted_contacts_empty_icon_description" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
                     android:gravity="center"
-                    android:text="No Trusted Contacts Yet"
+                    android:text="@string/trusted_contacts_empty_title"
                     android:textColor="#0B1F3A"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -207,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:gravity="center"
-                    android:text="Add someone you trust so they can be contacted during an emergency."
+                    android:text="@string/trusted_contacts_empty_description"
                     android:textColor="#667085"
                     android:textSize="13sp" />
 
@@ -222,18 +182,13 @@
                     android:minHeight="0dp"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
-                    android:text="Add Your First Contact"
+                    android:text="@string/trusted_contacts_add_first_button"
                     android:textAllCaps="false"
                     android:textColor="#1976D2"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
-
-
-            <!-- =================================================
-                 SAFETY INFORMATION
-                 ================================================= -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -250,14 +205,14 @@
                     android:background="@drawable/bg_trusted_contacts_notice_icon"
                     android:padding="9dp"
                     android:src="@drawable/ic_security_check"
-                    android:contentDescription="Security information" />
+                    android:contentDescription="@string/trusted_contacts_security_description" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="11dp"
-                    android:text="Trusted contacts are only used to support you during safety and emergency situations."
+                    android:text="@string/trusted_contacts_safety_notice"
                     android:textColor="#344054"
                     android:textSize="12sp" />
 

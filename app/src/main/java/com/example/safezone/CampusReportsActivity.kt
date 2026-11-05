@@ -1,8 +1,12 @@
 package com.example.safezone
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
@@ -11,9 +15,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
+import com.example.safezone.data.IncidentReportDao
+import com.example.safezone.data.IncidentReportEntity
+import com.example.safezone.data.SafeZoneDatabase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -28,7 +39,8 @@ class CampusReportsActivity : AppCompatActivity() {
     private lateinit var tvBack: TextView
     private lateinit var reportsContainer: LinearLayout
     private lateinit var tvNoReports: TextView
-
+    private lateinit var btnRefreshReports: TextView
+    private lateinit var tvReportCount: TextView
 
     // =========================================================
     // FIREBASE
@@ -37,214 +49,483 @@ class CampusReportsActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
+    // =========================================================
+    // ROOM DATABASE
+    // =========================================================
+
+    private lateinit var incidentReportDao: IncidentReportDao
+
+    // =========================================================
+    // REPORT OBSERVATION
+    // =========================================================
+
+    private var isObservingReports = false
+
+    // =========================================================
+    // REPORT DISPLAY MODEL
+    // =========================================================
+
+    private data class ReportDisplayData(
+        val reportId: String,
+        val userId: String,
+        val incidentType: String,
+        val campus: String,
+        val description: String,
+        val location: String,
+        val status: String,
+        val date: String?,
+        val time: String?,
+        val dateTime: String?,
+        val createdAt: Long,
+        val latitude: Double?,
+        val longitude: Double?,
+        val photoEvidence: String,
+        val videoEvidence: String,
+        val audioEvidence: String,
+        val fileEvidence: String,
+        val syncStatus: String
+    )
 
     // =========================================================
     // ON CREATE
     // =========================================================
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
-        setContentView(
-            R.layout.activity_campus_reports
-        )
+        setContentView(R.layout.activity_campus_reports)
 
-        auth =
-            FirebaseAuth.getInstance()
+        // Initialise Firebase.
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
-        db =
-            FirebaseFirestore.getInstance()
+        // Initialise Room database.
+        incidentReportDao =
+            SafeZoneDatabase.getDatabase(applicationContext)
+                .incidentReportDao()
 
-        tvBack =
-            findViewById(R.id.tvBack)
+        // Initialise views.
+        tvBack = findViewById(R.id.tvBack)
+        reportsContainer = findViewById(R.id.reportsContainer)
+        tvNoReports = findViewById(R.id.tvNoReports)
+        btnRefreshReports = findViewById(R.id.btnRefreshReports)
+        tvReportCount = findViewById(R.id.tvReportCount)
 
-        reportsContainer =
-            findViewById(R.id.reportsContainer)
+        // Refresh reports when the refresh button is pressed.
+        btnRefreshReports.setOnClickListener {
+            refreshCampusReports()
+        }
 
-        tvNoReports =
-            findViewById(R.id.tvNoReports)
-
-
-        // =====================================================
-        // BACK
-        // =====================================================
-
+        // Back button.
         tvBack.setOnClickListener {
-
             finish()
         }
 
-
-        loadReports()
+        // Observe reports stored locally.
+        observeLocalReports()
     }
 
-
     // =========================================================
-    // REFRESH WHEN SCREEN OPENS
+    // REFRESH WHEN SCREEN RESUMES
     // =========================================================
 
     override fun onResume() {
-
         super.onResume()
 
-        if (::reportsContainer.isInitialized) {
-
-            loadReports()
+        if (
+            ::reportsContainer.isInitialized &&
+            ::incidentReportDao.isInitialized &&
+            ::auth.isInitialized
+        ) {
+            refreshCampusReports()
         }
     }
 
+    // =========================================================
+    // CHECK INTERNET CONNECTION
+    // =========================================================
+
+    private fun isInternetAvailable(): Boolean {
+
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE)
+                    as ConnectivityManager
+
+        val network =
+            connectivityManager.activeNetwork ?: return false
+
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(network)
+                ?: return false
+
+        return capabilities.hasCapability(
+            NetworkCapabilities.NET_CAPABILITY_INTERNET
+        ) && capabilities.hasCapability(
+            NetworkCapabilities.NET_CAPABILITY_VALIDATED
+        )
+    }
 
     // =========================================================
-    // LOAD REPORTS
+    // OBSERVE LOCAL ROOM REPORTS
     // =========================================================
 
-    private fun loadReports() {
+    private fun observeLocalReports() {
 
-        val currentUser =
-            auth.currentUser
+        if (isObservingReports) return
 
-
-        // =====================================================
-        // CHECK LOGIN
-        // =====================================================
+        val currentUser = auth.currentUser
 
         if (currentUser == null) {
-
-            Toast.makeText(
-                this,
-                "Please log in first.",
-                Toast.LENGTH_SHORT
-            ).show()
-
-
-            val intent =
-                Intent(
-                    this,
-                    CampusLoginActivity::class.java
-                )
-
-
-            intent.flags =
-                Intent.FLAG_ACTIVITY_NEW_TASK or
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-
-            startActivity(intent)
-
-            finish()
-
+            openCampusLogin()
             return
         }
 
+        isObservingReports = true
 
-        // =====================================================
-        // CLEAR OLD REPORTS
-        // =====================================================
+        lifecycleScope.launch {
 
-        reportsContainer.removeAllViews()
+            incidentReportDao
+                .getReportsForUser(currentUser.uid)
+                .collect { reports ->
 
-        tvNoReports.visibility =
-            View.GONE
+                    val displayData = reports.map { report ->
+                        report.toDisplayData()
+                    }
 
+                    displayReports(displayData)
+                }
+        }
+    }
 
-        /*
-         * My Campus Reports and Manage Reports
-         * are the same feature.
-         *
-         * Therefore, we display the reports created
-         * by the currently signed-in Campus user.
-         */
+    // =========================================================
+    // REFRESH CAMPUS REPORTS
+    // =========================================================
 
+    private fun refreshCampusReports() {
 
-        // =====================================================
-        // GET USER'S REPORTS
-        // =====================================================
+        val currentUser = auth.currentUser
 
-        db.collection(
-            "IncidentReports"
-        )
-            .whereEqualTo(
-                "userId",
-                currentUser.uid
-            )
+        if (currentUser == null) {
+            openCampusLogin()
+            return
+        }
+
+        // Room reports remain available when offline.
+        if (!isInternetAvailable()) return
+
+        // Retry uploading pending reports.
+        syncPendingReports(currentUser.uid)
+
+        // Retrieve this user's reports from Firestore.
+        db.collection("IncidentReports")
+            .whereEqualTo("userId", currentUser.uid)
             .get()
             .addOnSuccessListener { documents ->
 
-                displayReports(
-                    documents.documents
-                )
+                lifecycleScope.launch {
+
+                    try {
+                        for (document in documents.documents) {
+
+                            val report =
+                                document.toIncidentReportEntity(
+                                    currentUser.uid
+                                )
+
+                            incidentReportDao.insert(report)
+                        }
+
+                    } catch (exception: Exception) {
+
+                        Log.e(
+                            TAG,
+                            "Some reports could not be saved locally.",
+                            exception
+                        )
+
+                        showToast(
+                            R.string.campus_reports_local_save_warning
+                        )
+                    }
+                }
             }
             .addOnFailureListener { exception ->
 
-                Toast.makeText(
-                    this,
-                    "Unable to load your campus reports: ${exception.message}",
-                    Toast.LENGTH_LONG
-                ).show()
+                Log.e(
+                    TAG,
+                    "Unable to refresh reports from Firestore.",
+                    exception
+                )
+
+                // Locally stored reports remain available.
+                showToast(R.string.campus_reports_refresh_failed)
             }
     }
 
+    // =========================================================
+    // RETRY PENDING REPORT UPLOADS
+    // =========================================================
+
+    private fun syncPendingReports(userId: String) {
+
+        if (!isInternetAvailable()) return
+
+        lifecycleScope.launch {
+
+            try {
+
+                val pendingReports =
+                    incidentReportDao.getPendingSyncReports(userId)
+
+                for (report in pendingReports) {
+                    uploadPendingReport(report)
+                }
+
+            } catch (exception: Exception) {
+
+                Log.e(
+                    TAG,
+                    "Unable to retrieve pending reports.",
+                    exception
+                )
+            }
+        }
+    }
+
+    // =========================================================
+    // UPLOAD A PENDING REPORT
+    // =========================================================
+
+    private fun uploadPendingReport(
+        report: IncidentReportEntity
+    ) {
+
+        if (!isInternetAvailable()) return
+
+        // Keep the same Firestore document ID when retrying.
+        val reportReference =
+            db.collection("IncidentReports")
+                .document(report.localId)
+
+        val dateParts = splitDateTime(report.dateTime)
+
+        val reportData = hashMapOf<String, Any>(
+            "reportId" to report.localId,
+            "userId" to report.userId,
+            "incidentType" to report.incidentType,
+            "campus" to report.campus,
+            "description" to report.description,
+            "location" to report.location,
+            "date" to dateParts.first,
+            "time" to dateParts.second,
+            "dateTime" to report.dateTime,
+            "status" to report.status,
+            "campusSafetyNotified" to false,
+            "createdAt" to report.createdAt,
+            "latitude" to report.latitude,
+            "longitude" to report.longitude,
+            "photoEvidence" to report.photoEvidence,
+            "videoEvidence" to report.videoEvidence,
+            "audioEvidence" to report.audioEvidence,
+            "fileEvidence" to report.fileEvidence
+        )
+
+        reportReference
+            .set(reportData, SetOptions.merge())
+            .addOnSuccessListener {
+
+                lifecycleScope.launch {
+
+                    try {
+
+                        incidentReportDao.updateSyncStatus(
+                            localId = report.localId,
+                            userId = report.userId,
+                            syncStatus = "Synced"
+                        )
+
+                    } catch (exception: Exception) {
+
+                        Log.e(
+                            TAG,
+                            "Report uploaded, but local sync status could not be updated.",
+                            exception
+                        )
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+
+                // Leave the local report available for another retry.
+                Log.e(
+                    TAG,
+                    "Pending report upload failed: ${report.localId}",
+                    exception
+                )
+            }
+    }
+
+    // =========================================================
+    // SPLIT DATE AND TIME
+    // =========================================================
+
+    private fun splitDateTime(
+        dateTime: String
+    ): Pair<String, String> {
+
+        if (dateTime.isBlank()) {
+            return Pair("", "")
+        }
+
+        val parts = dateTime.split(",", limit = 2)
+
+        return if (parts.size >= 2) {
+            Pair(parts[0].trim(), parts[1].trim())
+        } else {
+            Pair(dateTime.trim(), "")
+        }
+    }
+
+    // =========================================================
+    // CONVERT ROOM ENTITY TO DISPLAY MODEL
+    // =========================================================
+
+    private fun IncidentReportEntity.toDisplayData():
+            ReportDisplayData {
+
+        val dateParts = splitDateTime(dateTime)
+
+        return ReportDisplayData(
+            reportId = localId,
+            userId = userId,
+            incidentType = incidentType,
+            campus = campus.ifBlank {
+                getString(R.string.campus_reports_campus_not_provided)
+            },
+            description = description,
+            location = location,
+            status = status,
+            date = dateParts.first,
+            time = dateParts.second,
+            dateTime = dateTime,
+            createdAt = createdAt,
+            latitude = latitude,
+            longitude = longitude,
+            photoEvidence = photoEvidence,
+            videoEvidence = videoEvidence,
+            audioEvidence = audioEvidence,
+            fileEvidence = fileEvidence,
+            syncStatus = syncStatus
+        )
+    }
+
+    // =========================================================
+    // CONVERT FIRESTORE DOCUMENT TO ROOM ENTITY
+    // =========================================================
+
+    private fun DocumentSnapshot.toIncidentReportEntity(
+        currentUserId: String
+    ): IncidentReportEntity {
+
+        val documentDate = getString("date").orEmpty()
+        val documentTime = getString("time").orEmpty()
+        val documentDateTime = getString("dateTime").orEmpty()
+
+        val finalDateTime = documentDateTime.ifBlank {
+            listOf(documentDate, documentTime)
+                .filter { it.isNotBlank() }
+                .joinToString(", ")
+        }
+
+        val finalCreatedAt =
+            getLong("createdAt")
+                ?: getTimestamp("createdAt")
+                    ?.toDate()
+                    ?.time
+                ?: 0L
+
+        return IncidentReportEntity(
+            localId = getString("reportId") ?: id,
+            userId = getString("userId") ?: currentUserId,
+            campus = getString("campus")
+                ?: getString(R.string.campus_reports_campus_not_provided),
+            incidentType = getString("incidentType")
+                ?: "Incident Report",
+            description = getString("description")
+                ?: getString(R.string.campus_reports_no_description),
+            location = getString("location")
+                ?: getString(R.string.campus_reports_location_not_provided),
+            latitude = getDoubleValue(get("latitude")) ?: 0.0,
+            longitude = getDoubleValue(get("longitude")) ?: 0.0,
+            dateTime = finalDateTime,
+            status = getString("status") ?: "Submitted",
+            photoEvidence = getString("photoEvidence") ?: "",
+            videoEvidence = getString("videoEvidence") ?: "",
+            audioEvidence = getString("audioEvidence") ?: "",
+            fileEvidence = getString("fileEvidence") ?: "",
+            photoName = "",
+            videoName = "",
+            fileName = "",
+            createdAt = finalCreatedAt,
+            syncStatus = "Synced"
+        )
+    }
+
+    // =========================================================
+    // CONVERT FIRESTORE NUMBERS
+    // =========================================================
+
+    private fun getDoubleValue(value: Any?): Double? {
+
+        return when (value) {
+            is Double -> value
+            is Float -> value.toDouble()
+            is Long -> value.toDouble()
+            is Int -> value.toDouble()
+            is Number -> value.toDouble()
+            is String -> value.toDoubleOrNull()
+            else -> null
+        }
+    }
 
     // =========================================================
     // DISPLAY REPORTS
     // =========================================================
 
     private fun displayReports(
-        documents: List<DocumentSnapshot>
+        reports: List<ReportDisplayData>
     ) {
 
         reportsContainer.removeAllViews()
 
+        tvReportCount.text = if (reports.isEmpty()) {
+            getString(R.string.campus_reports_count_zero)
+        } else {
+            getString(
+                R.string.campus_reports_count,
+                reports.size
+            )
+        }
 
-        // =====================================================
-        // NO REPORTS
-        // =====================================================
-
-        if (documents.isEmpty()) {
-
+        if (reports.isEmpty()) {
             showNoReports()
-
             return
         }
 
+        tvNoReports.visibility = View.GONE
 
-        tvNoReports.visibility =
-            View.GONE
-
-
-        // =====================================================
-        // NEWEST REPORTS FIRST
-        // =====================================================
-
-        val reports =
-            documents.sortedByDescending {
-
-                it.getLong(
-                    "createdAt"
-                ) ?: 0L
+        reports.sortedByDescending { it.createdAt }
+            .forEach { report ->
+                createReportCard(report)
             }
-
-
-        // =====================================================
-        // CREATE EACH CARD
-        // =====================================================
-
-        for (document in reports) {
-
-            createReportCard(
-                document
-            )
-        }
     }
-
 
     // =========================================================
     // CREATE REPORT CARD
     // =========================================================
 
     private fun createReportCard(
-        document: DocumentSnapshot
+        report: ReportDisplayData
     ) {
 
         val reportView =
@@ -255,60 +536,39 @@ class CampusReportsActivity : AppCompatActivity() {
                     false
                 )
 
-
-        // =====================================================
-        // FIND VIEWS
-        // =====================================================
-
+        // Find views.
         val tvReportId =
-            reportView.findViewById<TextView>(
-                R.id.tvReportId
-            )
+            reportView.findViewById<TextView>(R.id.tvReportId)
 
         val tvReportType =
-            reportView.findViewById<TextView>(
-                R.id.tvReportType
-            )
+            reportView.findViewById<TextView>(R.id.tvReportType)
 
         val tvReportCampus =
-            reportView.findViewById<TextView>(
-                R.id.tvReportCampus
-            )
+            reportView.findViewById<TextView>(R.id.tvReportCampus)
 
         val tvReportDate =
-            reportView.findViewById<TextView>(
-                R.id.tvReportDate
-            )
+            reportView.findViewById<TextView>(R.id.tvReportDate)
 
         val tvReportTime =
-            reportView.findViewById<TextView>(
-                R.id.tvReportTime
-            )
+            reportView.findViewById<TextView>(R.id.tvReportTime)
 
         val tvReportDescription =
-            reportView.findViewById<TextView>(
-                R.id.tvReportDescription
-            )
+            reportView.findViewById<TextView>(R.id.tvReportDescription)
 
         val tvReportLocation =
-            reportView.findViewById<TextView>(
-                R.id.tvReportLocation
-            )
+            reportView.findViewById<TextView>(R.id.tvReportLocation)
 
         val tvReportCoordinates =
-            reportView.findViewById<TextView>(
-                R.id.tvReportCoordinates
-            )
+            reportView.findViewById<TextView>(R.id.tvReportCoordinates)
 
         val tvReportStatus =
-            reportView.findViewById<TextView>(
-                R.id.tvReportStatus
-            )
+            reportView.findViewById<TextView>(R.id.tvReportStatus)
+
+        val tvSyncStatus =
+            reportView.findViewById<TextView>(R.id.tvSyncStatus)
 
         val tvEvidenceTitle =
-            reportView.findViewById<TextView>(
-                R.id.tvEvidenceTitle
-            )
+            reportView.findViewById<TextView>(R.id.tvEvidenceTitle)
 
         val btnViewLocation =
             reportView.findViewById<AppCompatButton>(
@@ -335,175 +595,83 @@ class CampusReportsActivity : AppCompatActivity() {
                 R.id.btnViewFile
             )
 
+        // -----------------------------------------------------
+        // BASIC REPORT INFORMATION
+        // -----------------------------------------------------
 
-        // =====================================================
-        // GET REPORT DATA
-        // =====================================================
+        tvReportId.text = getString(
+            R.string.campus_reports_incident_id,
+            report.reportId
+        )
 
-        val reportId =
-            document.getString(
-                "reportId"
-            ) ?: document.id
+        tvReportType.text = report.incidentType
 
+        tvReportCampus.text = getString(
+            R.string.campus_reports_campus,
+            report.campus.ifBlank {
+                getString(R.string.campus_reports_campus_not_provided)
+            }
+        )
 
-        val incidentType =
-            document.getString(
-                "incidentType"
-            ) ?: "Incident Report"
+        tvReportDescription.text = report.description.ifBlank {
+            getString(R.string.campus_reports_no_description)
+        }
 
+        tvReportLocation.text = report.location.ifBlank {
+            getString(R.string.campus_reports_location_not_provided)
+        }
 
-        val campus =
-            document.getString(
-                "campus"
-            ) ?: "Campus not provided"
+        // -----------------------------------------------------
+        // REPORT STATUS
+        // -----------------------------------------------------
 
+        // Set the report status once; do not overwrite it later.
+        tvReportStatus.text = getString(
+            R.string.campus_reports_status,
+            report.status
+        )
 
-        val description =
-            document.getString(
-                "description"
-            ) ?: "No description provided."
+        // -----------------------------------------------------
+        // SYNC STATUS
+        // -----------------------------------------------------
 
+        tvSyncStatus.visibility = View.VISIBLE
 
-        val location =
-            document.getString(
-                "location"
-            ) ?: "Location not provided."
+        val isSynced = report.syncStatus.equals(
+            "Synced",
+            ignoreCase = true
+        )
 
-
-        val status =
-            document.getString(
-                "status"
-            ) ?: "Submitted"
-
-
-        val dateValue =
-            document.getString(
-                "date"
+        tvSyncStatus.text = getString(
+            R.string.campus_reports_sync_status,
+            getString(
+                if (isSynced) {
+                    R.string.campus_reports_synced
+                } else {
+                    R.string.campus_reports_pending_sync
+                }
             )
+        )
 
-
-        val timeValue =
-            document.getString(
-                "time"
-            )
-
-
-        val dateTime =
-            document.getString(
-                "dateTime"
-            )
-
-
-        val createdAt =
-            document.getLong(
-                "createdAt"
-            ) ?: 0L
-
-
-        // =====================================================
-        // GPS COORDINATES
-        // =====================================================
-
-        val latitude =
-            getDouble(
-                document.get(
-                    "latitude"
-                )
-            )
-
-
-        val longitude =
-            getDouble(
-                document.get(
-                    "longitude"
-                )
-            )
-
-
-        // =====================================================
-        // EVIDENCE
-        // =====================================================
-
-        /*
-         * These values can now be:
-         *
-         * 1. A SafeZone local file path:
-         *    /data/user/0/com.example.safezone/files/evidence/...
-         *
-         * OR
-         *
-         * 2. An old content:// URI from previous reports.
-         */
-
-        val photoEvidence =
-            document.getString(
-                "photoEvidence"
-            ) ?: ""
-
-
-        val videoEvidence =
-            document.getString(
-                "videoEvidence"
-            ) ?: ""
-
-
-        val audioEvidence =
-            document.getString(
-                "audioEvidence"
-            ) ?: ""
-
-
-        val fileEvidence =
-            document.getString(
-                "fileEvidence"
-            ) ?: ""
-
-
-        // =====================================================
-        // BASIC INFORMATION
-        // =====================================================
-
-        tvReportId.text =
-            "Incident ID: SZ-$reportId"
-
-
-        tvReportType.text =
-            incidentType
-
-
-        tvReportCampus.text =
-            "Campus: $campus"
-
-
-        tvReportDescription.text =
-            description
-
-
-        tvReportLocation.text =
-            location
-
-
-        tvReportStatus.text =
-            status
-
-
-        // =====================================================
+        // -----------------------------------------------------
         // DATE AND TIME
-        // =====================================================
+        // -----------------------------------------------------
 
         displayDateTime(
-            dateValue = dateValue,
-            timeValue = timeValue,
-            dateTime = dateTime,
-            createdAt = createdAt,
+            dateValue = report.date,
+            timeValue = report.time,
+            dateTime = report.dateTime,
+            createdAt = report.createdAt,
             tvDate = tvReportDate,
             tvTime = tvReportTime
         )
 
-
-        // =====================================================
+        // -----------------------------------------------------
         // GPS LOCATION
-        // =====================================================
+        // -----------------------------------------------------
+
+        val latitude = report.latitude
+        val longitude = report.longitude
 
         if (
             latitude != null &&
@@ -512,44 +680,38 @@ class CampusReportsActivity : AppCompatActivity() {
             longitude != 0.0
         ) {
 
-            tvReportCoordinates.visibility =
-                View.VISIBLE
+            tvReportCoordinates.visibility = View.VISIBLE
 
+            tvReportCoordinates.text = getString(
+                R.string.campus_reports_gps,
+                latitude,
+                longitude
+            )
 
-            tvReportCoordinates.text =
-                String.format(
-                    Locale.US,
-                    "GPS: %.6f, %.6f",
-                    latitude,
-                    longitude
-                )
+            btnViewLocation.visibility = View.VISIBLE
 
-
-            btnViewLocation.visibility =
-                View.VISIBLE
-
+            btnViewLocation.setText(
+                R.string.campus_reports_view_location
+            )
 
             btnViewLocation.setOnClickListener {
-
-                openLocationInMaps(
-                    latitude,
-                    longitude
-                )
+                openLocationInMaps(latitude, longitude)
             }
 
         } else {
 
-            tvReportCoordinates.visibility =
-                View.GONE
-
-            btnViewLocation.visibility =
-                View.GONE
+            tvReportCoordinates.visibility = View.GONE
+            btnViewLocation.visibility = View.GONE
         }
 
+        // -----------------------------------------------------
+        // EVIDENCE
+        // -----------------------------------------------------
 
-        // =====================================================
-        // EVIDENCE SECTION
-        // =====================================================
+        val photoEvidence = report.photoEvidence
+        val videoEvidence = report.videoEvidence
+        val audioEvidence = report.audioEvidence
+        val fileEvidence = report.fileEvidence
 
         val hasEvidence =
             photoEvidence.isNotBlank() ||
@@ -557,144 +719,75 @@ class CampusReportsActivity : AppCompatActivity() {
                     audioEvidence.isNotBlank() ||
                     fileEvidence.isNotBlank()
 
+        tvEvidenceTitle.visibility = if (hasEvidence) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
 
         if (hasEvidence) {
-
-            tvEvidenceTitle.visibility =
-                View.VISIBLE
-
-        } else {
-
-            tvEvidenceTitle.visibility =
-                View.GONE
+            tvEvidenceTitle.setText(R.string.campus_reports_evidence)
         }
 
-
-        // =====================================================
-        // PHOTO
-        // =====================================================
-
+        // Photo evidence.
         if (photoEvidence.isNotBlank()) {
 
-            btnViewPhoto.visibility =
-                View.VISIBLE
-
-
-            btnViewPhoto.text =
-                "View Photo"
-
+            btnViewPhoto.visibility = View.VISIBLE
+            btnViewPhoto.setText(R.string.campus_reports_view_photo)
 
             btnViewPhoto.setOnClickListener {
-
-                openEvidence(
-                    photoEvidence,
-                    "image/*"
-                )
+                openEvidence(photoEvidence, "image/*")
             }
 
         } else {
-
-            btnViewPhoto.visibility =
-                View.GONE
+            btnViewPhoto.visibility = View.GONE
         }
 
-
-        // =====================================================
-        // VIDEO
-        // =====================================================
-
+        // Video evidence.
         if (videoEvidence.isNotBlank()) {
 
-            btnViewVideo.visibility =
-                View.VISIBLE
-
-
-            btnViewVideo.text =
-                "View Video"
-
+            btnViewVideo.visibility = View.VISIBLE
+            btnViewVideo.setText(R.string.campus_reports_view_video)
 
             btnViewVideo.setOnClickListener {
-
-                openEvidence(
-                    videoEvidence,
-                    "video/*"
-                )
+                openEvidence(videoEvidence, "video/*")
             }
 
         } else {
-
-            btnViewVideo.visibility =
-                View.GONE
+            btnViewVideo.visibility = View.GONE
         }
 
-
-        // =====================================================
-        // AUDIO
-        // =====================================================
-
+        // Audio evidence.
         if (audioEvidence.isNotBlank()) {
 
-            btnViewAudio.visibility =
-                View.VISIBLE
-
-
-            btnViewAudio.text =
-                "View Audio"
-
+            btnViewAudio.visibility = View.VISIBLE
+            btnViewAudio.setText(R.string.campus_reports_view_audio)
 
             btnViewAudio.setOnClickListener {
-
-                openEvidence(
-                    audioEvidence,
-                    "audio/*"
-                )
+                openEvidence(audioEvidence, "audio/*")
             }
 
         } else {
-
-            btnViewAudio.visibility =
-                View.GONE
+            btnViewAudio.visibility = View.GONE
         }
 
-
-        // =====================================================
-        // FILE
-        // =====================================================
-
+        // File evidence.
         if (fileEvidence.isNotBlank()) {
 
-            btnViewFile.visibility =
-                View.VISIBLE
-
-
-            btnViewFile.text =
-                "View File"
-
+            btnViewFile.visibility = View.VISIBLE
+            btnViewFile.setText(R.string.campus_reports_view_file)
 
             btnViewFile.setOnClickListener {
-
-                openEvidence(
-                    fileEvidence,
-                    "*/*"
-                )
+                openEvidence(fileEvidence, "*/*")
             }
 
         } else {
-
-            btnViewFile.visibility =
-                View.GONE
+            btnViewFile.visibility = View.GONE
         }
 
-
-        // =====================================================
-        // ADD CARD
-        // =====================================================
-
-        reportsContainer.addView(
-            reportView
-        )
+        // Add card to the screen.
+        reportsContainer.addView(reportView)
     }
-
 
     // =========================================================
     // DISPLAY DATE AND TIME
@@ -709,94 +802,99 @@ class CampusReportsActivity : AppCompatActivity() {
         tvTime: TextView
     ) {
 
-        // =====================================================
-        // DATE + TIME FIELDS
-        // =====================================================
+        val notAvailable =
+            getString(R.string.campus_reports_not_available)
 
+        // Use separate date and time values if available.
         if (
             !dateValue.isNullOrBlank() &&
             !timeValue.isNullOrBlank()
         ) {
 
-            tvDate.text =
-                "Date: $dateValue"
+            tvDate.text = getString(
+                R.string.campus_reports_date,
+                dateValue
+            )
 
-
-            tvTime.text =
-                "Time: $timeValue"
-
+            tvTime.text = getString(
+                R.string.campus_reports_time,
+                timeValue
+            )
 
             return
         }
 
-
-        // =====================================================
-        // DATE TIME FALLBACK
-        // =====================================================
-
+        // Otherwise, try the combined date/time value.
         if (!dateTime.isNullOrBlank()) {
 
-            val parts =
-                dateTime.split(",")
-
+            val parts = dateTime.split(",", limit = 2)
 
             if (parts.size >= 2) {
 
-                tvDate.text =
-                    "Date: ${parts[0].trim()}"
+                tvDate.text = getString(
+                    R.string.campus_reports_date,
+                    parts[0].trim()
+                )
 
-
-                tvTime.text =
-                    "Time: ${parts[1].trim()}"
-
+                tvTime.text = getString(
+                    R.string.campus_reports_time,
+                    parts[1].trim()
+                )
 
                 return
             }
+
+            tvDate.text = getString(
+                R.string.campus_reports_date,
+                dateTime
+            )
+
+            tvTime.text = getString(
+                R.string.campus_reports_time,
+                notAvailable
+            )
+
+            return
         }
 
-
-        // =====================================================
-        // CREATED AT FALLBACK
-        // =====================================================
-
+        // Fall back to the creation timestamp.
         if (createdAt > 0L) {
 
-            val date =
-                Date(createdAt)
+            val date = Date(createdAt)
 
+            val dateFormat = SimpleDateFormat(
+                "dd MMM yyyy",
+                Locale.getDefault()
+            )
 
-            val dateFormat =
-                SimpleDateFormat(
-                    "dd MMM yyyy",
-                    Locale.getDefault()
-                )
+            val timeFormat = SimpleDateFormat(
+                "HH:mm",
+                Locale.getDefault()
+            )
 
+            tvDate.text = getString(
+                R.string.campus_reports_date,
+                dateFormat.format(date)
+            )
 
-            val timeFormat =
-                SimpleDateFormat(
-                    "HH:mm",
-                    Locale.getDefault()
-                )
-
-
-            tvDate.text =
-                "Date: ${dateFormat.format(date)}"
-
-
-            tvTime.text =
-                "Time: ${timeFormat.format(date)}"
+            tvTime.text = getString(
+                R.string.campus_reports_time,
+                timeFormat.format(date)
+            )
 
         } else {
 
-            tvDate.text =
-                "Date: Not available"
+            tvDate.text = getString(
+                R.string.campus_reports_date,
+                notAvailable
+            )
 
-
-            tvTime.text =
-                "Time: Not available"
+            tvTime.text = getString(
+                R.string.campus_reports_time,
+                notAvailable
+            )
         }
     }
-
 
     // =========================================================
     // NO REPORTS
@@ -805,48 +903,32 @@ class CampusReportsActivity : AppCompatActivity() {
     private fun showNoReports() {
 
         reportsContainer.removeAllViews()
-
-        tvNoReports.visibility =
-            View.VISIBLE
+        tvNoReports.visibility = View.VISIBLE
     }
 
-
     // =========================================================
-    // CONVERT FIRESTORE NUMBER
+    // OPEN CAMPUS LOGIN
     // =========================================================
 
-    private fun getDouble(
-        value: Any?
-    ): Double? {
+    private fun openCampusLogin() {
 
-        return when (value) {
+        showToast(R.string.campus_reports_login_required)
 
-            is Double ->
-                value
+        val intent = Intent(
+            this,
+            CampusLoginActivity::class.java
+        )
 
-            is Float ->
-                value.toDouble()
+        intent.flags =
+            Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK
 
-            is Long ->
-                value.toDouble()
-
-            is Int ->
-                value.toDouble()
-
-            is Number ->
-                value.toDouble()
-
-            is String ->
-                value.toDoubleOrNull()
-
-            else ->
-                null
-        }
+        startActivity(intent)
+        finish()
     }
 
-
     // =========================================================
-    // OPEN LOCATION
+    // OPEN LOCATION IN MAPS
     // =========================================================
 
     private fun openLocationInMaps(
@@ -854,61 +936,42 @@ class CampusReportsActivity : AppCompatActivity() {
         longitude: Double
     ) {
 
-        val geoUri =
-            Uri.parse(
-                "geo:$latitude,$longitude?q=$latitude,$longitude"
-            )
+        val geoUri = Uri.parse(
+            "geo:$latitude,$longitude?q=$latitude,$longitude"
+        )
 
-
-        val geoIntent =
-            Intent(
-                Intent.ACTION_VIEW,
-                geoUri
-            )
-
+        val geoIntent = Intent(
+            Intent.ACTION_VIEW,
+            geoUri
+        )
 
         try {
 
-            startActivity(
-                geoIntent
+            startActivity(geoIntent)
+
+        } catch (exception: Exception) {
+
+            val mapsUri = Uri.parse(
+                "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude"
             )
 
-        } catch (e: Exception) {
-
-            // =================================================
-            // FALLBACK TO BROWSER GOOGLE MAPS
-            // =================================================
-
-            val mapsUri =
-                Uri.parse(
-                    "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude"
-                )
-
-
-            val mapsIntent =
-                Intent(
-                    Intent.ACTION_VIEW,
-                    mapsUri
-                )
-
+            val mapsIntent = Intent(
+                Intent.ACTION_VIEW,
+                mapsUri
+            )
 
             try {
 
-                startActivity(
-                    mapsIntent
-                )
+                startActivity(mapsIntent)
 
             } catch (mapException: Exception) {
 
-                Toast.makeText(
-                    this,
-                    "Unable to open the map.",
-                    Toast.LENGTH_LONG
-                ).show()
+                Log.e(TAG, "Unable to open the map.", mapException)
+
+                showToast(R.string.campus_reports_map_unavailable)
             }
         }
     }
-
 
     // =========================================================
     // OPEN PHOTO / VIDEO / AUDIO / FILE
@@ -921,336 +984,188 @@ class CampusReportsActivity : AppCompatActivity() {
 
         try {
 
-            // =================================================
-            // NEW SAFEZONE LOCAL FILE
-            // =================================================
+            // -------------------------------------------------
+            // LOCAL FILE PATH
+            // -------------------------------------------------
 
-            if (
-                storedValue.startsWith("/")
-            ) {
+            if (storedValue.startsWith("/")) {
 
-                val file =
-                    File(storedValue)
-
-
-                // ---------------------------------------------
-                // CHECK FILE EXISTS
-                // ---------------------------------------------
+                val file = File(storedValue)
 
                 if (!file.exists()) {
-
-                    Toast.makeText(
-                        this,
-                        "This evidence file is no longer available.",
-                        Toast.LENGTH_LONG
-                    ).show()
-
+                    showToast(R.string.campus_reports_file_missing)
                     return
                 }
 
+                val fileUri = FileProvider.getUriForFile(
+                    this,
+                    "${packageName}.fileprovider",
+                    file
+                )
 
-                // ---------------------------------------------
-                // CREATE SECURE FILEPROVIDER URI
-                // ---------------------------------------------
+                val mimeType = guessMimeType(file.name)
 
-                val fileUri =
-                    FileProvider.getUriForFile(
-                        this,
-                        "${packageName}.fileprovider",
-                        file
-                    )
-
-
-                // ---------------------------------------------
-                // DETERMINE MIME TYPE
-                // ---------------------------------------------
-
-                val mimeType =
-                    guessMimeType(
-                        file.name
-                    )
-
-
-                // ---------------------------------------------
-                // CREATE INTENT
-                // ---------------------------------------------
-
-                val intent =
-                    Intent(
-                        Intent.ACTION_VIEW
-                    ).apply {
-
-                        setDataAndType(
-                            fileUri,
-                            mimeType
-                        )
-
-                        addFlags(
-                            Intent.FLAG_GRANT_READ_URI_PERMISSION
-                        )
-
-                        addFlags(
-                            Intent.FLAG_ACTIVITY_NEW_TASK
-                        )
-                    }
-
-
-                // ---------------------------------------------
-                // OPEN FILE
-                // ---------------------------------------------
+                val intent = Intent(
+                    Intent.ACTION_VIEW
+                ).apply {
+                    setDataAndType(fileUri, mimeType)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
 
                 try {
 
                     startActivity(
                         Intent.createChooser(
                             intent,
-                            "Open Evidence"
+                            getString(R.string.campus_reports_open_evidence)
                         )
                     )
 
-                } catch (e: Exception) {
+                } catch (exception: Exception) {
 
-                    Toast.makeText(
-                        this,
-                        "No app is available to open this evidence type.",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Log.e(TAG, "No app can open the evidence.", exception)
+
+                    showToast(
+                        R.string.campus_reports_no_evidence_app
+                    )
                 }
-
 
                 return
             }
 
+            // -------------------------------------------------
+            // CONTENT URI
+            // -------------------------------------------------
 
-            // =================================================
-            // OLD CONTENT URI
-            // =================================================
+            if (storedValue.startsWith("content://")) {
 
-            if (
-                storedValue.startsWith(
-                    "content://"
-                )
-            ) {
-
-                val uri =
-                    Uri.parse(
-                        storedValue
-                    )
-
+                val uri = Uri.parse(storedValue)
 
                 val detectedMimeType =
-                    contentResolver.getType(
-                        uri
-                    ) ?: fallbackMimeType
+                    contentResolver.getType(uri) ?: fallbackMimeType
 
-
-                val intent =
-                    Intent(
-                        Intent.ACTION_VIEW
-                    ).apply {
-
-                        setDataAndType(
-                            uri,
-                            detectedMimeType
-                        )
-
-                        addFlags(
-                            Intent.FLAG_GRANT_READ_URI_PERMISSION
-                        )
-                    }
-
+                val intent = Intent(
+                    Intent.ACTION_VIEW
+                ).apply {
+                    setDataAndType(uri, detectedMimeType)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
 
                 try {
 
                     startActivity(
                         Intent.createChooser(
                             intent,
-                            "Open Evidence"
+                            getString(R.string.campus_reports_open_evidence)
                         )
                     )
 
-                } catch (e: Exception) {
+                } catch (exception: Exception) {
 
-                    Toast.makeText(
-                        this,
-                        "This older evidence file is no longer accessible.",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Log.e(TAG, "Evidence URI is inaccessible.", exception)
+
+                    showToast(
+                        R.string.campus_reports_file_inaccessible
+                    )
                 }
-
 
                 return
             }
 
-
-            // =================================================
+            // -------------------------------------------------
             // UNKNOWN FORMAT
-            // =================================================
+            // -------------------------------------------------
 
-            Toast.makeText(
-                this,
-                "Invalid evidence file.",
-                Toast.LENGTH_LONG
-            ).show()
+            showToast(R.string.campus_reports_invalid_evidence)
 
+        } catch (exception: Exception) {
 
-        } catch (e: Exception) {
+            Log.e(TAG, "Unable to open evidence.", exception)
 
-            e.printStackTrace()
-
-
-            Toast.makeText(
-                this,
-                "Unable to open this evidence.",
-                Toast.LENGTH_LONG
-            ).show()
+            showToast(
+                R.string.campus_reports_open_evidence_failed
+            )
         }
     }
-
 
     // =========================================================
     // DETERMINE MIME TYPE
     // =========================================================
 
-    private fun guessMimeType(
-        fileName: String
-    ): String {
+    private fun guessMimeType(fileName: String): String {
 
-        val extension =
-            fileName
-                .substringAfterLast(
-                    ".",
-                    ""
-                )
-                .lowercase(
-                    Locale.getDefault()
-                )
-
+        val extension = fileName
+            .substringAfterLast(".", "")
+            .lowercase(Locale.getDefault())
 
         return when (extension) {
 
-            // =================================================
-            // IMAGES
-            // =================================================
+            // Images
+            "jpg", "jpeg" -> "image/jpeg"
+            "png" -> "image/png"
+            "gif" -> "image/gif"
+            "webp" -> "image/webp"
+            "bmp" -> "image/bmp"
 
-            "jpg",
-            "jpeg" ->
-                "image/jpeg"
+            // Video
+            "mp4" -> "video/mp4"
+            "3gp" -> "video/3gpp"
+            "mkv" -> "video/x-matroska"
+            "avi" -> "video/x-msvideo"
+            "mov" -> "video/quicktime"
 
-            "png" ->
-                "image/png"
+            // Audio
+            "mp3" -> "audio/mpeg"
+            "wav" -> "audio/wav"
+            "m4a" -> "audio/mp4"
+            "aac" -> "audio/aac"
+            "ogg" -> "audio/ogg"
+            "flac" -> "audio/flac"
 
-            "gif" ->
-                "image/gif"
-
-            "webp" ->
-                "image/webp"
-
-            "bmp" ->
-                "image/bmp"
-
-
-            // =================================================
-            // VIDEO
-            // =================================================
-
-            "mp4" ->
-                "video/mp4"
-
-            "3gp" ->
-                "video/3gpp"
-
-            "mkv" ->
-                "video/x-matroska"
-
-            "avi" ->
-                "video/x-msvideo"
-
-            "mov" ->
-                "video/quicktime"
-
-
-            // =================================================
-            // AUDIO
-            // =================================================
-
-            "mp3" ->
-                "audio/mpeg"
-
-            "wav" ->
-                "audio/wav"
-
-            "m4a" ->
-                "audio/mp4"
-
-            "aac" ->
-                "audio/aac"
-
-            "ogg" ->
-                "audio/ogg"
-
-            "flac" ->
-                "audio/flac"
-
-
-            // =================================================
             // PDF
-            // =================================================
+            "pdf" -> "application/pdf"
 
-            "pdf" ->
-                "application/pdf"
-
-
-            // =================================================
-            // MICROSOFT WORD
-            // =================================================
-
-            "doc" ->
-                "application/msword"
-
+            // Microsoft Word
+            "doc" -> "application/msword"
             "docx" ->
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
-
-            // =================================================
-            // MICROSOFT EXCEL
-            // =================================================
-
-            "xls" ->
-                "application/vnd.ms-excel"
-
+            // Microsoft Excel
+            "xls" -> "application/vnd.ms-excel"
             "xlsx" ->
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
-
-            // =================================================
-            // MICROSOFT POWERPOINT
-            // =================================================
-
-            "ppt" ->
-                "application/vnd.ms-powerpoint"
-
+            // Microsoft PowerPoint
+            "ppt" -> "application/vnd.ms-powerpoint"
             "pptx" ->
                 "application/vnd.openxmlformats-officedocument.presentationml.presentation"
 
+            // Text
+            "txt" -> "text/plain"
+            "csv" -> "text/csv"
 
-            // =================================================
-            // TEXT
-            // =================================================
-
-            "txt" ->
-                "text/plain"
-
-            "csv" ->
-                "text/csv"
-
-
-            // =================================================
-            // UNKNOWN
-            // =================================================
-
-            else ->
-                "*/*"
+            else -> "*/*"
         }
+    }
+
+    // =========================================================
+    // DISPLAY TOAST
+    // =========================================================
+
+    private fun showToast(messageResId: Int) {
+
+        Toast.makeText(
+            this,
+            getString(messageResId),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    // =========================================================
+    // CONSTANTS
+    // =========================================================
+
+    companion object {
+        private const val TAG = "CampusReportsActivity"
     }
 }

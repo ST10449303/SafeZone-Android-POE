@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,7 +17,7 @@
             android:layout_height="50dp"
             android:background="@color/safezone_navy"
             android:gravity="center"
-            android:text="SafeZone"
+            android:text="@string/app_name"
             android:textColor="@color/safezone_white"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -39,7 +38,7 @@
                 android:id="@+id/imgSafeZoneLogo"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:contentDescription="SafeZone Logo"
+                android:contentDescription="@string/safezone_logo_description"
                 android:src="@drawable/safezone_logo"
                 android:scaleType="fitCenter" />
 
@@ -50,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 android:gravity="center"
-                android:text="Personal Safety Login"
+                android:text="@string/personal_login_title"
                 android:textColor="@color/safezone_dark"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -62,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:gravity="center"
-                android:text="Sign in to access your personal safety account."
+                android:text="@string/personal_login_subtitle"
                 android:textColor="@color/safezone_grey"
                 android:textSize="14sp" />
 
@@ -75,7 +74,7 @@
                 android:background="@drawable/rounded_login_input"
                 android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="14dp"
-                android:hint="Email Address"
+                android:hint="@string/email_address_hint"
                 android:inputType="textEmailAddress"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
@@ -93,7 +92,7 @@
                 android:drawableStart="@drawable/ic_lock"
                 android:drawableEnd="@drawable/ic_visibility_off"
                 android:drawablePadding="14dp"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
@@ -109,7 +108,6 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <!-- Remember Me -->
                 <CheckBox
                     android:id="@+id/cbRememberMe"
                     android:layout_width="0dp"
@@ -117,11 +115,10 @@
                     android:layout_weight="1"
                     android:buttonTint="@color/safezone_navy"
                     android:minHeight="48dp"
-                    android:text="Remember me"
+                    android:text="@string/remember_me"
                     android:textColor="@color/safezone_dark"
                     android:textSize="14sp" />
 
-                <!-- Forgot Password -->
                 <TextView
                     android:id="@+id/tvForgotPassword"
                     android:layout_width="wrap_content"
@@ -132,11 +129,11 @@
                     android:paddingEnd="10dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:text="Forgot Password?"
+                    android:text="@string/forgot_password"
                     android:textColor="@color/safezone_blue"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:contentDescription="Forgot Password" />
+                    android:contentDescription="@string/forgot_password" />
 
             </LinearLayout>
 
@@ -147,7 +144,7 @@
                 android:layout_height="58dp"
                 android:layout_marginTop="14dp"
                 android:backgroundTint="@color/safezone_navy"
-                android:text="Login"
+                android:text="@string/login"
                 android:textAllCaps="false"
                 android:textColor="@color/safezone_white"
                 android:textSize="17sp"
@@ -172,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp"
-                    android:text="OR"
+                    android:text="@string/or"
                     android:textColor="@color/safezone_grey"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -185,6 +182,19 @@
 
             </LinearLayout>
 
+            <!-- Google Sign-In Button -->
+            <Button
+                android:id="@+id/btnGoogleSignIn"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/safezone_white"
+                android:text="@string/continue_with_google"
+                android:textAllCaps="false"
+                android:textColor="@color/safezone_navy"
+                android:textSize="16sp"
+                android:elevation="2dp" />
+
             <!-- Register Message -->
             <TextView
                 android:id="@+id/tvNoAccount"
@@ -192,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
                 android:gravity="center"
-                android:text="Don't have a personal account?"
+                android:text="@string/no_personal_account"
                 android:textColor="@color/safezone_grey"
                 android:textSize="14sp" />
 
@@ -205,7 +215,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:text="Register"
+                android:text="@string/register"
                 android:textColor="@color/safezone_blue"
                 android:textSize="17sp"
                 android:textStyle="bold" />

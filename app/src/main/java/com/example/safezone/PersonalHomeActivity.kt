@@ -2,6 +2,7 @@ package com.example.safezone
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -11,19 +12,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class PersonalHomeActivity : AppCompatActivity() {
 
-    // ==========================================
     // HEADER
-    // ==========================================
-
     private lateinit var tvNotification: TextView
     private lateinit var tvProfile: TextView
     private lateinit var tvLogout: TextView
     private lateinit var tvUserName: TextView
 
-    // ==========================================
     // QUICK ACTIONS
-    // ==========================================
-
     private lateinit var btnSOS: Button
     private lateinit var btnEmergencyAssistance: Button
     private lateinit var btnSafetyCheckIn: Button
@@ -32,426 +27,273 @@ class PersonalHomeActivity : AppCompatActivity() {
     private lateinit var btnReportIncident: Button
     private lateinit var btnSettings: Button
 
-    // ==========================================
     // BOTTOM NAVIGATION
-    // ==========================================
-
     private lateinit var navHome: TextView
     private lateinit var navMap: TextView
     private lateinit var navReports: TextView
     private lateinit var navNotifications: TextView
     private lateinit var navProfile: TextView
 
-    // ==========================================
     // FIREBASE
-    // ==========================================
-
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
-    // ==========================================
-    // ON CREATE
-    // ==========================================
+    // OFFLINE SESSION
+    private var offlineMode = false
+    private var savedFullName = "SafeZone User"
+    private var savedEmail = ""
 
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
+    companion object {
+        private const val TAG = "PersonalHomeActivity"
+        const val EXTRA_OFFLINE_MODE = "offlineMode"
+    }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_personal_home)
 
-        setContentView(
-            R.layout.activity_personal_home
-        )
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
-        // ==========================================
-        // FIREBASE INITIALIZATION
-        // ==========================================
+        offlineMode = intent.getBooleanExtra(EXTRA_OFFLINE_MODE, false)
 
-        auth =
-            FirebaseAuth.getInstance()
+        savedFullName = intent.getStringExtra("fullName")
+            ?.takeIf { it.isNotBlank() }
+            ?: getString(R.string.default_user_name)
 
-        db =
-            FirebaseFirestore.getInstance()
+        savedEmail = intent.getStringExtra("email").orEmpty()
 
-        // ==========================================
-        // HEADER
-        // ==========================================
+        initializeViews()
+        setupButtons()
 
-        tvNotification =
-            findViewById(R.id.tvNotification)
-
-        tvProfile =
-            findViewById(R.id.tvProfile)
-
-        tvLogout =
-            findViewById(R.id.tvLogout)
-
-        tvUserName =
-            findViewById(R.id.tvUserName)
-
-        // ==========================================
-        // QUICK ACTIONS
-        // ==========================================
-
-        btnSOS =
-            findViewById(R.id.btnSOS)
-
-        btnEmergencyAssistance =
-            findViewById(R.id.btnEmergencyAssistance)
-
-        btnSafetyCheckIn =
-            findViewById(R.id.btnSafetyCheckIn)
-
-        btnTrustedContacts =
-            findViewById(R.id.btnTrustedContacts)
-
-        btnFindHelp =
-            findViewById(R.id.btnFindHelp)
-
-        btnReportIncident =
-            findViewById(R.id.btnReportIncident)
-
-        btnSettings =
-            findViewById(R.id.btnSettings)
-
-        // ==========================================
-        // BOTTOM NAVIGATION
-        // ==========================================
-
-        navHome =
-            findViewById(R.id.navHome)
-
-        navMap =
-            findViewById(R.id.navMap)
-
-        navReports =
-            findViewById(R.id.navReports)
-
-        navNotifications =
-            findViewById(R.id.navNotifications)
-
-        navProfile =
-            findViewById(R.id.navProfile)
-
-        // ==========================================
-        // LOGIN CHECK
-        // ==========================================
-
-        val currentUser =
-            auth.currentUser
-
-        if (currentUser == null) {
-
-            goToChoosePanel()
-
+        if (!checkLogin()) {
             return
         }
 
-        // ==========================================
-        // LOAD USER NAME
-        // ==========================================
+        displaySavedUserName()
 
-        loadUserName(
-            currentUser.uid
-        )
-
-        // ==========================================
-        // SOS
-        // ==========================================
-
-        btnSOS.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    SOSConfirmationActivity::class.java
-                )
-            )
-        }
-
-        // ==========================================
-        // EMERGENCY ASSISTANCE
-        // ==========================================
-
-        btnEmergencyAssistance.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    EmergencyAssistanceActivity::class.java
-                )
-            )
-        }
-
-        // ==========================================
-        // SAFETY CHECK-IN
-        // ==========================================
-
-        btnSafetyCheckIn.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    SafetyCheckInActivity::class.java
-                )
-            )
-        }
-
-        // ==========================================
-        // TRUSTED CONTACTS
-        // ==========================================
-
-        btnTrustedContacts.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    TrustedContactsActivity::class.java
-                )
-            )
-        }
-
-        // ==========================================
-        // FIND HELP
-        // ==========================================
-
-        btnFindHelp.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    FindHelpActivity::class.java
-                )
-            )
-        }
-
-        // ==========================================
-        // REPORT INCIDENT
-        // ==========================================
-
-        btnReportIncident.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    PersonalIncidentReportActivity::class.java
-                )
-            )
-        }
-
-        // ==========================================
-        // SETTINGS
-        // ==========================================
-
-        btnSettings.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    PersonalSettingsActivity::class.java
-                )
-            )
-        }
-
-        // ==========================================
-        // NOTIFICATIONS / ALERTS
-        // ==========================================
-
-        /*
-         * The notification icon now opens the
-         * Personal Safety Alerts screen.
-         */
-
-        tvNotification.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    PersonalAlertsActivity::class.java
-                )
-            )
-        }
-
-        // ==========================================
-        // PROFILE
-        // ==========================================
-
-        tvProfile.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    PersonalProfileActivity::class.java
-                )
-            )
-        }
-
-        // ==========================================
-        // LOGOUT
-        // ==========================================
-
-        tvLogout.setOnClickListener {
-
-            logoutUser()
-        }
-
-        // ==========================================
-        // HOME
-        // ==========================================
-
-        navHome.setOnClickListener {
-
-            Toast.makeText(
-                this,
-                "You are already on Home.",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
-        // ==========================================
-        // MAP
-        // ==========================================
-
-        navMap.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    FindHelpActivity::class.java
-                )
-            )
-        }
-
-        // ==========================================
-        // REPORTS
-        // ==========================================
-
-        navReports.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    PersonalReportsActivity::class.java
-                )
-            )
-        }
-
-        // ==========================================
-        // ALERTS
-        // ==========================================
-
-        /*
-         * The bottom navigation previously displayed
-         * a Toast saying there were no alerts.
-         *
-         * It now opens the actual Personal Alerts screen.
-         */
-
-        navNotifications.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    PersonalAlertsActivity::class.java
-                )
-            )
-        }
-
-        // ==========================================
-        // PROFILE
-        // ==========================================
-
-        navProfile.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    PersonalProfileActivity::class.java
-                )
-            )
+        if (!offlineMode) {
+            auth.currentUser?.let { user ->
+                loadUserName(user.uid)
+            }
+        } else {
+            Log.d(TAG, "Personal home opened in offline mode")
         }
     }
 
-    // ==========================================
-    // LOAD USER NAME
-    // ==========================================
+    // INITIALIZE VIEWS
+    private fun initializeViews() {
+        tvNotification = findViewById(R.id.tvNotification)
+        tvProfile = findViewById(R.id.tvProfile)
+        tvLogout = findViewById(R.id.tvLogout)
+        tvUserName = findViewById(R.id.tvUserName)
 
-    private fun loadUserName(
-        userId: String
-    ) {
+        btnSOS = findViewById(R.id.btnSOS)
+        btnEmergencyAssistance =
+            findViewById(R.id.btnEmergencyAssistance)
+        btnSafetyCheckIn = findViewById(R.id.btnSafetyCheckIn)
+        btnTrustedContacts = findViewById(R.id.btnTrustedContacts)
+        btnFindHelp = findViewById(R.id.btnFindHelp)
+        btnReportIncident = findViewById(R.id.btnReportIncident)
+        btnSettings = findViewById(R.id.btnSettings)
 
+        navHome = findViewById(R.id.navHome)
+        navMap = findViewById(R.id.navMap)
+        navReports = findViewById(R.id.navReports)
+        navNotifications = findViewById(R.id.navNotifications)
+        navProfile = findViewById(R.id.navProfile)
+    }
+
+    // LOGIN CHECK
+    private fun checkLogin(): Boolean {
+        if (offlineMode) {
+            Log.d(TAG, "Offline Personal session accepted")
+            return true
+        }
+
+        if (auth.currentUser != null) {
+            return true
+        }
+
+        showMessage(R.string.login_required)
+        goToChoosePanel()
+        return false
+    }
+
+    // DISPLAY SAVED USER
+    private fun displaySavedUserName() {
+        tvUserName.text = savedFullName
+    }
+
+    // LOAD USER NAME FROM FIRESTORE
+    private fun loadUserName(userId: String) {
         db.collection("Users")
             .document(userId)
             .get()
             .addOnSuccessListener { document ->
+                if (isFinishing || isDestroyed) {
+                    return@addOnSuccessListener
+                }
 
                 if (document.exists()) {
+                    val fullName = document.getString("fullName")
 
-                    val fullName =
-                        document.getString(
-                            "fullName"
-                        )
-
-                    tvUserName.text =
-                        if (!fullName.isNullOrEmpty()) {
-
-                            fullName
-
-                        } else {
-
-                            "SafeZone User"
-                        }
-
-                } else {
-
-                    tvUserName.text =
-                        "SafeZone User"
+                    if (!fullName.isNullOrBlank()) {
+                        savedFullName = fullName
+                        tvUserName.text = fullName
+                    }
                 }
             }
-            .addOnFailureListener {
+            .addOnFailureListener { exception ->
+                Log.w(
+                    TAG,
+                    "Unable to refresh profile; using saved name",
+                    exception
+                )
 
-                tvUserName.text =
-                    "SafeZone User"
+                if (!isFinishing && !isDestroyed) {
+                    displaySavedUserName()
+                }
             }
     }
 
-    // ==========================================
+    // SETUP BUTTONS
+    private fun setupButtons() {
+
+        // SOS
+        btnSOS.setOnClickListener {
+            openScreen(SOSConfirmationActivity::class.java)
+        }
+
+        // EMERGENCY ASSISTANCE
+        btnEmergencyAssistance.setOnClickListener {
+            openScreen(EmergencyAssistanceActivity::class.java)
+        }
+
+        // SAFETY CHECK-IN
+        btnSafetyCheckIn.setOnClickListener {
+            openScreen(SafetyCheckInActivity::class.java)
+        }
+
+        // TRUSTED CONTACTS
+        btnTrustedContacts.setOnClickListener {
+            openScreen(TrustedContactsActivity::class.java)
+        }
+
+        // FIND HELP
+        btnFindHelp.setOnClickListener {
+            openScreen(FindHelpActivity::class.java)
+        }
+
+        // REPORT INCIDENT
+        btnReportIncident.setOnClickListener {
+            openScreen(PersonalIncidentReportActivity::class.java)
+        }
+
+        // SETTINGS
+        btnSettings.setOnClickListener {
+            openScreen(PersonalSettingsActivity::class.java)
+        }
+
+        // NOTIFICATIONS
+        tvNotification.setOnClickListener {
+            openScreen(PersonalAlertsActivity::class.java)
+        }
+
+        // PROFILE
+        tvProfile.setOnClickListener {
+            openScreen(PersonalProfileActivity::class.java)
+        }
+
+        // LOGOUT
+        tvLogout.setOnClickListener {
+            logoutUser()
+        }
+
+        // BOTTOM NAVIGATION
+        navHome.setOnClickListener {
+            showMessage(R.string.already_on_home)
+        }
+
+        navMap.setOnClickListener {
+            openScreen(FindHelpActivity::class.java)
+        }
+
+        navReports.setOnClickListener {
+            openScreen(PersonalReportsActivity::class.java)
+        }
+
+        navNotifications.setOnClickListener {
+            openScreen(PersonalAlertsActivity::class.java)
+        }
+
+        navProfile.setOnClickListener {
+            openScreen(PersonalProfileActivity::class.java)
+        }
+    }
+
+    // OPEN A SCREEN
+    private fun openScreen(activityClass: Class<*>) {
+        try {
+            val intent = Intent(this, activityClass).apply {
+                putExtra("fullName", savedFullName)
+                putExtra("email", savedEmail)
+                putExtra(EXTRA_OFFLINE_MODE, offlineMode)
+            }
+
+            startActivity(intent)
+        } catch (exception: Exception) {
+            Log.e(
+                TAG,
+                "Unable to open ${activityClass.simpleName}",
+                exception
+            )
+
+            showMessage(R.string.feature_unavailable)
+        }
+    }
+
     // LOGOUT
-    // ==========================================
-
     private fun logoutUser() {
-
         auth.signOut()
 
-        Toast.makeText(
-            this,
-            "You have been logged out.",
-            Toast.LENGTH_SHORT
-        ).show()
+        showMessage(R.string.logged_out_successfully)
 
+        // Keep saved offline credentials available for the next login.
         goToChoosePanel()
     }
 
-    // ==========================================
     // CHOOSE PANEL
-    // ==========================================
-
     private fun goToChoosePanel() {
-
-        val intent =
-            Intent(
-                this,
-                ChoosePanelActivity::class.java
-            )
-
-        intent.flags =
-            Intent.FLAG_ACTIVITY_NEW_TASK or
+        val intent = Intent(
+            this,
+            ChoosePanelActivity::class.java
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                     Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
 
-        startActivity(
-            intent
-        )
-
+        startActivity(intent)
         finish()
+    }
+
+    private fun showMessage(messageResId: Int) {
+        Toast.makeText(
+            this,
+            getString(messageResId),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (
+            ::auth.isInitialized &&
+            !offlineMode &&
+            auth.currentUser == null
+        ) {
+            goToChoosePanel()
+        }
     }
 }

@@ -1,3 +1,4 @@
+
 package com.example.safezone
 
 import android.content.Intent
@@ -21,72 +22,61 @@ class CampusForgotPasswordActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_campus_forgot_password)
 
-        // Connect XML components
         etStudentEmail = findViewById(R.id.etStudentEmail)
         etStudentNumber = findViewById(R.id.etStudentNumber)
         btnVerifyAccount = findViewById(R.id.btnVerifyAccount)
         tvBackToLogin = findViewById(R.id.tvBackToLogin)
 
-        // VERIFY ACCOUNT / CONTINUE button
         btnVerifyAccount.setOnClickListener {
 
             val email = etStudentEmail.text.toString().trim()
             val studentNumber = etStudentNumber.text.toString().trim()
 
-            // Check student email
             if (email.isEmpty()) {
-                etStudentEmail.error = "Please enter your student email"
+                etStudentEmail.error =
+                    "Please enter your registered campus email"
                 etStudentEmail.requestFocus()
                 return@setOnClickListener
             }
 
-            // Check email format
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                etStudentEmail.error = "Please enter a valid student email"
+                etStudentEmail.error =
+                    "Please enter a valid email address"
                 etStudentEmail.requestFocus()
                 return@setOnClickListener
             }
 
-            // Check student number
             if (studentNumber.isEmpty()) {
-                etStudentNumber.error = "Please enter your student number"
+                etStudentNumber.error =
+                    "Please enter your student number"
                 etStudentNumber.requestFocus()
                 return@setOnClickListener
             }
 
-            // Prototype account verification
-            Toast.makeText(
-                this,
-                "Account details accepted.",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            // Open Create New Password screen
-            val intent = Intent(
+            // Prototype flow: continue directly to the
+            // Create New Password screen without sending email.
+            val passwordIntent = Intent(
                 this,
                 CampusCreateNewPasswordActivity::class.java
             )
 
-            // Pass student email and student number
-            intent.putExtra("email", email)
-            intent.putExtra("studentNumber", studentNumber)
+            passwordIntent.putExtra("studentEmail", email)
+            passwordIntent.putExtra("studentNumber", studentNumber)
 
-            startActivity(intent)
+            startActivity(passwordIntent)
         }
 
-        // BACK TO LOG IN
         tvBackToLogin.setOnClickListener {
-
-            val intent = Intent(
+            val loginIntent = Intent(
                 this,
                 CampusLoginActivity::class.java
             )
 
-            intent.flags =
+            loginIntent.flags =
                 Intent.FLAG_ACTIVITY_CLEAR_TOP or
                         Intent.FLAG_ACTIVITY_SINGLE_TOP
 
-            startActivity(intent)
+            startActivity(loginIntent)
             finish()
         }
     }

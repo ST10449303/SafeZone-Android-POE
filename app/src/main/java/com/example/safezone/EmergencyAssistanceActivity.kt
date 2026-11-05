@@ -6,14 +6,22 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.safezone.data.EmergencyRequestRepository
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class EmergencyAssistanceActivity : AppCompatActivity() {
 
+    // HEADER
     private lateinit var tvBack: TextView
+
+    // SELECTED ASSISTANCE
     private lateinit var tvSelectedType: TextView
 
+    // EMERGENCY BUTTONS
     private lateinit var btnMedical: Button
     private lateinit var btnInjury: Button
     private lateinit var btnAccident: Button
@@ -23,20 +31,20 @@ class EmergencyAssistanceActivity : AppCompatActivity() {
     private lateinit var btnOther: Button
     private lateinit var btnContinue: Button
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
-
+    // SELECTED EMERGENCY
     private var selectedAssistanceType: String? = null
+    private var selectedAssistanceLabelRes: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_emergency_assistance)
 
-        // ================================
-        // CONNECT CONTROLS
-        // ================================
+        initializeViews()
+        setupEmergencyButtons()
+    }
 
+    // INITIALIZE VIEWS
+    private fun initializeViews() {
         tvBack = findViewById(R.id.tvBack)
         tvSelectedType = findViewById(R.id.tvSelectedType)
 
@@ -48,162 +56,155 @@ class EmergencyAssistanceActivity : AppCompatActivity() {
         btnHarassment = findViewById(R.id.btnHarassment)
         btnOther = findViewById(R.id.btnOther)
         btnContinue = findViewById(R.id.btnContinue)
+    }
 
-        auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
-
-        // ================================
-        // BACK ARROW
-        // ================================
+    // EMERGENCY BUTTON LISTENERS
+    private fun setupEmergencyButtons() {
 
         tvBack.setOnClickListener {
             finish()
         }
 
-        // ================================
-        // ASSISTANCE OPTIONS
-        // ================================
-
         btnMedical.setOnClickListener {
-            selectAssistance("Medical Emergency")
+            selectAssistanceType(
+                "medical",
+                R.string.emergency_type_medical
+            )
         }
 
         btnInjury.setOnClickListener {
-            selectAssistance("Injury / Fall")
+            selectAssistanceType(
+                "injury",
+                R.string.emergency_type_injury
+            )
         }
 
         btnAccident.setOnClickListener {
-            selectAssistance("Accident")
+            selectAssistanceType(
+                "accident",
+                R.string.emergency_type_accident
+            )
         }
 
         btnFire.setOnClickListener {
-            selectAssistance("Fire")
+            selectAssistanceType(
+                "fire",
+                R.string.emergency_type_fire
+            )
         }
 
         btnSecurity.setOnClickListener {
-            selectAssistance("Security Emergency")
+            selectAssistanceType(
+                "security",
+                R.string.emergency_type_security
+            )
         }
 
         btnHarassment.setOnClickListener {
-            selectAssistance("Harassment")
+            selectAssistanceType(
+                "harassment",
+                R.string.emergency_type_harassment
+            )
         }
 
         btnOther.setOnClickListener {
-            selectAssistance("Other")
+            selectAssistanceType(
+                "other",
+                R.string.emergency_type_other
+            )
         }
-
-        // ================================
-        // CONTINUE
-        // ================================
 
         btnContinue.setOnClickListener {
-
-            if (selectedAssistanceType == null) {
-
-                Toast.makeText(
-                    this,
-                    "Please select the type of assistance you need.",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                return@setOnClickListener
-            }
-
-            createEmergencyRequest()
+            saveEmergencyRequest()
         }
     }
 
-    // ============================================================
-    // SELECT ASSISTANCE
-    // ============================================================
-
-    private fun selectAssistance(type: String) {
-
+    // SELECT EMERGENCY TYPE
+    private fun selectAssistanceType(
+        type: String,
+        labelResId: Int
+    ) {
         selectedAssistanceType = type
+        selectedAssistanceLabelRes = labelResId
 
-        tvSelectedType.text =
-            "Selected: $type"
-
-        Toast.makeText(
-            this,
-            "$type selected.",
-            Toast.LENGTH_SHORT
-        ).show()
+        tvSelectedType.text = getString(
+            R.string.emergency_type_selected,
+            getString(labelResId)
+        )
     }
 
-    // ============================================================
-    // CREATE EMERGENCY REQUEST
-    // ============================================================
+    // SAVE EMERGENCY REQUEST
+    private fun saveEmergencyRequest() {
 
-    private fun createEmergencyRequest() {
+        val assistanceType = selectedAssistanceType
 
-        val currentUser = auth.currentUser
-
-        if (currentUser == null) {
-
-            Toast.makeText(
-                this,
-                "Please log in first.",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            finish()
+        if (assistanceType.isNullOrBlank()) {
+            showMessage(R.string.select_emergency_type_error)
             return
         }
 
-        val assistanceType =
-            selectedAssistanceType ?: return
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-        val emergencyData: Map<String, Any> =
-            mapOf(
-
-                "userId" to currentUser.uid,
-
-                "assistanceType" to assistanceType,
-
-                "status" to "Requested",
-
-                "createdAt" to System.currentTimeMillis()
+        if (userId.isNullOrBlank()) {
+            showMessage(
+                R.string.sign_in_emergency_required,
+                Toast.LENGTH_LONG
             )
+            return
+        }
 
         btnContinue.isEnabled = false
-        btnContinue.text = "Sending Request..."
+        btnContinue.text = getString(R.string.saving_emergency_request)
 
-        db.collection("EmergencyRequests")
-            .add(emergencyData)
-            .addOnSuccessListener {
+        lifecycleScope.launch {
+            try {
 
-                Toast.makeText(
-                    this,
-                    "Emergency assistance request sent.",
+                // SAVE LOCALLY FIRST
+                val requestId = withContext(Dispatchers.IO) {
+                    EmergencyRequestRepository(applicationContext)
+                        .saveRequest(userId, assistanceType)
+                }
+
+                showMessage(
+                    R.string.emergency_request_saved_pending,
                     Toast.LENGTH_LONG
-                ).show()
-
-                val intent =
-                    Intent(
-                        this,
-                        EmergencyRequestActivity::class.java
-                    )
-
-                intent.putExtra(
-                    "assistanceType",
-                    assistanceType
                 )
 
-                startActivity(intent)
+                // OPEN REQUEST DETAILS
+                val intent = Intent(
+                    this@EmergencyAssistanceActivity,
+                    EmergencyRequestActivity::class.java
+                ).apply {
+                    putExtra("requestId", requestId)
+                    putExtra("assistanceType", assistanceType)
+                    putExtra("syncStatus", "Pending Sync")
+                }
 
+                startActivity(intent)
                 finish()
-            }
-            .addOnFailureListener {
+
+            } catch (e: Exception) {
 
                 btnContinue.isEnabled = true
-                btnContinue.text = "Continue"
+                btnContinue.text = getString(R.string.continue_with_arrow)
 
-                Toast.makeText(
-                    this,
-                    "Unable to send emergency request. Please try again.",
+                showMessage(
+                    R.string.emergency_request_save_failed,
                     Toast.LENGTH_LONG
-                ).show()
+                )
             }
+        }
+    }
+
+    // DISPLAY TRANSLATED MESSAGES
+    private fun showMessage(
+        messageResId: Int,
+        duration: Int = Toast.LENGTH_SHORT
+    ) {
+        Toast.makeText(
+            this,
+            getString(messageResId),
+            duration
+        ).show()
     }
 }

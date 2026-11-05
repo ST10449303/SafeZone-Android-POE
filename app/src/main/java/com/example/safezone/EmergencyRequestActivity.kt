@@ -15,6 +15,12 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.example.safezone.data.SafeZoneDatabase
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 class EmergencyRequestActivity : AppCompatActivity() {
@@ -27,21 +33,13 @@ class EmergencyRequestActivity : AppCompatActivity() {
     private lateinit var btnShareLocation: Button
     private lateinit var btnReturnHome: Button
 
-    // ==========================================
-    // LOCATION MANAGER
-    // ==========================================
-
     private lateinit var locationManager: LocationManager
 
-    // Executor used for location callbacks.
-    // This avoids using Context.getMainExecutor()
-    // which requires API 28.
-    private val locationExecutor =
-        Executors.newSingleThreadExecutor()
+    private val locationExecutor = Executors.newSingleThreadExecutor()
 
-    // ==========================================
-    // LOCATION PERMISSION REQUEST
-    // ==========================================
+    // Keep the sync value supplied by the request/database.
+    private var syncStatusText = ""
+    private var locationStatusText = ""
 
     private val locationPermissionLauncher =
         registerForActivityResult(
@@ -55,176 +53,192 @@ class EmergencyRequestActivity : AppCompatActivity() {
                 permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
 
             if (fineLocation || coarseLocation) {
-
                 shareCurrentLocation()
-
             } else {
+                locationStatusText =
+                    getString(R.string.emergency_request_location_permission_denied)
+                updateStatusText()
 
                 Toast.makeText(
                     this,
-                    "Location permission is required to share your location.",
+                    R.string.emergency_request_location_permission_required,
                     Toast.LENGTH_LONG
                 ).show()
-
-                tvStatus.text =
-                    "Request Status: Location permission denied"
             }
         }
 
-    // ==========================================
-    // ACTIVITY CREATED
-    // ==========================================
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_emergency_request)
 
-        // ==========================================
-        // CONNECT XML CONTROLS
-        // ==========================================
+        tvBack = findViewById(R.id.tvBack)
+        tvAssistanceType = findViewById(R.id.tvAssistanceType)
+        tvStatus = findViewById(R.id.tvStatus)
 
-        tvBack =
-            findViewById(R.id.tvBack)
-
-        tvAssistanceType =
-            findViewById(R.id.tvAssistanceType)
-
-        tvStatus =
-            findViewById(R.id.tvStatus)
-
-        btnEmergencyServices =
-            findViewById(R.id.btnEmergencyServices)
-
-        btnShareLocation =
-            findViewById(R.id.btnShareLocation)
-
-        btnReturnHome =
-            findViewById(R.id.btnReturnHome)
-
-        // ==========================================
-        // INITIALISE LOCATION MANAGER
-        // ==========================================
+        btnEmergencyServices = findViewById(R.id.btnEmergencyServices)
+        btnShareLocation = findViewById(R.id.btnShareLocation)
+        btnReturnHome = findViewById(R.id.btnReturnHome)
 
         locationManager =
             getSystemService(LOCATION_SERVICE) as LocationManager
 
-        // ==========================================
-        // GET ASSISTANCE TYPE
-        // ==========================================
+        val assistanceType = intent.getStringExtra("assistanceType")
 
-        val assistanceType =
-            intent.getStringExtra("assistanceType")
+        tvAssistanceType.text = getString(
+            R.string.emergency_request_assistance_type_value,
+            assistanceType
+                ?: getString(R.string.emergency_request_default_type)
+        )
 
-        if (!assistanceType.isNullOrEmpty()) {
+        syncStatusText = intent.getStringExtra("syncStatus")
+            ?: getString(R.string.emergency_request_pending_sync)
 
-            tvAssistanceType.text =
-                "Assistance Type: $assistanceType"
+        locationStatusText =
+            getString(R.string.emergency_request_location_not_shared)
 
-        } else {
+        updateStatusText()
 
-            tvAssistanceType.text =
-                "Assistance Type: Emergency Assistance"
+        // Observe the request's actual local synchronisation status.
+        val requestId = intent.getStringExtra("requestId")
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (!requestId.isNullOrBlank() && !userId.isNullOrBlank()) {
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    SafeZoneDatabase.getDatabase(applicationContext)
+                        .emergencyRequestDao()
+                        .observeRequest(requestId, userId)
+                        .collect { request ->
+                            if (request != null) {
+                                syncStatusText = request.syncStatus
+                                updateStatusText()
+                            }
+                        }
+                }
+            }
         }
-
-        // ==========================================
-        // INITIAL STATUS
-        // ==========================================
-
-        tvStatus.text =
-            "Request Status: Requested"
-
-        // ==========================================
-        // BACK BUTTON
-        // ==========================================
 
         tvBack.setOnClickListener {
             finish()
         }
 
-        // ==========================================
-        // EMERGENCY SERVICES
-        // ==========================================
-
         btnEmergencyServices.setOnClickListener {
+            openEmergencyDialler()
+        }
 
-            try {
+        btnShareLocation.setOnClickListener {
+            val preferences = getSharedPreferences(
+                "SafeZonePreferences",
+                MODE_PRIVATE
+            )
 
-                val dialIntent =
-                    Intent(
-                        Intent.ACTION_DIAL,
-                        Uri.parse("tel:112")
-                    )
+            val locationEnabled =
+                preferences.getBoolean("emergencyLocation", true)
 
-                startActivity(dialIntent)
-
-            } catch (e: Exception) {
+            if (!locationEnabled) {
+                locationStatusText =
+                    getString(R.string.emergency_request_location_disabled)
+                updateStatusText()
 
                 Toast.makeText(
                     this,
-                    "Unable to open the phone dialler.",
-                    Toast.LENGTH_SHORT
+                    R.string.emergency_request_enable_location_first,
+                    Toast.LENGTH_LONG
                 ).show()
+            } else {
+                checkLocationPermission()
             }
         }
 
-        // ==========================================
-        // SHARE LOCATION
-        // ==========================================
-
-        btnShareLocation.setOnClickListener {
-
-            checkLocationPermission()
-        }
-
-        // ==========================================
-        // RETURN HOME
-        // ==========================================
-
         btnReturnHome.setOnClickListener {
-
-            val intent =
-                Intent(
-                    this,
-                    PersonalHomeActivity::class.java
-                )
-
-            intent.flags =
-                Intent.FLAG_ACTIVITY_NEW_TASK or
+            val homeIntent = Intent(
+                this,
+                PersonalHomeActivity::class.java
+            ).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                         Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
 
-            startActivity(intent)
-
+            startActivity(homeIntent)
             finish()
         }
     }
 
-    // ==================================================
-    // CHECK LOCATION PERMISSION
-    // ==================================================
+    // Display sync and location status separately.
+    private fun updateStatusText() {
+        tvStatus.text = getString(
+            R.string.emergency_request_status_format,
+            syncStatusText,
+            locationStatusText
+        )
+    }
+
+    private fun openEmergencyDialler() {
+        val preferences = getSharedPreferences(
+            "SafeZonePreferences",
+            MODE_PRIVATE
+        )
+
+        val servicesEnabled =
+            preferences.getBoolean("emergencyServices", true)
+
+        if (!servicesEnabled) {
+            Toast.makeText(
+                this,
+                R.string.emergency_request_services_disabled,
+                Toast.LENGTH_LONG
+            ).show()
+            return
+        }
+
+        val emergencyNumber = preferences
+            .getString("emergencyNumber", "112")
+            .orEmpty()
+            .trim()
+
+        if (emergencyNumber.isBlank()) {
+            Toast.makeText(
+                this,
+                R.string.emergency_request_set_emergency_number,
+                Toast.LENGTH_LONG
+            ).show()
+            return
+        }
+
+        try {
+            // ACTION_DIAL opens the dialler; the user must place the call.
+            startActivity(
+                Intent(
+                    Intent.ACTION_DIAL,
+                    Uri.fromParts("tel", emergencyNumber, null)
+                )
+            )
+        } catch (e: Exception) {
+            Toast.makeText(
+                this,
+                R.string.emergency_request_dialler_error,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 
     private fun checkLocationPermission() {
+        val fineGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
-        val fineLocationGranted =
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
+        val coarseGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
-        val coarseLocationGranted =
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-
-        if (fineLocationGranted || coarseLocationGranted) {
-
+        if (fineGranted || coarseGranted) {
             shareCurrentLocation()
-
         } else {
-
-            tvStatus.text =
-                "Request Status: Requesting location permission..."
+            locationStatusText =
+                getString(R.string.emergency_request_requesting_permission)
+            updateStatusText()
 
             locationPermissionLauncher.launch(
                 arrayOf(
@@ -235,426 +249,246 @@ class EmergencyRequestActivity : AppCompatActivity() {
         }
     }
 
-    // ==================================================
-    // SHARE CURRENT LOCATION
-    // ==================================================
-
     private fun shareCurrentLocation() {
+        val gpsEnabled = try {
+            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        } catch (e: Exception) {
+            false
+        }
 
-        // ==========================================
-        // CHECK LOCATION SERVICES
-        // ==========================================
-
-        val gpsEnabled =
-            try {
-                locationManager.isProviderEnabled(
-                    LocationManager.GPS_PROVIDER
-                )
-            } catch (e: Exception) {
-                false
-            }
-
-        val networkEnabled =
-            try {
-                locationManager.isProviderEnabled(
-                    LocationManager.NETWORK_PROVIDER
-                )
-            } catch (e: Exception) {
-                false
-            }
-
-        // ==========================================
-        // LOCATION SERVICES OFF
-        // ==========================================
+        val networkEnabled = try {
+            locationManager.isProviderEnabled(
+                LocationManager.NETWORK_PROVIDER
+            )
+        } catch (e: Exception) {
+            false
+        }
 
         if (!gpsEnabled && !networkEnabled) {
-
-            tvStatus.text =
-                "Request Status: Location Services are off"
+            locationStatusText =
+                getString(R.string.emergency_request_location_services_off)
+            updateStatusText()
 
             Toast.makeText(
                 this,
-                "Please turn on Location Services first.",
+                R.string.emergency_request_turn_on_location,
                 Toast.LENGTH_LONG
             ).show()
 
             try {
-
-                val settingsIntent =
+                startActivity(
                     Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-
-                startActivity(settingsIntent)
-
+                )
             } catch (e: Exception) {
-
                 Toast.makeText(
                     this,
-                    "Please enable Location Services in Settings.",
+                    R.string.emergency_request_enable_location_in_settings,
                     Toast.LENGTH_LONG
                 ).show()
             }
-
             return
         }
 
-        // ==========================================
-        // CHECK PERMISSION AGAIN
-        // ==========================================
+        val fineGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
-        val fineLocationGranted =
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
+        val coarseGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
-        val coarseLocationGranted =
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-
-        if (!fineLocationGranted && !coarseLocationGranted) {
-
-            Toast.makeText(
-                this,
-                "Location permission is required.",
-                Toast.LENGTH_LONG
-            ).show()
-
+        if (!fineGranted && !coarseGranted) {
+            locationStatusText =
+                getString(R.string.emergency_request_location_permission_required_status)
+            updateStatusText()
             return
         }
 
-        // ==========================================
-        // FAST METHOD
-        // USE LAST KNOWN LOCATION FIRST
-        // ==========================================
-
-        val lastLocation =
-            getFastLastKnownLocation()
+        val lastLocation = getFastLastKnownLocation()
 
         if (lastLocation != null) {
-
-            shareLocation(
-                lastLocation.latitude,
-                lastLocation.longitude
-            )
-
+            shareLocation(lastLocation.latitude, lastLocation.longitude)
             return
         }
 
-        // ==========================================
-        // NO LAST KNOWN LOCATION
-        // GET CURRENT LOCATION
-        // ==========================================
-
-        tvStatus.text =
-            "Request Status: Finding current location..."
+        locationStatusText =
+            getString(R.string.emergency_request_finding_location)
+        updateStatusText()
 
         Toast.makeText(
             this,
-            "Finding your location...",
+            R.string.emergency_request_finding_location_toast,
             Toast.LENGTH_SHORT
         ).show()
 
-        requestCurrentLocation(
-            gpsEnabled,
-            networkEnabled
-        )
+        requestCurrentLocation(gpsEnabled, networkEnabled)
     }
-
-    // ==================================================
-    // GET LAST KNOWN LOCATION
-    // ==================================================
 
     private fun getFastLastKnownLocation(): Location? {
+        val fineGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
-        val fineLocationGranted =
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
+        val coarseGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
-        val coarseLocationGranted =
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
+        if (!fineGranted && !coarseGranted) return null
 
-        if (!fineLocationGranted && !coarseLocationGranted) {
-            return null
+        val gpsLocation = try {
+            locationManager.getLastKnownLocation(
+                LocationManager.GPS_PROVIDER
+            )
+        } catch (e: Exception) {
+            null
         }
 
-        var gpsLocation: Location? = null
-        var networkLocation: Location? = null
-
-        try {
-
-            gpsLocation =
-                locationManager.getLastKnownLocation(
-                    LocationManager.GPS_PROVIDER
-                )
-
-        } catch (e: SecurityException) {
-            gpsLocation = null
+        val networkLocation = try {
+            locationManager.getLastKnownLocation(
+                LocationManager.NETWORK_PROVIDER
+            )
+        } catch (e: Exception) {
+            null
         }
-
-        try {
-
-            networkLocation =
-                locationManager.getLastKnownLocation(
-                    LocationManager.NETWORK_PROVIDER
-                )
-
-        } catch (e: SecurityException) {
-            networkLocation = null
-        }
-
-        // ==========================================
-        // USE THE NEWER LOCATION
-        // ==========================================
 
         return when {
-
-            gpsLocation == null && networkLocation == null ->
-                null
-
-            gpsLocation == null ->
-                networkLocation
-
-            networkLocation == null ->
-                gpsLocation
-
-            gpsLocation.time >= networkLocation.time ->
-                gpsLocation
-
-            else ->
-                networkLocation
+            gpsLocation == null && networkLocation == null -> null
+            gpsLocation == null -> networkLocation
+            networkLocation == null -> gpsLocation
+            gpsLocation.time >= networkLocation.time -> gpsLocation
+            else -> networkLocation
         }
     }
-
-    // ==================================================
-    // REQUEST CURRENT LOCATION
-    // ==================================================
 
     private fun requestCurrentLocation(
         gpsEnabled: Boolean,
         networkEnabled: Boolean
     ) {
-
-        // ==========================================
-        // API 30+ CURRENT LOCATION
-        // ==========================================
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-
-            val provider =
-                when {
-
-                    gpsEnabled ->
-                        LocationManager.GPS_PROVIDER
-
-                    networkEnabled ->
-                        LocationManager.NETWORK_PROVIDER
-
-                    else ->
-                        null
-                }
+            val provider = when {
+                gpsEnabled -> LocationManager.GPS_PROVIDER
+                networkEnabled -> LocationManager.NETWORK_PROVIDER
+                else -> null
+            }
 
             if (provider == null) {
-
                 showLocationError()
-
                 return
             }
 
             try {
-
                 locationManager.getCurrentLocation(
                     provider,
                     null,
                     locationExecutor
                 ) { location ->
-
                     runOnUiThread {
+                        if (isFinishing || isDestroyed) return@runOnUiThread
 
                         if (location != null) {
-
                             shareLocation(
                                 location.latitude,
                                 location.longitude
                             )
-
                         } else {
+                            val fallback = getFastLastKnownLocation()
 
-                            // ==========================================
-                            // FINAL FALLBACK
-                            // ==========================================
-
-                            val fallbackLocation =
-                                getFastLastKnownLocation()
-
-                            if (fallbackLocation != null) {
-
+                            if (fallback != null) {
                                 shareLocation(
-                                    fallbackLocation.latitude,
-                                    fallbackLocation.longitude
+                                    fallback.latitude,
+                                    fallback.longitude
                                 )
-
                             } else {
-
                                 showLocationError()
                             }
                         }
                     }
                 }
-
             } catch (e: SecurityException) {
-
                 showLocationPermissionError()
-
             } catch (e: Exception) {
-
                 showLocationError()
             }
-
         } else {
+            val fallback = getFastLastKnownLocation()
 
-            // ==========================================
-            // OLDER ANDROID DEVICES
-            // ==========================================
-
-            val fallbackLocation =
-                getFastLastKnownLocation()
-
-            if (fallbackLocation != null) {
-
-                shareLocation(
-                    fallbackLocation.latitude,
-                    fallbackLocation.longitude
-                )
-
+            if (fallback != null) {
+                shareLocation(fallback.latitude, fallback.longitude)
             } else {
-
                 showLocationError()
             }
         }
     }
 
-    // ==================================================
-    // LOCATION ERROR
-    // ==================================================
-
     private fun showLocationError() {
-
-        tvStatus.text =
-            "Request Status: Location unavailable"
+        locationStatusText =
+            getString(R.string.emergency_request_location_unavailable)
+        updateStatusText()
 
         Toast.makeText(
             this,
-            "Unable to determine your location. Please try again.",
+            R.string.emergency_request_location_try_again,
             Toast.LENGTH_LONG
         ).show()
     }
-
-    // ==================================================
-    // LOCATION PERMISSION ERROR
-    // ==================================================
 
     private fun showLocationPermissionError() {
-
-        tvStatus.text =
-            "Request Status: Location permission required"
+        locationStatusText =
+            getString(R.string.emergency_request_location_permission_required_status)
+        updateStatusText()
 
         Toast.makeText(
             this,
-            "Location permission is required.",
+            R.string.emergency_request_location_permission_required,
             Toast.LENGTH_LONG
         ).show()
     }
 
-    // ==================================================
-    // SHARE LOCATION THROUGH ANDROID SHARE MENU
-    // ==================================================
-
-    private fun shareLocation(
-        latitude: Double,
-        longitude: Double
-    ) {
-
-        // ==========================================
-        // CREATE GOOGLE MAPS LINK
-        // ==========================================
-
+    private fun shareLocation(latitude: Double, longitude: Double) {
         val mapsLink =
             "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude"
 
-        // ==========================================
-        // CREATE EMERGENCY MESSAGE
-        // ==========================================
+        val shareMessage = getString(
+            R.string.emergency_request_share_message,
+            mapsLink
+        )
 
-        val shareMessage =
-            """
-            🚨 SafeZone Emergency Location
-            
-            I need emergency assistance.
-            
-            My current location:
-            $mapsLink
-            
-            Please use this location to find me.
-            """.trimIndent()
-
-        // ==========================================
-        // CREATE SHARE INTENT
-        // ==========================================
-
-        val shareIntent =
-            Intent(Intent.ACTION_SEND).apply {
-
-                type = "text/plain"
-
-                putExtra(
-                    Intent.EXTRA_TEXT,
-                    shareMessage
-                )
-            }
-
-        // ==========================================
-        // OPEN SHARE MENU
-        // ==========================================
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, shareMessage)
+        }
 
         try {
-
-            tvStatus.text =
-                "Request Status: Location Shared"
-
             startActivity(
                 Intent.createChooser(
                     shareIntent,
-                    "Share Emergency Location"
+                    getString(R.string.emergency_request_share_chooser_title)
                 )
             )
 
+            // Opening the chooser does not confirm that a message was sent.
+            locationStatusText =
+                getString(R.string.emergency_request_location_ready_to_share)
+            updateStatusText()
         } catch (e: Exception) {
-
-            tvStatus.text =
-                "Request Status: Unable to share location"
+            locationStatusText =
+                getString(R.string.emergency_request_sharing_menu_error)
+            updateStatusText()
 
             Toast.makeText(
                 this,
-                "Unable to open the sharing menu.",
+                R.string.emergency_request_sharing_menu_error_toast,
                 Toast.LENGTH_LONG
             ).show()
         }
     }
 
-    // ==================================================
-    // CLEAN UP EXECUTOR
-    // ==================================================
-
     override fun onDestroy() {
         super.onDestroy()
-
         locationExecutor.shutdown()
     }
 }

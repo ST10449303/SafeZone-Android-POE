@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -7,10 +6,7 @@
     android:orientation="vertical"
     android:background="#F5F7FA">
 
-    <!-- ===================================================== -->
-    <!-- HEADER -->
-    <!-- ===================================================== -->
-
+    <!-- Header: back button, screen title and notification settings -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -30,17 +26,17 @@
             android:textSize="34sp"
             android:clickable="true"
             android:focusable="true"
-            android:contentDescription="Back"/>
+            android:contentDescription="@string/personal_alerts_back" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Safety Alerts"
+            android:text="@string/personal_alerts_header"
             android:textColor="@android:color/white"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/ivNotification"
@@ -51,25 +47,20 @@
             android:textSize="20sp"
             android:clickable="true"
             android:focusable="true"
-            android:contentDescription="Notification Settings"/>
-
+            android:contentDescription="@string/personal_alerts_notification_settings" />
     </LinearLayout>
 
-
-    <!-- ===================================================== -->
-    <!-- TITLE -->
-    <!-- ===================================================== -->
-
+    <!-- Screen title and introduction -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="20dp"
-        android:text="Personal Safety Alerts"
+        android:text="@string/personal_alerts_title"
         android:textColor="#172033"
         android:textSize="24sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
@@ -77,31 +68,23 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        android:text="Stay informed about important safety information in your selected location."
+        android:text="@string/personal_alerts_description"
         android:textColor="#667085"
-        android:textSize="14sp"/>
+        android:textSize="14sp" />
 
-
-    <!-- ===================================================== -->
-    <!-- LOCATION LABEL -->
-    <!-- ===================================================== -->
-
+    <!-- Location label -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
-        android:text="Location"
+        android:text="@string/personal_alerts_location_label"
         android:textColor="#172033"
         android:textSize="14sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
-
-    <!-- ===================================================== -->
-    <!-- LOCATION SELECTOR -->
-    <!-- ===================================================== -->
-
+    <!-- Location selector -->
     <LinearLayout
         android:id="@+id/locationSelector"
         android:layout_width="match_parent"
@@ -122,9 +105,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="Location"
+            android:text="@string/personal_alerts_location_label"
             android:textColor="#667085"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvSelectedLocation"
@@ -134,7 +117,7 @@
             android:text="Pretoria"
             android:textColor="#172033"
             android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="35dp"
@@ -142,15 +125,10 @@
             android:gravity="center"
             android:text="▼"
             android:textColor="#667085"
-            android:textSize="14sp"/>
-
+            android:textSize="14sp" />
     </LinearLayout>
 
-
-    <!-- ===================================================== -->
-    <!-- FILTERS -->
-    <!-- ===================================================== -->
-
+    <!-- Horizontally scrollable alert category filters -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -169,69 +147,63 @@
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
                 android:layout_marginEnd="8dp"
-                android:text="All"
+                android:text="@string/personal_alerts_filter_all"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textAllCaps="false"
                 android:background="@drawable/bg_alert_filter"
-                android:textColor="#243B5A"/>
+                android:textColor="#243B5A" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnFilterEmergency"
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
                 android:layout_marginEnd="8dp"
-                android:text="Emergency"
+                android:text="@string/personal_alerts_filter_emergency"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textAllCaps="false"
                 android:background="@drawable/bg_alert_filter"
-                android:textColor="#243B5A"/>
+                android:textColor="#243B5A" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnFilterSafety"
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
                 android:layout_marginEnd="8dp"
-                android:text="Safety"
+                android:text="@string/personal_alerts_filter_safety"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textAllCaps="false"
                 android:background="@drawable/bg_alert_filter"
-                android:textColor="#243B5A"/>
+                android:textColor="#243B5A" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnFilterGeneral"
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
                 android:layout_marginEnd="8dp"
-                android:text="General"
+                android:text="@string/personal_alerts_filter_general"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textAllCaps="false"
                 android:background="@drawable/bg_alert_filter"
-                android:textColor="#243B5A"/>
+                android:textColor="#243B5A" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnFilterEvents"
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
-                android:text="Events"
+                android:text="@string/personal_alerts_filter_events"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textAllCaps="false"
                 android:background="@drawable/bg_alert_filter"
-                android:textColor="#243B5A"/>
-
+                android:textColor="#243B5A" />
         </LinearLayout>
-
     </HorizontalScrollView>
 
-
-    <!-- ===================================================== -->
-    <!-- NOTIFICATIONS -->
-    <!-- ===================================================== -->
-
+    <!-- Opens Android notification settings; does not itself grant permission -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnEnableNotifications"
         android:layout_width="match_parent"
@@ -239,18 +211,14 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:text="Enable Notifications"
+        android:text="@string/personal_alerts_enable_notifications"
         android:textAllCaps="false"
         android:textSize="14sp"
         android:textStyle="bold"
         android:backgroundTint="@color/safezone_navy"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white" />
 
-
-    <!-- ===================================================== -->
-    <!-- ALERT LIST -->
-    <!-- ===================================================== -->
-
+    <!-- Alert cards are inserted dynamically by PersonalAlertsActivity -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -267,15 +235,10 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:paddingTop="8dp"
-            android:paddingBottom="20dp"/>
-
+            android:paddingBottom="20dp" />
     </ScrollView>
 
-
-    <!-- ===================================================== -->
-    <!-- BOTTOM NAVIGATION -->
-    <!-- ===================================================== -->
-
+    <!-- Bottom navigation -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="68dp"
@@ -290,11 +253,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="⌂\nHome"
+            android:text="@string/personal_alerts_nav_home"
             android:textColor="#667085"
             android:textSize="12sp"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/navMap"
@@ -302,11 +265,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="⌖\nMap"
+            android:text="@string/personal_alerts_nav_map"
             android:textColor="#667085"
             android:textSize="12sp"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/navReports"
@@ -314,11 +277,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="▤\nReports"
+            android:text="@string/personal_alerts_nav_reports"
             android:textColor="#667085"
             android:textSize="12sp"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/navNotifications"
@@ -326,12 +289,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="🔔\nAlerts"
+            android:text="@string/personal_alerts_nav_alerts"
             android:textColor="@color/safezone_navy"
             android:textSize="12sp"
             android:textStyle="bold"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/navProfile"
@@ -339,12 +302,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="●\nProfile"
+            android:text="@string/personal_alerts_nav_profile"
             android:textColor="#667085"
             android:textSize="12sp"
             android:clickable="true"
-            android:focusable="true"/>
-
+            android:focusable="true" />
     </LinearLayout>
 
 </LinearLayout>

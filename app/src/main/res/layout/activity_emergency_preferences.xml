@@ -22,19 +22,19 @@
             android:layout_width="50dp"
             android:layout_height="54dp"
             android:gravity="center"
-            android:text="‹"
+            android:text="@string/emergency_preferences_back"
             android:textColor="#FFFFFF"
             android:textSize="38sp"
             android:clickable="true"
             android:focusable="true"
-            android:contentDescription="Back" />
+            android:contentDescription="@string/emergency_preferences_back_description" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="SafeZone"
+            android:text="@string/emergency_preferences_app_name"
             android:textColor="#FFFFFF"
             android:textSize="23sp"
             android:textStyle="bold" />
@@ -45,6 +45,7 @@
 
     </LinearLayout>
 
+    <!-- SCROLLABLE CONTENT -->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -66,8 +67,7 @@
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/safezone_logo"
-                android:contentDescription="SafeZone logo" />
-
+                android:contentDescription="@string/emergency_preferences_logo_description" />
 
             <!-- TITLE -->
 
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:gravity="center"
-                android:text="Emergency Preferences"
+                android:text="@string/emergency_preferences_title"
                 android:textColor="#0B1F3A"
                 android:textSize="27sp"
                 android:textStyle="bold" />
@@ -86,10 +86,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:gravity="center"
-                android:text="Choose what SafeZone should do during an emergency."
+                android:text="@string/emergency_preferences_subtitle"
                 android:textColor="#667085"
                 android:textSize="14sp" />
-
 
             <!-- EMERGENCY SERVICES -->
 
@@ -109,7 +108,7 @@
                     android:background="@drawable/bg_settings_icon"
                     android:padding="10dp"
                     android:src="@drawable/ic_settings_emergency"
-                    android:contentDescription="Emergency services" />
+                    android:contentDescription="@string/emergency_preferences_services" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -121,7 +120,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Emergency Services"
+                        android:text="@string/emergency_preferences_services"
                         android:textColor="#172033"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -130,7 +129,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Allow quick access to emergency services."
+                        android:text="@string/emergency_preferences_services_description"
                         android:textColor="#667085"
                         android:textSize="12sp" />
 
@@ -140,10 +139,10 @@
                     android:id="@+id/switchEmergencyServices"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true" />
+                    android:checked="true"
+                    android:contentDescription="@string/emergency_preferences_services" />
 
             </LinearLayout>
-
 
             <!-- LOCATION DURING EMERGENCY -->
 
@@ -163,7 +162,7 @@
                     android:background="@drawable/bg_settings_icon"
                     android:padding="10dp"
                     android:src="@drawable/ic_settings_location"
-                    android:contentDescription="Emergency location" />
+                    android:contentDescription="@string/emergency_preferences_location" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -175,7 +174,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Share Location During Emergency"
+                        android:text="@string/emergency_preferences_location"
                         android:textColor="#172033"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -184,7 +183,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Allow your location to be shared for emergency assistance."
+                        android:text="@string/emergency_preferences_location_description"
                         android:textColor="#667085"
                         android:textSize="12sp" />
 
@@ -194,12 +193,12 @@
                     android:id="@+id/switchEmergencyLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true" />
+                    android:checked="true"
+                    android:contentDescription="@string/emergency_preferences_location" />
 
             </LinearLayout>
 
-
-            <!-- TRUSTED CONTACT ALERT -->
+            <!-- TRUSTED CONTACT ALERTS -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -217,7 +216,7 @@
                     android:background="@drawable/bg_settings_icon"
                     android:padding="10dp"
                     android:src="@drawable/ic_settings_contacts"
-                    android:contentDescription="Trusted contacts" />
+                    android:contentDescription="@string/emergency_preferences_contacts" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -229,7 +228,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Trusted Contact Alerts"
+                        android:text="@string/emergency_preferences_contacts"
                         android:textColor="#172033"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -238,7 +237,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Notify trusted contacts when emergency assistance is requested."
+                        android:text="@string/emergency_preferences_contacts_description"
                         android:textColor="#667085"
                         android:textSize="12sp" />
 
@@ -248,10 +247,10 @@
                     android:id="@+id/switchTrustedContactAlerts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true" />
+                    android:checked="true"
+                    android:contentDescription="@string/emergency_preferences_contacts" />
 
             </LinearLayout>
-
 
             <!-- EMERGENCY NUMBER -->
 
@@ -259,7 +258,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:text="Emergency Services Number"
+                android:labelFor="@id/etEmergencyNumber"
+                android:text="@string/emergency_preferences_number_label"
                 android:textColor="#172033"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -269,16 +269,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="8dp"
+                android:autofillHints="phone"
                 android:background="@drawable/rounded_login_input"
-                android:hint="112"
+                android:hint="@string/emergency_preferences_number_hint"
                 android:inputType="phone"
                 android:text="112"
                 android:textColor="#172033"
                 android:textColorHint="#98A2B3"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:singleLine="true" />
 
-
-            <!-- SAVE -->
+            <!-- SAVE PREFERENCES -->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSavePreferences"
@@ -288,12 +289,13 @@
                 android:background="@drawable/bg_primary_button"
                 android:backgroundTint="@null"
                 android:stateListAnimator="@null"
-                android:text="SAVE PREFERENCES"
+                android:text="@string/emergency_preferences_save"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
+            <!-- BACK TO SETTINGS -->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnBackToSettings"
@@ -303,7 +305,7 @@
                 android:background="@drawable/bg_secondary_button"
                 android:backgroundTint="@null"
                 android:stateListAnimator="@null"
-                android:text="BACK TO SETTINGS"
+                android:text="@string/emergency_preferences_back_to_settings"
                 android:textAllCaps="false"
                 android:textColor="#0B1F3A"
                 android:textSize="14sp"

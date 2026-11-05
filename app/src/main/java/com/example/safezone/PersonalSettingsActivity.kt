@@ -1,3 +1,4 @@
+
 package com.example.safezone
 
 import android.content.Intent
@@ -16,6 +17,7 @@ class PersonalSettingsActivity : AppCompatActivity() {
     private lateinit var btnEditProfile: AppCompatButton
     private lateinit var btnChangePassword: AppCompatButton
     private lateinit var btnLogout: AppCompatButton
+    private lateinit var btnLanguageSettings: AppCompatButton
 
     private lateinit var btnTrustedContacts: AppCompatButton
     private lateinit var btnLocationSharing: AppCompatButton
@@ -35,33 +37,22 @@ class PersonalSettingsActivity : AppCompatActivity() {
         // FIND VIEWS
         // ==============================
 
-        val tvBack =
-            findViewById<TextView>(R.id.tvBack)
+        val tvBack = findViewById<TextView>(R.id.tvBack)
 
-        btnEditProfile =
-            findViewById(R.id.btnEditProfile)
+        btnEditProfile = findViewById(R.id.btnEditProfile)
+        btnChangePassword = findViewById(R.id.btnChangePassword)
+        btnLogout = findViewById(R.id.btnLogout)
+        btnLanguageSettings = findViewById(R.id.btnLanguageSettings)
 
-        btnChangePassword =
-            findViewById(R.id.btnChangePassword)
-
-        btnLogout =
-            findViewById(R.id.btnLogout)
-
-        btnTrustedContacts =
-            findViewById(R.id.btnTrustedContacts)
-
-        btnLocationSharing =
-            findViewById(R.id.btnLocationSharing)
-
-        btnEmergencyPreferences =
-            findViewById(R.id.btnEmergencyPreferences)
+        btnTrustedContacts = findViewById(R.id.btnTrustedContacts)
+        btnLocationSharing = findViewById(R.id.btnLocationSharing)
+        btnEmergencyPreferences = findViewById(R.id.btnEmergencyPreferences)
 
         switchPushNotifications =
             findViewById(R.id.switchPushNotifications)
 
         switchSafetyAlerts =
             findViewById(R.id.switchSafetyAlerts)
-
 
         // ==============================
         // BACK
@@ -71,24 +62,19 @@ class PersonalSettingsActivity : AppCompatActivity() {
             finish()
         }
 
-
         // ==============================
         // EDIT PROFILE
         // ==============================
 
         btnEditProfile.setOnClickListener {
-
             try {
-
                 startActivity(
                     Intent(
                         this,
                         PersonalProfileActivity::class.java
                     )
                 )
-
             } catch (e: Exception) {
-
                 Toast.makeText(
                     this,
                     "Profile screen is not available yet.",
@@ -97,13 +83,11 @@ class PersonalSettingsActivity : AppCompatActivity() {
             }
         }
 
-
         // ==============================
         // CHANGE PASSWORD
         // ==============================
 
         btnChangePassword.setOnClickListener {
-
             startActivity(
                 Intent(
                     this,
@@ -112,13 +96,11 @@ class PersonalSettingsActivity : AppCompatActivity() {
             )
         }
 
-
         // ==============================
         // LOGOUT
         // ==============================
 
         btnLogout.setOnClickListener {
-
             auth.signOut()
 
             Toast.makeText(
@@ -130,35 +112,42 @@ class PersonalSettingsActivity : AppCompatActivity() {
             val intent = Intent(
                 this,
                 ChoosePanelActivity::class.java
-            )
-
-            intent.flags =
-                Intent.FLAG_ACTIVITY_NEW_TASK or
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK
+            ).apply {
+                flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
 
             startActivity(intent)
-
             finish()
         }
 
+        // ==============================
+        // LANGUAGE SETTINGS
+        // ==============================
+
+        btnLanguageSettings.setOnClickListener {
+            startActivity(
+                Intent(
+                    this,
+                    LanguageSettingsActivity::class.java
+                )
+            )
+        }
 
         // ==============================
         // TRUSTED CONTACTS
         // ==============================
 
         btnTrustedContacts.setOnClickListener {
-
             try {
-
                 startActivity(
                     Intent(
                         this,
                         TrustedContactsActivity::class.java
                     )
                 )
-
             } catch (e: Exception) {
-
                 Toast.makeText(
                     this,
                     "Trusted Contacts screen is not available.",
@@ -167,13 +156,11 @@ class PersonalSettingsActivity : AppCompatActivity() {
             }
         }
 
-
         // ==============================
         // LOCATION SHARING
         // ==============================
 
         btnLocationSharing.setOnClickListener {
-
             startActivity(
                 Intent(
                     this,
@@ -182,13 +169,11 @@ class PersonalSettingsActivity : AppCompatActivity() {
             )
         }
 
-
         // ==============================
         // EMERGENCY PREFERENCES
         // ==============================
 
         btnEmergencyPreferences.setOnClickListener {
-
             startActivity(
                 Intent(
                     this,
@@ -197,54 +182,40 @@ class PersonalSettingsActivity : AppCompatActivity() {
             )
         }
 
-
         // ==============================
         // PUSH NOTIFICATIONS
         // ==============================
 
         switchPushNotifications.setOnCheckedChangeListener { _, isChecked ->
-
-            if (isChecked) {
-
-                Toast.makeText(
-                    this,
-                    "Push notifications enabled.",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+            val message = if (isChecked) {
+                "Push notifications enabled."
             } else {
-
-                Toast.makeText(
-                    this,
-                    "Push notifications disabled.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                "Push notifications disabled."
             }
-        }
 
+            Toast.makeText(
+                this,
+                message,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
 
         // ==============================
         // SAFETY CHECK ALERTS
         // ==============================
 
         switchSafetyAlerts.setOnCheckedChangeListener { _, isChecked ->
-
-            if (isChecked) {
-
-                Toast.makeText(
-                    this,
-                    "Safety check alerts enabled.",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+            val message = if (isChecked) {
+                "Safety check alerts enabled."
             } else {
-
-                Toast.makeText(
-                    this,
-                    "Safety check alerts disabled.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                "Safety check alerts disabled."
             }
+
+            Toast.makeText(
+                this,
+                message,
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

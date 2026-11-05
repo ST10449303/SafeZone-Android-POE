@@ -27,14 +27,14 @@
             android:textSize="38sp"
             android:clickable="true"
             android:focusable="true"
-            android:contentDescription="Back" />
+            android:contentDescription="@string/back" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="SafeZone"
+            android:text="@string/app_name"
             android:textColor="#FFFFFF"
             android:textSize="23sp"
             android:textStyle="bold" />
@@ -44,7 +44,6 @@
             android:layout_height="50dp" />
 
     </LinearLayout>
-
 
     <!-- ================= CONTENT ================= -->
 
@@ -64,13 +63,12 @@
             android:paddingTop="22dp"
             android:paddingBottom="30dp">
 
-
             <!-- ================= TITLE ================= -->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Settings"
+                android:text="@string/settings"
                 android:textColor="#0B1F3A"
                 android:textSize="27sp"
                 android:textStyle="bold" />
@@ -83,10 +81,7 @@
                 android:textColor="#667085"
                 android:textSize="14sp" />
 
-
-            <!-- ================================================= -->
-            <!-- ACCOUNT -->
-            <!-- ================================================= -->
+            <!-- ================= ACCOUNT ================= -->
 
             <TextView
                 android:layout_width="match_parent"
@@ -98,14 +93,12 @@
                 android:textStyle="bold"
                 android:letterSpacing="0.08" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/bg_settings_card"
                 android:orientation="vertical">
-
 
                 <!-- EDIT PROFILE -->
 
@@ -123,19 +116,17 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Edit Profile"
+                    android:text="@string/edit_profile"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="16sp"
                     android:textStyle="bold" />
-
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginStart="68dp"
                     android:background="#E5EAF0" />
-
 
                 <!-- CHANGE PASSWORD -->
 
@@ -153,19 +144,17 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Change Password"
+                    android:text="@string/change_password"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="16sp"
                     android:textStyle="bold" />
-
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginStart="68dp"
                     android:background="#E5EAF0" />
-
 
                 <!-- LOGOUT -->
 
@@ -183,18 +172,45 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Logout"
+                    android:text="@string/logout"
                     android:textAllCaps="false"
                     android:textColor="#D32F2F"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
+                <!-- DIVIDER BEFORE LANGUAGE SETTINGS -->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="68dp"
+                    android:background="#E5EAF0" />
+
+                <!-- LANGUAGE SETTINGS -->
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnLanguageSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@null"
+                    android:stateListAnimator="@null"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:drawableStart="@drawable/ic_settings_lock"
+                    android:drawablePadding="15dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/language_settings"
+                    android:textAllCaps="false"
+                    android:textColor="#172033"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
 
-
-            <!-- ================================================= -->
-            <!-- SAFETY -->
-            <!-- ================================================= -->
+            <!-- ================= SAFETY ================= -->
 
             <TextView
                 android:layout_width="match_parent"
@@ -206,14 +222,12 @@
                 android:textStyle="bold"
                 android:letterSpacing="0.08" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/bg_settings_card"
                 android:orientation="vertical">
-
 
                 <!-- TRUSTED CONTACTS -->
 
@@ -231,19 +245,17 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Trusted Contacts"
+                    android:text="@string/trusted_contacts"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="16sp"
                     android:textStyle="bold" />
-
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginStart="68dp"
                     android:background="#E5EAF0" />
-
 
                 <!-- LOCATION SHARING -->
 
@@ -261,19 +273,17 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Location Sharing"
+                    android:text="@string/location_sharing"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="16sp"
                     android:textStyle="bold" />
-
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginStart="68dp"
                     android:background="#E5EAF0" />
-
 
                 <!-- EMERGENCY PREFERENCES -->
 
@@ -291,7 +301,7 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Emergency Preferences"
+                    android:text="@string/emergency_preferences"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="16sp"
@@ -299,10 +309,7 @@
 
             </LinearLayout>
 
-
-            <!-- ================================================= -->
-            <!-- NOTIFICATIONS -->
-            <!-- ================================================= -->
+            <!-- ================= NOTIFICATIONS ================= -->
 
             <TextView
                 android:layout_width="match_parent"
@@ -314,14 +321,12 @@
                 android:textStyle="bold"
                 android:letterSpacing="0.08" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/bg_settings_card"
                 android:orientation="vertical">
-
 
                 <!-- PUSH NOTIFICATIONS -->
 
@@ -375,13 +380,11 @@
 
                 </LinearLayout>
 
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginStart="72dp"
                     android:background="#E5EAF0" />
-
 
                 <!-- SAFETY CHECK ALERTS -->
 
@@ -436,7 +439,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
 
             <!-- ================= SECURITY MESSAGE ================= -->
 

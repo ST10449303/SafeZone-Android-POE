@@ -3,6 +3,7 @@ package com.example.safezone
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
@@ -13,14 +14,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.safezone.data.SafeZoneDatabase
+import com.example.safezone.data.TrustedContactEntity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
 
 class TrustedContactsActivity : AppCompatActivity() {
-
-    // ==========================================
-    // XML VIEWS
-    // ==========================================
 
     private lateinit var tvBack: TextView
     private lateinit var btnAddContact: Button
@@ -28,233 +29,258 @@ class TrustedContactsActivity : AppCompatActivity() {
     private lateinit var emptyState: LinearLayout
     private lateinit var tvNoContacts: TextView
 
-    // ==========================================
-    // FIREBASE
-    // ==========================================
-
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
-    // ==========================================
-    // ON CREATE
-    // ==========================================
-
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_trusted_contacts)
 
-        setContentView(
-            R.layout.activity_trusted_contacts
-        )
+        tvBack = findViewById(R.id.tvBack)
+        btnAddContact = findViewById(R.id.btnAddContact)
+        contactsList = findViewById(R.id.contactsList)
+        emptyState = findViewById(R.id.emptyState)
+        tvNoContacts = findViewById(R.id.tvNoContacts)
 
-        // ==========================================
-        // CONNECT XML
-        // ==========================================
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
-        tvBack =
-            findViewById(R.id.tvBack)
-
-        btnAddContact =
-            findViewById(R.id.btnAddContact)
-
-        contactsList =
-            findViewById(R.id.contactsList)
-
-        emptyState =
-            findViewById(R.id.emptyState)
-
-        tvNoContacts =
-            findViewById(R.id.tvNoContacts)
-
-        // ==========================================
-        // FIREBASE
-        // ==========================================
-
-        auth =
-            FirebaseAuth.getInstance()
-
-        db =
-            FirebaseFirestore.getInstance()
-
-        // ==========================================
-        // BACK
-        // ==========================================
-
-        tvBack.setOnClickListener {
-
-            finish()
-        }
-
-        // ==========================================
-        // ADD CONTACT
-        // ==========================================
+        tvBack.setOnClickListener { finish() }
 
         btnAddContact.setOnClickListener {
-
-            val intent =
-                Intent(
-                    this,
-                    AddTrustedContactActivity::class.java
-                )
-
-            startActivity(intent)
+            startActivity(
+                Intent(this, AddTrustedContactActivity::class.java)
+            )
         }
     }
 
-    // ==========================================
-    // REFRESH CONTACTS
-    // ==========================================
-
     override fun onResume() {
-
         super.onResume()
-
         loadTrustedContacts()
     }
 
-    // ==================================================
-    // LOAD TRUSTED CONTACTS
-    // ==================================================
-
     private fun loadTrustedContacts() {
+        val user = auth.currentUser
 
-        val currentUser =
-            auth.currentUser
-
-        // ==========================================
-        // CHECK LOGIN
-        // ==========================================
-
-        if (currentUser == null) {
-
+        if (user == null) {
             Toast.makeText(
                 this,
-                "Please log in first.",
+                getString(R.string.trusted_contacts_login_required),
                 Toast.LENGTH_SHORT
             ).show()
-
             finish()
-
             return
         }
 
-        // ==========================================
-        // CLEAR CURRENT CONTACTS
-        // ==========================================
+        // Display the local cache first for offline access.
+        lifecycleScope.launch {
+            try {
+                val dao = SafeZoneDatabase
+                    .getDatabase(applicationContext)
+                    .trustedContactDao()
 
-        contactsList.removeAllViews()
+                val cachedContacts =
+                    dao.getContactsForUserOnce(user.uid)
 
-        contactsList.visibility =
-            View.GONE
+                displayContacts(cachedContacts)
 
-        emptyState.visibility =
-            View.GONE
+                // Synchronise pending deletions and refresh cloud data.
+                syncPendingDeletions(user.uid)
+                refreshContactsFromFirestore(user.uid)
 
-        // ==========================================
-        // LOAD CURRENT USER'S CONTACTS
-        // ==========================================
+            } catch (_: Exception) {
+                showEmptyState(
+                    getString(
+                        R.string.trusted_contacts_load_device_error
+                    )
+                )
+            }
+        }
+    }
 
+    private fun refreshContactsFromFirestore(userId: String) {
         db.collection("TrustedContacts")
-            .whereEqualTo(
-                "userId",
-                currentUser.uid
-            )
+            .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { result ->
+                lifecycleScope.launch {
+                    try {
+                        val dao = SafeZoneDatabase
+                            .getDatabase(applicationContext)
+                            .trustedContactDao()
 
-                // ==================================
-                // NO CONTACTS
-                // ==================================
+                        val cloudContacts =
+                            result.documents.mapNotNull { document ->
+                                val owner =
+                                    document.getString("userId")
+                                        ?: return@mapNotNull null
 
-                if (result.isEmpty) {
+                                val name =
+                                    document.getString("fullName")
+                                        ?: return@mapNotNull null
 
-                    contactsList.visibility =
-                        View.GONE
+                                TrustedContactEntity(
+                                    contactId = document.id,
+                                    userId = owner,
+                                    fullName = name,
+                                    relationship =
+                                        document.getString("relationship")
+                                            ?: getString(
+                                                R.string.trusted_contacts_default_relationship
+                                            ),
+                                    phone =
+                                        document.getString("phone") ?: "",
+                                    email =
+                                        document.getString("email") ?: "",
+                                    emergencyAlerts =
+                                        document.getBoolean("emergencyAlerts")
+                                            ?: false,
+                                    createdAt =
+                                        document.getLong("createdAt") ?: 0L,
+                                    syncStatus = "Synced"
+                                )
+                            }
 
-                    emptyState.visibility =
-                        View.VISIBLE
+                        // Preserve locally pending changes.
+                        val existing =
+                            dao.getContactsForUserOnce(userId)
 
-                    tvNoContacts.text =
-                        "Add someone you trust so they can be contacted during an emergency."
+                        val existingById =
+                            existing.associateBy { it.contactId }
 
-                    return@addOnSuccessListener
-                }
+                        val safeToCache =
+                            cloudContacts.filter { cloud ->
+                                val local =
+                                    existingById[cloud.contactId]
 
-                // ==================================
-                // CONTACTS FOUND
-                // ==================================
+                                local == null ||
+                                        local.syncStatus == "Synced"
+                            }
 
-                contactsList.visibility =
-                    View.VISIBLE
+                        dao.insertAll(safeToCache)
 
-                emptyState.visibility =
-                    View.GONE
+                        // Remove stale synced contacts only after a
+                        // successful Firestore response.
+                        val cloudIds =
+                            cloudContacts.map { it.contactId }.toSet()
 
-                // ==================================
-                // CREATE CONTACT CARDS
-                // ==================================
+                        val refreshedExisting =
+                            dao.getContactsForUserOnce(userId)
 
-                for (document in result) {
+                        refreshedExisting.forEach { local ->
+                            if (
+                                local.syncStatus == "Synced" &&
+                                local.contactId !in cloudIds
+                            ) {
+                                dao.deleteContact(
+                                    local.contactId,
+                                    userId
+                                )
+                            }
+                        }
 
-                    val fullName =
-                        document.getString(
-                            "fullName"
-                        ) ?: "Unknown Contact"
+                        val updated =
+                            dao.getContactsForUserOnce(userId)
 
-                    val relationship =
-                        document.getString(
-                            "relationship"
-                        ) ?: "Trusted Contact"
+                        displayContacts(updated)
 
-                    val phone =
-                        document.getString(
-                            "phone"
-                        ) ?: ""
-
-                    val email =
-                        document.getString(
-                            "email"
-                        ) ?: ""
-
-                    val emergencyAlerts =
-                        document.getBoolean(
-                            "emergencyAlerts"
-                        ) ?: false
-
-                    addContactCard(
-                        document.id,
-                        fullName,
-                        relationship,
-                        phone,
-                        email,
-                        emergencyAlerts
-                    )
+                    } catch (_: Exception) {
+                        // Keep cached contacts available.
+                    }
                 }
             }
             .addOnFailureListener {
-
-                contactsList.removeAllViews()
-
-                contactsList.visibility =
-                    View.GONE
-
-                emptyState.visibility =
-                    View.VISIBLE
-
-                tvNoContacts.text =
-                    "Unable to load your trusted contacts. Please try again."
-
                 Toast.makeText(
                     this,
-                    "Unable to load trusted contacts.",
-                    Toast.LENGTH_LONG
+                    getString(
+                        R.string.trusted_contacts_cloud_unavailable
+                    ),
+                    Toast.LENGTH_SHORT
                 ).show()
             }
     }
 
-    // ==================================================
-    // CREATE CONTACT CARD
-    // ==================================================
+    private fun syncPendingDeletions(userId: String) {
+        lifecycleScope.launch {
+            try {
+                val dao = SafeZoneDatabase
+                    .getDatabase(applicationContext)
+                    .trustedContactDao()
+
+                val pending = dao.getPendingDeletions(userId)
+
+                for (contact in pending) {
+                    db.collection("TrustedContacts")
+                        .document(contact.contactId)
+                        .get()
+                        .addOnSuccessListener { document ->
+                            val owner =
+                                document.getString("userId")
+
+                            if (!document.exists()) {
+                                lifecycleScope.launch {
+                                    dao.deleteContact(
+                                        contact.contactId,
+                                        userId
+                                    )
+                                }
+                            } else if (owner == userId) {
+                                db.collection("TrustedContacts")
+                                    .document(contact.contactId)
+                                    .delete()
+                                    .addOnSuccessListener {
+                                        lifecycleScope.launch {
+                                            dao.deleteContact(
+                                                contact.contactId,
+                                                userId
+                                            )
+                                        }
+                                    }
+                            }
+                        }
+                }
+            } catch (_: Exception) {
+                // Retry pending deletions on a later load.
+            }
+        }
+    }
+
+    private fun displayContacts(
+        contacts: List<TrustedContactEntity>
+    ) {
+        contactsList.removeAllViews()
+
+        if (contacts.isEmpty()) {
+            showEmptyState(
+                getString(
+                    R.string.trusted_contacts_empty_description
+                )
+            )
+            return
+        }
+
+        contactsList.visibility = View.VISIBLE
+        emptyState.visibility = View.GONE
+
+        contacts.forEach { contact ->
+            addContactCard(
+                contact.contactId,
+                contact.fullName,
+                contact.relationship,
+                contact.phone,
+                contact.email,
+                contact.emergencyAlerts,
+                contact.syncStatus
+            )
+        }
+    }
+
+    private fun showEmptyState(message: String) {
+        contactsList.removeAllViews()
+        contactsList.visibility = View.GONE
+        emptyState.visibility = View.VISIBLE
+        tvNoContacts.text = message
+    }
 
     private fun addContactCard(
         contactId: String,
@@ -262,775 +288,370 @@ class TrustedContactsActivity : AppCompatActivity() {
         relationship: String,
         phone: String,
         email: String,
-        emergencyAlerts: Boolean
+        emergencyAlerts: Boolean,
+        syncStatus: String
     ) {
-
-        // ==========================================
-        // MAIN CARD
-        // ==========================================
-
-        val card =
-            LinearLayout(this)
-
-        card.orientation =
-            LinearLayout.VERTICAL
-
-        card.setPadding(
-            dp(16),
-            dp(16),
-            dp(16),
-            dp(16)
-        )
-
-        card.background =
-            createRoundedBackground(
+        val card = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(16), dp(16), dp(16), dp(16))
+            background = createRoundedBackground(
                 Color.WHITE,
                 Color.parseColor("#DCE5F0"),
                 16
             )
+        }
 
-        val cardParams =
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+        val cardParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        cardParams.setMargins(0, dp(10), 0, 0)
+        card.layoutParams = cardParams
+
+        val topRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+        }
+
+        val icon = ImageView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(dp(48), dp(48))
+            setPadding(dp(10), dp(10), dp(10), dp(10))
+            setBackgroundResource(
+                R.drawable.bg_trusted_contacts_empty_icon
             )
-
-        cardParams.setMargins(
-            0,
-            dp(10),
-            0,
-            0
-        )
-
-        card.layoutParams =
-            cardParams
-
-        // ==========================================
-        // TOP ROW
-        // ==========================================
-
-        val topRow =
-            LinearLayout(this)
-
-        topRow.orientation =
-            LinearLayout.HORIZONTAL
-
-        topRow.gravity =
-            Gravity.CENTER_VERTICAL
-
-        // ==========================================
-        // PERSON ICON
-        // ==========================================
-
-        val icon =
-            ImageView(this)
-
-        icon.layoutParams =
-            LinearLayout.LayoutParams(
-                dp(48),
-                dp(48)
-            )
-
-        icon.setPadding(
-            dp(10),
-            dp(10),
-            dp(10),
-            dp(10)
-        )
-
-        icon.setBackgroundResource(
-            R.drawable.bg_trusted_contacts_empty_icon
-        )
-
-        icon.setImageResource(
-            R.drawable.ic_person
-        )
-
-        icon.contentDescription =
-            "Trusted contact"
-
+            setImageResource(R.drawable.ic_person)
+            contentDescription =
+                getString(R.string.trusted_contacts_icon_description)
+        }
         topRow.addView(icon)
 
-        // ==========================================
-        // NAME CONTAINER
-        // ==========================================
-
-        val nameContainer =
-            LinearLayout(this)
-
-        nameContainer.orientation =
-            LinearLayout.VERTICAL
-
-        val nameParams =
-            LinearLayout.LayoutParams(
+        val nameContainer = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(
                 0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 1f
-            )
+            ).apply {
+                setMargins(dp(12), 0, 0, 0)
+            }
+        }
 
-        nameParams.setMargins(
-            dp(12),
-            0,
-            0,
-            0
-        )
+        val nameText = TextView(this).apply {
+            text = fullName
+            setTextColor(Color.parseColor("#0B1F3A"))
+            textSize = 17f
+            setTypeface(null, Typeface.BOLD)
+        }
+        nameContainer.addView(nameText)
 
-        nameContainer.layoutParams =
-            nameParams
+        val relationshipText = TextView(this).apply {
+            text = relationship
+            setTextColor(Color.parseColor("#667085"))
+            textSize = 13f
+            setPadding(0, dp(3), 0, 0)
+        }
+        nameContainer.addView(relationshipText)
 
-        // ==========================================
-        // NAME
-        // ==========================================
+        topRow.addView(nameContainer)
+        card.addView(topRow)
 
-        val nameText =
-            TextView(this)
-
-        nameText.text =
-            fullName
-
-        nameText.setTextColor(
-            Color.parseColor("#0B1F3A")
-        )
-
-        nameText.textSize =
-            17f
-
-        nameText.setTypeface(
-            null,
-            Typeface.BOLD
-        )
-
-        nameContainer.addView(
-            nameText
-        )
-
-        // ==========================================
-        // RELATIONSHIP
-        // ==========================================
-
-        val relationshipText =
-            TextView(this)
-
-        relationshipText.text =
-            relationship
-
-        relationshipText.setTextColor(
-            Color.parseColor("#667085")
-        )
-
-        relationshipText.textSize =
-            13f
-
-        relationshipText.setPadding(
-            0,
-            dp(3),
-            0,
-            0
-        )
-
-        nameContainer.addView(
-            relationshipText
-        )
-
-        topRow.addView(
-            nameContainer
-        )
-
-        card.addView(
-            topRow
-        )
-
-        // ==========================================
-        // DIVIDER
-        // ==========================================
-
-        val divider =
-            View(this)
-
-        divider.setBackgroundColor(
-            Color.parseColor("#E6EBF2")
-        )
-
-        val dividerParams =
-            LinearLayout.LayoutParams(
+        val divider = View(this).apply {
+            setBackgroundColor(Color.parseColor("#E6EBF2"))
+            layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 dp(1)
-            )
-
-        dividerParams.setMargins(
-            0,
-            dp(14),
-            0,
-            dp(12)
-        )
-
-        divider.layoutParams =
-            dividerParams
-
-        card.addView(
-            divider
-        )
-
-        // ==========================================
-        // PHONE
-        // ==========================================
+            ).apply {
+                setMargins(0, dp(14), 0, dp(12))
+            }
+        }
+        card.addView(divider)
 
         if (phone.isNotEmpty()) {
-
-            val phoneRow =
-                createInfoRow(
-                    R.drawable.ic_phone,
-                    phone
-                )
-
+            val phoneRow = createInfoRow(
+                R.drawable.ic_phone,
+                phone
+            )
             phoneRow.setOnClickListener {
-
                 callContact(phone)
             }
-
-            card.addView(
-                phoneRow
-            )
+            card.addView(phoneRow)
         }
-
-        // ==========================================
-        // EMAIL
-        // ==========================================
 
         if (email.isNotEmpty()) {
-
-            val emailRow =
-                createInfoRow(
-                    R.drawable.ic_email,
-                    email
-                )
-
-            // FIX:
-            // Create new LayoutParams instead of
-            // casting a null layoutParams object.
-
-            val emailParams =
-                LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-
-            emailParams.setMargins(
-                0,
-                dp(8),
-                0,
-                0
+            val emailRow = createInfoRow(
+                R.drawable.ic_email,
+                email
             )
-
-            emailRow.layoutParams =
-                emailParams
-
-            card.addView(
-                emailRow
-            )
-        }
-
-        // ==========================================
-        // EMERGENCY ALERT STATUS
-        // ==========================================
-
-        val alertStatus =
-            TextView(this)
-
-        alertStatus.text =
-            if (emergencyAlerts) {
-
-                "✓  Emergency alerts enabled"
-
-            } else {
-
-                "○  Emergency alerts disabled"
-            }
-
-        if (emergencyAlerts) {
-
-            alertStatus.setTextColor(
-                Color.parseColor("#18864B")
-            )
-
-        } else {
-
-            alertStatus.setTextColor(
-                Color.parseColor("#667085")
-            )
-        }
-
-        alertStatus.textSize =
-            12f
-
-        alertStatus.setTypeface(
-            null,
-            Typeface.BOLD
-        )
-
-        val alertParams =
-            LinearLayout.LayoutParams(
+            emailRow.layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(0, dp(8), 0, 0)
+            }
+            card.addView(emailRow)
+        }
+
+        val alertStatus = TextView(this).apply {
+            text = if (emergencyAlerts) {
+                getString(
+                    R.string.trusted_contacts_alerts_enabled
+                )
+            } else {
+                getString(
+                    R.string.trusted_contacts_alerts_disabled
+                )
+            }
+
+            setTextColor(
+                if (emergencyAlerts) {
+                    Color.parseColor("#18864B")
+                } else {
+                    Color.parseColor("#667085")
+                }
             )
 
-        alertParams.setMargins(
-            0,
-            dp(12),
-            0,
-            0
-        )
+            textSize = 12f
+            setTypeface(null, Typeface.BOLD)
 
-        alertStatus.layoutParams =
-            alertParams
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(0, dp(12), 0, 0)
+            }
+        }
+        card.addView(alertStatus)
 
-        card.addView(
-            alertStatus
-        )
+        if (syncStatus != "Synced") {
+            val syncText = TextView(this).apply {
+                text = getString(
+                    R.string.trusted_contacts_sync_pending
+                )
+                setTextColor(Color.parseColor("#9A6700"))
+                textSize = 12f
+                setPadding(0, dp(6), 0, 0)
+            }
+            card.addView(syncText)
+        }
 
-        // ==========================================
-        // BUTTON ROW
-        // ==========================================
-
-        val buttonRow =
-            LinearLayout(this)
-
-        buttonRow.orientation =
-            LinearLayout.HORIZONTAL
-
-        buttonRow.gravity =
-            Gravity.CENTER_VERTICAL
-
-        val buttonRowParams =
-            LinearLayout.LayoutParams(
+        val buttonRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 dp(48)
-            )
+            ).apply {
+                setMargins(0, dp(14), 0, 0)
+            }
+        }
 
-        buttonRowParams.setMargins(
-            0,
-            dp(14),
-            0,
-            0
-        )
+        val callButton = Button(this).apply {
+            text = getString(R.string.trusted_contacts_call)
+            isAllCaps = false
+            textSize = 13f
+            setTextColor(Color.WHITE)
+            setTypeface(null, Typeface.BOLD)
 
-        buttonRow.layoutParams =
-            buttonRowParams
-
-        // ==========================================
-        // CALL BUTTON
-        // ==========================================
-
-        val callButton =
-            Button(this)
-
-        callButton.text =
-            "Call"
-
-        callButton.isAllCaps =
-            false
-
-        callButton.textSize =
-            13f
-
-        callButton.setTextColor(
-            Color.WHITE
-        )
-
-        callButton.setTypeface(
-            null,
-            Typeface.BOLD
-        )
-
-        callButton.background =
-            createRoundedBackground(
+            background = createRoundedBackground(
                 Color.parseColor("#234572"),
                 Color.TRANSPARENT,
                 24
             )
 
-        callButton.setOnClickListener {
-
-            if (phone.isNotEmpty()) {
-
-                callContact(phone)
-
-            } else {
-
-                Toast.makeText(
-                    this,
-                    "No phone number available.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
-        val callParams =
-            LinearLayout.LayoutParams(
+            layoutParams = LinearLayout.LayoutParams(
                 0,
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 1f
-            )
+            ).apply {
+                setMargins(0, 0, dp(5), 0)
+            }
 
-        callParams.setMargins(
-            0,
-            0,
-            dp(5),
-            0
-        )
+            setOnClickListener {
+                if (phone.isNotEmpty()) {
+                    callContact(phone)
+                } else {
+                    Toast.makeText(
+                        this@TrustedContactsActivity,
+                        getString(
+                            R.string.trusted_contacts_no_phone
+                        ),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+        buttonRow.addView(callButton)
 
-        callButton.layoutParams =
-            callParams
+        val deleteButton = Button(this).apply {
+            text = getString(R.string.trusted_contacts_delete)
+            isAllCaps = false
+            textSize = 13f
+            setTextColor(Color.WHITE)
+            setTypeface(null, Typeface.BOLD)
 
-        buttonRow.addView(
-            callButton
-        )
-
-        // ==========================================
-        // DELETE BUTTON
-        // ==========================================
-
-        val deleteButton =
-            Button(this)
-
-        deleteButton.text =
-            "Delete"
-
-        deleteButton.isAllCaps =
-            false
-
-        deleteButton.textSize =
-            13f
-
-        deleteButton.setTextColor(
-            Color.WHITE
-        )
-
-        deleteButton.setTypeface(
-            null,
-            Typeface.BOLD
-        )
-
-        deleteButton.background =
-            createRoundedBackground(
+            background = createRoundedBackground(
                 Color.parseColor("#D32F2F"),
                 Color.TRANSPARENT,
                 24
             )
 
-        deleteButton.setOnClickListener {
-
-            deleteContact(contactId)
-        }
-
-        val deleteParams =
-            LinearLayout.LayoutParams(
+            layoutParams = LinearLayout.LayoutParams(
                 0,
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 1f
-            )
+            ).apply {
+                setMargins(dp(5), 0, 0, 0)
+            }
 
-        deleteParams.setMargins(
-            dp(5),
-            0,
-            0,
-            0
-        )
+            setOnClickListener {
+                deleteContact(contactId)
+            }
+        }
+        buttonRow.addView(deleteButton)
 
-        deleteButton.layoutParams =
-            deleteParams
-
-        buttonRow.addView(
-            deleteButton
-        )
-
-        card.addView(
-            buttonRow
-        )
-
-        // ==========================================
-        // ADD CARD TO LIST
-        // ==========================================
-
-        contactsList.addView(
-            card
-        )
+        card.addView(buttonRow)
+        contactsList.addView(card)
     }
-
-    // ==================================================
-    // CREATE INFORMATION ROW
-    // ==================================================
 
     private fun createInfoRow(
         iconResource: Int,
         text: String
     ): LinearLayout {
+        val row = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+        }
 
-        val row =
-            LinearLayout(this)
+        val icon = ImageView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(dp(26), dp(26))
+            setImageResource(iconResource)
+            contentDescription =
+                getString(R.string.trusted_contacts_info_description)
+        }
+        row.addView(icon)
 
-        row.orientation =
-            LinearLayout.HORIZONTAL
-
-        row.gravity =
-            Gravity.CENTER_VERTICAL
-
-        // ==========================================
-        // ICON
-        // ==========================================
-
-        val icon =
-            ImageView(this)
-
-        icon.layoutParams =
-            LinearLayout.LayoutParams(
-                dp(26),
-                dp(26)
-            )
-
-        icon.setImageResource(
-            iconResource
-        )
-
-        icon.contentDescription =
-            "Contact information"
-
-        row.addView(
-            icon
-        )
-
-        // ==========================================
-        // TEXT
-        // ==========================================
-
-        val textView =
-            TextView(this)
-
-        textView.text =
-            text
-
-        textView.setTextColor(
-            Color.parseColor("#344054")
-        )
-
-        textView.textSize =
-            13f
-
-        val textParams =
-            LinearLayout.LayoutParams(
+        val textView = TextView(this).apply {
+            this.text = text
+            setTextColor(Color.parseColor("#344054"))
+            textSize = 13f
+            layoutParams = LinearLayout.LayoutParams(
                 0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 1f
-            )
-
-        textParams.setMargins(
-            dp(10),
-            0,
-            0,
-            0
-        )
-
-        textView.layoutParams =
-            textParams
-
-        row.addView(
-            textView
-        )
+            ).apply {
+                setMargins(dp(10), 0, 0, 0)
+            }
+        }
+        row.addView(textView)
 
         return row
     }
 
-    // ==================================================
-    // CALL CONTACT
-    // ==================================================
-
-    private fun callContact(
-        phone: String
-    ) {
-
+    private fun callContact(phone: String) {
         try {
-
-            val intent =
+            startActivity(
                 Intent(
                     Intent.ACTION_DIAL,
-                    Uri.parse(
-                        "tel:$phone"
-                    )
+                    Uri.parse("tel:$phone")
                 )
-
-            startActivity(
-                intent
             )
-
-        } catch (e: Exception) {
-
+        } catch (_: Exception) {
             Toast.makeText(
                 this,
-                "Unable to open the phone dialler.",
+                getString(
+                    R.string.trusted_contacts_dialer_error
+                ),
                 Toast.LENGTH_SHORT
             ).show()
         }
     }
 
-    // ==================================================
-    // DELETE CONTACT
-    // ==================================================
-
-    private fun deleteContact(
-        contactId: String
-    ) {
-
-        val currentUser =
-            auth.currentUser
-
-        if (currentUser == null) {
-
+    private fun deleteContact(contactId: String) {
+        val user = auth.currentUser ?: run {
             Toast.makeText(
                 this,
-                "Please log in again.",
+                getString(
+                    R.string.trusted_contacts_login_again
+                ),
                 Toast.LENGTH_SHORT
             ).show()
-
             return
         }
 
-        // ==========================================
-        // VERIFY CONTACT OWNERSHIP
-        // ==========================================
+        lifecycleScope.launch {
+            try {
+                val dao = SafeZoneDatabase
+                    .getDatabase(applicationContext)
+                    .trustedContactDao()
 
-        db.collection(
-            "TrustedContacts"
-        )
-            .document(
-                contactId
-            )
-            .get()
-            .addOnSuccessListener { document ->
+                val localContact =
+                    dao.getContactsForUserOnce(user.uid)
+                        .firstOrNull {
+                            it.contactId == contactId
+                        }
 
-                if (!document.exists()) {
-
+                if (localContact == null) {
                     Toast.makeText(
-                        this,
-                        "Contact no longer exists.",
+                        this@TrustedContactsActivity,
+                        getString(
+                            R.string.trusted_contacts_not_found
+                        ),
                         Toast.LENGTH_SHORT
                     ).show()
-
-                    loadTrustedContacts()
-
-                    return@addOnSuccessListener
+                    return@launch
                 }
 
-                val contactUserId =
-                    document.getString(
-                        "userId"
-                    )
-
-                // ==================================
-                // SECURITY CHECK
-                // ==================================
-
-                if (
-                    contactUserId !=
-                    currentUser.uid
-                ) {
-
-                    Toast.makeText(
-                        this,
-                        "You cannot delete this contact.",
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    return@addOnSuccessListener
+                if (localContact.syncStatus == "Pending Sync") {
+                    // No cloud document exists for this pending upload.
+                    dao.deleteContact(contactId, user.uid)
+                } else {
+                    // Mark the contact for deletion until Firestore confirms.
+                    dao.markContactDeleted(contactId, user.uid)
+                    syncPendingDeletions(user.uid)
                 }
 
-                // ==================================
-                // DELETE
-                // ==================================
-
-                db.collection(
-                    "TrustedContacts"
+                displayContacts(
+                    dao.getContactsForUserOnce(user.uid)
                 )
-                    .document(
-                        contactId
-                    )
-                    .delete()
-                    .addOnSuccessListener {
-
-                        Toast.makeText(
-                            this,
-                            "Trusted contact deleted.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        loadTrustedContacts()
-                    }
-                    .addOnFailureListener {
-
-                        Toast.makeText(
-                            this,
-                            "Unable to delete contact.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-            }
-            .addOnFailureListener {
 
                 Toast.makeText(
-                    this,
-                    "Unable to verify the contact.",
+                    this@TrustedContactsActivity,
+                    getString(
+                        R.string.trusted_contacts_removed_message
+                    ),
+                    Toast.LENGTH_LONG
+                ).show()
+
+            } catch (_: Exception) {
+                Toast.makeText(
+                    this@TrustedContactsActivity,
+                    getString(
+                        R.string.trusted_contacts_remove_error
+                    ),
                     Toast.LENGTH_LONG
                 ).show()
             }
+        }
     }
-
-    // ==================================================
-    // ROUNDED BACKGROUND
-    // ==================================================
 
     private fun createRoundedBackground(
         fillColor: Int,
         strokeColor: Int,
         radiusDp: Int
-    ): android.graphics.drawable.GradientDrawable {
+    ): GradientDrawable {
+        return GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            setColor(fillColor)
 
-        val drawable =
-            android.graphics.drawable.GradientDrawable()
+            if (strokeColor != Color.TRANSPARENT) {
+                setStroke(dp(1), strokeColor)
+            }
 
-        drawable.shape =
-            android.graphics.drawable.GradientDrawable.RECTANGLE
-
-        drawable.setColor(
-            fillColor
-        )
-
-        if (
-            strokeColor !=
-            Color.TRANSPARENT
-        ) {
-
-            drawable.setStroke(
-                dp(1),
-                strokeColor
-            )
+            cornerRadius = dp(radiusDp).toFloat()
         }
-
-        drawable.cornerRadius =
-            dp(radiusDp).toFloat()
-
-        return drawable
     }
 
-    // ==================================================
-    // DP CONVERSION
-    // ==================================================
-
-    private fun dp(
-        value: Int
-    ): Int {
-
-        return (
-                value *
-                        resources.displayMetrics.density
-                ).toInt()
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
     }
 }

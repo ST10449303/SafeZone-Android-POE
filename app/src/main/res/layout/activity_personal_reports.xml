@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="#F5F7FA">
 
-    <!-- ================= HEADER ================= -->
+    <!-- HEADER -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:textSize="38sp"
             android:clickable="true"
             android:focusable="true"
-            android:contentDescription="Back" />
+            android:contentDescription="@string/personal_reports_back" />
 
         <TextView
             android:layout_width="0dp"
@@ -45,8 +45,7 @@
 
     </LinearLayout>
 
-
-    <!-- ================= CONTENT ================= -->
+    <!-- CONTENT -->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -64,8 +63,7 @@
             android:paddingTop="22dp"
             android:paddingBottom="30dp">
 
-
-            <!-- ================= TITLE ================= -->
+            <!-- TITLE -->
 
             <ImageView
                 android:layout_width="70dp"
@@ -74,14 +72,14 @@
                 android:background="@drawable/bg_reports_header_icon"
                 android:padding="17dp"
                 android:src="@drawable/ic_reports"
-                android:contentDescription="My reports" />
+                android:contentDescription="@string/personal_reports_image_description" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 android:gravity="center"
-                android:text="My Reports"
+                android:text="@string/personal_reports_title"
                 android:textColor="#0B1F3A"
                 android:textSize="26sp"
                 android:textStyle="bold" />
@@ -91,25 +89,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:text="View the personal incidents you have reported."
+                android:text="@string/personal_reports_subtitle"
                 android:textColor="#667085"
                 android:textSize="14sp" />
 
-
-            <!-- ================= REPORT COUNT ================= -->
+            <!-- REPORT COUNT -->
 
             <TextView
                 android:id="@+id/tvReportCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Your Reports"
+                android:text="@string/personal_reports_heading"
                 android:textColor="#234572"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-
-            <!-- ================= REPORT LIST ================= -->
+            <!-- REPORT LIST -->
 
             <LinearLayout
                 android:id="@+id/reportsContainer"
@@ -118,8 +114,7 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical" />
 
-
-            <!-- ================= EMPTY STATE ================= -->
+            <!-- EMPTY STATE -->
 
             <LinearLayout
                 android:id="@+id/emptyState"
@@ -138,14 +133,14 @@
                     android:background="@drawable/bg_reports_empty_icon"
                     android:padding="14dp"
                     android:src="@drawable/ic_reports_empty"
-                    android:contentDescription="No reports" />
+                    android:contentDescription="@string/personal_reports_empty_image_description" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
                     android:gravity="center"
-                    android:text="No reports yet"
+                    android:text="@string/personal_reports_empty_title"
                     android:textColor="#0B1F3A"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -155,14 +150,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:text="You haven't reported any personal incidents yet."
+                    android:text="@string/personal_reports_empty_message"
                     android:textColor="#667085"
                     android:textSize="13sp" />
 
             </LinearLayout>
 
-
-            <!-- ================= REPORT INCIDENT ================= -->
+            <!-- REPORT INCIDENT -->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnReportIncident"
@@ -177,7 +171,7 @@
                 android:gravity="center"
                 android:drawableStart="@drawable/ic_add_report"
                 android:drawablePadding="10dp"
-                android:text="Report an Incident"
+                android:text="@string/personal_reports_report_incident"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="17sp"

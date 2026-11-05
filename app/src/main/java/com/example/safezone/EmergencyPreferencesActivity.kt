@@ -1,3 +1,4 @@
+
 package com.example.safezone
 
 import android.os.Bundle
@@ -21,21 +22,15 @@ class EmergencyPreferencesActivity : AppCompatActivity() {
     private lateinit var btnSavePreferences: AppCompatButton
     private lateinit var btnBackToSettings: AppCompatButton
 
+    // Name of the local preferences file.
+    private val preferencesName = "SafeZonePreferences"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_emergency_preferences)
 
-        setContentView(
-            R.layout.activity_emergency_preferences
-        )
-
-
-        // ==============================
-        // FIND VIEWS
-        // ==============================
-
-        tvBack =
-            findViewById(R.id.tvBack)
+        // Connect XML views.
+        tvBack = findViewById(R.id.tvBack)
 
         switchEmergencyServices =
             findViewById(R.id.switchEmergencyServices)
@@ -55,11 +50,7 @@ class EmergencyPreferencesActivity : AppCompatActivity() {
         btnBackToSettings =
             findViewById(R.id.btnBackToSettings)
 
-
-        // ==============================
-        // BACK
-        // ==============================
-
+        // Return to the previous screen.
         tvBack.setOnClickListener {
             finish()
         }
@@ -68,142 +59,133 @@ class EmergencyPreferencesActivity : AppCompatActivity() {
             finish()
         }
 
+        // Restore previously saved preferences.
+        loadPreferences()
 
-        // ==============================
-        // SAVE PREFERENCES
-        // ==============================
-
+        // Save changes when the user taps the save button.
         btnSavePreferences.setOnClickListener {
+            savePreferences()
+        }
+    }
 
-            val emergencyNumber =
-                etEmergencyNumber.text.toString().trim()
+    // =====================================================
+    // SAVE EMERGENCY PREFERENCES
+    // =====================================================
 
+    private fun savePreferences() {
 
-            // ==============================
-            // VALIDATE NUMBER
-            // ==============================
+        val emergencyNumber =
+            etEmergencyNumber.text.toString().trim()
 
-            if (emergencyNumber.isEmpty()) {
-
-                etEmergencyNumber.error =
-                    "Please enter an emergency number"
-
-                etEmergencyNumber.requestFocus()
-
-                return@setOnClickListener
-            }
-
-
-            if (emergencyNumber.length < 3) {
-
-                etEmergencyNumber.error =
-                    "Please enter a valid emergency number"
-
-                etEmergencyNumber.requestFocus()
-
-                return@setOnClickListener
-            }
-
-
-            // ==============================
-            // READ SETTINGS
-            // ==============================
-
-            val emergencyServicesEnabled =
-                switchEmergencyServices.isChecked
-
-            val locationEnabled =
-                switchEmergencyLocation.isChecked
-
-            val trustedContactsEnabled =
-                switchTrustedContactAlerts.isChecked
-
-
-            // ==============================
-            // SAVE
-            // ==============================
-
-            val preferences =
-                getSharedPreferences(
-                    "SafeZonePreferences",
-                    MODE_PRIVATE
+        // Ensure an emergency number has been entered.
+        if (emergencyNumber.isBlank()) {
+            etEmergencyNumber.error =
+                getString(
+                    R.string.emergency_preferences_number_required
                 )
+            etEmergencyNumber.requestFocus()
+            return
+        }
 
-            preferences.edit()
-                .putBoolean(
-                    "emergencyServices",
-                    emergencyServicesEnabled
+        // Check the minimum number length.
+        if (emergencyNumber.length < 3) {
+            etEmergencyNumber.error =
+                getString(
+                    R.string.emergency_preferences_number_invalid
                 )
-                .putBoolean(
-                    "emergencyLocation",
-                    locationEnabled
-                )
-                .putBoolean(
-                    "trustedContactAlerts",
-                    trustedContactsEnabled
-                )
-                .putString(
-                    "emergencyNumber",
-                    emergencyNumber
-                )
-                .apply()
+            etEmergencyNumber.requestFocus()
+            return
+        }
 
+        // Allow digits, spaces, plus signs, hyphens and parentheses.
+        if (!emergencyNumber.matches(Regex("[0-9+() -]+"))) {
+            etEmergencyNumber.error =
+                getString(
+                    R.string.emergency_preferences_number_format
+                )
+            etEmergencyNumber.requestFocus()
+            return
+        }
 
-            // ==============================
-            // SUCCESS
-            // ==============================
+        // Read the current switch values.
+        val emergencyServicesEnabled =
+            switchEmergencyServices.isChecked
 
+        val locationEnabled =
+            switchEmergencyLocation.isChecked
+
+        val trustedContactsEnabled =
+            switchTrustedContactAlerts.isChecked
+
+        // Save locally. No internet connection is required.
+        val preferences = getSharedPreferences(
+            preferencesName,
+            MODE_PRIVATE
+        )
+
+        val saved = preferences.edit()
+            .putBoolean(
+                "emergencyServices",
+                emergencyServicesEnabled
+            )
+            .putBoolean(
+                "emergencyLocation",
+                locationEnabled
+            )
+            .putBoolean(
+                "trustedContactAlerts",
+                trustedContactsEnabled
+            )
+            .putString(
+                "emergencyNumber",
+                emergencyNumber
+            )
+            .commit()
+
+        // Display a localized result.
+        if (saved) {
             Toast.makeText(
                 this,
-                "Emergency preferences saved.",
+                getString(
+                    R.string.emergency_preferences_saved
+                ),
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            Toast.makeText(
+                this,
+                getString(
+                    R.string.emergency_preferences_save_failed
+                ),
                 Toast.LENGTH_LONG
             ).show()
         }
-
-
-        // ==============================
-        // LOAD SAVED PREFERENCES
-        // ==============================
-
-        loadPreferences()
     }
 
+    // =====================================================
+    // LOAD SAVED EMERGENCY PREFERENCES
+    // =====================================================
 
     private fun loadPreferences() {
 
-        val preferences =
-            getSharedPreferences(
-                "SafeZonePreferences",
-                MODE_PRIVATE
-            )
+        val preferences = getSharedPreferences(
+            preferencesName,
+            MODE_PRIVATE
+        )
 
-
+        // Default to enabled if no preference has been saved.
         switchEmergencyServices.isChecked =
-            preferences.getBoolean(
-                "emergencyServices",
-                true
-            )
-
+            preferences.getBoolean("emergencyServices", true)
 
         switchEmergencyLocation.isChecked =
-            preferences.getBoolean(
-                "emergencyLocation",
-                true
-            )
-
+            preferences.getBoolean("emergencyLocation", true)
 
         switchTrustedContactAlerts.isChecked =
-            preferences.getBoolean(
-                "trustedContactAlerts",
-                true
-            )
+            preferences.getBoolean("trustedContactAlerts", true)
 
-
+        // Default emergency number is 112.
         etEmergencyNumber.setText(
-            preferences.getString(
-                "emergencyNumber",
-                "112"
-            )
+            preferences.getString("emergencyNumber", "112")
         )
     }
 }

@@ -26,376 +26,185 @@ class CampusChangePasswordActivity : AppCompatActivity() {
     private lateinit var tvSuccess: TextView
     private lateinit var tvBack: TextView
 
+    // Track visibility separately instead of comparing transformation methods.
+    private val passwordVisibility = mutableMapOf<Int, Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContentView(
-            R.layout.activity_campus_change_password
-        )
+        setContentView(R.layout.activity_campus_change_password)
 
         auth = FirebaseAuth.getInstance()
 
+        tvBack = findViewById(R.id.tvBack)
+        tvSuccess = findViewById(R.id.tvSuccess)
 
-        // ==============================
-        // FIND VIEWS
-        // ==============================
+        etCurrentPassword = findViewById(R.id.etCurrentPassword)
+        etNewPassword = findViewById(R.id.etNewPassword)
+        etConfirmPassword = findViewById(R.id.etConfirmPassword)
 
-        tvBack =
-            findViewById(R.id.tvBack)
+        btnChangePassword = findViewById(R.id.btnChangePassword)
+        btnBackToSettings = findViewById(R.id.btnBackToSettings)
 
-        etCurrentPassword =
-            findViewById(R.id.etCurrentPassword)
+        tvSuccess.visibility = TextView.GONE
 
-        etNewPassword =
-            findViewById(R.id.etNewPassword)
-
-        etConfirmPassword =
-            findViewById(R.id.etConfirmPassword)
-
-        btnChangePassword =
-            findViewById(R.id.btnChangePassword)
-
-        btnBackToSettings =
-            findViewById(R.id.btnBackToSettings)
-
-        tvSuccess =
-            findViewById(R.id.tvSuccess)
-
-
-        // ==============================
-        // PASSWORD VISIBILITY
-        // ==============================
-
-        setupPasswordVisibility(
-            etCurrentPassword
-        )
-
-        setupPasswordVisibility(
-            etNewPassword
-        )
-
-        setupPasswordVisibility(
+        listOf(
+            etCurrentPassword,
+            etNewPassword,
             etConfirmPassword
-        )
-
-
-        // ==============================
-        // BACK ARROW
-        // ==============================
-
-        tvBack.setOnClickListener {
-            finish()
+        ).forEach { editText ->
+            passwordVisibility[editText.id] = false
+            setupPasswordVisibility(editText)
         }
 
-
-        // ==============================
-        // BACK TO SETTINGS
-        // ==============================
-
-        btnBackToSettings.setOnClickListener {
-            finish()
-        }
-
-
-        // ==============================
-        // CHANGE PASSWORD
-        // ==============================
+        tvBack.setOnClickListener { finish() }
+        btnBackToSettings.setOnClickListener { finish() }
 
         btnChangePassword.setOnClickListener {
-
             changePassword()
         }
     }
 
-
-    // =====================================================
-    // CHANGE PASSWORD
-    // =====================================================
-
     private fun changePassword() {
+        val currentPassword = etCurrentPassword.text.toString()
+        val newPassword = etNewPassword.text.toString()
+        val confirmPassword = etConfirmPassword.text.toString()
 
-        val currentPassword =
-            etCurrentPassword.text.toString()
-
-        val newPassword =
-            etNewPassword.text.toString()
-
-        val confirmPassword =
-            etConfirmPassword.text.toString()
-
-
-        // ==============================
-        // CURRENT PASSWORD
-        // ==============================
-
-        if (currentPassword.isEmpty()) {
-
-            etCurrentPassword.error =
-                "Please enter your current password"
-
+        if (currentPassword.isBlank()) {
+            etCurrentPassword.error = "Please enter your current password"
             etCurrentPassword.requestFocus()
-
             return
         }
-
-
-        // ==============================
-        // NEW PASSWORD
-        // ==============================
-
-        if (newPassword.isEmpty()) {
-
-            etNewPassword.error =
-                "Please enter a new password"
-
-            etNewPassword.requestFocus()
-
-            return
-        }
-
-
-        // ==============================
-        // PASSWORD LENGTH
-        // ==============================
 
         if (newPassword.length < 6) {
-
-            etNewPassword.error =
-                "Password must contain at least 6 characters"
-
+            etNewPassword.error = "Password must contain at least 6 characters"
             etNewPassword.requestFocus()
-
             return
         }
 
-
-        // ==============================
-        // CONFIRM PASSWORD
-        // ==============================
-
-        if (confirmPassword.isEmpty()) {
-
-            etConfirmPassword.error =
-                "Please confirm your new password"
-
+        if (confirmPassword.isBlank()) {
+            etConfirmPassword.error = "Please confirm your new password"
             etConfirmPassword.requestFocus()
-
             return
         }
-
-
-        // ==============================
-        // MATCH PASSWORDS
-        // ==============================
 
         if (newPassword != confirmPassword) {
-
-            etConfirmPassword.error =
-                "Passwords do not match"
-
+            etConfirmPassword.error = "Passwords do not match"
             etConfirmPassword.requestFocus()
-
             return
         }
-
-
-        // ==============================
-        // NEW PASSWORD DIFFERENT
-        // ==============================
 
         if (currentPassword == newPassword) {
-
-            etNewPassword.error =
-                "New password must be different from current password"
-
+            etNewPassword.error = "New password must differ from your current password"
             etNewPassword.requestFocus()
-
             return
         }
 
-
-        // ==============================
-        // CHECK USER
-        // ==============================
-
-        val user =
-            auth.currentUser
+        val user = auth.currentUser
 
         if (user == null) {
-
             Toast.makeText(
                 this,
-                "Your campus account session has expired. Please log in again.",
+                "Your campus session has expired. Please log in again.",
                 Toast.LENGTH_LONG
             ).show()
-
             finish()
-
             return
         }
 
+        val email = user.email
 
-        // ==============================
-        // GET EMAIL
-        // ==============================
-
-        val email =
-            user.email
-
-        if (email.isNullOrEmpty()) {
-
+        if (email.isNullOrBlank()) {
             Toast.makeText(
                 this,
                 "Unable to find your campus account email.",
                 Toast.LENGTH_LONG
             ).show()
-
             return
         }
 
-
-        // ==============================
-        // DISABLE BUTTON
-        // ==============================
-
         btnChangePassword.isEnabled = false
+        btnChangePassword.text = "CHANGING PASSWORD..."
 
-        btnChangePassword.text =
-            "CHANGING PASSWORD..."
-
-
-        // ==============================
-        // RE-AUTHENTICATE USER
-        // ==============================
-
-        val credential =
-            EmailAuthProvider.getCredential(
-                email,
-                currentPassword
-            )
-
+        val credential = EmailAuthProvider.getCredential(
+            email,
+            currentPassword
+        )
 
         user.reauthenticate(credential)
             .addOnCompleteListener { reauthTask ->
 
-                if (reauthTask.isSuccessful) {
+                if (!reauthTask.isSuccessful) {
+                    btnChangePassword.isEnabled = true
+                    btnChangePassword.text = "CHANGE PASSWORD"
 
-                    // ==============================
-                    // UPDATE PASSWORD
-                    // ==============================
+                    etCurrentPassword.error =
+                        "Current password is incorrect"
+                    etCurrentPassword.requestFocus()
 
-                    user.updatePassword(
-                        newPassword
-                    ).addOnCompleteListener { updateTask ->
+                    Toast.makeText(
+                        this,
+                        "Unable to verify your current password.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return@addOnCompleteListener
+                }
+
+                user.updatePassword(newPassword)
+                    .addOnCompleteListener { updateTask ->
 
                         btnChangePassword.isEnabled = true
-
-                        btnChangePassword.text =
-                            "CHANGE PASSWORD"
-
+                        btnChangePassword.text = "CHANGE PASSWORD"
 
                         if (updateTask.isSuccessful) {
-
-                            tvSuccess.visibility =
-                                TextView.VISIBLE
-
-                            Toast.makeText(
-                                this,
-                                "Your campus password has been changed successfully.",
-                                Toast.LENGTH_LONG
-                            ).show()
-
-
-                            // Clear fields
+                            tvSuccess.visibility = TextView.VISIBLE
 
                             etCurrentPassword.text.clear()
                             etNewPassword.text.clear()
                             etConfirmPassword.text.clear()
 
-                        } else {
-
                             Toast.makeText(
                                 this,
-                                updateTask.exception?.message
-                                    ?: "Unable to change password.",
+                                "Campus password changed successfully!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                this,
+                                updateTask.exception?.localizedMessage
+                                    ?: "Unable to change your password.",
                                 Toast.LENGTH_LONG
                             ).show()
                         }
                     }
-
-                } else {
-
-                    btnChangePassword.isEnabled = true
-
-                    btnChangePassword.text =
-                        "CHANGE PASSWORD"
-
-
-                    Toast.makeText(
-                        this,
-                        "Current password is incorrect.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
             }
     }
 
-
-    // =====================================================
-    // PASSWORD VISIBILITY
-    // =====================================================
-
-    private fun setupPasswordVisibility(
-        editText: EditText
-    ) {
-
+    private fun setupPasswordVisibility(editText: EditText) {
         editText.setOnTouchListener { _, event ->
-
             if (event.action == MotionEvent.ACTION_UP) {
+                val drawableEnd = editText.compoundDrawables[2]
 
-                val drawableEnd =
-                    editText.compoundDrawables[2]
+                if (drawableEnd != null) {
+                    val clickPosition =
+                        editText.right -
+                                drawableEnd.bounds.width() -
+                                editText.paddingEnd
 
-                if (
-                    drawableEnd != null &&
-                    event.rawX >=
-                    editText.right -
-                    drawableEnd.bounds.width() -
-                    editText.paddingEnd
-                ) {
-
-                    togglePasswordVisibility(
-                        editText
-                    )
-
-                    return@setOnTouchListener true
+                    if (event.rawX >= clickPosition) {
+                        togglePasswordVisibility(editText)
+                        return@setOnTouchListener true
+                    }
                 }
             }
-
             false
         }
     }
 
+    private fun togglePasswordVisibility(editText: EditText) {
+        val isVisible = passwordVisibility[editText.id] ?: false
+        val cursorPosition = editText.selectionStart
 
-    // =====================================================
-    // TOGGLE PASSWORD
-    // =====================================================
-
-    private fun togglePasswordVisibility(
-        editText: EditText
-    ) {
-
-        val cursorPosition =
-            editText.selectionStart
-
-
-        if (
-            editText.transformationMethod == null
-        ) {
-
-            // Hide password
-
+        if (isVisible) {
             editText.transformationMethod =
                 PasswordTransformationMethod.getInstance()
 
@@ -406,10 +215,8 @@ class CampusChangePasswordActivity : AppCompatActivity() {
                 0
             )
 
+            passwordVisibility[editText.id] = false
         } else {
-
-            // Show password
-
             editText.transformationMethod =
                 HideReturnsTransformationMethod.getInstance()
 
@@ -419,11 +226,12 @@ class CampusChangePasswordActivity : AppCompatActivity() {
                 R.drawable.ic_visibility,
                 0
             )
+
+            passwordVisibility[editText.id] = true
         }
 
-
         editText.setSelection(
-            cursorPosition.coerceAtLeast(0)
+            cursorPosition.coerceIn(0, editText.text.length)
         )
     }
 }

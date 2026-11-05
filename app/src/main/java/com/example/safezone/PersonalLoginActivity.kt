@@ -1,6 +1,10 @@
+
 package com.example.safezone
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -12,8 +16,18 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.GetCredentialException
+import androidx.lifecycle.lifecycleScope
+import com.example.safezone.data.OfflineLoginStore
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
 
 class PersonalLoginActivity : AppCompatActivity() {
 
@@ -21,432 +35,658 @@ class PersonalLoginActivity : AppCompatActivity() {
     private lateinit var etPassword: EditText
     private lateinit var cbRememberMe: CheckBox
     private lateinit var btnLogin: Button
+    private lateinit var btnGoogleSignIn: Button
     private lateinit var tvForgotPassword: TextView
     private lateinit var tvCreateAccount: TextView
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
+    private lateinit var credentialManager: CredentialManager
+    private lateinit var offlineLoginStore: OfflineLoginStore
 
-    private var passwordVisible = false
-
-    // --------------------------------------------------
-    // LOGGING
-    // --------------------------------------------------
+    private var isPasswordVisible = false
+    private var isAuthenticating = false
 
     companion object {
         private const val TAG = "SafeZonePersonalLogin"
+        private const val EXTRA_OFFLINE_MODE = "offlineMode"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_personal_login)
-
-        Log.d(TAG, "Personal Login screen opened")
-
-        // --------------------------------------------------
-        // CONNECT XML CONTROLS
-        // --------------------------------------------------
 
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
         cbRememberMe = findViewById(R.id.cbRememberMe)
         btnLogin = findViewById(R.id.btnLogin)
+        btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn)
         tvForgotPassword = findViewById(R.id.tvForgotPassword)
         tvCreateAccount = findViewById(R.id.tvCreateAccount)
 
-        Log.d(TAG, "Login screen controls connected successfully")
-
-        // --------------------------------------------------
-        // INITIALISE FIREBASE
-        // --------------------------------------------------
-
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
+        credentialManager = CredentialManager.create(this)
 
-        Log.d(TAG, "Firebase Authentication and Firestore initialized")
+        // Keep Personal credentials separate from Campus credentials.
+        offlineLoginStore = OfflineLoginStore(
+            context = applicationContext,
+            accountType = "Personal"
+        )
 
-        // --------------------------------------------------
-        // GET REGISTERED EMAIL
-        // --------------------------------------------------
+        setupPasswordVisibility()
 
-        val registeredEmail = intent.getStringExtra("registeredEmail")
-
-        if (!registeredEmail.isNullOrEmpty()) {
-            etEmail.setText(registeredEmail)
-
-            Log.d(TAG, "Registered email received from registration screen")
+        btnLogin.setOnClickListener {
+            loginUser()
         }
 
-        // --------------------------------------------------
-        // PASSWORD VISIBILITY
-        // --------------------------------------------------
+        btnGoogleSignIn.setOnClickListener {
+            startGoogleSignIn()
+        }
+
+        tvForgotPassword.setOnClickListener {
+            if (!isInternetAvailable()) {
+                showMessage(getString(R.string.internet_required_reset))
+            } else {
+                startActivity(
+                    Intent(this, ForgotPasswordActivity::class.java)
+                )
+            }
+        }
+
+        tvCreateAccount.setOnClickListener {
+            startActivity(
+                Intent(this, PersonalRegistrationActivity::class.java)
+            )
+        }
+    }
+
+    // ==========================================
+    // INTERNET CONNECTION
+    // ==========================================
+
+    private fun isInternetAvailable(): Boolean {
+        val manager = getSystemService(
+            Context.CONNECTIVITY_SERVICE
+        ) as ConnectivityManager
+
+        val network = manager.activeNetwork ?: return false
+        val capabilities = manager.getNetworkCapabilities(network)
+            ?: return false
+
+        return capabilities.hasCapability(
+            NetworkCapabilities.NET_CAPABILITY_INTERNET
+        ) && capabilities.hasCapability(
+            NetworkCapabilities.NET_CAPABILITY_VALIDATED
+        )
+    }
+
+    // ==========================================
+    // PASSWORD VISIBILITY
+    // ==========================================
+
+    private fun setupPasswordVisibility() {
+        isPasswordVisible = false
+
+        etPassword.inputType =
+            InputType.TYPE_CLASS_TEXT or
+                    InputType.TYPE_TEXT_VARIATION_PASSWORD
+
+        etPassword.setCompoundDrawablesWithIntrinsicBounds(
+            R.drawable.ic_lock,
+            0,
+            R.drawable.ic_visibility_off,
+            0
+        )
 
         etPassword.setOnTouchListener { _, event ->
-
             if (event.action == MotionEvent.ACTION_UP) {
-
-                val drawableEnd =
-                    etPassword.compoundDrawablesRelative[2]
+                val drawableEnd = etPassword.compoundDrawables[2]
 
                 if (drawableEnd != null) {
-
-                    val drawableWidth =
-                        drawableEnd.bounds.width()
-
-                    val touchArea =
+                    val iconStart =
                         etPassword.width -
                                 etPassword.paddingEnd -
-                                drawableWidth
+                                drawableEnd.bounds.width() - 20
 
-                    if (event.x >= touchArea) {
-
-                        passwordVisible = !passwordVisible
-
-                        if (passwordVisible) {
-
-                            // SHOW PASSWORD
-                            etPassword.inputType =
-                                InputType.TYPE_CLASS_TEXT or
-                                        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-
-                            etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                R.drawable.ic_lock,
-                                0,
-                                R.drawable.ic_visibility,
-                                0
-                            )
-
-                            Log.d(TAG, "Password visibility enabled")
-
-                        } else {
-
-                            // HIDE PASSWORD
-                            etPassword.inputType =
-                                InputType.TYPE_CLASS_TEXT or
-                                        InputType.TYPE_TEXT_VARIATION_PASSWORD
-
-                            etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                R.drawable.ic_lock,
-                                0,
-                                R.drawable.ic_visibility_off,
-                                0
-                            )
-
-                            Log.d(TAG, "Password visibility disabled")
-                        }
-
-                        // Keep cursor at the end
-                        etPassword.setSelection(
-                            etPassword.text.length
-                        )
-
+                    if (event.x >= iconStart) {
+                        togglePasswordVisibility()
                         return@setOnTouchListener true
                     }
                 }
             }
-
             false
         }
+    }
 
-        // --------------------------------------------------
-        // LOGIN BUTTON
-        // --------------------------------------------------
+    private fun togglePasswordVisibility() {
+        isPasswordVisible = !isPasswordVisible
 
-        btnLogin.setOnClickListener {
-
-            Log.d(TAG, "Login button clicked")
-
-            val email =
-                etEmail.text.toString().trim()
-
-            val password =
-                etPassword.text.toString()
-
-            // --------------------------------------------------
-            // EMAIL VALIDATION
-            // --------------------------------------------------
-
-            if (email.isEmpty()) {
-
-                Log.w(TAG, "Login validation failed: email is empty")
-
-                etEmail.error =
-                    "Please enter your email address"
-
-                etEmail.requestFocus()
-
-                return@setOnClickListener
+        etPassword.inputType =
+            if (isPasswordVisible) {
+                InputType.TYPE_CLASS_TEXT or
+                        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            } else {
+                InputType.TYPE_CLASS_TEXT or
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD
             }
 
-            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        etPassword.setCompoundDrawablesWithIntrinsicBounds(
+            R.drawable.ic_lock,
+            0,
+            if (isPasswordVisible) {
+                R.drawable.ic_visibility
+            } else {
+                R.drawable.ic_visibility_off
+            },
+            0
+        )
 
-                Log.w(TAG, "Login validation failed: invalid email format")
+        etPassword.setSelection(etPassword.text.length)
+    }
 
-                etEmail.error =
-                    "Please enter a valid email address"
+    // ==========================================
+    // EMAIL AND PASSWORD LOGIN
+    // ==========================================
 
-                etEmail.requestFocus()
+    private fun loginUser() {
+        if (isAuthenticating) return
 
-                return@setOnClickListener
+        val email = etEmail.text.toString().trim()
+        val password = etPassword.text.toString()
+
+        if (email.isEmpty()) {
+            etEmail.error = getString(R.string.enter_email_error)
+            etEmail.requestFocus()
+            return
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.error = getString(R.string.valid_email_error)
+            etEmail.requestFocus()
+            return
+        }
+
+        if (password.isEmpty()) {
+            etPassword.error = getString(R.string.enter_password_error)
+            etPassword.requestFocus()
+            return
+        }
+
+        // OFFLINE: verify locally saved credentials.
+        if (!isInternetAvailable()) {
+            openOfflineSession(email, password)
+            return
+        }
+
+        // ONLINE: authenticate through Firebase.
+        setAuthenticating(true)
+
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                val user = auth.currentUser
+
+                if (user == null) {
+                    showLoginError(
+                        getString(R.string.unable_verify_account)
+                    )
+                    return@addOnSuccessListener
+                }
+
+                verifyPersonalProfile(
+                    uid = user.uid,
+                    email = user.email ?: email,
+                    password = password,
+                    signInMethod = "email"
+                )
             }
+            .addOnFailureListener { exception ->
+                Log.e(TAG, "Email login failed", exception)
 
-            // --------------------------------------------------
-            // PASSWORD VALIDATION
-            // --------------------------------------------------
-
-            if (password.isEmpty()) {
-
-                Log.w(TAG, "Login validation failed: password is empty")
-
-                etPassword.error =
-                    "Please enter your password"
-
-                etPassword.requestFocus()
-
-                return@setOnClickListener
+                showLoginError(
+                    getLoginErrorMessage(exception.message)
+                )
             }
+    }
 
-            Log.d(TAG, "Login input validation successful")
+    // ==========================================
+    // GOOGLE SIGN-IN
+    // ==========================================
 
-            // --------------------------------------------------
-            // DISABLE LOGIN BUTTON
-            // --------------------------------------------------
+    private fun startGoogleSignIn() {
+        if (isAuthenticating) return
 
-            btnLogin.isEnabled = false
-            btnLogin.text = "Logging in..."
+        if (!isInternetAvailable()) {
+            showMessage(getString(R.string.internet_required_google))
+            return
+        }
 
-            Log.d(TAG, "Login button disabled while authentication is processing")
+        setAuthenticating(true)
 
-            // --------------------------------------------------
-            // FIREBASE LOGIN
-            // --------------------------------------------------
+        lifecycleScope.launch {
+            try {
+                val googleIdOption = GetGoogleIdOption.Builder()
+                    .setFilterByAuthorizedAccounts(false)
+                    .setServerClientId(
+                        getString(R.string.default_web_client_id)
+                    )
+                    .setAutoSelectEnabled(false)
+                    .build()
 
-            Log.d(TAG, "Starting Firebase authentication")
+                val request = GetCredentialRequest.Builder()
+                    .addCredentialOption(googleIdOption)
+                    .build()
 
-            auth.signInWithEmailAndPassword(
-                email,
-                password
-            ).addOnCompleteListener(this) { task ->
+                val result = credentialManager.getCredential(
+                    context = this@PersonalLoginActivity,
+                    request = request
+                )
 
-                if (task.isSuccessful) {
+                val credential = result.credential
 
-                    Log.d(TAG, "Firebase authentication successful")
-
-                    val firebaseUser =
-                        auth.currentUser
-
-                    if (firebaseUser == null) {
-
-                        Log.e(
-                            TAG,
-                            "Authentication reported success but current Firebase user is null"
+                if (
+                    credential is CustomCredential &&
+                    credential.type ==
+                    GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
+                ) {
+                    val googleCredential =
+                        GoogleIdTokenCredential.createFrom(
+                            credential.data
                         )
 
-                        btnLogin.isEnabled = true
-                        btnLogin.text = "Login"
-
-                        Toast.makeText(
-                            this,
-                            "Login failed. Please try again.",
-                            Toast.LENGTH_LONG
-                        ).show()
-
-                        return@addOnCompleteListener
-                    }
-
-                    val userId =
-                        firebaseUser.uid
-
-                    Log.d(TAG, "Firebase user authenticated successfully")
-
-                    // --------------------------------------------------
-                    // GET USER PROFILE FROM FIRESTORE
-                    // --------------------------------------------------
-
-                    Log.d(TAG, "Loading personal user profile from Firestore")
-
-                    db.collection("Users")
-                        .document(userId)
-                        .get()
-                        .addOnSuccessListener { document ->
-
-                            Log.d(TAG, "Firestore user profile loaded successfully")
-
-                            val fullName =
-                                document.getString("fullName")
-                                    ?: "SafeZone User"
-
-                            Log.d(TAG, "Preparing to open Personal Home screen")
-
-                            // --------------------------------------------------
-                            // OPEN PERSONAL DASHBOARD
-                            // --------------------------------------------------
-
-                            val intent =
-                                Intent(
-                                    this,
-                                    PersonalHomeActivity::class.java
-                                )
-
-                            intent.putExtra(
-                                "fullName",
-                                fullName
-                            )
-
-                            startActivity(intent)
-
-                            Log.d(TAG, "Personal Home screen opened successfully")
-
-                            finish()
-                        }
-                        .addOnFailureListener { exception ->
-
-                            Log.e(
-                                TAG,
-                                "Unable to load Firestore user profile. Continuing with default profile.",
-                                exception
-                            )
-
-                            // Login succeeded even if the
-                            // Firestore profile cannot be loaded.
-
-                            val intent =
-                                Intent(
-                                    this,
-                                    PersonalHomeActivity::class.java
-                                )
-
-                            intent.putExtra(
-                                "fullName",
-                                "SafeZone User"
-                            )
-
-                            startActivity(intent)
-
-                            Log.d(
-                                TAG,
-                                "Personal Home screen opened with default user name"
-                            )
-
-                            finish()
-                        }
-
+                    firebaseGoogleSignIn(googleCredential.idToken)
                 } else {
-
-                    Log.e(
-                        TAG,
-                        "Firebase authentication failed",
-                        task.exception
+                    showLoginError(
+                        getString(R.string.valid_google_account)
                     )
-
-                    btnLogin.isEnabled = true
-                    btnLogin.text = "Login"
-
-                    val error =
-                        task.exception?.message ?: ""
-
-                    val errorMessage = when {
-
-                        error.contains(
-                            "invalid credential",
-                            ignoreCase = true
-                        ) -> {
-                            Log.w(
-                                TAG,
-                                "Authentication rejected because the credentials are invalid"
-                            )
-
-                            "Incorrect email or password."
-                        }
-
-                        error.contains(
-                            "password",
-                            ignoreCase = true
-                        ) -> {
-                            Log.w(
-                                TAG,
-                                "Authentication rejected because of a password-related error"
-                            )
-
-                            "Incorrect password."
-                        }
-
-                        error.contains(
-                            "user",
-                            ignoreCase = true
-                        ) -> {
-                            Log.w(
-                                TAG,
-                                "Authentication rejected because the user account could not be found"
-                            )
-
-                            "No account found with this email."
-                        }
-
-                        error.contains(
-                            "network",
-                            ignoreCase = true
-                        ) -> {
-                            Log.w(
-                                TAG,
-                                "Authentication failed because of a network error"
-                            )
-
-                            "Network error. Please check your internet connection."
-                        }
-
-                        else -> {
-                            Log.w(
-                                TAG,
-                                "Authentication failed with an unspecified error"
-                            )
-
-                            "Login failed. Please check your email and password."
-                        }
-                    }
-
-                    Toast.makeText(
-                        this,
-                        errorMessage,
-                        Toast.LENGTH_LONG
-                    ).show()
                 }
+
+            } catch (exception: GetCredentialException) {
+                Log.e(
+                    TAG,
+                    "Google account selection failed",
+                    exception
+                )
+
+                showLoginError(
+                    getString(R.string.google_signin_cancelled)
+                )
+
+            } catch (exception: Exception) {
+                Log.e(TAG, "Google sign-in failed", exception)
+
+                showLoginError(
+                    getString(R.string.google_signin_failed)
+                )
             }
         }
+    }
 
-        // --------------------------------------------------
-        // FORGOT PASSWORD
-        // --------------------------------------------------
+    private fun firebaseGoogleSignIn(idToken: String) {
+        val firebaseCredential =
+            GoogleAuthProvider.getCredential(idToken, null)
 
-        tvForgotPassword.setOnClickListener {
+        auth.signInWithCredential(firebaseCredential)
+            .addOnSuccessListener {
+                val user = auth.currentUser
 
-            Log.d(TAG, "Forgot Password selected")
+                if (user == null) {
+                    showLoginError(
+                        getString(R.string.unable_verify_google)
+                    )
+                    return@addOnSuccessListener
+                }
 
-            val intent =
-                Intent(
-                    this,
-                    ForgotPasswordActivity::class.java
+                verifyPersonalProfile(
+                    uid = user.uid,
+                    email = user.email.orEmpty(),
+                    password = null,
+                    signInMethod = "google"
+                )
+            }
+            .addOnFailureListener { exception ->
+                Log.e(
+                    TAG,
+                    "Firebase Google authentication failed",
+                    exception
                 )
 
-            startActivity(intent)
+                showLoginError(
+                    getString(R.string.google_auth_failed)
+                )
+            }
+    }
+
+    // ==========================================
+    // VERIFY PERSONAL PROFILE ONLINE
+    // ==========================================
+
+    private fun verifyPersonalProfile(
+        uid: String,
+        email: String,
+        password: String?,
+        signInMethod: String
+    ) {
+        db.collection("Users")
+            .document(uid)
+            .get()
+            .addOnSuccessListener { document ->
+
+                if (!document.exists()) {
+                    auth.signOut()
+
+                    showLoginError(
+                        getString(R.string.personal_profile_not_found)
+                    )
+                    return@addOnSuccessListener
+                }
+
+                if (document.getString("accountType") != "Personal") {
+                    auth.signOut()
+
+                    showLoginError(
+                        getString(R.string.wrong_account_type)
+                    )
+                    return@addOnSuccessListener
+                }
+
+                val fullName =
+                    document.getString("fullName") ?: "SafeZone User"
+
+                // Retrieve the saved residential location.
+                val savedLocation =
+                    document.getString("location")?.trim().orEmpty()
+
+                // Register the FCM device with Azure.
+                // Registration is best-effort and does not block login.
+                if (savedLocation.isNotBlank()) {
+
+                    FCMTokenManager.registerDeviceWithAzure(
+                        accountType = "Personal",
+                        location = savedLocation
+                    )
+
+                    Log.d(
+                        TAG,
+                        "Personal FCM registration requested using saved residential location."
+                    )
+
+                } else {
+                    Log.w(
+                        TAG,
+                        "No residential location found. Azure FCM registration skipped."
+                    )
+                }
+
+                // Save verified offline profile.
+                val offlineLoginSaved = saveVerifiedPersonalProfile(
+                    userId = uid,
+                    email = email,
+                    fullName = fullName,
+                    password = password
+                )
+
+                if (signInMethod == "email") {
+                    if (offlineLoginSaved) {
+                        Log.d(
+                            TAG,
+                            "PERSONAL_OFFLINE_SAVE_SUCCESS: Credentials saved."
+                        )
+                    } else {
+                        Log.e(
+                            TAG,
+                            "PERSONAL_OFFLINE_SAVE_FAILED: Credentials were not saved."
+                        )
+                    }
+                }
+
+                setAuthenticating(false)
+
+                val message = when {
+                    signInMethod == "email" && !offlineLoginSaved ->
+                        getString(R.string.offline_setup_failed)
+
+                    signInMethod == "email" ->
+                        getString(R.string.personal_login_offline_ready)
+
+                    else ->
+                        getString(R.string.personal_login_success)
+                }
+
+                showMessage(message)
+
+                openPersonalHome(
+                    fullName = fullName,
+                    email = email,
+                    offline = false
+                )
+            }
+            .addOnFailureListener { exception ->
+
+                Log.e(
+                    TAG,
+                    "Could not verify Personal profile",
+                    exception
+                )
+
+                auth.signOut()
+
+                showLoginError(
+                    if (!isInternetAvailable()) {
+                        getString(R.string.connection_lost_verify)
+                    } else {
+                        getString(R.string.profile_verification_failed)
+                    }
+                )
+            }
+    }
+
+    // ==========================================
+    // SAVE VERIFIED OFFLINE CREDENTIALS
+    // ==========================================
+
+    private fun saveVerifiedPersonalProfile(
+        userId: String,
+        email: String,
+        fullName: String,
+        password: String?
+    ): Boolean {
+        return try {
+            offlineLoginStore.saveVerifiedLogin(
+                userId = userId,
+                email = email,
+                fullName = fullName,
+                password = password
+            )
+        } catch (exception: Exception) {
+            Log.e(
+                TAG,
+                "PERSONAL_OFFLINE_SAVE_EXCEPTION",
+                exception
+            )
+            false
+        }
+    }
+
+    // ==========================================
+    // OFFLINE LOGIN
+    // ==========================================
+
+    private fun openOfflineSession(
+        emailInput: String,
+        password: String
+    ) {
+        val profile = try {
+            offlineLoginStore.verifyOfflineLogin(
+                email = emailInput,
+                password = password
+            )
+        } catch (exception: Exception) {
+            Log.e(
+                TAG,
+                "PERSONAL_OFFLINE_VERIFY_EXCEPTION",
+                exception
+            )
+            null
         }
 
-        // --------------------------------------------------
-        // CREATE ACCOUNT
-        // --------------------------------------------------
+        if (profile == null) {
+            Log.w(TAG, "PERSONAL_OFFLINE_VERIFY_FAILED")
 
-        tvCreateAccount.setOnClickListener {
+            showMessage(
+                getString(R.string.offline_login_failed)
+            )
+            return
+        }
 
-            Log.d(TAG, "Create Account selected")
+        if (profile.accountType != "Personal") {
+            showMessage(
+                getString(R.string.offline_wrong_account_type)
+            )
+            return
+        }
 
-            val intent =
-                Intent(
-                    this,
-                    PersonalRegistrationActivity::class.java
+        Log.d(TAG, "PERSONAL_OFFLINE_VERIFY_SUCCESS")
+
+        showMessage(
+            getString(R.string.offline_personal_enabled)
+        )
+
+        openPersonalHome(
+            fullName = profile.fullName,
+            email = profile.email,
+            offline = true
+        )
+    }
+
+    // ==========================================
+    // OPEN PERSONAL HOME
+    // ==========================================
+
+    private fun openPersonalHome(
+        fullName: String = "SafeZone User",
+        email: String = "",
+        offline: Boolean = false
+    ) {
+        try {
+            Log.d(
+                TAG,
+                "Opening PersonalHomeActivity. Offline mode: $offline"
+            )
+
+            val homeIntent = Intent(
+                this@PersonalLoginActivity,
+                PersonalHomeActivity::class.java
+            ).apply {
+                putExtra("fullName", fullName)
+                putExtra("email", email)
+                putExtra(EXTRA_OFFLINE_MODE, offline)
+
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+
+            startActivity(homeIntent)
+            finish()
+
+            Log.d(TAG, "PersonalHomeActivity navigation requested")
+
+        } catch (exception: Exception) {
+            Log.e(
+                TAG,
+                "Failed to open PersonalHomeActivity",
+                exception
+            )
+
+            showMessage(
+                getString(
+                    R.string.unable_open_personal_home,
+                    exception.message ?: "Unknown error"
                 )
+            )
+        }
+    }
 
-            startActivity(intent)
+    // ==========================================
+    // AUTHENTICATION STATE
+    // ==========================================
+
+    private fun setAuthenticating(loading: Boolean) {
+        isAuthenticating = loading
+
+        btnLogin.isEnabled = !loading
+        btnGoogleSignIn.isEnabled = !loading
+
+        btnLogin.text = if (loading) {
+            getString(R.string.signing_in)
+        } else {
+            getString(R.string.login)
+        }
+
+        btnGoogleSignIn.text = if (loading) {
+            getString(R.string.please_wait)
+        } else {
+            getString(R.string.continue_with_google)
+        }
+    }
+
+    // ==========================================
+    // ERROR HANDLING
+    // ==========================================
+
+    private fun showLoginError(message: String) {
+        setAuthenticating(false)
+        showMessage(message)
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(
+            this,
+            message,
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    private fun getLoginErrorMessage(
+        errorMessage: String?
+    ): String {
+        val message = errorMessage?.lowercase() ?: ""
+
+        return when {
+            message.contains("invalid-credential") ||
+                    message.contains("wrong-password") ->
+                getString(R.string.incorrect_credentials)
+
+            message.contains("invalid-email") ->
+                getString(R.string.valid_email_error)
+
+            message.contains("user-not-found") ->
+                getString(R.string.account_not_found)
+
+            message.contains("too-many-requests") ->
+                getString(R.string.too_many_login_attempts)
+
+            message.contains("network") ->
+                getString(R.string.network_error)
+
+            else ->
+                getString(R.string.login_failed)
+        }
+    }
+
+    // ==========================================
+    // ON RESUME
+    // ==========================================
+
+    override fun onResume() {
+        super.onResume()
+
+        if (
+            ::btnLogin.isInitialized &&
+            ::btnGoogleSignIn.isInitialized &&
+            !isAuthenticating
+        ) {
+            setAuthenticating(false)
         }
     }
 }

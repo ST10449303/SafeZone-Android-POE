@@ -14,7 +14,7 @@
         android:layout_height="55dp"
         android:background="@color/safezone_navy"
         android:gravity="center"
-        android:text="SafeZone"
+        android:text="@string/app_name"
         android:textColor="@color/safezone_white"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -28,7 +28,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="30dp"
-        android:contentDescription="SafeZone logo"
+        android:contentDescription="@string/safezone_logo_description"
         android:scaleType="fitCenter"
         android:src="@drawable/safezone_logo"
         app:layout_constraintTop_toBottomOf="@id/tvHeader"
@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Welcome to SafeZone"
+        android:text="@string/welcome"
         android:textColor="@color/safezone_dark"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Choose your safety panel"
+        android:text="@string/choose_safety_panel"
         android:textColor="@color/safezone_grey"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/tvWelcome"
@@ -87,7 +87,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Personal Safety"
+                android:text="@string/personal_safety"
                 android:textColor="@color/safezone_navy"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Stay safe wherever you are"
+                android:text="@string/personal_safety_description"
                 android:textColor="@color/safezone_dark"
                 android:textSize="13sp" />
 
@@ -129,7 +129,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Campus Safety"
+                android:text="@string/campus_safety"
                 android:textColor="@color/safezone_navy"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -138,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Connect to your campus safety services"
+                android:text="@string/campus_safety_description"
                 android:textColor="@color/safezone_dark"
                 android:textSize="13sp"
                 android:gravity="center" />
@@ -153,7 +153,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="Need help? Emergency Assistance"
+        android:text="@string/emergency_assistance"
         android:textColor="@color/safezone_blue"
         android:textSize="14sp"
         android:textStyle="bold"

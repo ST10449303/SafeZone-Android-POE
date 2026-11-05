@@ -6,9 +6,7 @@
     android:orientation="vertical"
     android:background="#F5F7FA">
 
-    <!-- ===================================================== -->
     <!-- SAFEZONE HEADER -->
-    <!-- ===================================================== -->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,28 +21,26 @@
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:gravity="center"
-            android:text="‹"
+            android:text="@string/campus_settings_back"
             android:textColor="@android:color/white"
             android:textSize="38sp"
             android:clickable="true"
-            android:focusable="true" />
+            android:focusable="true"
+            android:contentDescription="@string/campus_settings_back" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="SafeZone"
+            android:text="@string/campus_settings_app_name"
             android:textColor="@android:color/white"
             android:textSize="23sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
 
-
-    <!-- ===================================================== -->
     <!-- CONTENT -->
-    <!-- ===================================================== -->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -62,10 +58,7 @@
             android:paddingTop="22dp"
             android:paddingBottom="25dp">
 
-
-            <!-- ================================================= -->
             <!-- SETTINGS HEADER -->
-            <!-- ================================================= -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -78,7 +71,7 @@
                     android:padding="11dp"
                     android:background="@drawable/bg_settings_icon"
                     android:src="@drawable/ic_settings"
-                    android:contentDescription="Settings" />
+                    android:contentDescription="@string/campus_settings_title" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -90,7 +83,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Campus Settings"
+                        android:text="@string/campus_settings_title"
                         android:textColor="#0B1F3A"
                         android:textSize="26sp"
                         android:textStyle="bold" />
@@ -99,18 +92,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Manage your campus safety settings"
+                        android:text="@string/campus_settings_subtitle"
                         android:textColor="#667085"
                         android:textSize="14sp" />
 
                 </LinearLayout>
-
             </LinearLayout>
 
-
-            <!-- ================================================= -->
-            <!-- ACCOUNT -->
-            <!-- ================================================= -->
+            <!-- ACCOUNT SECTION -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -118,8 +107,6 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 android:background="@drawable/bg_settings_section">
-
-                <!-- Account Header -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -131,27 +118,25 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_shield"
-                        android:contentDescription="Account" />
+                        android:contentDescription="@string/campus_settings_account" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Account"
+                        android:text="@string/campus_settings_account"
                         android:textColor="#0B1F3A"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
 
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#E1E7EF" />
 
-
-                <!-- Edit Profile -->
+                <!-- EDIT PROFILE -->
 
                 <LinearLayout
                     android:id="@+id/rowEditProfile"
@@ -167,14 +152,14 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_person_blue"
-                        android:contentDescription="Edit Profile" />
+                        android:contentDescription="@string/campus_settings_edit_profile" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="14dp"
-                        android:text="Edit Profile"
+                        android:text="@string/campus_settings_edit_profile"
                         android:textColor="#203A5A"
                         android:textSize="15sp" />
 
@@ -182,18 +167,16 @@
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:src="@drawable/ic_chevron_right"
-                        android:contentDescription="Open" />
+                        android:contentDescription="@string/campus_settings_open" />
 
                 </LinearLayout>
-
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#E1E7EF" />
 
-
-                <!-- Change Password -->
+                <!-- CHANGE PASSWORD -->
 
                 <LinearLayout
                     android:id="@+id/rowChangePassword"
@@ -209,14 +192,14 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_lock_blue"
-                        android:contentDescription="Change Password" />
+                        android:contentDescription="@string/campus_settings_change_password" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="14dp"
-                        android:text="Change Password"
+                        android:text="@string/campus_settings_change_password"
                         android:textColor="#203A5A"
                         android:textSize="15sp" />
 
@@ -224,18 +207,65 @@
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:src="@drawable/ic_chevron_right"
-                        android:contentDescription="Open" />
+                        android:contentDescription="@string/campus_settings_open" />
 
                 </LinearLayout>
-
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#E1E7EF" />
 
+                <!-- LANGUAGE -->
 
-                <!-- Logout -->
+                <LinearLayout
+                    android:id="@+id/rowLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_info_blue"
+                        android:contentDescription="@string/campus_settings_language" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="14dp"
+                        android:text="@string/campus_settings_language"
+                        android:textColor="#203A5A"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvSelectedLanguage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/campus_settings_language_english"
+                        android:textColor="#667085"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_chevron_right"
+                        android:contentDescription="@string/campus_settings_choose_language" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E1E7EF" />
+
+                <!-- LOGOUT -->
 
                 <LinearLayout
                     android:id="@+id/rowLogout"
@@ -251,14 +281,14 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_logout_red"
-                        android:contentDescription="Logout" />
+                        android:contentDescription="@string/campus_settings_logout" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="14dp"
-                        android:text="Logout"
+                        android:text="@string/campus_settings_logout"
                         android:textColor="#E53935"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -267,16 +297,13 @@
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:src="@drawable/ic_chevron_right"
-                        android:contentDescription="Logout" />
+                        android:contentDescription="@string/campus_settings_logout" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-
-            <!-- ================================================= -->
-            <!-- CAMPUS SAFETY -->
-            <!-- ================================================= -->
+            <!-- CAMPUS SAFETY SECTION -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -284,8 +311,6 @@
                 android:layout_marginTop="14dp"
                 android:orientation="vertical"
                 android:background="@drawable/bg_settings_section">
-
-                <!-- Campus Safety Header -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -297,27 +322,25 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_shield"
-                        android:contentDescription="Campus Safety" />
+                        android:contentDescription="@string/campus_settings_campus_safety" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Campus Safety"
+                        android:text="@string/campus_settings_campus_safety"
                         android:textColor="#0B1F3A"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
 
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#E1E7EF" />
 
-
-                <!-- Campus Alerts -->
+                <!-- CAMPUS ALERTS -->
 
                 <LinearLayout
                     android:id="@+id/rowCampusAlerts"
@@ -333,14 +356,14 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_bell_blue"
-                        android:contentDescription="Campus Alerts" />
+                        android:contentDescription="@string/campus_settings_campus_alerts" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="14dp"
-                        android:text="Campus Alerts"
+                        android:text="@string/campus_settings_campus_alerts"
                         android:textColor="#203A5A"
                         android:textSize="15sp" />
 
@@ -348,18 +371,16 @@
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:src="@drawable/ic_chevron_right"
-                        android:contentDescription="Open" />
+                        android:contentDescription="@string/campus_settings_open" />
 
                 </LinearLayout>
-
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#E1E7EF" />
 
-
-                <!-- Emergency Preferences -->
+                <!-- EMERGENCY PREFERENCES -->
 
                 <LinearLayout
                     android:id="@+id/rowEmergencyPreferences"
@@ -375,14 +396,14 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_warning_blue"
-                        android:contentDescription="Emergency Preferences" />
+                        android:contentDescription="@string/campus_settings_emergency_preferences" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="14dp"
-                        android:text="Emergency Preferences"
+                        android:text="@string/campus_settings_emergency_preferences"
                         android:textColor="#203A5A"
                         android:textSize="15sp" />
 
@@ -390,18 +411,16 @@
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:src="@drawable/ic_chevron_right"
-                        android:contentDescription="Open" />
+                        android:contentDescription="@string/campus_settings_open" />
 
                 </LinearLayout>
-
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#E1E7EF" />
 
-
-                <!-- Location Sharing -->
+                <!-- LOCATION SHARING -->
 
                 <LinearLayout
                     android:id="@+id/rowLocationSharing"
@@ -417,14 +436,14 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_location_blue"
-                        android:contentDescription="Location Sharing" />
+                        android:contentDescription="@string/campus_settings_location_sharing" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="14dp"
-                        android:text="Location Sharing"
+                        android:text="@string/campus_settings_location_sharing"
                         android:textColor="#203A5A"
                         android:textSize="15sp" />
 
@@ -432,16 +451,13 @@
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:src="@drawable/ic_chevron_right"
-                        android:contentDescription="Open" />
+                        android:contentDescription="@string/campus_settings_open" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-
-            <!-- ================================================= -->
-            <!-- SUPPORT -->
-            <!-- ================================================= -->
+            <!-- SUPPORT SECTION -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -449,8 +465,6 @@
                 android:layout_marginTop="14dp"
                 android:orientation="vertical"
                 android:background="@drawable/bg_settings_section">
-
-                <!-- Support Header -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -462,27 +476,25 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_help_blue"
-                        android:contentDescription="Support" />
+                        android:contentDescription="@string/campus_settings_support" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Support"
+                        android:text="@string/campus_settings_support"
                         android:textColor="#0B1F3A"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
 
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#E1E7EF" />
 
-
-                <!-- Help & Support -->
+                <!-- HELP & SUPPORT -->
 
                 <LinearLayout
                     android:id="@+id/rowHelpSupport"
@@ -498,14 +510,14 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_help_blue"
-                        android:contentDescription="Help and Support" />
+                        android:contentDescription="@string/campus_settings_help_support" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="14dp"
-                        android:text="Help &amp; Support"
+                        android:text="@string/campus_settings_help_support"
                         android:textColor="#203A5A"
                         android:textSize="15sp" />
 
@@ -513,18 +525,16 @@
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:src="@drawable/ic_chevron_right"
-                        android:contentDescription="Open" />
+                        android:contentDescription="@string/campus_settings_open" />
 
                 </LinearLayout>
-
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#E1E7EF" />
 
-
-                <!-- About SafeZone -->
+                <!-- ABOUT SAFEZONE -->
 
                 <LinearLayout
                     android:id="@+id/rowAboutSafeZone"
@@ -540,14 +550,14 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_info_blue"
-                        android:contentDescription="About SafeZone" />
+                        android:contentDescription="@string/campus_settings_about_safezone" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="14dp"
-                        android:text="About SafeZone"
+                        android:text="@string/campus_settings_about_safezone"
                         android:textColor="#203A5A"
                         android:textSize="15sp" />
 
@@ -555,20 +565,16 @@
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:src="@drawable/ic_chevron_right"
-                        android:contentDescription="Open" />
+                        android:contentDescription="@string/campus_settings_open" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-
     </ScrollView>
 
-
-    <!-- ===================================================== -->
     <!-- BOTTOM NAVIGATION -->
-    <!-- ===================================================== -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -579,7 +585,6 @@
         android:elevation="8dp"
         android:paddingTop="6dp"
         android:paddingBottom="5dp">
-
 
         <!-- HOME -->
 
@@ -597,17 +602,16 @@
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/ic_home_outline"
-                android:contentDescription="Home" />
+                android:contentDescription="@string/campus_settings_home" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"
+                android:text="@string/campus_settings_home"
                 android:textColor="#506174"
                 android:textSize="13sp" />
 
         </LinearLayout>
-
 
         <!-- MAP -->
 
@@ -625,17 +629,16 @@
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/ic_map_outline"
-                android:contentDescription="Map" />
+                android:contentDescription="@string/campus_settings_map" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Map"
+                android:text="@string/campus_settings_map"
                 android:textColor="#506174"
                 android:textSize="13sp" />
 
         </LinearLayout>
-
 
         <!-- REPORTS -->
 
@@ -653,17 +656,16 @@
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/ic_report_outline"
-                android:contentDescription="Reports" />
+                android:contentDescription="@string/campus_settings_reports" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reports"
+                android:text="@string/campus_settings_reports"
                 android:textColor="#506174"
                 android:textSize="13sp" />
 
         </LinearLayout>
-
 
         <!-- ALERTS -->
 
@@ -681,17 +683,16 @@
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/ic_bell_outline"
-                android:contentDescription="Alerts" />
+                android:contentDescription="@string/campus_settings_alerts" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Alerts"
+                android:text="@string/campus_settings_alerts"
                 android:textColor="#506174"
                 android:textSize="13sp" />
 
         </LinearLayout>
-
 
         <!-- PROFILE -->
 
@@ -709,12 +710,12 @@
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/ic_profile_blue"
-                android:contentDescription="Profile" />
+                android:contentDescription="@string/campus_settings_profile" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Profile"
+                android:text="@string/campus_settings_profile"
                 android:textColor="#1976D2"
                 android:textSize="13sp"
                 android:textStyle="bold" />

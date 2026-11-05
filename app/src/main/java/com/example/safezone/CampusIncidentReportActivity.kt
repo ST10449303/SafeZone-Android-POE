@@ -1,17 +1,21 @@
 package com.example.safezone
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
 import android.webkit.MimeTypeMap
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -22,8 +26,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.safezone.data.IncidentReportDao
+import com.example.safezone.data.IncidentReportEntity
+import com.example.safezone.data.SafeZoneDatabase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -32,457 +44,222 @@ import java.util.Locale
 
 class CampusIncidentReportActivity : AppCompatActivity() {
 
-    // =========================================================
-    // FIREBASE
-    // =========================================================
-
+    // Firebase
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
+    // Local database
+    private lateinit var localDatabase: SafeZoneDatabase
+    private lateinit var incidentReportDao: IncidentReportDao
 
-    // =========================================================
-    // VIEWS
-    // =========================================================
-
+    // Views
     private lateinit var tvBack: ImageView
-
     private lateinit var spIncidentType: Spinner
     private lateinit var spCampus: Spinner
-
     private lateinit var etLocation: EditText
     private lateinit var etDescription: EditText
-
     private lateinit var tvCharacterCount: TextView
-
     private lateinit var ivCurrentLocation: ImageView
-
     private lateinit var btnAddPhoto: LinearLayout
     private lateinit var btnAddVideo: LinearLayout
     private lateinit var btnAddAudio: LinearLayout
     private lateinit var btnAddFile: LinearLayout
-
     private lateinit var btnSubmitCampusReport: AppCompatButton
 
-
-    // =========================================================
-    // LOCATION
-    // =========================================================
-
+    // Location
     private lateinit var locationManager: LocationManager
-
     private var currentLocation: Location? = null
 
+    // Selected evidence files
+    private var selectedPhotoPath: String? = null
+    private var selectedVideoPath: String? = null
+    private var selectedAudioPath: String? = null
+    private var selectedFilePath: String? = null
 
-    // =========================================================
-    // LOCATION PERMISSION
-    // =========================================================
-
+    // Location permission request
     private val locationPermissionRequest =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions ->
 
             val fineLocation =
-                permissions[Manifest.permission.ACCESS_FINE_LOCATION]
-                    ?: false
+                permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
 
             val coarseLocation =
-                permissions[Manifest.permission.ACCESS_COARSE_LOCATION]
-                    ?: false
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
 
             if (fineLocation || coarseLocation) {
-
                 getCurrentLocation()
-
             } else {
-
-                Toast.makeText(
-                    this,
-                    "Location permission is required to use your current location.",
-                    Toast.LENGTH_LONG
-                ).show()
+                showToast(R.string.cir_location_permission_required, true)
             }
         }
 
-
-    // =========================================================
-    // SELECTED EVIDENCE FILE PATHS
-    // =========================================================
-
-    /*
-     * IMPORTANT:
-     *
-     * We no longer store content:// URIs in Firestore.
-     *
-     * These variables contain paths to actual files
-     * copied into the SafeZone app's private storage.
-     */
-
-    private var selectedPhotoPath: String? = null
-    private var selectedVideoPath: String? = null
-    private var selectedAudioPath: String? = null
-    private var selectedFilePath: String? = null
-
-
-    // =========================================================
-    // PHOTO PICKER
-    // =========================================================
-
+    // Photo picker
     private val photoPicker =
         registerForActivityResult(
             ActivityResultContracts.OpenDocument()
         ) { uri ->
-
-            if (uri != null) {
-
-                val savedPath =
-                    copyUriToInternalStorage(
-                        uri,
-                        "photo"
-                    )
-
-                if (savedPath != null) {
-
-                    selectedPhotoPath =
-                        savedPath
-
-                    Toast.makeText(
-                        this,
-                        "Photo saved successfully.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                } else {
-
-                    Toast.makeText(
-                        this,
-                        "Unable to save the selected photo.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+            uri?.let {
+                saveSelectedEvidence(it, "photo")
             }
         }
 
-
-    // =========================================================
-    // VIDEO PICKER
-    // =========================================================
-
+    // Video picker
     private val videoPicker =
         registerForActivityResult(
             ActivityResultContracts.OpenDocument()
         ) { uri ->
-
-            if (uri != null) {
-
-                val savedPath =
-                    copyUriToInternalStorage(
-                        uri,
-                        "video"
-                    )
-
-                if (savedPath != null) {
-
-                    selectedVideoPath =
-                        savedPath
-
-                    Toast.makeText(
-                        this,
-                        "Video saved successfully.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                } else {
-
-                    Toast.makeText(
-                        this,
-                        "Unable to save the selected video.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+            uri?.let {
+                saveSelectedEvidence(it, "video")
             }
         }
 
-
-    // =========================================================
-    // AUDIO PICKER
-    // =========================================================
-
+    // Audio picker
     private val audioPicker =
         registerForActivityResult(
             ActivityResultContracts.OpenDocument()
         ) { uri ->
-
-            if (uri != null) {
-
-                val savedPath =
-                    copyUriToInternalStorage(
-                        uri,
-                        "audio"
-                    )
-
-                if (savedPath != null) {
-
-                    selectedAudioPath =
-                        savedPath
-
-                    Toast.makeText(
-                        this,
-                        "Audio saved successfully.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                } else {
-
-                    Toast.makeText(
-                        this,
-                        "Unable to save the selected audio.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+            uri?.let {
+                saveSelectedEvidence(it, "audio")
             }
         }
 
-
-    // =========================================================
-    // FILE PICKER
-    // =========================================================
-
+    // General file picker
     private val filePicker =
         registerForActivityResult(
             ActivityResultContracts.OpenDocument()
         ) { uri ->
-
-            if (uri != null) {
-
-                val savedPath =
-                    copyUriToInternalStorage(
-                        uri,
-                        "file"
-                    )
-
-                if (savedPath != null) {
-
-                    selectedFilePath =
-                        savedPath
-
-                    Toast.makeText(
-                        this,
-                        "File saved successfully.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                } else {
-
-                    Toast.makeText(
-                        this,
-                        "Unable to save the selected file.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+            uri?.let {
+                saveSelectedEvidence(it, "file")
             }
         }
 
+    // Location listener
+    private val locationListener = object : LocationListener {
 
-    // =========================================================
-    // LOCATION LISTENER
-    // =========================================================
+        override fun onLocationChanged(location: Location) {
+            currentLocation = location
 
-    private val locationListener =
-        object : LocationListener {
-
-            override fun onLocationChanged(
-                location: Location
-            ) {
-
-                currentLocation =
-                    location
-
-                val latitude =
-                    location.latitude
-
-                val longitude =
+            etLocation.setText(
+                String.format(
+                    Locale.US,
+                    "%.6f, %.6f",
+                    location.latitude,
                     location.longitude
-
-                etLocation.setText(
-                    String.format(
-                        Locale.US,
-                        "%.6f, %.6f",
-                        latitude,
-                        longitude
-                    )
                 )
+            )
 
-                stopLocationUpdates()
-            }
-
-            override fun onProviderEnabled(
-                provider: String
-            ) {
-            }
-
-            override fun onProviderDisabled(
-                provider: String
-            ) {
-            }
+            stopLocationUpdates()
         }
 
+        override fun onProviderEnabled(provider: String) = Unit
 
-    // =========================================================
-    // ON CREATE
-    // =========================================================
+        override fun onProviderDisabled(provider: String) = Unit
+    }
 
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
+    // ---------------------------------------------------------
+    // CREATE ACTIVITY
+    // ---------------------------------------------------------
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(
+            SafeZoneLanguageManager.wrapContext(newBase)
+        )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(
-            R.layout.activity_campus_incident_report
-        )
+        setContentView(R.layout.activity_campus_incident_report)
 
-        auth =
-            FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
-        db =
-            FirebaseFirestore.getInstance()
+        localDatabase =
+            SafeZoneDatabase.getDatabase(applicationContext)
+
+        incidentReportDao = localDatabase.incidentReportDao()
 
         initializeViews()
-
         setupIncidentTypeSpinner()
-
         setupCampusSpinner()
-
         setupCharacterCounter()
-
         setupButtons()
     }
 
-
-    // =========================================================
+    // ---------------------------------------------------------
     // INITIALIZE VIEWS
-    // =========================================================
+    // ---------------------------------------------------------
 
     private fun initializeViews() {
-
-        tvBack =
-            findViewById(R.id.tvBack)
-
-        spIncidentType =
-            findViewById(R.id.spIncidentType)
-
-        spCampus =
-            findViewById(R.id.spCampus)
-
-        etLocation =
-            findViewById(R.id.etLocation)
-
-        etDescription =
-            findViewById(R.id.etDescription)
-
-        tvCharacterCount =
-            findViewById(R.id.tvCharacterCount)
-
-        ivCurrentLocation =
-            findViewById(R.id.ivCurrentLocation)
-
-        btnAddPhoto =
-            findViewById(R.id.btnAddPhoto)
-
-        btnAddVideo =
-            findViewById(R.id.btnAddVideo)
-
-        btnAddAudio =
-            findViewById(R.id.btnAddAudio)
-
-        btnAddFile =
-            findViewById(R.id.btnAddFile)
-
+        tvBack = findViewById(R.id.tvBack)
+        spIncidentType = findViewById(R.id.spIncidentType)
+        spCampus = findViewById(R.id.spCampus)
+        etLocation = findViewById(R.id.etLocation)
+        etDescription = findViewById(R.id.etDescription)
+        tvCharacterCount = findViewById(R.id.tvCharacterCount)
+        ivCurrentLocation = findViewById(R.id.ivCurrentLocation)
+        btnAddPhoto = findViewById(R.id.btnAddPhoto)
+        btnAddVideo = findViewById(R.id.btnAddVideo)
+        btnAddAudio = findViewById(R.id.btnAddAudio)
+        btnAddFile = findViewById(R.id.btnAddFile)
         btnSubmitCampusReport =
             findViewById(R.id.btnSubmitCampusReport)
 
         locationManager =
-            getSystemService(
-                LOCATION_SERVICE
-            ) as LocationManager
+            getSystemService(LOCATION_SERVICE) as LocationManager
     }
 
-
-    // =========================================================
+    // ---------------------------------------------------------
     // INCIDENT TYPE SPINNER
-    // =========================================================
+    // ---------------------------------------------------------
 
     private fun setupIncidentTypeSpinner() {
+        val incidentTypes = resources.getStringArray(
+            R.array.cir_incident_types
+        )
 
-        val incidentTypes =
-            arrayOf(
-                "Select incident type",
-                "Medical Emergency",
-                "Assault",
-                "Harassment",
-                "Theft",
-                "Fire",
-                "Accident",
-                "Suspicious Activity",
-                "Unsafe Area",
-                "Other"
-            )
-
-        val adapter =
-            android.widget.ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_item,
-                incidentTypes
-            )
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            incidentTypes
+        )
 
         adapter.setDropDownViewResource(
             android.R.layout.simple_spinner_dropdown_item
         )
 
-        spIncidentType.adapter =
-            adapter
+        spIncidentType.adapter = adapter
     }
 
-
-    // =========================================================
+    // ---------------------------------------------------------
     // CAMPUS SPINNER
-    // =========================================================
+    // ---------------------------------------------------------
 
     private fun setupCampusSpinner() {
+        val campuses = resources.getStringArray(
+            R.array.cir_campuses
+        )
 
-        val campuses =
-            arrayOf(
-                "Select campus",
-                "Pretoria Campus",
-                "Johannesburg Campus",
-                "Polokwane Campus",
-                "Durban Campus",
-                "Bloemfontein Campus"
-            )
-
-        val adapter =
-            android.widget.ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_item,
-                campuses
-            )
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            campuses
+        )
 
         adapter.setDropDownViewResource(
             android.R.layout.simple_spinner_dropdown_item
         )
 
-        spCampus.adapter =
-            adapter
+        spCampus.adapter = adapter
     }
 
-
-    // =========================================================
+    // ---------------------------------------------------------
     // CHARACTER COUNTER
-    // =========================================================
+    // ---------------------------------------------------------
 
     private fun setupCharacterCounter() {
-
         etDescription.addTextChangedListener(
             object : TextWatcher {
 
@@ -491,8 +268,7 @@ class CampusIncidentReportActivity : AppCompatActivity() {
                     start: Int,
                     count: Int,
                     after: Int
-                ) {
-                }
+                ) = Unit
 
                 override fun onTextChanged(
                     s: CharSequence?,
@@ -500,311 +276,242 @@ class CampusIncidentReportActivity : AppCompatActivity() {
                     before: Int,
                     count: Int
                 ) {
-
-                    val length =
+                    tvCharacterCount.text = getString(
+                        R.string.cir_character_count,
                         s?.length ?: 0
-
-                    tvCharacterCount.text =
-                        "$length/500"
+                    )
                 }
 
-                override fun afterTextChanged(
-                    s: Editable?
-                ) {
-                }
+                override fun afterTextChanged(s: Editable?) = Unit
             }
         )
     }
 
-
-    // =========================================================
+    // ---------------------------------------------------------
     // BUTTONS
-    // =========================================================
+    // ---------------------------------------------------------
 
     private fun setupButtons() {
 
-        // -----------------------------------------------------
-        // BACK
-        // -----------------------------------------------------
-
+        // Back button
         tvBack.setOnClickListener {
-
             finish()
         }
 
-
-        // -----------------------------------------------------
-        // CURRENT LOCATION
-        // -----------------------------------------------------
-
+        // Current location
         ivCurrentLocation.setOnClickListener {
-
             requestCurrentLocation()
         }
 
-
-        // -----------------------------------------------------
-        // PHOTO
-        // -----------------------------------------------------
-
+        // Evidence pickers
         btnAddPhoto.setOnClickListener {
-
-            photoPicker.launch(
-                arrayOf("image/*")
-            )
+            photoPicker.launch(arrayOf("image/*"))
         }
-
-
-        // -----------------------------------------------------
-        // VIDEO
-        // -----------------------------------------------------
 
         btnAddVideo.setOnClickListener {
-
-            videoPicker.launch(
-                arrayOf("video/*")
-            )
+            videoPicker.launch(arrayOf("video/*"))
         }
-
-
-        // -----------------------------------------------------
-        // AUDIO
-        // -----------------------------------------------------
 
         btnAddAudio.setOnClickListener {
-
-            audioPicker.launch(
-                arrayOf("audio/*")
-            )
+            audioPicker.launch(arrayOf("audio/*"))
         }
-
-
-        // -----------------------------------------------------
-        // FILE
-        // -----------------------------------------------------
 
         btnAddFile.setOnClickListener {
-
-            filePicker.launch(
-                arrayOf("*/*")
-            )
+            filePicker.launch(arrayOf("*/*"))
         }
 
-
-        // -----------------------------------------------------
-        // SUBMIT
-        // -----------------------------------------------------
-
+        // Submit report
         btnSubmitCampusReport.setOnClickListener {
-
             submitCampusReport()
+        }
+
+        // Set up functional bottom navigation
+        setupBottomNavigation()
+    }
+
+    // ---------------------------------------------------------
+    // BOTTOM NAVIGATION
+    // ---------------------------------------------------------
+
+    private fun setupBottomNavigation() {
+
+        // Home
+        findViewById<LinearLayout>(R.id.navHome)
+            .setOnClickListener {
+                navigateToScreen(CampusHomeActivity::class.java)
+            }
+
+        // Safety map
+        findViewById<LinearLayout>(R.id.navMap)
+            .setOnClickListener {
+                navigateToScreen(CampusSafetyMapActivity::class.java)
+            }
+
+        // Incident reports
+        findViewById<LinearLayout>(R.id.navReports)
+            .setOnClickListener {
+                navigateToScreen(CampusReportsActivity::class.java)
+            }
+
+        // Notifications and alerts
+        findViewById<LinearLayout>(R.id.navNotifications)
+            .setOnClickListener {
+                navigateToScreen(CampusAlertsActivity::class.java)
+            }
+
+        // Profile
+        findViewById<LinearLayout>(R.id.navProfile)
+            .setOnClickListener {
+                navigateToScreen(CampusProfileActivity::class.java)
+            }
+    }
+
+    // ---------------------------------------------------------
+    // NAVIGATE TO A SCREEN
+    // ---------------------------------------------------------
+
+    private fun navigateToScreen(destination: Class<*>) {
+
+        try {
+            startActivity(
+                Intent(this, destination)
+            )
+        } catch (exception: Exception) {
+
+            Toast.makeText(
+                this,
+                getString(R.string.cir_navigation_failed),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
+    // ---------------------------------------------------------
+    // SAVE SELECTED EVIDENCE
+    // ---------------------------------------------------------
 
-    // =========================================================
-    // COPY SELECTED FILE TO SAFEZONE STORAGE
-    // =========================================================
+    private fun saveSelectedEvidence(uri: Uri, prefix: String) {
+        val savedPath = copyUriToInternalStorage(uri, prefix)
+
+        if (savedPath == null) {
+            showToast(R.string.cir_evidence_save_failed, true)
+            return
+        }
+
+        when (prefix) {
+            "photo" -> selectedPhotoPath = savedPath
+            "video" -> selectedVideoPath = savedPath
+            "audio" -> selectedAudioPath = savedPath
+            "file" -> selectedFilePath = savedPath
+        }
+
+        val message = when (prefix) {
+            "photo" -> R.string.cir_photo_saved
+            "video" -> R.string.cir_video_saved
+            "audio" -> R.string.cir_audio_saved
+            else -> R.string.cir_file_saved
+        }
+
+        showToast(message)
+    }
+
+    // ---------------------------------------------------------
+    // COPY FILE TO PRIVATE APP STORAGE
+    // ---------------------------------------------------------
 
     private fun copyUriToInternalStorage(
         uri: Uri,
         prefix: String
     ): String? {
-
         return try {
+            val evidenceDirectory = File(filesDir, "evidence")
 
-            // -------------------------------------------------
-            // CREATE EVIDENCE DIRECTORY
-            // -------------------------------------------------
-
-            val evidenceDirectory =
-                File(
-                    filesDir,
-                    "evidence"
-                )
-
-            if (!evidenceDirectory.exists()) {
-
-                evidenceDirectory.mkdirs()
-            }
-
-
-            // -------------------------------------------------
-            // GET ORIGINAL FILE NAME
-            // -------------------------------------------------
-
-            var originalFileName =
-                getFileName(uri)
-
-            if (
-                originalFileName.isNullOrBlank()
+            if (!evidenceDirectory.exists() &&
+                !evidenceDirectory.mkdirs()
             ) {
-
-                originalFileName =
-                    "$prefix"
+                return null
             }
 
+            val originalFileName =
+                getFileName(uri).takeUnless { it.isNullOrBlank() }
+                    ?: prefix
 
-            // -------------------------------------------------
-            // GET FILE EXTENSION
-            // -------------------------------------------------
-
-            val mimeType =
-                contentResolver.getType(uri)
-
+            val mimeType = contentResolver.getType(uri)
             val extension =
-                getFileExtension(
-                    originalFileName,
-                    mimeType
-                )
-
-
-            // -------------------------------------------------
-            // CREATE UNIQUE FILE NAME
-            // -------------------------------------------------
+                getFileExtension(originalFileName, mimeType)
 
             val fileName =
                 "${prefix}_${System.currentTimeMillis()}$extension"
 
-
-            // -------------------------------------------------
-            // CREATE DESTINATION FILE
-            // -------------------------------------------------
-
-            val destinationFile =
-                File(
-                    evidenceDirectory,
-                    fileName
-                )
-
-
-            // -------------------------------------------------
-            // OPEN ORIGINAL FILE
-            // -------------------------------------------------
+            val destinationFile = File(evidenceDirectory, fileName)
 
             val inputStream =
-                contentResolver.openInputStream(uri)
-                    ?: return null
-
-
-            // -------------------------------------------------
-            // COPY FILE
-            // -------------------------------------------------
+                contentResolver.openInputStream(uri) ?: return null
 
             inputStream.use { input ->
-
-                FileOutputStream(
-                    destinationFile
-                ).use { output ->
-
+                FileOutputStream(destinationFile).use { output ->
                     input.copyTo(output)
                 }
             }
 
-
-            // -------------------------------------------------
-            // RETURN REAL FILE PATH
-            // -------------------------------------------------
-
             destinationFile.absolutePath
-
         } catch (e: Exception) {
-
             e.printStackTrace()
-
             null
         }
     }
 
-
-    // =========================================================
+    // ---------------------------------------------------------
     // GET ORIGINAL FILE NAME
-    // =========================================================
+    // ---------------------------------------------------------
 
-    private fun getFileName(
-        uri: Uri
-    ): String? {
-
-        var fileName: String? = null
-
-        try {
-
+    private fun getFileName(uri: Uri): String? {
+        return try {
             contentResolver.query(
                 uri,
-                arrayOf(
-                    OpenableColumns.DISPLAY_NAME
-                ),
+                arrayOf(OpenableColumns.DISPLAY_NAME),
                 null,
                 null,
                 null
             )?.use { cursor ->
-
                 if (cursor.moveToFirst()) {
+                    val index = cursor.getColumnIndex(
+                        OpenableColumns.DISPLAY_NAME
+                    )
 
-                    val nameIndex =
-                        cursor.getColumnIndex(
-                            OpenableColumns.DISPLAY_NAME
-                        )
-
-                    if (nameIndex >= 0) {
-
-                        fileName =
-                            cursor.getString(
-                                nameIndex
-                            )
-                    }
+                    if (index >= 0) cursor.getString(index) else null
+                } else {
+                    null
                 }
             }
-
         } catch (_: Exception) {
+            null
         }
-
-        return fileName
     }
 
-
-    // =========================================================
+    // ---------------------------------------------------------
     // GET FILE EXTENSION
-    // =========================================================
+    // ---------------------------------------------------------
 
     private fun getFileExtension(
         fileName: String?,
         mimeType: String?
     ): String {
-
-        // -----------------------------------------------------
-        // Try original file name
-        // -----------------------------------------------------
-
         if (!fileName.isNullOrBlank()) {
+            val dotPosition = fileName.lastIndexOf('.')
 
-            val dotPosition =
-                fileName.lastIndexOf(".")
-
-            if (dotPosition >= 0) {
-
-                return fileName.substring(
-                    dotPosition
-                )
+            if (dotPosition >= 0 &&
+                dotPosition < fileName.length - 1
+            ) {
+                return fileName.substring(dotPosition)
             }
         }
 
-
-        // -----------------------------------------------------
-        // Try MIME type
-        // -----------------------------------------------------
-
         if (!mimeType.isNullOrBlank()) {
-
-            val extension =
-                MimeTypeMap
-                    .getSingleton()
-                    .getExtensionFromMimeType(
-                        mimeType
-                    )
+            val extension = MimeTypeMap.getSingleton()
+                .getExtensionFromMimeType(mimeType)
 
             if (!extension.isNullOrBlank()) {
-
                 return ".$extension"
             }
         }
@@ -812,100 +519,70 @@ class CampusIncidentReportActivity : AppCompatActivity() {
         return ""
     }
 
-
-    // =========================================================
-    // REQUEST LOCATION
-    // =========================================================
+    // ---------------------------------------------------------
+    // REQUEST LOCATION PERMISSION
+    // ---------------------------------------------------------
 
     private fun requestCurrentLocation() {
+        val fineGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
-        val fineGranted =
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-
-        val coarseGranted =
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
+        val coarseGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
         if (!fineGranted && !coarseGranted) {
-
             locationPermissionRequest.launch(
                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 )
             )
-
             return
         }
 
         getCurrentLocation()
     }
 
-
-    // =========================================================
+    // ---------------------------------------------------------
     // GET CURRENT LOCATION
-    // =========================================================
+    // ---------------------------------------------------------
 
     private fun getCurrentLocation() {
+        val fineGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
-        val fineGranted =
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
+        val coarseGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
-        val coarseGranted =
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-
-        if (!fineGranted && !coarseGranted) {
-
-            return
-        }
+        if (!fineGranted && !coarseGranted) return
 
         try {
+            val gpsEnabled = locationManager.isProviderEnabled(
+                LocationManager.GPS_PROVIDER
+            )
 
-            val gpsEnabled =
-                locationManager.isProviderEnabled(
-                    LocationManager.GPS_PROVIDER
-                )
-
-            val networkEnabled =
-                locationManager.isProviderEnabled(
-                    LocationManager.NETWORK_PROVIDER
-                )
-
+            val networkEnabled = locationManager.isProviderEnabled(
+                LocationManager.NETWORK_PROVIDER
+            )
 
             if (!gpsEnabled && !networkEnabled) {
-
-                Toast.makeText(
-                    this,
-                    "Please turn on Location Services.",
-                    Toast.LENGTH_LONG
-                ).show()
-
+                showToast(R.string.cir_enable_location_services, true)
                 return
             }
 
-
             etLocation.setText(
-                "Getting current location..."
+                getString(R.string.cir_getting_location)
             )
 
-
-            // -------------------------------------------------
-            // GPS
-            // -------------------------------------------------
-
             if (gpsEnabled) {
-
                 locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     1000L,
@@ -914,13 +591,7 @@ class CampusIncidentReportActivity : AppCompatActivity() {
                 )
             }
 
-
-            // -------------------------------------------------
-            // NETWORK
-            // -------------------------------------------------
-
             if (networkEnabled) {
-
                 locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER,
                     1000L,
@@ -929,51 +600,30 @@ class CampusIncidentReportActivity : AppCompatActivity() {
                 )
             }
 
+            var lastLocation: Location? = null
 
-            // -------------------------------------------------
-            // LAST KNOWN GPS LOCATION
-            // -------------------------------------------------
-
-            var lastLocation: Location? =
-                null
-
-            try {
-
-                lastLocation =
+            if (gpsEnabled) {
+                lastLocation = try {
                     locationManager.getLastKnownLocation(
                         LocationManager.GPS_PROVIDER
                     )
-
-            } catch (_: SecurityException) {
-            }
-
-
-            // -------------------------------------------------
-            // LAST KNOWN NETWORK LOCATION
-            // -------------------------------------------------
-
-            if (lastLocation == null) {
-
-                try {
-
-                    lastLocation =
-                        locationManager.getLastKnownLocation(
-                            LocationManager.NETWORK_PROVIDER
-                        )
-
                 } catch (_: SecurityException) {
+                    null
                 }
             }
 
-
-            // -------------------------------------------------
-            // DISPLAY LAST LOCATION
-            // -------------------------------------------------
+            if (lastLocation == null && networkEnabled) {
+                lastLocation = try {
+                    locationManager.getLastKnownLocation(
+                        LocationManager.NETWORK_PROVIDER
+                    )
+                } catch (_: SecurityException) {
+                    null
+                }
+            }
 
             if (lastLocation != null) {
-
-                currentLocation =
-                    lastLocation
+                currentLocation = lastLocation
 
                 etLocation.setText(
                     String.format(
@@ -984,443 +634,344 @@ class CampusIncidentReportActivity : AppCompatActivity() {
                     )
                 )
             }
-
+        } catch (e: SecurityException) {
+            showToast(R.string.cir_location_permission_required, true)
         } catch (e: Exception) {
-
-            Toast.makeText(
-                this,
-                "Unable to get current location.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showToast(R.string.cir_location_failed, true)
         }
     }
 
-
-    // =========================================================
+    // ---------------------------------------------------------
     // STOP LOCATION UPDATES
-    // =========================================================
+    // ---------------------------------------------------------
 
     private fun stopLocationUpdates() {
-
         try {
-
-            locationManager.removeUpdates(
-                locationListener
-            )
-
+            locationManager.removeUpdates(locationListener)
         } catch (_: SecurityException) {
+            // Permission may have been revoked.
         }
     }
 
+    // ---------------------------------------------------------
+    // CHECK INTERNET CONNECTIVITY
+    // ---------------------------------------------------------
 
-    // =========================================================
-    // SUBMIT CAMPUS REPORT
-    // =========================================================
+    private fun isInternetAvailable(): Boolean {
+        val connectivityManager = getSystemService(
+            Context.CONNECTIVITY_SERVICE
+        ) as ConnectivityManager
+
+        val network = connectivityManager.activeNetwork ?: return false
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(network)
+                ?: return false
+
+        return capabilities.hasCapability(
+            NetworkCapabilities.NET_CAPABILITY_INTERNET
+        ) && capabilities.hasCapability(
+            NetworkCapabilities.NET_CAPABILITY_VALIDATED
+        )
+    }
+
+    // ---------------------------------------------------------
+    // SUBMIT CAMPUS REPORT - SAVE LOCALLY FIRST
+    // ---------------------------------------------------------
 
     private fun submitCampusReport() {
-
-        val currentUser =
-            auth.currentUser
-
-
-        // =====================================================
-        // LOGIN CHECK
-        // =====================================================
+        val currentUser = auth.currentUser
 
         if (currentUser == null) {
+            showToast(R.string.cir_login_required, true)
 
-            Toast.makeText(
-                this,
-                "Please login to submit a campus report.",
-                Toast.LENGTH_LONG
-            ).show()
-
-            val intent =
-                Intent(
-                    this,
-                    CampusLoginActivity::class.java
-                )
-
+            val intent = Intent(this, CampusLoginActivity::class.java)
             intent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or
                         Intent.FLAG_ACTIVITY_CLEAR_TASK
 
             startActivity(intent)
-
             return
         }
-
-
-        // =====================================================
-        // INCIDENT TYPE
-        // =====================================================
 
         val incidentType =
-            spIncidentType.selectedItem
-                ?.toString()
-                ?: ""
-
-
-        // =====================================================
-        // CAMPUS
-        // =====================================================
+            spIncidentType.selectedItem?.toString().orEmpty()
 
         val campus =
-            spCampus.selectedItem
-                ?.toString()
-                ?: ""
+            spCampus.selectedItem?.toString().orEmpty()
 
+        val location = etLocation.text.toString().trim()
+        val description = etDescription.text.toString().trim()
 
-        // =====================================================
-        // LOCATION
-        // =====================================================
+        // Spinner position 0 is the placeholder in every language.
+        if (spIncidentType.selectedItemPosition <= 0) {
+            showToast(R.string.cir_select_incident_type)
+            return
+        }
 
-        val location =
-            etLocation.text
-                .toString()
-                .trim()
+        if (spCampus.selectedItemPosition <= 0) {
+            showToast(R.string.cir_select_campus)
+            return
+        }
 
-
-        // =====================================================
-        // DESCRIPTION
-        // =====================================================
-
-        val description =
-            etDescription.text
-                .toString()
-                .trim()
-
-
-        // =====================================================
-        // VALIDATION
-        // =====================================================
-
-        if (
-            incidentType.isEmpty() ||
-            incidentType == "Select incident type"
+        if (location.isBlank() ||
+            location == getString(R.string.cir_getting_location)
         ) {
-
-            Toast.makeText(
-                this,
-                "Please select an incident type.",
-                Toast.LENGTH_SHORT
-            ).show()
-
+            showToast(R.string.cir_enter_location)
             return
         }
 
-
-        if (
-            campus.isEmpty() ||
-            campus == "Select campus"
-        ) {
-
-            Toast.makeText(
-                this,
-                "Please select a campus.",
-                Toast.LENGTH_SHORT
-            ).show()
-
+        if (description.isBlank()) {
+            showToast(R.string.cir_enter_description)
             return
         }
-
-
-        if (location.isEmpty()) {
-
-            Toast.makeText(
-                this,
-                "Please enter or select the incident location.",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            return
-        }
-
-
-        if (description.isEmpty()) {
-
-            Toast.makeText(
-                this,
-                "Please describe what happened.",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            return
-        }
-
 
         if (description.length < 10) {
-
-            Toast.makeText(
-                this,
-                "Please provide more details about the incident.",
-                Toast.LENGTH_SHORT
-            ).show()
-
+            showToast(R.string.cir_description_too_short)
             return
         }
-
 
         if (description.length > 500) {
-
-            Toast.makeText(
-                this,
-                "Description cannot exceed 500 characters.",
-                Toast.LENGTH_SHORT
-            ).show()
-
+            showToast(R.string.cir_description_too_long)
             return
         }
 
+        val calendar = Calendar.getInstance()
 
-        // =====================================================
-        // DATE AND TIME
-        // =====================================================
+        val dateValue = SimpleDateFormat(
+            "dd MMM yyyy",
+            Locale.getDefault()
+        ).format(calendar.time)
 
-        val calendar =
-            Calendar.getInstance()
+        val timeValue = SimpleDateFormat(
+            "HH:mm",
+            Locale.getDefault()
+        ).format(calendar.time)
 
-        val dateFormat =
-            SimpleDateFormat(
-                "dd MMM yyyy",
-                Locale.getDefault()
-            )
-
-        val timeFormat =
-            SimpleDateFormat(
-                "HH:mm",
-                Locale.getDefault()
-            )
-
-        val dateValue =
-            dateFormat.format(
-                calendar.time
-            )
-
-        val timeValue =
-            timeFormat.format(
-                calendar.time
-            )
-
-        val dateTimeValue =
-            "$dateValue, $timeValue"
-
-
-        // =====================================================
-        // CREATE FIRESTORE DOCUMENT
-        // =====================================================
+        val dateTimeValue = "$dateValue, $timeValue"
+        val createdAt = System.currentTimeMillis()
 
         val reportReference =
-            db.collection(
-                "IncidentReports"
-            ).document()
+            db.collection("IncidentReports").document()
 
-        val reportId =
-            reportReference.id
+        val reportId = reportReference.id
 
+        val latitude = currentLocation?.latitude ?: 0.0
+        val longitude = currentLocation?.longitude ?: 0.0
 
-        // =====================================================
-        // DISABLE SUBMIT BUTTON
-        // =====================================================
+        val localReport = IncidentReportEntity(
+            localId = reportId,
+            userId = currentUser.uid,
+            campus = campus,
+            incidentType = incidentType,
+            description = description,
+            location = location,
+            latitude = latitude,
+            longitude = longitude,
+            dateTime = dateTimeValue,
+            status = "Submitted",
+            photoEvidence = selectedPhotoPath ?: "",
+            videoEvidence = selectedVideoPath ?: "",
+            audioEvidence = selectedAudioPath ?: "",
+            fileEvidence = selectedFilePath ?: "",
+            createdAt = createdAt,
+            syncStatus = "Pending Sync"
+        )
 
-        btnSubmitCampusReport.isEnabled =
-            false
-
+        btnSubmitCampusReport.isEnabled = false
         btnSubmitCampusReport.text =
-            "Submitting..."
+            getString(R.string.cir_saving_report)
 
+        lifecycleScope.launch {
+            try {
+                withContext(Dispatchers.IO) {
+                    incidentReportDao.insert(localReport)
+                }
 
-        // =====================================================
-        // REPORT DATA
-        // =====================================================
-
-        val reportData =
-            hashMapOf<String, Any>(
-
-                "reportId" to reportId,
-
-                "userId" to currentUser.uid,
-
-                "incidentType" to incidentType,
-
-                "campus" to campus,
-
-                "location" to location,
-
-                "description" to description,
-
-                "date" to dateValue,
-
-                "time" to timeValue,
-
-                "dateTime" to dateTimeValue,
-
-                "status" to "Submitted",
-
-                "campusSafetyNotified" to true,
-
-                "createdAt" to System.currentTimeMillis()
-            )
-
-
-        // =====================================================
-        // GPS COORDINATES
-        // =====================================================
-
-        currentLocation?.let { locationData ->
-
-            reportData["latitude"] =
-                locationData.latitude
-
-            reportData["longitude"] =
-                locationData.longitude
-        }
-
-
-        // =====================================================
-        // PHOTO EVIDENCE
-        // =====================================================
-
-        selectedPhotoPath?.let { path ->
-
-            reportData["photoEvidence"] =
-                path
-        }
-
-
-        // =====================================================
-        // VIDEO EVIDENCE
-        // =====================================================
-
-        selectedVideoPath?.let { path ->
-
-            reportData["videoEvidence"] =
-                path
-        }
-
-
-        // =====================================================
-        // AUDIO EVIDENCE
-        // =====================================================
-
-        selectedAudioPath?.let { path ->
-
-            reportData["audioEvidence"] =
-                path
-        }
-
-
-        // =====================================================
-        // FILE EVIDENCE
-        // =====================================================
-
-        selectedFilePath?.let { path ->
-
-            reportData["fileEvidence"] =
-                path
-        }
-
-
-        // =====================================================
-        // SAVE REPORT TO FIRESTORE
-        // =====================================================
-
-        reportReference
-            .set(reportData)
-            .addOnSuccessListener {
-
-                Toast.makeText(
-                    this,
-                    "Campus report submitted successfully.",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-
-                // =============================================
-                // OPEN CONFIRMATION SCREEN
-                // =============================================
-
-                val intent =
-                    Intent(
-                        this,
-                        CampusIncidentConfirmationActivity::class.java
+                if (isInternetAvailable()) {
+                    uploadCampusReport(
+                        report = localReport,
+                        reportReference = reportReference,
+                        dateValue = dateValue,
+                        timeValue = timeValue
                     )
+                } else {
+                    showToast(R.string.cir_saved_offline, true)
 
-
-                intent.putExtra(
-                    "reportId",
-                    reportId
-                )
-
-
-                intent.putExtra(
-                    "incidentType",
-                    incidentType
-                )
-
-
-                intent.putExtra(
-                    "campus",
-                    campus
-                )
-
-
-                intent.putExtra(
-                    "location",
-                    location
-                )
-
-
-                intent.putExtra(
-                    "date",
-                    dateValue
-                )
-
-
-                intent.putExtra(
-                    "time",
-                    timeValue
-                )
-
-
-                intent.putExtra(
-                    "dateTime",
-                    dateTimeValue
-                )
-
-
-                startActivity(intent)
-
-                finish()
-            }
-
-
-            .addOnFailureListener { exception ->
-
-                btnSubmitCampusReport.isEnabled =
-                    true
-
+                    openConfirmationScreen(
+                        reportId = reportId,
+                        incidentType = incidentType,
+                        campus = campus,
+                        location = location,
+                        dateValue = dateValue,
+                        timeValue = timeValue,
+                        dateTimeValue = dateTimeValue,
+                        offline = true
+                    )
+                }
+            } catch (exception: Exception) {
+                btnSubmitCampusReport.isEnabled = true
                 btnSubmitCampusReport.text =
-                    "Submit Campus Report"
-
+                    getString(R.string.cir_submit_report)
 
                 Toast.makeText(
-                    this,
-                    "Failed to submit report: ${exception.message}",
+                    this@CampusIncidentReportActivity,
+                    getString(
+                        R.string.cir_local_save_failed,
+                        exception.message ?: ""
+                    ),
                     Toast.LENGTH_LONG
                 ).show()
             }
+        }
     }
 
+    // ---------------------------------------------------------
+    // UPLOAD REPORT TO FIRESTORE
+    // ---------------------------------------------------------
 
-    // =========================================================
-    // ON DESTROY
-    // =========================================================
+    private fun uploadCampusReport(
+        report: IncidentReportEntity,
+        reportReference: DocumentReference,
+        dateValue: String,
+        timeValue: String
+    ) {
+        btnSubmitCampusReport.text =
+            getString(R.string.cir_synchronising)
+
+        val reportData = hashMapOf<String, Any>(
+            "reportId" to report.localId,
+            "userId" to report.userId,
+            "incidentType" to report.incidentType,
+            "campus" to report.campus,
+            "location" to report.location,
+            "description" to report.description,
+            "date" to dateValue,
+            "time" to timeValue,
+            "dateTime" to report.dateTime,
+            "status" to report.status,
+            "campusSafetyNotified" to true,
+            "createdAt" to report.createdAt
+        )
+
+        if (report.latitude != 0.0 || report.longitude != 0.0) {
+            reportData["latitude"] = report.latitude
+            reportData["longitude"] = report.longitude
+        }
+
+        if (report.photoEvidence.isNotBlank()) {
+            reportData["photoEvidence"] = report.photoEvidence
+        }
+
+        if (report.videoEvidence.isNotBlank()) {
+            reportData["videoEvidence"] = report.videoEvidence
+        }
+
+        if (report.audioEvidence.isNotBlank()) {
+            reportData["audioEvidence"] = report.audioEvidence
+        }
+
+        if (report.fileEvidence.isNotBlank()) {
+            reportData["fileEvidence"] = report.fileEvidence
+        }
+
+        reportReference.set(reportData)
+            .addOnSuccessListener {
+                lifecycleScope.launch {
+                    try {
+                        withContext(Dispatchers.IO) {
+                            incidentReportDao.updateSyncStatus(
+                                localId = report.localId,
+                                userId = report.userId,
+                                syncStatus = "Synced"
+                            )
+                        }
+                    } catch (exception: Exception) {
+                        exception.printStackTrace()
+                    }
+
+                    showToast(R.string.cir_submission_success)
+
+                    openConfirmationScreen(
+                        reportId = report.localId,
+                        incidentType = report.incidentType,
+                        campus = report.campus,
+                        location = report.location,
+                        dateValue = dateValue,
+                        timeValue = timeValue,
+                        dateTimeValue = report.dateTime,
+                        offline = false
+                    )
+                }
+            }
+            .addOnFailureListener {
+                showToast(R.string.cir_sync_pending, true)
+
+                openConfirmationScreen(
+                    reportId = report.localId,
+                    incidentType = report.incidentType,
+                    campus = report.campus,
+                    location = report.location,
+                    dateValue = dateValue,
+                    timeValue = timeValue,
+                    dateTimeValue = report.dateTime,
+                    offline = true
+                )
+            }
+    }
+
+    // ---------------------------------------------------------
+    // OPEN CONFIRMATION SCREEN
+    // ---------------------------------------------------------
+
+    private fun openConfirmationScreen(
+        reportId: String,
+        incidentType: String,
+        campus: String,
+        location: String,
+        dateValue: String,
+        timeValue: String,
+        dateTimeValue: String,
+        offline: Boolean
+    ) {
+        val intent = Intent(
+            this,
+            CampusIncidentConfirmationActivity::class.java
+        )
+
+        intent.putExtra("reportId", reportId)
+        intent.putExtra("incidentType", incidentType)
+        intent.putExtra("campus", campus)
+        intent.putExtra("location", location)
+        intent.putExtra("date", dateValue)
+        intent.putExtra("time", timeValue)
+        intent.putExtra("dateTime", dateTimeValue)
+        intent.putExtra("offlineReport", offline)
+
+        startActivity(intent)
+        finish()
+    }
+
+    // ---------------------------------------------------------
+    // TOAST HELPER
+    // ---------------------------------------------------------
+
+    private fun showToast(
+        messageRes: Int,
+        longDuration: Boolean = false
+    ) {
+        Toast.makeText(
+            this,
+            getString(messageRes),
+            if (longDuration) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    // ---------------------------------------------------------
+    // DESTROY ACTIVITY
+    // ---------------------------------------------------------
 
     override fun onDestroy() {
-
         stopLocationUpdates()
-
         super.onDestroy()
     }
 }

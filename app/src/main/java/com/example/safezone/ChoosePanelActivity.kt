@@ -28,13 +28,9 @@ class ChoosePanelActivity : AppCompatActivity() {
         // ================================
 
         cardPersonalSafety.setOnClickListener {
-
-            val intent = Intent(
-                this,
-                PersonalLoginActivity::class.java
+            startActivity(
+                Intent(this, PersonalLoginActivity::class.java)
             )
-
-            startActivity(intent)
         }
 
         // ================================
@@ -42,13 +38,9 @@ class ChoosePanelActivity : AppCompatActivity() {
         // ================================
 
         cardCampusSafety.setOnClickListener {
-
-            val intent = Intent(
-                this,
-                CampusLoginActivity::class.java
+            startActivity(
+                Intent(this, CampusLoginActivity::class.java)
             )
-
-            startActivity(intent)
         }
 
         // ================================
@@ -56,10 +48,9 @@ class ChoosePanelActivity : AppCompatActivity() {
         // ================================
 
         tvEmergency.setOnClickListener {
-
             Toast.makeText(
                 this,
-                "Emergency Assistance selected",
+                getString(R.string.emergency_assistance_selected),
                 Toast.LENGTH_SHORT
             ).show()
         }

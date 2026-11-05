@@ -30,18 +30,20 @@ class ForgotPasswordActivity : AppCompatActivity() {
             val email = etEmail.text.toString().trim()
 
             if (email.isEmpty()) {
-                etEmail.error = "Please enter your email address"
+                etEmail.error =
+                    getString(R.string.forgot_enter_email)
                 etEmail.requestFocus()
                 return@setOnClickListener
             }
 
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                etEmail.error = "Please enter a valid email address"
+                etEmail.error =
+                    getString(R.string.forgot_invalid_email)
                 etEmail.requestFocus()
                 return@setOnClickListener
             }
 
-            // Go directly to Create New Password
+            // Open Create New Password screen
             val intent = Intent(
                 this,
                 CreateNewPasswordActivity::class.java
@@ -66,7 +68,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
                         Intent.FLAG_ACTIVITY_SINGLE_TOP
 
             startActivity(intent)
-
             finish()
         }
     }

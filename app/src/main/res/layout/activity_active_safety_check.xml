@@ -11,9 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- ============================= -->
         <!-- SAFEZONE HEADER -->
-        <!-- ============================= -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +30,8 @@
                 android:textSize="38sp"
                 android:textStyle="bold"
                 android:clickable="true"
-                android:focusable="true" />
+                android:focusable="true"
+                android:contentDescription="@string/active_check_back" />
 
             <TextView
                 android:layout_width="0dp"
@@ -50,10 +49,7 @@
 
         </LinearLayout>
 
-
-        <!-- ============================= -->
         <!-- CONTENT -->
-        <!-- ============================= -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,12 +65,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Safety Check Active"
+                android:text="@string/active_check_title"
                 android:textColor="@color/safezone_dark"
                 android:textSize="21sp"
                 android:textStyle="bold" />
 
-            <!-- Countdown -->
+            <!-- COUNTDOWN -->
 
             <TextView
                 android:id="@+id/tvCountdown"
@@ -93,12 +89,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:text="Your safety check is active."
+                android:text="@string/active_check_initial_status"
                 android:textColor="@color/safezone_grey"
                 android:textSize="13sp" />
 
-
-            <!-- Information -->
+            <!-- INFORMATION -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -112,7 +107,7 @@
                     android:id="@+id/tvTrustedContact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Trusted Contact: --"
+                    android:text="@string/active_check_contact_default"
                     android:textColor="@color/safezone_dark"
                     android:textSize="14sp" />
 
@@ -121,12 +116,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Location Sharing: OFF"
+                    android:text="@string/active_check_location_off"
                     android:textColor="@color/safezone_dark"
                     android:textSize="14sp" />
 
             </LinearLayout>
-
 
             <!-- I'M SAFE -->
 
@@ -136,12 +130,11 @@
                 android:layout_height="54dp"
                 android:layout_marginTop="22dp"
                 android:backgroundTint="#2E7D32"
-                android:text="I'M SAFE"
+                android:text="@string/active_check_im_safe"
                 android:textAllCaps="false"
                 android:textColor="@color/safezone_white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
 
             <!-- CANCEL -->
 
@@ -151,7 +144,7 @@
                 android:layout_height="52dp"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/safezone_white"
-                android:text="Cancel Check-In"
+                android:text="@string/active_check_cancel"
                 android:textAllCaps="false"
                 android:textColor="@color/safezone_dark"
                 android:textSize="15sp" />

@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F5F8FC">
 
-    <!-- ===================================================== -->
-    <!-- TOP NAVIGATION -->
-    <!-- ===================================================== -->
-
+    <!-- Header -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
@@ -20,11 +15,12 @@
 
         <ImageView
             android:id="@+id/tvBack"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_centerVertical="true"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:padding="6dp"
             android:src="@drawable/ic_back"
-            android:contentDescription="Back"
+            android:contentDescription="@string/cir_back"
             android:clickable="true"
             android:focusable="true" />
 
@@ -33,18 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="SafeZone"
+            android:text="@string/cir_app_name"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
 
-
-    <!-- ===================================================== -->
-    <!-- MAIN CONTENT -->
-    <!-- ===================================================== -->
-
+    <!-- Scrollable form -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -61,12 +53,10 @@
             android:paddingEnd="16dp"
             android:paddingBottom="24dp">
 
-            <!-- TITLE -->
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Report Campus Incident"
+                android:text="@string/cir_title"
                 android:textColor="#102A4C"
                 android:textSize="28sp"
                 android:textStyle="bold" />
@@ -75,16 +65,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Help us keep our campus safe. Provide as much detail as possible."
+                android:text="@string/cir_subtitle"
                 android:textColor="#58708F"
                 android:textSize="16sp"
                 android:lineSpacingExtra="3dp" />
 
-
-            <!-- ================================================= -->
-            <!-- INCIDENT DETAILS CARD -->
-            <!-- ================================================= -->
-
+            <!-- Incident details card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,12 +79,10 @@
                 android:background="@drawable/bg_white_card"
                 android:padding="16dp">
 
-                <!-- INCIDENT TYPE -->
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Incident Type *"
+                    android:text="@string/cir_incident_type_required"
                     android:textColor="#102A4C"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -116,7 +100,7 @@
                         android:layout_height="26dp"
                         android:layout_marginStart="12dp"
                         android:src="@drawable/ic_security_check"
-                        android:contentDescription="Incident type" />
+                        android:contentDescription="@string/cir_incident_type" />
 
                     <Spinner
                         android:id="@+id/spIncidentType"
@@ -129,14 +113,11 @@
 
                 </LinearLayout>
 
-
-                <!-- CAMPUS -->
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Campus *"
+                    android:text="@string/cir_campus_required"
                     android:textColor="#102A4C"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -154,7 +135,7 @@
                         android:layout_height="26dp"
                         android:layout_marginStart="12dp"
                         android:src="@drawable/ic_campus"
-                        android:contentDescription="Campus" />
+                        android:contentDescription="@string/cir_campus" />
 
                     <Spinner
                         android:id="@+id/spCampus"
@@ -167,14 +148,11 @@
 
                 </LinearLayout>
 
-
-                <!-- LOCATION -->
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Location *"
+                    android:text="@string/cir_location_required"
                     android:textColor="#102A4C"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -192,7 +170,7 @@
                         android:layout_height="26dp"
                         android:layout_marginStart="12dp"
                         android:src="@drawable/ic_location"
-                        android:contentDescription="Location" />
+                        android:contentDescription="@string/cir_location" />
 
                     <EditText
                         android:id="@+id/etLocation"
@@ -201,33 +179,32 @@
                         android:layout_weight="1"
                         android:layout_marginStart="8dp"
                         android:background="@android:color/transparent"
-                        android:hint="Enter current location or select on map"
+                        android:hint="@string/cir_location_hint"
                         android:textColor="#17365D"
                         android:textColorHint="#8AA0BB"
                         android:textSize="15sp"
                         android:singleLine="true"
+                        android:inputType="text"
                         android:paddingEnd="8dp" />
 
                     <ImageView
                         android:id="@+id/ivCurrentLocation"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_marginEnd="12dp"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="8dp"
+                        android:padding="4dp"
                         android:src="@drawable/ic_location_current"
-                        android:contentDescription="Use current location"
+                        android:contentDescription="@string/cir_use_current_location"
                         android:clickable="true"
                         android:focusable="true" />
 
                 </LinearLayout>
 
-
-                <!-- DESCRIPTION -->
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Description *"
+                    android:text="@string/cir_description_required"
                     android:textColor="#102A4C"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -244,7 +221,7 @@
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="14dp"
                         android:src="@drawable/ic_description"
-                        android:contentDescription="Description" />
+                        android:contentDescription="@string/cir_description" />
 
                     <EditText
                         android:id="@+id/etDescription"
@@ -254,36 +231,29 @@
                         android:layout_marginEnd="10dp"
                         android:background="@android:color/transparent"
                         android:gravity="top"
-                        android:hint="Describe what happened..."
+                        android:hint="@string/cir_description_hint"
                         android:textColor="#17365D"
                         android:textColorHint="#8AA0BB"
                         android:textSize="15sp"
-                        android:inputType="textMultiLine"
+                        android:inputType="textMultiLine|textCapSentences"
                         android:maxLength="500"
                         android:paddingTop="14dp"
                         android:paddingBottom="10dp" />
 
                 </FrameLayout>
 
-
-                <!-- CHARACTER COUNTER -->
-
                 <TextView
                     android:id="@+id/tvCharacterCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text="0/500"
+                    android:text="@string/cir_initial_character_count"
                     android:textColor="#71849B"
                     android:textSize="12sp" />
 
             </LinearLayout>
 
-
-            <!-- ================================================= -->
-            <!-- EVIDENCE CARD -->
-            <!-- ================================================= -->
-
+            <!-- Evidence card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -295,7 +265,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Evidence (Optional)"
+                    android:text="@string/cir_evidence_title"
                     android:textColor="#102A4C"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -304,23 +274,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="Add photos, videos, audio recordings or files to support your report."
+                    android:text="@string/cir_evidence_description"
                     android:textColor="#66809F"
                     android:textSize="14sp" />
 
-
-                <!-- ================================================= -->
-                <!-- EVIDENCE ROW 1 -->
-                <!-- ================================================= -->
-
+                <!-- Photo and video -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="105dp"
                     android:layout_marginTop="12dp"
                     android:orientation="horizontal"
                     android:weightSum="2">
-
-                    <!-- PHOTO -->
 
                     <LinearLayout
                         android:id="@+id/btnAddPhoto"
@@ -338,21 +302,18 @@
                             android:layout_width="34dp"
                             android:layout_height="34dp"
                             android:src="@drawable/ic_camera"
-                            android:contentDescription="Photo" />
+                            android:contentDescription="@string/cir_photo" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="Photo"
+                            android:text="@string/cir_photo"
                             android:textColor="#17365D"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
-
-
-                    <!-- VIDEO -->
 
                     <LinearLayout
                         android:id="@+id/btnAddVideo"
@@ -371,13 +332,13 @@
                             android:layout_width="34dp"
                             android:layout_height="34dp"
                             android:src="@drawable/ic_video"
-                            android:contentDescription="Video" />
+                            android:contentDescription="@string/cir_video" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="Video"
+                            android:text="@string/cir_video"
                             android:textColor="#17365D"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -386,19 +347,13 @@
 
                 </LinearLayout>
 
-
-                <!-- ================================================= -->
-                <!-- EVIDENCE ROW 2 -->
-                <!-- ================================================= -->
-
+                <!-- Audio and file -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="105dp"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:weightSum="2">
-
-                    <!-- AUDIO -->
 
                     <LinearLayout
                         android:id="@+id/btnAddAudio"
@@ -416,21 +371,18 @@
                             android:layout_width="34dp"
                             android:layout_height="34dp"
                             android:src="@drawable/ic_audio"
-                            android:contentDescription="Audio" />
+                            android:contentDescription="@string/cir_audio" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="Audio"
+                            android:text="@string/cir_audio"
                             android:textColor="#17365D"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
-
-
-                    <!-- FILE -->
 
                     <LinearLayout
                         android:id="@+id/btnAddFile"
@@ -448,13 +400,13 @@
                             android:layout_width="34dp"
                             android:layout_height="34dp"
                             android:src="@drawable/ic_file"
-                            android:contentDescription="File" />
+                            android:contentDescription="@string/cir_file" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="File"
+                            android:text="@string/cir_file"
                             android:textColor="#17365D"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -465,11 +417,7 @@
 
             </LinearLayout>
 
-
-            <!-- ================================================= -->
-            <!-- SUBMIT -->
-            <!-- ================================================= -->
-
+            <!-- Submit -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSubmitCampusReport"
                 android:layout_width="match_parent"
@@ -478,25 +426,23 @@
                 android:background="@drawable/bg_submit_report"
                 android:backgroundTint="@null"
                 android:stateListAnimator="@null"
-                android:text="Submit Campus Report"
+                android:text="@string/cir_submit_report"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 android:drawableStart="@drawable/ic_send"
                 android:drawablePadding="10dp"
-                android:gravity="center" />
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true" />
 
         </LinearLayout>
-
     </ScrollView>
 
-
-    <!-- ===================================================== -->
-    <!-- BOTTOM NAVIGATION -->
-    <!-- ===================================================== -->
-
+    <!-- Bottom navigation -->
     <LinearLayout
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="78dp"
         android:orientation="horizontal"
@@ -504,8 +450,6 @@
         android:background="@android:color/white"
         android:elevation="8dp"
         android:weightSum="5">
-
-        <!-- HOME -->
 
         <LinearLayout
             android:id="@+id/navHome"
@@ -521,19 +465,15 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:src="@drawable/ic_home"
-                android:contentDescription="Home" />
+                android:contentDescription="@string/cir_nav_home" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"
+                android:text="@string/cir_nav_home"
                 android:textColor="#17365D"
                 android:textSize="12sp" />
-
         </LinearLayout>
-
-
-        <!-- MAP -->
 
         <LinearLayout
             android:id="@+id/navMap"
@@ -549,19 +489,15 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:src="@drawable/ic_location"
-                android:contentDescription="Map" />
+                android:contentDescription="@string/cir_nav_map" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Map"
+                android:text="@string/cir_nav_map"
                 android:textColor="#17365D"
                 android:textSize="12sp" />
-
         </LinearLayout>
-
-
-        <!-- REPORTS -->
 
         <LinearLayout
             android:id="@+id/navReports"
@@ -577,19 +513,15 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:src="@drawable/ic_description"
-                android:contentDescription="Reports" />
+                android:contentDescription="@string/cir_nav_reports" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reports"
+                android:text="@string/cir_nav_reports"
                 android:textColor="#17365D"
                 android:textSize="12sp" />
-
         </LinearLayout>
-
-
-        <!-- ALERTS -->
 
         <LinearLayout
             android:id="@+id/navNotifications"
@@ -605,19 +537,15 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:src="@drawable/ic_notification"
-                android:contentDescription="Alerts" />
+                android:contentDescription="@string/cir_nav_alerts" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Alerts"
+                android:text="@string/cir_nav_alerts"
                 android:textColor="#17365D"
                 android:textSize="12sp" />
-
         </LinearLayout>
-
-
-        <!-- PROFILE -->
 
         <LinearLayout
             android:id="@+id/navProfile"
@@ -633,15 +561,14 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:src="@drawable/ic_person"
-                android:contentDescription="Profile" />
+                android:contentDescription="@string/cir_nav_profile" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Profile"
+                android:text="@string/cir_nav_profile"
                 android:textColor="#17365D"
                 android:textSize="12sp" />
-
         </LinearLayout>
 
     </LinearLayout>

@@ -31,6 +31,7 @@ class CampusRegistrationActivity : AppCompatActivity() {
 
     private lateinit var etFullName: EditText
     private lateinit var etStudentEmail: EditText
+    private lateinit var etStudentNumber: EditText
     private lateinit var spInstitution: Spinner
     private lateinit var spCampus: Spinner
     private lateinit var etPassword: EditText
@@ -155,6 +156,10 @@ class CampusRegistrationActivity : AppCompatActivity() {
 
         etStudentEmail =
             findViewById(R.id.etStudentEmail)
+
+        // NEW: Student Number field
+        etStudentNumber =
+            findViewById(R.id.etStudentNumber)
 
         spInstitution =
             findViewById(R.id.spInstitution)
@@ -545,6 +550,12 @@ class CampusRegistrationActivity : AppCompatActivity() {
                 .toString()
                 .trim()
 
+        // NEW: Get student number
+        val studentNumber =
+            etStudentNumber.text
+                .toString()
+                .trim()
+
         val password =
             etPassword.text
                 .toString()
@@ -652,7 +663,7 @@ class CampusRegistrationActivity : AppCompatActivity() {
             )
 
             etStudentEmail.error =
-                "Enter a valid email address"
+                "Enter a valid student email"
 
             etStudentEmail.requestFocus()
 
@@ -662,6 +673,30 @@ class CampusRegistrationActivity : AppCompatActivity() {
         Log.d(
             TAG,
             "Student email validation successful"
+        )
+
+        // =====================================================
+        // STUDENT NUMBER VALIDATION
+        // =====================================================
+
+        if (studentNumber.isEmpty()) {
+
+            Log.w(
+                TAG,
+                "Registration validation failed: student number is empty"
+            )
+
+            etStudentNumber.error =
+                "Enter your student number"
+
+            etStudentNumber.requestFocus()
+
+            return
+        }
+
+        Log.d(
+            TAG,
+            "Student number validation successful"
         )
 
         // =====================================================
@@ -890,6 +925,9 @@ class CampusRegistrationActivity : AppCompatActivity() {
                             "fullName" to fullName,
 
                             "email" to email,
+
+                            // NEW: Save student number
+                            "studentNumber" to studentNumber,
 
                             "institution" to institution,
 

@@ -1,3 +1,1354 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- App -->
     <string name="app_name">SafeZone</string>
+
+    <!-- Language Settings -->
+    <string name="language">Language</string>
+    <string name="select_language">Choose your language</string>
+    <string name="language_settings">Language Settings</string>
+    <string name="language_description">Choose your preferred language for SafeZone.</string>
+    <string name="english">English</string>
+    <string name="isizulu">isiZulu</string>
+    <string name="setswana">Setswana</string>
+    <string name="save_language">Save Language</string>
+    <string name="language_saved">Language preference saved</string>
+
+    <!-- General Navigation -->
+    <string name="home">Home</string>
+    <string name="settings">Settings</string>
+    <string name="login">Log in</string>
+    <string name="logout">Log out</string>
+    <string name="register">Register</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="submit">Submit</string>
+    <string name="back">Back</string>
+
+    <!-- Account -->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_password">Change Password</string>
+
+    <!-- SafeZone Safety Features -->
+    <string name="welcome">Welcome to SafeZone</string>
+    <string name="personal_panel">Personal Panel</string>
+    <string name="campus_panel">Campus Panel</string>
+    <string name="safety_alerts">Safety Alerts</string>
+    <string name="emergency">Emergency</string>
+    <string name="location">Location</string>
+    <string name="trusted_contacts">Trusted Contacts</string>
+    <string name="location_sharing">Location Sharing</string>
+    <string name="emergency_preferences">Emergency Preferences</string>
+
+    <!-- Choose Panel Screen -->
+    <string name="safezone_logo_description">SafeZone logo</string>
+    <string name="choose_safety_panel">Choose your safety panel</string>
+    <string name="personal_safety">Personal Safety</string>
+    <string name="personal_safety_description">Stay safe wherever you are</string>
+    <string name="campus_safety">Campus Safety</string>
+    <string name="campus_safety_description">Connect to your campus safety services</string>
+    <string name="emergency_assistance">Need help? Emergency Assistance</string>
+    <string name="emergency_assistance_selected">Emergency Assistance selected</string>
+
+    <!-- Personal Login Screen -->
+    <string name="personal_login_title">Personal Safety Login</string>
+    <string name="personal_login_subtitle">Sign in to access your personal safety account.</string>
+    <string name="email_address_hint">Email Address</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="or">OR</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="no_personal_account">Don\'t have a personal account?</string>
+
+    <!-- Login Validation and Messages -->
+    <string name="enter_email_error">Please enter your email address</string>
+    <string name="valid_email_error">Please enter a valid email address</string>
+    <string name="enter_password_error">Please enter your password</string>
+    <string name="internet_required_reset">Internet is required to reset your password.</string>
+    <string name="internet_required_google">Connect to the internet to sign in with Google.</string>
+    <string name="valid_google_account">Please select a valid Google account.</string>
+    <string name="google_signin_cancelled">Google sign-in was cancelled or could not start. Please try again.</string>
+    <string name="google_signin_failed">Google sign-in failed. Please try again.</string>
+    <string name="unable_verify_account">Unable to verify your account.</string>
+    <string name="unable_verify_google">Unable to verify your Google account.</string>
+    <string name="google_auth_failed">Google authentication failed. Please try again.</string>
+    <string name="personal_profile_not_found">No SafeZone Personal profile was found. Please register first.</string>
+    <string name="wrong_account_type">This account is not registered as a Personal account. Please use the correct login.</string>
+    <string name="offline_setup_failed">Online login succeeded, but offline setup failed. Check Logcat.</string>
+    <string name="personal_login_offline_ready">Personal login successful. Offline login is prepared.</string>
+    <string name="personal_login_success">Personal login successful!</string>
+    <string name="connection_lost_verify">Connection lost before your profile could be verified. Please try again when online.</string>
+    <string name="profile_verification_failed">Unable to verify your profile. Please try again.</string>
+    <string name="offline_login_failed">Offline login failed. First sign in successfully online on this device and confirm offline setup succeeds.</string>
+    <string name="offline_wrong_account_type">This login is not registered as a Personal account.</string>
+    <string name="offline_personal_enabled">Offline Personal access enabled. Online services may be unavailable.</string>
+    <string name="unable_open_personal_home">Unable to open Personal Home: %1$s</string>
+    <string name="signing_in">Signing In...</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="incorrect_credentials">Incorrect email or password.</string>
+    <string name="account_not_found">No account was found with this email.</string>
+    <string name="too_many_login_attempts">Too many login attempts. Please try again later.</string>
+    <string name="network_error">Network error. Please check your internet connection.</string>
+    <string name="login_failed">Login failed. Please check your email and password.</string>
+
+    <!-- Personal Registration Screen -->
+    <string name="create_personal_account">Create Personal Account</string>
+    <string name="create_personal_account_subtitle">Create your SafeZone personal safety account.</string>
+    <string name="full_name">Full Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_have_personal_account">Already have a personal account?</string>
+    <string name="password_visibility_description">Password. Tap the eye icon to show or hide password.</string>
+    <string name="confirm_password_visibility_description">Confirm password. Tap the eye icon to show or hide password.</string>
+
+    <!-- Registration Validation and Results -->
+    <string name="enter_full_name_error">Please enter your full name.</string>
+    <string name="enter_registration_email_error">Please enter your email address.</string>
+    <string name="valid_registration_email_error">Please enter a valid email address.</string>
+    <string name="enter_registration_password_error">Please enter a password.</string>
+    <string name="password_min_length_error">Password must be at least 6 characters.</string>
+    <string name="confirm_password_error">Please confirm your password.</string>
+    <string name="passwords_do_not_match">Passwords do not match.</string>
+    <string name="registration_success">Personal account created successfully.</string>
+    <string name="registration_failed">Registration failed. Please try again.</string>
+    <string name="email_already_registered">This email address is already registered.</string>
+    <string name="registration_network_error">Network error. Check your internet connection and try again.</string>
+
+    <!-- Personal Registration Password Validation -->
+    <string name="creating_account">Creating Account...</string>
+    <string name="create_password_error">Please create a password.</string>
+    <string name="password_min_eight_error">Password must be at least 8 characters.</string>
+    <string name="password_uppercase_error">Password needs an uppercase letter.</string>
+    <string name="password_lowercase_error">Password needs a lowercase letter.</string>
+    <string name="password_number_error">Password needs a number.</string>
+    <string name="password_special_character_error">Password needs a special character.</string>
+    <string name="account_creation_failed">Account creation failed. Please try again.</string>
+    <string name="account_created_profile_failed">Account created, but profile could not be saved: %1$s</string>
+
+    <!-- Forgot Password Screen -->
+    <string name="forgot_password_instructions">Enter your email address to reset your SafeZone password.</string>
+    <string name="remember_password">Remember your password?</string>
+    <string name="back_to_personal_login">Back to Personal Login</string>
+    <string name="forgot_enter_email">Please enter your email address.</string>
+    <string name="forgot_invalid_email">Please enter a valid email address.</string>
+    <string name="password_reset_email_sent">Password reset email sent. Check your inbox.</string>
+    <string name="password_reset_account_not_found">No account was found with this email address.</string>
+    <string name="sending_reset_email">Sending...</string>
+
+    <!-- Shared Password Reset Button and Messages -->
+    <string name="reset_password">Reset Password</string>
+    <string name="password_reset_failed">Unable to reset the password. Please try again.</string>
+    <string name="password_reset_network_error">Network error. Check your internet connection and try again.</string>
+
+    <!-- Create New Password Screen -->
+    <string name="create_new_password">Create New Password</string>
+    <string name="create_new_password_instructions">Create a new password for your SafeZone account.</string>
+    <string name="new_password">New Password</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="confirm_new_password_hint">Confirm new password</string>
+    <string name="password_reset_successful">✓ Password Reset Successful!</string>
+    <string name="new_password_saved">Your new password has been saved successfully.</string>
+    <string name="back_to_login">BACK TO LOGIN</string>
+
+    <!-- Create New Password Validation and Status -->
+    <string name="password_reset_missing_email">Email is missing. Please start again.</string>
+    <string name="enter_new_password_error">Please enter a new password.</string>
+    <string name="password_min_six_error">Password must contain at least 6 characters.</string>
+    <string name="confirm_new_password_error">Please confirm your new password.</string>
+    <string name="resetting_password">Resetting...</string>
+
+    <!-- PERSONAL HOME ACTIVITY MESSAGES -->
+    <string name="default_user_name">SafeZone User</string>
+    <string name="login_required">Please log in to continue.</string>
+    <string name="already_on_home">You are already on Home.</string>
+    <string name="feature_unavailable">This feature could not be opened.</string>
+    <string name="logged_out_successfully">You have been logged out.</string>
+
+    <!-- PERSONAL HOME SCREEN -->
+    <string name="notifications">Notifications</string>
+    <string name="profile">Profile</string>
+    <string name="good_afternoon">Good afternoon 👋</string>
+    <string name="stay_safe_message">Stay safe. We are here for you.</string>
+    <string name="safety_status">Safety status</string>
+    <string name="you_are_safe">You are safe</string>
+    <string name="no_active_emergencies">No active emergencies</string>
+    <string name="last_check_in_today">Last check-in: Today</string>
+    <string name="need_immediate_help">Need immediate help?</string>
+    <string name="sos_emergency_help">SOS&#10;EMERGENCY HELP</string>
+    <string name="tap_for_emergency_assistance">Tap for emergency assistance</string>
+    <string name="quick_actions">Quick Actions</string>
+    <string name="emergency_assistance_card">🏥&#10;Emergency&#10;Assistance</string>
+    <string name="safety_check_in_card">✓&#10;Safety&#10;Check-In</string>
+    <string name="trusted_contacts_card">👥&#10;Trusted&#10;Contacts</string>
+    <string name="find_help_card">📍&#10;Find&#10;Help</string>
+    <string name="report_incident_card">⚠&#10;Report&#10;Incident</string>
+    <string name="settings_card">⚙&#10;Settings</string>
+    <string name="recent_alerts">Recent Alerts</string>
+    <string name="no_new_safety_alerts">No new safety alerts</string>
+    <string name="important_updates_appear_here">Important updates will appear here.</string>
+    <string name="safety_tip">Safety Tip</string>
+    <string name="stay_aware_surroundings">Stay aware of your surroundings</string>
+    <string name="keep_trusted_contacts_informed">Keep your trusted contacts informed.</string>
+    <string name="nav_home">⌂&#10;Home</string>
+    <string name="nav_map">●&#10;Map</string>
+    <string name="nav_reports">▤&#10;Reports</string>
+    <string name="nav_alerts">🔔&#10;Alerts</string>
+    <string name="nav_profile">●&#10;Profile</string>
+
+    <!-- EMERGENCY ASSISTANCE SCREEN -->
+
+    <!-- SCREEN TITLE AND DESCRIPTION -->
+    <string name="emergency_assistance_title">What type of assistance&#10;do you need?</string>
+    <string name="emergency_assistance_subtitle">Select the type of emergency assistance you need.</string>
+
+    <!-- EMERGENCY BUTTONS - EMOJIS PRESERVED -->
+    <string name="emergency_type_medical_card">✚&#10;&#10;Medical&#10;Emergency</string>
+    <string name="emergency_type_injury_card">⚕&#10;&#10;Injury / Fall</string>
+    <string name="emergency_type_accident_card">🚗&#10;&#10;Accident</string>
+    <string name="emergency_type_fire_card">🔥&#10;&#10;Fire</string>
+    <string name="emergency_type_security_card">🛡&#10;&#10;Security&#10;Emergency</string>
+    <string name="emergency_type_harassment_card">👥&#10;&#10;Harassment</string>
+    <string name="emergency_type_other_card">•••    Other Assistance</string>
+
+    <!-- SELECTED ASSISTANCE -->
+    <string name="selected_assistance">Selected Assistance</string>
+    <string name="no_assistance_selected">No assistance type selected</string>
+    <string name="continue_with_arrow">Continue  →</string>
+
+    <!-- EMERGENCY ASSISTANCE ACTIVITY -->
+    <string name="emergency_type_medical">Medical Emergency</string>
+    <string name="emergency_type_injury">Injury / Fall</string>
+    <string name="emergency_type_accident">Accident</string>
+    <string name="emergency_type_fire">Fire</string>
+    <string name="emergency_type_security">Security Emergency</string>
+    <string name="emergency_type_harassment">Harassment</string>
+    <string name="emergency_type_other">Other</string>
+
+    <!-- VALIDATION AND STATUS MESSAGES -->
+    <string name="emergency_type_selected">Selected: %1$s</string>
+    <string name="select_emergency_type_error">Please select an emergency type.</string>
+    <string name="sign_in_emergency_required">Please sign in before creating an emergency request.</string>
+    <string name="saving_emergency_request">Saving Request...</string>
+    <string name="emergency_request_saved_pending">Request saved on this phone. Synchronisation is pending.</string>
+    <string name="emergency_request_save_failed">Unable to save the request locally. Please try again.</string>
+
+    <!-- SAFETY CHECK-IN -->
+    <string name="safety_check_in_title">Safety Check-In</string>
+    <string name="safety_check_in_subtitle">Let someone you trust know that you are safe.</string>
+    <string name="check_in_duration">Check-In Duration</string>
+    <string name="check_in_duration_description">Choose how long you want your safety check-in to remain active.</string>
+    <string name="duration_30_minutes">30 Minutes</string>
+    <string name="duration_1_hour">1 Hour</string>
+    <string name="duration_2_hours">2 Hours</string>
+    <string name="duration_custom">Custom</string>
+    <string name="selected_duration">Selected Duration</string>
+    <string name="duration_selected_default">Duration: 30 minutes</string>
+    <string name="duration_selected">Duration: %1$s</string>
+    <string name="trusted_contact">Trusted Contact</string>
+    <string name="trusted_contact_description">Choose who should receive your safety check-in.</string>
+    <string name="select_trusted_contact">Select Trusted Contact</string>
+    <string name="share_location">Share Location</string>
+    <string name="share_location_description">Allow your trusted contact to see your current location.</string>
+    <string name="start_safety_check">Start Safety Check</string>
+    <string name="enter_minutes">Enter minutes</string>
+    <string name="custom_duration_title">Custom Check-In Duration</string>
+    <string name="custom_duration_message">Enter the duration in minutes.</string>
+    <string name="set">Set</string>
+    <string name="duration_range_error">Enter between 5 and 1440 minutes.</string>
+    <string name="contacts_load_failed">Unable to load saved contacts.</string>
+    <string name="contacts_cloud_unavailable">Using saved contacts. Cloud refresh is unavailable.</string>
+    <string name="no_saved_contacts">No saved trusted contacts. Add a contact while online first, or check your saved contacts.</string>
+    <string name="select_trusted_contact_error">Please select a saved trusted contact.</string>
+    <string name="select_another_contact">Please select another trusted contact.</string>
+    <string name="saving">Saving...</string>
+    <string name="check_in_saved">Safety Check-In saved on this device.</string>
+    <string name="check_in_save_failed">Unable to save check-in on this device. Please try again.</string>
+
+    <plurals name="duration_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+
+
+    <!-- ACTIVE SAFETY CHECK SCREEN -->
+    <string name="active_check_back">Back</string>
+    <string name="active_check_title">Safety Check Active</string>
+    <string name="active_check_initial_status">Your safety check is active.</string>
+    <string name="active_check_contact_default">Trusted Contact: --</string>
+    <string name="active_check_not_configured">Not configured</string>
+    <string name="active_check_trusted_contact">Trusted Contact: %1$s</string>
+    <string name="active_check_location_on">Location Sharing: ON</string>
+    <string name="active_check_location_off">Location Sharing: OFF</string>
+    <string name="active_check_im_safe">I AM SAFE</string>
+    <string name="active_check_cancel">Cancel Check-In</string>
+    <string name="active_check_status_active">Safety check active.</string>
+    <string name="active_check_status_pending_sync">Safety check active. Changes will sync when internet is available.</string>
+    <string name="active_check_still_active">Your safety check is still active.</string>
+    <string name="active_check_time_unavailable">Unable to determine the check-in time.</string>
+    <string name="active_check_information_missing">Safety check information is missing.</string>
+    <string name="active_check_updating">Updating safety check...</string>
+    <string name="active_check_local_update_failed">Unable to save the status on this device.</string>
+    <string name="active_check_local_save_error">Could not save the safety check. Please try again.</string>
+    <string name="active_check_cloud_update_failed">Unable to update the safety check. Please try again.</string>
+    <string name="active_check_connection_error">Unable to update the safety check. Check your connection.</string>
+    <string name="active_check_completed_status">You confirmed that you are safe.</string>
+    <string name="active_check_cancelled_status">Your safety check has been cancelled.</string>
+    <string name="active_check_expired_status">Your safety check has expired.</string>
+    <string name="active_check_completed_pending">Safety check completed. Waiting to sync.</string>
+    <string name="active_check_cancelled_pending">Safety check cancelled. Waiting to sync.</string>
+    <string name="active_check_expired_pending">Safety check expired. Waiting to sync.</string>
+    <string name="active_check_completed_message">Safety check completed.</string>
+    <string name="active_check_cancelled_message">Safety check cancelled.</string>
+    <string name="active_check_expired_message">Your safety check has expired.</string>
+
+
+    <!-- ========================================== -->
+    <!-- TRUSTED CONTACTS SCREEN -->
+    <!-- ========================================== -->
+    <string name="trusted_contacts_back">Back</string>
+    <string name="trusted_contacts_app_name">SafeZone</string>
+    <string name="trusted_contacts_icon_description">Trusted contacts</string>
+    <string name="trusted_contacts_title">Trusted Contacts</string>
+    <string name="trusted_contacts_subtitle">People you trust can be contacted during an emergency.</string>
+    <string name="trusted_contacts_add_button">+  Add Trusted Contact</string>
+    <string name="trusted_contacts_section_title">Your Trusted Contacts</string>
+    <string name="trusted_contacts_section_description">These people can be contacted when you need support.</string>
+    <string name="trusted_contacts_empty_icon_description">No trusted contacts</string>
+    <string name="trusted_contacts_empty_title">No Trusted Contacts Yet</string>
+    <string name="trusted_contacts_empty_description">Add someone you trust so they can be contacted during an emergency.</string>
+    <string name="trusted_contacts_add_first_button">Add Your First Contact</string>
+    <string name="trusted_contacts_security_description">Security information</string>
+    <string name="trusted_contacts_safety_notice">Trusted contacts are only used to support you during safety and emergency situations.</string>
+    <string name="trusted_contacts_login_required">Please log in first.</string>
+    <string name="trusted_contacts_load_device_error">Unable to load contacts stored on this device.</string>
+    <string name="trusted_contacts_default_relationship">Trusted Contact</string>
+    <string name="trusted_contacts_cloud_unavailable">Showing saved contacts. Cloud refresh is unavailable.</string>
+    <string name="trusted_contacts_alerts_enabled">✓  Emergency alerts enabled</string>
+    <string name="trusted_contacts_alerts_disabled">○  Emergency alerts disabled</string>
+    <string name="trusted_contacts_sync_pending">Saved on this device — cloud sync pending</string>
+    <string name="trusted_contacts_call">Call</string>
+    <string name="trusted_contacts_delete">Delete</string>
+    <string name="trusted_contacts_no_phone">No phone number available.</string>
+    <string name="trusted_contacts_info_description">Contact information</string>
+    <string name="trusted_contacts_dialer_error">Unable to open the phone dialler.</string>
+    <string name="trusted_contacts_login_again">Please log in again.</string>
+    <string name="trusted_contacts_not_found">Contact not found on this device.</string>
+    <string name="trusted_contacts_removed_message">Contact removed from your list. Cloud deletion may still be pending.</string>
+    <string name="trusted_contacts_remove_error">Unable to remove this contact.</string>
+
+
+    <!-- ========================================== -->
+    <!-- ADD TRUSTED CONTACT SCREEN -->
+    <!-- ========================================== -->
+
+    <!-- Header and screen title -->
+    <string name="add_trusted_contact_back">Go back</string>
+    <string name="add_trusted_contact_app_name">SafeZone</string>
+    <string name="add_trusted_contact_title">Add Trusted Contact</string>
+
+    <!-- Contact input fields -->
+    <string name="add_trusted_contact_full_name">Full Name</string>
+    <string name="add_trusted_contact_relationship">Relationship</string>
+    <string name="add_trusted_contact_phone">Phone Number</string>
+    <string name="add_trusted_contact_email">Email Address</string>
+
+    <!-- Emergency alert preference -->
+    <string name="add_trusted_contact_emergency_alerts">Receive Emergency Alerts</string>
+    <string name="add_trusted_contact_on_off">ON / OFF</string>
+
+    <!-- Save button -->
+    <string name="add_trusted_contact_save">Save Contact</string>
+    <string name="add_trusted_contact_saving">Saving...</string>
+
+    <!-- Authentication messages -->
+    <string name="add_trusted_contact_session_expired">Your session has expired. Please log in again.</string>
+
+    <!-- Input validation messages -->
+    <string name="add_trusted_contact_invalid_name">Please enter a valid full name.</string>
+    <string name="add_trusted_contact_relationship_required">Please enter the relationship.</string>
+    <string name="add_trusted_contact_phone_required">Please enter a phone number.</string>
+    <string name="add_trusted_contact_invalid_phone">Please enter a valid phone number.</string>
+    <string name="add_trusted_contact_invalid_email">Please enter a valid email address.</string>
+
+    <!-- Saving and synchronisation messages -->
+    <string name="add_trusted_contact_saved_pending">Contact saved on this device. Cloud sync may still be pending.</string>
+    <string name="add_trusted_contact_save_failed">Unable to save the contact on this device. Please try again.</string>
+
+
+    <!-- ========================================== -->
+    <!-- FIND HELP SCREEN -->
+    <!-- ========================================== -->
+
+    <!-- Header and screen introduction -->
+    <string name="find_help_back">Back</string>
+    <string name="find_help_app_name">SafeZone</string>
+    <string name="find_help_title">Find Help</string>
+    <string name="find_help_subtitle">Find nearby emergency and safety services.</string>
+
+    <!-- Current location -->
+    <string name="find_help_current_location_icon">Current location</string>
+    <string name="find_help_your_location">Your Current Location</string>
+    <string name="find_help_finding_location">Finding your location...</string>
+    <string name="find_help_waiting_gps">Waiting for GPS...</string>
+    <string name="find_help_refresh_location">Refresh location</string>
+    <string name="find_help_nearby_services">Nearby Services</string>
+
+    <!-- Hospital services -->
+    <string name="find_help_hospital">Hospital</string>
+    <string name="find_help_nearest_hospital">Nearest Hospital</string>
+    <string name="find_help_calculating_distance">Calculating distance...</string>
+    <string name="find_help_get_directions">Get Directions</string>
+    <string name="find_help_call">Call</string>
+
+    <!-- Emergency services -->
+    <string name="find_help_emergency_services">Emergency Services</string>
+    <string name="find_help_emergency_nearby_description">Find emergency services near you</string>
+    <string name="find_help_find_nearby">Find Nearby</string>
+    <string name="find_help_call_112">Call 112</string>
+
+    <!-- Campus security -->
+    <string name="find_help_campus_security">Campus Security</string>
+    <string name="find_help_campus_security_description">Find nearby campus safety services</string>
+    <string name="find_help_find_campus_security">Find Nearby Campus Security</string>
+
+    <!-- Safety notice -->
+    <string name="find_help_safety_notice_icon">Safety notice</string>
+    <string name="find_help_immediate_emergency">For an immediate emergency, call 112.</string>
+
+    <!-- Location status messages -->
+    <string name="find_help_location_services_off">Location services are turned off</string>
+    <string name="find_help_location_unavailable">Location unavailable</string>
+    <string name="find_help_turn_on_location">Turn on Location Services to find nearby help.</string>
+    <string name="find_help_permission_required">Location permission is required.</string>
+    <string name="find_help_live_location_updated">Live location • Updated just now</string>
+    <string name="find_help_distance_from_location">Distance will be calculated from your current location.</string>
+    <string name="find_help_location_not_ready">Your current location is not available yet.</string>
+    <string name="find_help_allow_location">Allow SafeZone to access your location.</string>
+
+    <!-- Map and calling errors -->
+    <string name="find_help_no_map_app">No map application is available.</string>
+    <string name="find_help_dialer_error">Unable to open the phone dialler.</string>
+
+
+        <!-- Personal Reports -->
+        <string name="personal_reports_back">Back</string>
+        <string name="personal_reports_image_description">My reports</string>
+        <string name="personal_reports_title">My Reports</string>
+        <string name="personal_reports_subtitle">View the personal incidents you have reported.</string>
+        <string name="personal_reports_heading">Your Reports</string>
+        <string name="personal_reports_empty_image_description">No reports</string>
+        <string name="personal_reports_empty_title">No reports yet</string>
+        <string name="personal_reports_empty_message">You have not reported any personal incidents yet.</string>
+        <string name="personal_reports_report_incident">Report an Incident</string>
+
+        <!-- Report Card -->
+        <string name="personal_reports_incident">Incident</string>
+        <string name="personal_reports_incident_id_placeholder">Incident ID: -</string>
+        <string name="personal_reports_incident_id">Incident ID: %1$s</string>
+        <string name="personal_reports_campus_placeholder">Campus: Not provided</string>
+        <string name="personal_reports_campus">Campus: %1$s</string>
+        <string name="personal_reports_date_placeholder">Date: Not available</string>
+        <string name="personal_reports_date">Date: %1$s</string>
+        <string name="personal_reports_time_placeholder">Time: Not available</string>
+        <string name="personal_reports_time">Time: %1$s</string>
+        <string name="personal_reports_description_heading">Description</string>
+        <string name="personal_reports_no_description">No description provided.</string>
+        <string name="personal_reports_location_heading">Location</string>
+        <string name="personal_reports_location_placeholder">Location not provided</string>
+        <string name="personal_reports_coordinates_placeholder">Coordinates not available</string>
+        <string name="personal_reports_coordinates">Coordinates: %1$s, %2$s</string>
+        <string name="personal_reports_view_map">VIEW LOCATION ON MAP</string>
+        <string name="personal_reports_status_label">Status: </string>
+        <string name="personal_reports_submitted">Submitted</string>
+        <string name="personal_reports_evidence_heading">Evidence</string>
+        <string name="personal_reports_view_photo">📷 View Photo\n%1$s</string>
+        <string name="personal_reports_view_video">🎥 View Video\n%1$s</string>
+        <string name="personal_reports_view_file">📄 Open File\n%1$s</string>
+
+        <!-- Loading and Messages -->
+        <string name="personal_reports_loading">Loading your reports...</string>
+        <string name="personal_reports_report_count_one">%1$d Report</string>
+        <string name="personal_reports_report_count_other">%1$d Reports</string>
+        <string name="personal_reports_login_required">Please log in first.</string>
+        <string name="personal_reports_refresh_failed">Could not refresh online reports. Saved offline reports will still appear.</string>
+        <string name="personal_reports_offline_fallback">Showing saved reports. Online refresh failed.</string>
+        <string name="personal_reports_maps_unavailable">No Maps application is available.</string>
+        <string name="personal_reports_evidence_unavailable">Unable to open this evidence. It may only be available on the device where it was selected.</string>
+        <string name="personal_reports_pending_sync">Pending Sync</string>
+    <string name="personal_reports_not_specified">Not specified</string>
+    <string name="personal_reports_default_photo">Photo evidence</string>
+    <string name="personal_reports_default_video">Video evidence</string>
+    <string name="personal_reports_default_file">Attached file</string>
+    <string name="personal_reports_server_error">Could not refresh reports from the server.</string>
+    <string name="personal_reports_status_with_sync">%1$s • %2$s</string>
+
+    <plurals name="personal_reports_report_count">
+        <item quantity="one">%1$d Report</item>
+        <item quantity="other">%1$d Reports</item>
+    </plurals>
+
+
+    <!-- Personal Incident Report -->
+    <string name="personal_incident_back">Back</string>
+    <string name="personal_incident_icon_description">Report incident</string>
+    <string name="personal_incident_title">Report a Personal Incident</string>
+    <string name="personal_incident_subtitle">Help us keep our community safe by reporting incidents.</string>
+    <string name="personal_incident_type_description">Incident type</string>
+    <string name="personal_incident_description_label">Description</string>
+    <string name="personal_incident_description_hint">Describe what happened...</string>
+    <string name="personal_incident_location_label">Location</string>
+    <string name="personal_incident_current_location">Current Location</string>
+    <string name="personal_incident_datetime_label">Date and time</string>
+    <string name="personal_incident_datetime_hint">Automatically recorded</string>
+    <string name="personal_incident_evidence_title">Add Evidence</string>
+    <string name="personal_incident_evidence_subtitle">Optional — photos, videos or files can support your report.</string>
+    <string name="personal_incident_add_photo">Add Photo</string>
+    <string name="personal_incident_add_video">Add Video</string>
+    <string name="personal_incident_add_file">Add File</string>
+    <string name="personal_incident_no_evidence">No evidence selected</string>
+    <string name="personal_incident_submit">Submit Report   →</string>
+
+    <!-- Incident types -->
+    <string name="personal_incident_type_select">Select incident type</string>
+    <string name="personal_incident_type_theft">Theft</string>
+    <string name="personal_incident_type_assault">Assault</string>
+    <string name="personal_incident_type_harassment">Harassment</string>
+    <string name="personal_incident_type_accident">Accident</string>
+    <string name="personal_incident_type_suspicious">Suspicious Activity</string>
+    <string name="personal_incident_type_property_damage">Property Damage</string>
+    <string name="personal_incident_type_missing_person">Missing Person</string>
+    <string name="personal_incident_type_other">Other</string>
+
+    <!-- Evidence labels -->
+    <string name="personal_incident_evidence_photo">Photo: %1$s</string>
+    <string name="personal_incident_evidence_video">Video: %1$s</string>
+    <string name="personal_incident_evidence_file">File: %1$s</string>
+    <string name="personal_incident_selected">Selected</string>
+
+    <!-- Location messages -->
+    <string name="personal_incident_location_services_off">Location services are turned off</string>
+    <string name="personal_incident_enable_location">Please turn on Location services.</string>
+    <string name="personal_incident_location_unavailable">Current location unavailable</string>
+    <string name="personal_incident_location_permission_denied">Location permission not granted</string>
+    <string name="personal_incident_location_permission_required">Location permission is required to record the incident location.</string>
+
+    <!-- Validation and saving -->
+    <string name="personal_incident_login_required">Please log in first.</string>
+    <string name="personal_incident_select_type_error">Please select an incident type.</string>
+    <string name="personal_incident_description_error">Please describe what happened.</string>
+    <string name="personal_incident_valid_location_error">Please obtain a valid incident location.</string>
+    <string name="personal_incident_coordinates_unavailable">GPS coordinates are unavailable. Please obtain your location first.</string>
+    <string name="personal_incident_saving">Saving...</string>
+    <string name="personal_incident_saved_offline">Incident report saved on this device. It will sync when internet is available.</string>
+    <string name="personal_incident_save_failed">Unable to save report locally: %1$s</string>
+    <string name="personal_incident_unknown_error">Unknown error</string>
+    <string name="personal_incident_coordinates_display">Latitude: %1$s\nLongitude: %2$s</string>
+
+        <!-- ======================================= -->
+        <!-- PERSONAL PROFILE: HEADER AND GENERAL UI -->
+        <!-- ======================================= -->
+
+        <!-- Back navigation accessibility label -->
+        <string name="personal_profile_back">Back</string>
+
+        <!-- Application name displayed in the header -->
+        <string name="personal_profile_app_name">SafeZone</string>
+
+        <!-- Accessibility description for the profile icon -->
+        <string name="personal_profile_avatar_description">Profile icon</string>
+
+        <!-- Default name shown before profile data loads -->
+        <string name="personal_profile_default_name">SafeZone User</string>
+
+        <!-- Profile screen subtitle -->
+        <string name="personal_profile_subtitle">Manage your profile and account settings.</string>
+
+
+        <!-- ======================================= -->
+        <!-- PERSONAL PROFILE: ACCOUNT INFORMATION  -->
+        <!-- ======================================= -->
+
+        <!-- Email address label -->
+        <string name="personal_profile_email_label">Email</string>
+
+        <!-- Phone number label -->
+        <string name="personal_profile_phone_label">Phone</string>
+
+        <!-- Account type label -->
+        <string name="personal_profile_account_type_label">Account Type</string>
+
+        <!-- Placeholder used when profile information is missing -->
+        <string name="personal_profile_not_available">Not available</string>
+
+        <!-- Default account type -->
+        <string name="personal_profile_default_account_type">Personal</string>
+
+
+        <!-- ======================================= -->
+        <!-- PERSONAL PROFILE: NAVIGATION BUTTONS   -->
+        <!-- ======================================= -->
+
+        <!-- Button for editing personal details -->
+        <string name="personal_profile_edit">✎    Edit Profile    ›</string>
+
+        <!-- Button for managing trusted contacts -->
+        <string name="personal_profile_trusted_contacts">👥    Trusted Contacts    ›</string>
+
+        <!-- Button for viewing submitted incident reports -->
+        <string name="personal_profile_my_reports">▤    My Reports    ›</string>
+
+        <!-- Button for opening application settings -->
+        <string name="personal_profile_settings">⚙    Settings    ›</string>
+
+        <!-- Button for signing out -->
+        <string name="personal_profile_logout">Logout</string>
+
+
+        <!-- ======================================= -->
+        <!-- PERSONAL PROFILE: FEEDBACK MESSAGES    -->
+        <!-- ======================================= -->
+
+        <!-- Shown when Firestore profile loading fails -->
+        <string name="personal_profile_load_failed">Unable to load some profile information.</string>
+
+        <!-- Shown when another screen cannot be opened -->
+        <string name="personal_profile_open_failed">Unable to open this screen.</string>
+
+        <!-- Confirmation shown after signing out -->
+        <string name="personal_profile_logged_out">You have been logged out.</string>
+
+
+        <!-- ============================================= -->
+        <!-- EDIT PROFILE: HEADER AND SCREEN INFORMATION   -->
+        <!-- ============================================= -->
+
+        <!-- Accessibility description for the back button -->
+        <string name="edit_profile_back">Back</string>
+
+        <!-- Application name in the header -->
+        <string name="edit_profile_app_name">SafeZone</string>
+
+        <!-- Main screen title -->
+        <string name="edit_profile_title">Edit Profile</string>
+
+        <!-- Screen subtitle -->
+        <string name="edit_profile_subtitle">Update your personal information</string>
+
+
+        <!-- ============================================= -->
+        <!-- EDIT PROFILE: INPUT FIELD LABELS AND HINTS    -->
+        <!-- ============================================= -->
+
+        <!-- Full name field -->
+        <string name="edit_profile_full_name">Full Name</string>
+        <string name="edit_profile_full_name_hint">Enter your full name</string>
+
+        <!-- Email field -->
+        <string name="edit_profile_email">Email Address</string>
+        <string name="edit_profile_email_hint">Enter your email</string>
+
+        <!-- Phone number field -->
+        <string name="edit_profile_phone">Phone Number</string>
+        <string name="edit_profile_phone_hint">Enter your phone number</string>
+
+
+        <!-- ============================================= -->
+        <!-- EDIT PROFILE: BUTTONS                         -->
+        <!-- ============================================= -->
+
+        <!-- Save button; also used when restoring the button after an error -->
+        <string name="edit_profile_save_changes">Save Changes</string>
+
+        <!-- Button displayed while changes are being saved -->
+        <string name="edit_profile_saving">Saving...</string>
+
+        <!-- Cancel editing button -->
+        <string name="edit_profile_cancel">Cancel</string>
+
+
+        <!-- ============================================= -->
+        <!-- EDIT PROFILE: SESSION AND LOADING MESSAGES    -->
+        <!-- ============================================= -->
+
+        <!-- Shown when no authenticated user is available -->
+        <string name="edit_profile_session_expired">Your session has expired. Please log in again.</string>
+
+        <!-- Shown when loading the profile from Firestore fails.
+             %1$s is replaced with the error details. -->
+        <string name="edit_profile_load_failed">Unable to load your profile: %1$s</string>
+
+        <!-- Fallback message when an error has no details -->
+        <string name="edit_profile_unknown_error">Unknown error</string>
+
+
+        <!-- ============================================= -->
+        <!-- EDIT PROFILE: VALIDATION MESSAGES             -->
+        <!-- ============================================= -->
+
+        <!-- Full name validation -->
+        <string name="edit_profile_name_required">Please enter your full name</string>
+
+        <!-- Email validation -->
+        <string name="edit_profile_email_required">Please enter your email address</string>
+        <string name="edit_profile_email_invalid">Please enter a valid email address</string>
+
+        <!-- Phone number validation -->
+        <string name="edit_profile_phone_required">Please enter your phone number</string>
+        <string name="edit_profile_phone_invalid">Please enter a valid phone number</string>
+
+
+        <!-- ============================================= -->
+        <!-- EDIT PROFILE: SAVE RESULT MESSAGES            -->
+        <!-- ============================================= -->
+
+        <!-- Shown after Firestore successfully saves the profile -->
+        <string name="edit_profile_save_success">Profile updated successfully.</string>
+
+        <!-- Shown when saving fails.
+             %1$s is replaced with the error details. -->
+        <string name="edit_profile_save_failed">Failed to update profile: %1$s</string>
+
+
+        <!-- Change Password: header and page content -->
+        <string name="change_password_back">‹</string>
+        <string name="change_password_back_description">Go back</string>
+        <string name="change_password_app_name">SafeZone</string>
+        <string name="change_password_logo_description">SafeZone logo</string>
+        <string name="change_password_title">Change Password</string>
+        <string name="change_password_subtitle">Keep your account secure with a strong password.</string>
+        <string name="change_password_security_description">Security information</string>
+        <string name="change_password_security_tip">Protect your account. Never share your password with anyone.</string>
+
+        <!-- Change Password: field labels and hints -->
+        <string name="change_password_current_label">Current password</string>
+        <string name="change_password_current_hint">Enter your current password</string>
+        <string name="change_password_new_label">New password</string>
+        <string name="change_password_new_hint">Enter your new password</string>
+        <string name="change_password_confirm_label">Confirm new password</string>
+        <string name="change_password_confirm_hint">Re-enter your new password</string>
+
+        <!-- Change Password: requirements -->
+        <string name="change_password_requirements_title">Password requirements</string>
+        <string name="change_password_requirements_list">• Use at least 6 characters.\n• Choose a password that is difficult to guess.\n• Make sure both new password entries match.</string>
+
+        <!-- Change Password: validation and Firebase messages -->
+        <string name="change_password_no_user">No logged-in account was found.</string>
+        <string name="change_password_current_required">Please enter your current password.</string>
+        <string name="change_password_new_required">Please enter a new password.</string>
+        <string name="change_password_min_length">Password must contain at least 6 characters.</string>
+        <string name="change_password_confirm_required">Please confirm your new password.</string>
+        <string name="change_password_mismatch">Passwords do not match.</string>
+        <string name="change_password_same_as_current">New password must be different from your current password.</string>
+        <string name="change_password_email_missing">Your account email could not be found.</string>
+        <string name="change_password_processing">CHANGING PASSWORD...</string>
+        <string name="change_password_button">CHANGE PASSWORD</string>
+        <string name="change_password_success">Password changed successfully!</string>
+        <string name="change_password_unknown_error">Unable to change password.</string>
+        <string name="change_password_update_failed">Unable to change password: %1$s</string>
+        <string name="change_password_current_incorrect">Current password is incorrect.</string>
+        <string name="change_password_back_to_settings">Back to Settings</string>
+
+
+    <!-- Emergency Preferences: header and page content -->
+    <string name="emergency_preferences_back">‹</string>
+    <string name="emergency_preferences_back_description">Back</string>
+    <string name="emergency_preferences_app_name">SafeZone</string>
+    <string name="emergency_preferences_logo_description">SafeZone logo</string>
+    <string name="emergency_preferences_title">Emergency Preferences</string>
+    <string name="emergency_preferences_subtitle">Choose what SafeZone should do during an emergency.</string>
+
+    <!-- Emergency Preferences: emergency services -->
+    <string name="emergency_preferences_services">Emergency Services</string>
+    <string name="emergency_preferences_services_description">Allow quick access to emergency services.</string>
+
+    <!-- Emergency Preferences: location sharing -->
+    <string name="emergency_preferences_location">Share Location During Emergency</string>
+    <string name="emergency_preferences_location_description">Allow your location to be shared for emergency assistance.</string>
+
+    <!-- Emergency Preferences: trusted contact alerts -->
+    <string name="emergency_preferences_contacts">Trusted Contact Alerts</string>
+    <string name="emergency_preferences_contacts_description">Notify trusted contacts when emergency assistance is requested.</string>
+
+    <!-- Emergency Preferences: emergency number -->
+    <string name="emergency_preferences_number_label">Emergency Services Number</string>
+    <string name="emergency_preferences_number_hint">Enter emergency number (e.g. 112)</string>
+    <string name="emergency_preferences_number_required">Please enter an emergency number.</string>
+    <string name="emergency_preferences_number_invalid">Please enter a valid emergency number.</string>
+    <string name="emergency_preferences_number_format">Use digits and standard phone number symbols only.</string>
+
+    <!-- Emergency Preferences: save and navigation -->
+    <string name="emergency_preferences_save">Save Preferences</string>
+    <string name="emergency_preferences_saved">Emergency preferences saved.</string>
+    <string name="emergency_preferences_save_failed">Unable to save preferences. Please try again.</string>
+    <string name="emergency_preferences_back_to_settings">Back to Settings</string>
+
+    <!-- Emergency Request screen: English -->
+    <string name="emergency_request_back">Back</string>
+    <string name="emergency_request_icon_description">Emergency assistance requested</string>
+    <string name="emergency_request_title">Emergency Assistance Requested</string>
+    <string name="emergency_request_description">Your emergency assistance request has been recorded.</string>
+    <string name="emergency_request_type_icon_description">Assistance type icon</string>
+    <string name="emergency_request_assistance_type_label">Assistance Type</string>
+    <string name="emergency_request_assistance_type_value">Assistance Type: %1$s</string>
+    <string name="emergency_request_default_type">Emergency Assistance</string>
+    <string name="emergency_request_status_icon_description">Request status icon</string>
+    <string name="emergency_request_status_label">Request Status</string>
+    <string name="emergency_request_location_icon_description">Location icon</string>
+    <string name="emergency_request_location_label">Location</string>
+    <string name="emergency_request_location_description">Share your location if possible.</string>
+    <string name="emergency_request_call_button">Call Emergency Services</string>
+    <string name="emergency_request_share_location_button">Share Location</string>
+    <string name="emergency_request_return_home_button">Return to Home</string>
+
+    <string name="emergency_request_pending_sync">Pending Sync</string>
+    <string name="emergency_request_location_not_shared">Location not shared</string>
+    <string name="emergency_request_status_format">Request Sync Status: %1$s\n%2$s</string>
+
+    <string name="emergency_request_location_permission_denied">Location permission denied</string>
+    <string name="emergency_request_location_permission_required">Location permission is required to share your location.</string>
+    <string name="emergency_request_location_disabled">Location sharing disabled in preferences</string>
+    <string name="emergency_request_enable_location_first">Enable emergency location sharing in your preferences first.</string>
+    <string name="emergency_request_services_disabled">Emergency services are disabled in your preferences.</string>
+    <string name="emergency_request_set_emergency_number">Please set an emergency number in your preferences.</string>
+    <string name="emergency_request_dialler_error">Unable to open the phone dialler.</string>
+    <string name="emergency_request_requesting_permission">Requesting location permission</string>
+    <string name="emergency_request_location_services_off">Location Services are off</string>
+    <string name="emergency_request_turn_on_location">Please turn on Location Services first.</string>
+    <string name="emergency_request_enable_location_in_settings">Please enable Location Services in Settings.</string>
+    <string name="emergency_request_location_permission_required_status">Location permission required</string>
+    <string name="emergency_request_finding_location">Finding current location</string>
+    <string name="emergency_request_finding_location_toast">Finding your location...</string>
+    <string name="emergency_request_location_unavailable">Location unavailable</string>
+    <string name="emergency_request_location_try_again">Unable to determine your location. Please try again.</string>
+    <string name="emergency_request_share_message">🚨 SafeZone Emergency Location\n\nI need emergency assistance.\n\nMy current location:\n%1$s\n\nPlease use this location to find me.</string>
+    <string name="emergency_request_share_chooser_title">Share Emergency Location</string>
+    <string name="emergency_request_location_ready_to_share">Location ready to share; sending not confirmed</string>
+    <string name="emergency_request_sharing_menu_error">Unable to open sharing menu</string>
+    <string name="emergency_request_sharing_menu_error_toast">Unable to open the sharing menu.</string>
+
+    <!-- Personal Safety Alerts: English -->
+
+    <string name="personal_alerts_back">Back</string>
+    <string name="personal_alerts_header">Safety Alerts</string>
+    <string name="personal_alerts_notification_settings">Notification Settings</string>
+    <string name="personal_alerts_title">Personal Safety Alerts</string>
+    <string name="personal_alerts_description">Stay informed about important safety information in your selected location.</string>
+    <string name="personal_alerts_location_label">Location</string>
+
+    <string name="personal_alerts_filter_all">All</string>
+    <string name="personal_alerts_filter_emergency">Emergency</string>
+    <string name="personal_alerts_filter_safety">Safety</string>
+    <string name="personal_alerts_filter_general">General</string>
+    <string name="personal_alerts_filter_events">Events</string>
+
+    <string name="personal_alerts_enable_notifications">Enable Notifications</string>
+
+    <string name="personal_alerts_nav_home">⌂\nHome</string>
+    <string name="personal_alerts_nav_map">⌖\nMap</string>
+    <string name="personal_alerts_nav_reports">▤\nReports</string>
+    <string name="personal_alerts_nav_alerts">🔔\nAlerts</string>
+    <string name="personal_alerts_nav_profile">●\nProfile</string>
+
+    <string name="personal_alerts_location_selected">%1$s selected.</string>
+    <string name="personal_alerts_empty_all">No saved safety guidance is available for %1$s.</string>
+    <string name="personal_alerts_empty_category">No %1$s guidance is available for %2$s.</string>
+    <string name="personal_alerts_card_location">Location: %1$s</string>
+    <string name="personal_alerts_datetime_unavailable">Date and time unavailable</string>
+    <string name="personal_alerts_date_time_format">Date: %1$s  •  Time: %2$s</string>
+
+    <string name="personal_alerts_loading">Loading saved safety guidance...</string>
+    <string name="personal_alerts_server_error">Showing saved guidance. The server returned error %1$d.</string>
+    <string name="personal_alerts_offline_notice">Offline mode: showing saved safety guidance. Live alerts may not be current.</string>
+    <string name="personal_alerts_notification_settings_unavailable">Notification settings are unavailable.</string>
+
+    <!-- Campus Login: screen labels -->
+    <string name="campus_login_header">SafeZone</string>
+    <string name="campus_login_logo_description">SafeZone Logo</string>
+    <string name="campus_login_title">Campus Safety Login</string>
+    <string name="campus_login_subtitle">Sign in to access campus-specific safety services.</string>
+    <string name="campus_login_email_hint">Student Email Address</string>
+    <string name="campus_login_password_hint">Password</string>
+    <string name="campus_login_remember_me">Remember Me</string>
+    <string name="campus_login_forgot_password">Forgot Password?</string>
+    <string name="campus_login_button">LOGIN</string>
+    <string name="campus_login_or">OR</string>
+    <string name="campus_login_google_button">Continue with Google</string>
+    <string name="campus_login_no_account">Don\'t have a campus account?</string>
+    <string name="campus_login_register">Register</string>
+
+    <!-- Campus Login: loading states -->
+    <string name="campus_login_signing_in">Signing In...</string>
+    <string name="campus_login_google_wait">Please wait...</string>
+
+    <!-- Campus Login: input validation -->
+    <string name="campus_login_error_email_required">Please enter your student email.</string>
+    <string name="campus_login_error_email_invalid">Please enter a valid email address.</string>
+    <string name="campus_login_error_password_required">Please enter your password.</string>
+
+    <!-- Campus Login: internet and Google sign-in -->
+    <string name="campus_login_internet_reset">Internet is required to reset your password.</string>
+    <string name="campus_login_google_internet">Connect to the internet to sign in with Google.</string>
+    <string name="campus_login_google_invalid">Please select a valid Google account.</string>
+    <string name="campus_login_google_cancelled">Google sign-in was cancelled or could not start. Please try again.</string>
+    <string name="campus_login_google_failed">Google sign-in failed. Please try again.</string>
+    <string name="campus_login_google_verify">Unable to verify your Google account.</string>
+    <string name="campus_login_google_auth_failed">Google authentication failed. Check your account and try again.</string>
+
+    <!-- Campus Login: campus profile verification -->
+    <string name="campus_login_error_account_verify">Unable to verify your account.</string>
+    <string name="campus_login_profile_missing">No SafeZone campus profile was found. Please register first.</string>
+    <string name="campus_login_wrong_account_type">This account is not registered as a Campus account.</string>
+    <string name="campus_login_default_name">Campus User</string>
+    <string name="campus_login_online_offline_setup_failed">Online login succeeded, but offline setup failed. Check Logcat.</string>
+    <string name="campus_login_success_offline_ready">Campus login successful. Offline login is prepared.</string>
+    <string name="campus_login_success">Campus login successful!</string>
+    <string name="campus_login_profile_connection_lost">Connection lost before your profile could be verified. Please try again when online.</string>
+    <string name="campus_login_profile_verify_failed">Unable to verify your profile. Please try again.</string>
+
+    <!-- Campus Login: offline access -->
+    <string name="campus_login_offline_not_prepared">Offline login failed. First sign in successfully online on this device and confirm offline setup succeeds.</string>
+    <string name="campus_login_offline_wrong_type">This login is not registered as a Campus account.</string>
+    <string name="campus_login_offline_success">Offline Campus access enabled. Online services may be unavailable.</string>
+
+    <!-- Campus Login: errors -->
+    <string name="campus_login_error_incorrect_credentials">Incorrect email or password.</string>
+    <string name="campus_login_error_user_not_found">No account was found with this email.</string>
+    <string name="campus_login_error_too_many_attempts">Too many login attempts. Please try again later.</string>
+    <string name="campus_login_error_network">Network error. Please check your internet connection.</string>
+    <string name="campus_login_error_generic">Login failed. Please check your email and password.</string>
+    <string name="campus_login_open_home_failed">Unable to open Campus Home: %1$s</string>
+
+
+    <!-- Campus Home: headings and welcome -->
+    <string name="campus_home_header">SafeZone</string>
+    <string name="campus_home_title">Campus Safety</string>
+    <string name="campus_home_welcome">Welcome, %1$s 👋</string>
+    <string name="campus_home_welcome_default">Welcome, Learner 👋</string>
+    <string name="campus_home_tagline">Your safety matters. Stay informed, stay safe.</string>
+    <string name="campus_home_default_name">Campus User</string>
+    <string name="campus_home_default_learner">Learner</string>
+
+    <!-- Campus connection -->
+    <string name="campus_home_default_campus">Campus</string>
+    <string name="campus_home_campus_name_format">%1$s Campus</string>
+    <string name="campus_home_campus_icon">Campus building</string>
+    <string name="campus_home_connection_title">Campus Safety Connection</string>
+    <string name="campus_home_status_available">Status: Available</string>
+    <string name="campus_home_status_offline">Status: Offline</string>
+    <string name="campus_home_status_profile_outdated">Status: Offline — profile may be outdated</string>
+    <string name="campus_home_hours_description">Campus hours</string>
+    <string name="campus_home_hours">Monday – Friday | 07:00 – 18:00</string>
+
+    <!-- Campus Home: action cards -->
+    <string name="campus_home_report_incident">Report Campus Incident\nReport a safety concern on campus.</string>
+    <string name="campus_home_emergency">Campus Emergency\nGet immediate help on campus.</string>
+    <string name="campus_home_safety_map">Campus Safety Map\nView safety resources and locations.</string>
+    <string name="campus_home_alerts">Campus Alerts\nStay updated with important alerts.</string>
+    <string name="campus_home_my_reports">My Campus Reports\nView and manage your reported incidents.</string>
+    <string name="campus_home_logout">LOG OUT</string>
+
+    <!-- Campus Home: bottom navigation -->
+    <string name="campus_home_nav_home">Home</string>
+    <string name="campus_home_nav_map">Map</string>
+    <string name="campus_home_nav_reports">Reports</string>
+    <string name="campus_home_nav_alerts">Alerts</string>
+    <string name="campus_home_nav_profile">Profile</string>
+
+    <!-- Campus Home: messages -->
+    <string name="campus_home_login_required">Please log in to continue.</string>
+    <string name="campus_home_logout_success">You have been logged out.</string>
+    <string name="campus_home_feature_unavailable">%1$s is not available right now.</string>
+    <string name="campus_home_feature_incident">Campus incident reporting</string>
+    <string name="campus_home_feature_emergency">Emergency services</string>
+    <string name="campus_home_feature_map">Campus safety map</string>
+    <string name="campus_home_feature_alerts">Campus alerts</string>
+    <string name="campus_home_feature_reports">Campus reports</string>
+    <string name="campus_home_feature_profile">Campus profile</string>
+
+    <string name="campus_alerts_back">Back</string>
+    <string name="campus_alerts_header">SafeZone</string>
+    <string name="campus_alerts_notifications">Notifications</string>
+    <string name="campus_alerts_title">Campus Alerts</string>
+    <string name="campus_alerts_tagline">Stay informed. Stay safe.</string>
+    <string name="campus_alerts_description">Receive important updates, safety notices and emergency information for your campus.</string>
+    <string name="campus_alerts_campus">Campus</string>
+    <string name="campus_alerts_select_campus">Select campus</string>
+    <string name="campus_alerts_default_campus">Pretoria Campus</string>
+    <string name="campus_alerts_filter_all">All</string>
+    <string name="campus_alerts_filter_emergency">Emergency</string>
+    <string name="campus_alerts_filter_safety">Safety</string>
+    <string name="campus_alerts_filter_general">General</string>
+    <string name="campus_alerts_filter_events">Events</string>
+    <string name="campus_alerts_enable_notifications">Enable Notifications</string>
+    <string name="campus_alerts_notification_description">Don\'t miss important campus updates.</string>
+    <string name="campus_alerts_turn_on">Turn On</string>
+    <string name="campus_alerts_nav_home">Home</string>
+    <string name="campus_alerts_nav_map">Map</string>
+    <string name="campus_alerts_nav_reports">Reports</string>
+    <string name="campus_alerts_nav_alerts">Alerts</string>
+    <string name="campus_alerts_nav_profile">Profile</string>
+    <string name="campus_alerts_loading">Loading saved campus information...</string>
+    <string name="campus_alerts_empty_all">No campus safety information is currently available for %1$s Campus.</string>
+    <string name="campus_alerts_empty_filter">No %1$s information is currently available for %2$s Campus.</string>
+    <string name="campus_alerts_location">Location: %1$s</string>
+    <string name="campus_alerts_campus_label">Campus: %1$s</string>
+    <string name="campus_alerts_datetime_unavailable">Date and time unavailable</string>
+    <string name="campus_alerts_datetime">Date: %1$s • Time: %2$s</string>
+    <string name="campus_alerts_local_guidance_error">Local guidance could not be loaded.</string>
+    <string name="campus_alerts_no_live_alerts">No live alerts were returned. Saved guidance may still be available.</string>
+    <string name="campus_alerts_refresh_error">Unable to refresh live alerts. Showing saved campus information where available.</string>
+    <string name="campus_alerts_offline_notice">Offline mode: showing saved campus information. Live emergency alerts may not be current.</string>
+    <string name="campus_alerts_notification_settings_error">Notification settings are unavailable.</string>
+    <string name="campus_alerts_campus_selected">%1$s Campus selected.</string>
+    <string name="campus_alerts_map_unavailable">Campus map is not available.</string>
+    <string name="campus_alerts_reports_unavailable">Campus reports are not available.</string>
+    <string name="campus_alerts_profile_unavailable">Campus profile is not available.</string>
+    <string name="campus_alerts_new_alert_title">New Campus Safety Alert</string>
+    <string name="campus_alerts_new_alert_message">A new alert has been posted for %1$s Campus.</string>
+    <string name="campus_alerts_notification_channel">Campus Safety Alerts</string>
+    <string name="campus_alerts_notification_channel_description">Real-time safety alerts for the selected campus</string>
+
+    <!-- Campus Incident Report: English -->
+    <string name="cir_app_name">SafeZone</string>
+    <string name="cir_back">Back</string>
+    <string name="cir_title">Report Campus Incident</string>
+    <string name="cir_subtitle">Help us keep our campus safe. Provide as much detail as possible.</string>
+
+    <string name="cir_incident_type_required">Incident Type *</string>
+    <string name="cir_campus_required">Campus *</string>
+    <string name="cir_location_required">Location *</string>
+    <string name="cir_description_required">Description *</string>
+
+    <string name="cir_incident_type">Incident type</string>
+    <string name="cir_campus">Campus</string>
+    <string name="cir_location">Location</string>
+    <string name="cir_description">Description</string>
+    <string name="cir_location_hint">Enter current location or select on map</string>
+    <string name="cir_use_current_location">Use current location</string>
+    <string name="cir_description_hint">Describe what happened...</string>
+    <string name="cir_initial_character_count">0/500</string>
+    <string name="cir_character_count">%1$d/500</string>
+
+    <string name="cir_evidence_title">Evidence (Optional)</string>
+    <string name="cir_evidence_description">Add photos, videos, audio recordings or files to support your report.</string>
+    <string name="cir_photo">Photo</string>
+    <string name="cir_video">Video</string>
+    <string name="cir_audio">Audio</string>
+    <string name="cir_file">File</string>
+    <string name="cir_submit_report">Submit Campus Report</string>
+
+    <string name="cir_nav_home">Home</string>
+    <string name="cir_nav_map">Map</string>
+    <string name="cir_nav_reports">Reports</string>
+    <string name="cir_nav_alerts">Alerts</string>
+    <string name="cir_nav_profile">Profile</string>
+
+    <string name="cir_location_permission_required">Location permission is required to use your current location.</string>
+    <string name="cir_photo_saved">Photo saved successfully.</string>
+    <string name="cir_video_saved">Video saved successfully.</string>
+    <string name="cir_audio_saved">Audio saved successfully.</string>
+    <string name="cir_file_saved">File saved successfully.</string>
+    <string name="cir_evidence_save_failed">Unable to save the selected evidence.</string>
+    <string name="cir_enable_location_services">Please turn on Location Services.</string>
+    <string name="cir_getting_location">Getting current location...</string>
+    <string name="cir_location_failed">Unable to get current location.</string>
+
+    <string name="cir_login_required">Please log in to submit a campus report.</string>
+    <string name="cir_select_incident_type">Please select an incident type.</string>
+    <string name="cir_select_campus">Please select a campus.</string>
+    <string name="cir_enter_location">Please enter or select the incident location.</string>
+    <string name="cir_enter_description">Please describe what happened.</string>
+    <string name="cir_description_too_short">Please provide more details about the incident.</string>
+    <string name="cir_description_too_long">Description cannot exceed 500 characters.</string>
+    <string name="cir_saving_report">Saving report...</string>
+    <string name="cir_synchronising">Synchronising...</string>
+    <string name="cir_saved_offline">Report saved offline. It is awaiting synchronisation.</string>
+    <string name="cir_local_save_failed">Unable to save the report locally: %1$s</string>
+    <string name="cir_submission_success">Campus report submitted successfully.</string>
+    <string name="cir_sync_pending">Report saved on this device. Synchronisation is still pending.</string>
+
+    <string name="cir_navigation_map">Map navigation is not connected yet.</string>
+    <string name="cir_navigation_reports">Reports navigation is not connected yet.</string>
+    <string name="cir_navigation_alerts">Alerts navigation is not connected yet.</string>
+    <string name="cir_navigation_profile">Profile navigation is not connected yet.</string>
+
+    <string-array name="cir_incident_types">
+        <item>Select incident type</item>
+        <item>Medical Emergency</item>
+        <item>Assault</item>
+        <item>Harassment</item>
+        <item>Theft</item>
+        <item>Fire</item>
+        <item>Accident</item>
+        <item>Suspicious Activity</item>
+        <item>Unsafe Area</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="cir_campuses">
+        <item>Select campus</item>
+        <item>Pretoria Campus</item>
+        <item>Johannesburg Campus</item>
+        <item>Polokwane Campus</item>
+        <item>Durban Campus</item>
+        <item>Bloemfontein Campus</item>
+    </string-array>
+
+    <!-- Campus Settings: English -->
+
+    <string name="campus_settings_app_name">SafeZone</string>
+    <string name="campus_settings_back">‹</string>
+    <string name="campus_settings_title">Campus Settings</string>
+    <string name="campus_settings_subtitle">Manage your account and safety preferences.</string>
+
+    <!-- Account section -->
+    <string name="campus_settings_account">Account</string>
+    <string name="campus_settings_edit_profile">Edit Profile</string>
+    <string name="campus_settings_change_password">Change Password</string>
+    <string name="campus_settings_language">Language</string>
+    <string name="campus_settings_language_english">English</string>
+    <string name="campus_settings_logout">Logout</string>
+
+    <!-- Campus Safety section -->
+    <string name="campus_settings_campus_safety">Campus Safety</string>
+    <string name="campus_settings_campus_alerts">Campus Alerts</string>
+    <string name="campus_settings_emergency_preferences">Emergency Preferences</string>
+    <string name="campus_settings_location_sharing">Location Sharing</string>
+
+    <!-- Support section -->
+    <string name="campus_settings_support">Support</string>
+    <string name="campus_settings_help_support">Help &amp; Support</string>
+    <string name="campus_settings_about_safezone">About SafeZone</string>
+
+    <!-- Bottom navigation -->
+    <string name="campus_settings_home">Home</string>
+    <string name="campus_settings_map">Map</string>
+    <string name="campus_settings_reports">Reports</string>
+    <string name="campus_settings_alerts">Alerts</string>
+    <string name="campus_settings_profile">Profile</string>
+
+    <!-- Language dialog -->
+    <string name="campus_settings_choose_language">Choose Language</string>
+    <string name="campus_settings_cancel">Cancel</string>
+    <string name="campus_settings_language_saved">Language saved successfully.</string>
+    <string name="campus_settings_open">Open</string>
+
+    <!-- Error and status messages -->
+    <string name="campus_settings_edit_profile_unavailable">Unable to open Edit Profile.</string>
+    <string name="campus_settings_change_password_unavailable">Unable to open Change Password.</string>
+    <string name="campus_settings_alerts_unavailable">Unable to open Campus Alerts.</string>
+    <string name="campus_settings_emergency_unavailable">Unable to open Emergency Preferences.</string>
+    <string name="campus_settings_location_unavailable">Unable to open Location Sharing.</string>
+    <string name="campus_settings_help_unavailable">Unable to open Help and Support.</string>
+    <string name="campus_settings_about_unavailable">Unable to open About SafeZone.</string>
+    <string name="campus_settings_reports_unavailable">Unable to open Reports.</string>
+    <string name="campus_settings_profile_unavailable">Unable to open Profile.</string>
+    <string name="campus_settings_map_unavailable">Map is not available on this device.</string>
+    <string name="campus_settings_logout_success">You have been logged out.</string>
+
+    <!-- Campus Profile -->
+    <string name="campus_profile_app_name">SafeZone</string>
+    <string name="campus_profile_back">‹</string>
+    <string name="campus_profile_back_description">Go back</string>
+    <string name="campus_profile_default_name">Student</string>
+    <string name="campus_profile_student_details_default">Student • Campus</string>
+    <string name="campus_profile_student_details">Student • %1$s — %2$s</string>
+
+    <!-- Profile information -->
+    <string name="campus_profile_photo_description">Profile photo</string>
+    <string name="campus_profile_change_photo">Change profile photo</string>
+    <string name="campus_profile_email_label">Email</string>
+    <string name="campus_profile_phone_label">Phone</string>
+    <string name="campus_profile_institution_label">Institution</string>
+    <string name="campus_profile_campus_label">Campus</string>
+    <string name="campus_profile_no_email">No email provided</string>
+    <string name="campus_profile_phone_missing">Phone number not provided</string>
+    <string name="campus_profile_institution_missing">Institution not provided</string>
+    <string name="campus_profile_campus_missing">Campus not provided</string>
+
+    <!-- Profile actions -->
+    <string name="campus_profile_edit">Edit Profile</string>
+    <string name="campus_profile_trusted_contacts">Trusted Contacts</string>
+    <string name="campus_profile_my_reports">My Reports</string>
+    <string name="campus_profile_settings">Settings</string>
+    <string name="campus_profile_logout">Logout</string>
+    <string name="campus_profile_open">Open</string>
+
+    <!-- Bottom navigation -->
+    <string name="campus_profile_home">Home</string>
+    <string name="campus_profile_map">Map</string>
+    <string name="campus_profile_alerts">Alerts</string>
+    <string name="campus_profile_profile">Profile</string>
+
+    <!-- Status and error messages -->
+    <string name="campus_profile_not_found">Campus profile information was not found.</string>
+    <string name="campus_profile_load_failed">Unable to load campus profile.</string>
+    <string name="campus_profile_photo_coming_soon">Profile photo selection will be added here.</string>
+    <string name="campus_profile_edit_unavailable">Edit Profile is not available.</string>
+    <string name="campus_profile_trusted_contacts_unavailable">Trusted Contacts are not available.</string>
+    <string name="campus_profile_settings_unavailable">Settings are not available.</string>
+    <string name="campus_profile_map_unavailable">Campus Safety Map is not available.</string>
+    <string name="campus_profile_reports_unavailable">Reports are not available.</string>
+    <string name="campus_profile_alerts_unavailable">Campus Alerts are not available.</string>
+    <string name="campus_profile_current_profile">You are viewing your profile.</string>
+    <string name="campus_profile_logout_success">You have been logged out.</string>
+
+
+    <!-- Campus Safety Map screen labels -->
+
+    <string name="campus_map_back">Back</string>
+    <string name="campus_map_app_title">SafeZone</string>
+    <string name="campus_map_notifications">Notifications</string>
+    <string name="campus_map_location">Campus location</string>
+    <string name="campus_map_title">Campus Safety Map</string>
+    <string name="campus_map_subtitle">Explore your campus and find your way around safely.</string>
+    <string name="campus_map_campus">Campus</string>
+    <string name="campus_map_search">Search</string>
+    <string name="campus_map_search_hint">Search for a building or location...</string>
+    <string name="campus_map_library">Library</string>
+    <string name="campus_map_student_centre">Student\nCentre</string>
+    <string name="campus_map_lecture_halls">Lecture\nHalls</string>
+    <string name="campus_map_admin_block">Admin\nBlock</string>
+    <string name="campus_map_main_entrance">Main\nEntrance</string>
+    <string name="campus_map_illustrated_location">Illustrated location indicator; not your live GPS position</string>
+    <string name="campus_map_compass">Reset map orientation</string>
+    <string name="campus_map_zoom_in">Zoom in</string>
+    <string name="campus_map_zoom_out">Zoom out</string>
+    <string name="campus_map_my_location">Show my location in a maps application</string>
+    <string name="campus_map_information">Information</string>
+    <string name="campus_map_explore_title">Explore Your Campus</string>
+    <string name="campus_map_explore_description">Find buildings, pathways and important campus locations.</string>
+    <string name="campus_map_get_directions">Get\nDirections</string>
+    <string name="campus_map_home">Home</string>
+    <string name="campus_map_nav_map">Map</string>
+    <string name="campus_map_reports">Reports</string>
+    <string name="campus_map_alerts">Alerts</string>
+    <string name="campus_map_profile">Profile</string>
+
+
+    <!-- Campus Safety Map -->
+    <string name="campus_map_location_permission_denied">Location permission denied. Allow location access to use this feature.</string>
+    <string name="campus_map_building_selected">Selected building: %1$s</string>
+    <string name="campus_map_load_campus_failed">Could not load your campus information.</string>
+    <string name="campus_map_default_campus">Default Campus</string>
+    <string name="campus_map_zoom_level">Map zoom: %1$d%%</string>
+    <string name="campus_map_orientation_reset">Map orientation reset.</string>
+    <string name="campus_map_enter_location">Please enter a location to search.</string>
+    <string name="campus_map_location_found">Location found: %1$s</string>
+    <string name="campus_map_location_not_on_illustration">%1$s is not shown on the campus illustration. You can still request directions.</string>
+    <string name="campus_map_select_campus">Select Campus</string>
+    <string name="campus_map_campus_selected">Selected campus: %1$s</string>
+    <string name="campus_map_cancel">Cancel</string>
+    <string name="campus_map_no_maps_app">No map application is available on this device.</string>
+    <string name="campus_map_open_home_failed">Unable to open the home screen.</string>
+    <string name="campus_map_open_reports_failed">Unable to open campus reports.</string>
+    <string name="campus_map_open_alerts_failed">Unable to open campus alerts.</string>
+    <string name="campus_map_open_profile_failed">Unable to open your profile.</string>
+
+
+    <!-- Campus Reports -->
+
+    <string name="campus_reports_back">Back</string>
+    <string name="campus_reports_title">Campus Reports</string>
+    <string name="campus_reports_refresh">Refresh reports</string>
+    <string name="campus_reports_heading">My Incident Reports</string>
+    <string name="campus_reports_description">View incidents you have reported on campus.</string>
+    <string name="campus_reports_count_zero">0 reports</string>
+    <string name="campus_reports_count">%1$d reports</string>
+    <string name="campus_reports_empty">You have not submitted any campus reports yet.</string>
+    <string name="campus_reports_description_label">Description</string>
+    <string name="campus_reports_location_label">Location</string>
+    <string name="campus_reports_view_location">View Location on Map</string>
+    <string name="campus_reports_status_label">Report Status</string>
+    <string name="campus_reports_sync_status">Sync: %1$s</string>
+    <string name="campus_reports_evidence">Evidence</string>
+    <string name="campus_reports_view_photo">View Photo</string>
+    <string name="campus_reports_view_video">View Video</string>
+    <string name="campus_reports_view_audio">View Audio</string>
+    <string name="campus_reports_view_file">View File</string>
+    <string name="campus_reports_incident_id">Incident ID: SZ-%1$s</string>
+    <string name="campus_reports_campus">Campus: %1$s</string>
+    <string name="campus_reports_date">Date: %1$s</string>
+    <string name="campus_reports_time">Time: %1$s</string>
+    <string name="campus_reports_gps">GPS: %1$.6f, %2$.6f</string>
+    <string name="campus_reports_status">Status: %1$s</string>
+    <string name="campus_reports_pending_sync">Pending Sync</string>
+    <string name="campus_reports_synced">Synced</string>
+    <string name="campus_reports_not_available">Not available</string>
+    <string name="campus_reports_campus_not_provided">Campus not provided</string>
+    <string name="campus_reports_no_description">No description provided.</string>
+    <string name="campus_reports_location_not_provided">Location not provided.</string>
+    <string name="campus_reports_login_required">Please log in first.</string>
+    <string name="campus_reports_local_save_warning">Some reports could not be saved locally.</string>
+    <string name="campus_reports_map_unavailable">Unable to open the map.</string>
+    <string name="campus_reports_file_missing">This evidence file is no longer available on this device.</string>
+    <string name="campus_reports_file_inaccessible">This evidence file is no longer accessible.</string>
+    <string name="campus_reports_invalid_evidence">Invalid evidence file.</string>
+    <string name="campus_reports_open_evidence_failed">Unable to open this evidence.</string>
+    <string name="campus_reports_no_evidence_app">No app is available to open this evidence type.</string>
+    <string name="campus_reports_open_evidence">Open Evidence</string>
+    <string name="campus_reports_refresh_failed">Unable to refresh reports. Your saved reports are still available.</string>
+    <string name="cir_navigation_failed">Unable to open this screen.</string>
+
+    <!-- Campus Emergency Screen -->
+    <string name="campus_emergency_back">Back</string>
+    <string name="campus_emergency_app_name">SafeZone</string>
+    <string name="campus_emergency_title">Campus Emergency</string>
+    <string name="campus_emergency_subtitle">Get immediate help or contact campus security in case of an emergency.</string>
+
+    <string name="campus_emergency_content_description_warning">Emergency warning</string>
+    <string name="campus_emergency_warning_message">If you are in immediate danger, call emergency services now.</string>
+
+    <string name="campus_emergency_content_description_phone">Phone</string>
+    <string name="campus_emergency_call_services">Call Emergency Services</string>
+    <string name="campus_emergency_emergency_number">112</string>
+    <string name="campus_emergency_services_list">Police • Ambulance • Fire</string>
+
+    <string name="campus_emergency_contacts_title">Campus Security Contacts</string>
+    <string name="campus_emergency_content_description_security">Campus Security</string>
+    <string name="campus_emergency_security">Campus Security</string>
+    <string name="campus_emergency_available_24_7">Available 24/7</string>
+    <string name="campus_emergency_call_security">Call Campus Security</string>
+
+    <string name="campus_emergency_content_description_campus_control">Campus Control</string>
+    <string name="campus_emergency_campus_control">Pretoria Campus Control</string>
+    <string name="campus_emergency_campus_control_number">012 345 6789</string>
+    <string name="campus_emergency_call_campus_control">Call Campus Control</string>
+
+    <string name="campus_emergency_content_description_health">Campus Health Centre</string>
+    <string name="campus_emergency_health_centre">Campus Health Centre</string>
+    <string name="campus_emergency_health_number">012 345 6790</string>
+    <string name="campus_emergency_call_health">Call Health Centre</string>
+
+    <string name="campus_emergency_content_description_support">Student Support</string>
+    <string name="campus_emergency_student_support">Student Support</string>
+    <string name="campus_emergency_support_number">012 345 6791</string>
+    <string name="campus_emergency_call_student_support">Call Student Support</string>
+
+    <string name="campus_emergency_content_description_location">Location</string>
+    <string name="campus_emergency_stay_safe">Stay Safe</string>
+    <string name="campus_emergency_share_location_description">Share your location with campus security during an emergency for faster assistance.</string>
+    <string name="campus_emergency_share_location_button">➤   Share My Location</string>
+
+    <!-- Bottom Navigation -->
+    <string name="campus_emergency_nav_home">Home</string>
+    <string name="campus_emergency_nav_map">Map</string>
+    <string name="campus_emergency_nav_reports">Reports</string>
+    <string name="campus_emergency_nav_alerts">Alerts</string>
+    <string name="campus_emergency_nav_profile">Profile</string>
+
+
+    <!-- Residential Location -->
+    <string name="edit_profile_location">Residential Area / Suburb</string>
+    <string name="edit_profile_location_hint">e.g. Hammanskraal, Pretoria</string>
+    <string name="edit_profile_location_description">Your saved area can be used for location-based personal safety alerts when GPS is unavailable.</string>
+
+    <!-- Residential Location Validation -->
+    <string name="edit_profile_location_required">Residential area is required.</string>
+    <string name="edit_profile_location_invalid">Please enter a valid residential area.</string>
+
 </resources>

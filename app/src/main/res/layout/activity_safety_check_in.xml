@@ -7,9 +7,7 @@
     android:orientation="vertical"
     android:background="#F5F7FA">
 
-    <!-- =====================================================
-         SAFEZONE HEADER
-         ===================================================== -->
+    <!-- SAFEZONE HEADER -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +31,7 @@
             android:textStyle="normal"
             android:clickable="true"
             android:focusable="true"
-            android:contentDescription="Back" />
+            android:contentDescription="@string/back" />
 
         <!-- TITLE -->
 
@@ -55,10 +53,7 @@
 
     </LinearLayout>
 
-
-    <!-- =====================================================
-         MAIN CONTENT
-         ===================================================== -->
+    <!-- MAIN CONTENT -->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -76,10 +71,7 @@
             android:paddingTop="22dp"
             android:paddingBottom="30dp">
 
-
-            <!-- =================================================
-                 SAFETY CHECK-IN ICON
-                 ================================================= -->
+            <!-- SAFETY CHECK-IN ICON -->
 
             <ImageView
                 android:layout_width="76dp"
@@ -88,19 +80,16 @@
                 android:background="@drawable/bg_checkin_icon"
                 android:padding="19dp"
                 android:src="@drawable/ic_checkin"
-                android:contentDescription="Safety check-in" />
+                android:contentDescription="@string/safety_check_in_title" />
 
-
-            <!-- =================================================
-                 TITLE
-                 ================================================= -->
+            <!-- TITLE -->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text="Safety Check-In"
+                android:text="@string/safety_check_in_title"
                 android:textColor="#0B1F3A"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -110,20 +99,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:gravity="center"
-                android:text="Let someone you trust know that you're safe."
+                android:text="@string/safety_check_in_subtitle"
                 android:textColor="#667085"
                 android:textSize="14sp" />
 
-
-            <!-- =================================================
-                 DURATION
-                 ================================================= -->
+            <!-- DURATION -->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Check-In Duration"
+                android:text="@string/check_in_duration"
                 android:textColor="#0B1F3A"
                 android:textSize="19sp"
                 android:textStyle="bold" />
@@ -132,14 +118,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Choose how long you want your safety check-in to remain active."
+                android:text="@string/check_in_duration_description"
                 android:textColor="#667085"
                 android:textSize="13sp" />
 
-
-            <!-- =================================================
-                 DURATION ROW 1
-                 ================================================= -->
+            <!-- DURATION ROW 1 -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -162,7 +145,7 @@
                     android:gravity="center"
                     android:clickable="true"
                     android:focusable="true"
-                    android:text="30 Minutes"
+                    android:text="@string/duration_30_minutes"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="15sp"
@@ -183,7 +166,7 @@
                     android:gravity="center"
                     android:clickable="true"
                     android:focusable="true"
-                    android:text="1 Hour"
+                    android:text="@string/duration_1_hour"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="15sp"
@@ -191,10 +174,7 @@
 
             </LinearLayout>
 
-
-            <!-- =================================================
-                 DURATION ROW 2
-                 ================================================= -->
+            <!-- DURATION ROW 2 -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -217,7 +197,7 @@
                     android:gravity="center"
                     android:clickable="true"
                     android:focusable="true"
-                    android:text="2 Hours"
+                    android:text="@string/duration_2_hours"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="15sp"
@@ -238,7 +218,7 @@
                     android:gravity="center"
                     android:clickable="true"
                     android:focusable="true"
-                    android:text="Custom"
+                    android:text="@string/duration_custom"
                     android:textAllCaps="false"
                     android:textColor="#172033"
                     android:textSize="15sp"
@@ -246,10 +226,7 @@
 
             </LinearLayout>
 
-
-            <!-- =================================================
-                 SELECTED DURATION
-                 ================================================= -->
+            <!-- SELECTED DURATION -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -267,7 +244,7 @@
                     android:background="@drawable/bg_icon_circle_blue"
                     android:padding="10dp"
                     android:src="@drawable/ic_checkin"
-                    android:contentDescription="Selected duration" />
+                    android:contentDescription="@string/selected_duration" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -279,7 +256,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Selected Duration"
+                        android:text="@string/selected_duration"
                         android:textColor="#0B1F3A"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -289,7 +266,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="Duration: 30 minutes"
+                        android:text="@string/duration_selected_default"
                         android:textColor="#667085"
                         android:textSize="13sp" />
 
@@ -297,16 +274,13 @@
 
             </LinearLayout>
 
-
-            <!-- =================================================
-                 TRUSTED CONTACT
-                 ================================================= -->
+            <!-- TRUSTED CONTACT -->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Trusted Contact"
+                android:text="@string/trusted_contact"
                 android:textColor="#0B1F3A"
                 android:textSize="19sp"
                 android:textStyle="bold" />
@@ -315,10 +289,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Choose who should receive your safety check-in."
+                android:text="@string/trusted_contact_description"
                 android:textColor="#667085"
                 android:textSize="13sp" />
-
 
             <!-- CONTACT SELECTOR -->
 
@@ -337,7 +310,7 @@
                     android:background="@drawable/bg_icon_circle_blue"
                     android:padding="10dp"
                     android:src="@drawable/ic_person"
-                    android:contentDescription="Trusted contact" />
+                    android:contentDescription="@string/trusted_contact" />
 
                 <Spinner
                     android:id="@+id/spTrustedContact"
@@ -352,10 +325,7 @@
 
             </LinearLayout>
 
-
-            <!-- =================================================
-                 LOCATION SHARING
-                 ================================================= -->
+            <!-- LOCATION SHARING -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -372,7 +342,7 @@
                     android:background="@drawable/bg_icon_circle_blue"
                     android:padding="10dp"
                     android:src="@drawable/ic_location"
-                    android:contentDescription="Location sharing" />
+                    android:contentDescription="@string/share_location" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -384,7 +354,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Share Location"
+                        android:text="@string/share_location"
                         android:textColor="#172033"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -393,7 +363,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="Allow your trusted contact to see your current location."
+                        android:text="@string/share_location_description"
                         android:textColor="#667085"
                         android:textSize="11sp" />
 
@@ -406,14 +376,11 @@
                     android:checked="true"
                     android:clickable="true"
                     android:focusable="true"
-                    android:contentDescription="Share location" />
+                    android:contentDescription="@string/share_location" />
 
             </LinearLayout>
 
-
-            <!-- =================================================
-                 START SAFETY CHECK
-                 ================================================= -->
+            <!-- START SAFETY CHECK -->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnStartSafetyCheck"
@@ -430,7 +397,7 @@
                 android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="Start Safety Check"
+                android:text="@string/start_safety_check"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"

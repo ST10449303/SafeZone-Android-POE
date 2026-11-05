@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F5F7FA">
 
-    <!-- ===================================================== -->
-    <!-- SAFEZONE HEADER -->
-    <!-- ===================================================== -->
-
+    <!-- SafeZone header -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="74dp"
@@ -23,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="SafeZone"
+            android:text="@string/campus_home_header"
             android:textColor="@android:color/white"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -37,7 +33,7 @@
             android:layout_marginEnd="62dp"
             android:padding="5dp"
             android:src="@drawable/ic_notification"
-            android:contentDescription="Notifications" />
+            android:contentDescription="@string/campus_home_nav_alerts" />
 
         <ImageView
             android:id="@+id/tvProfile"
@@ -46,14 +42,11 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_profile"
-            android:contentDescription="Profile" />
+            android:contentDescription="@string/campus_home_nav_profile" />
 
     </RelativeLayout>
 
-    <!-- ===================================================== -->
-    <!-- MAIN CONTENT -->
-    <!-- ===================================================== -->
-
+    <!-- Main content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -70,12 +63,10 @@
             android:paddingTop="28dp"
             android:paddingBottom="28dp">
 
-            <!-- PAGE TITLE -->
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Campus Safety"
+                android:text="@string/campus_home_title"
                 android:textColor="#0B1F3A"
                 android:textSize="34sp"
                 android:textStyle="bold" />
@@ -85,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Welcome, Learner 👋"
+                android:text="@string/campus_home_welcome_default"
                 android:textColor="#50698A"
                 android:textSize="21sp"
                 android:textStyle="bold" />
@@ -94,14 +85,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Your safety matters. Stay informed, stay safe."
+                android:text="@string/campus_home_tagline"
                 android:textColor="#58708F"
                 android:textSize="16sp" />
 
-            <!-- ================================================= -->
-            <!-- CAMPUS CONNECTION CARD -->
-            <!-- ================================================= -->
-
+            <!-- Campus connection card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,7 +110,7 @@
                         android:layout_width="52dp"
                         android:layout_height="52dp"
                         android:src="@drawable/ic_campus_building"
-                        android:contentDescription="Campus" />
+                        android:contentDescription="@string/campus_home_campus_icon" />
 
                 </LinearLayout>
 
@@ -137,7 +125,7 @@
                         android:id="@+id/tvCampusName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Pretoria Campus"
+                        android:text="@string/campus_home_default_campus"
                         android:textColor="#0B1F3A"
                         android:textSize="21sp"
                         android:textStyle="bold" />
@@ -146,7 +134,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Campus Safety Connection"
+                        android:text="@string/campus_home_connection_title"
                         android:textColor="#50698A"
                         android:textSize="15sp" />
 
@@ -166,7 +154,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="9dp"
-                            android:text="Status: Available"
+                            android:text="@string/campus_home_status_available"
                             android:textColor="#159447"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -183,13 +171,13 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:src="@drawable/ic_clock"
-                            android:contentDescription="Campus hours" />
+                            android:contentDescription="@string/campus_home_hours_description" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="Monday – Friday | 07:00 – 18:00"
+                            android:text="@string/campus_home_hours"
                             android:textColor="#50698A"
                             android:textSize="14sp" />
 
@@ -199,10 +187,7 @@
 
             </LinearLayout>
 
-            <!-- ================================================= -->
-            <!-- REPORT CAMPUS INCIDENT -->
-            <!-- ================================================= -->
-
+            <!-- Report campus incident -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnReportCampusIncident"
                 android:layout_width="match_parent"
@@ -214,7 +199,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="24dp"
                 android:paddingEnd="20dp"
-                android:text="Report Campus Incident\nReport a safety concern on campus."
+                android:text="@string/campus_home_report_incident"
                 android:textAllCaps="false"
                 android:textColor="#0B1F3A"
                 android:textSize="17sp"
@@ -223,10 +208,7 @@
                 android:drawableEnd="@drawable/ic_arrow_right"
                 android:drawablePadding="18dp" />
 
-            <!-- ================================================= -->
-            <!-- CAMPUS EMERGENCY -->
-            <!-- ================================================= -->
-
+            <!-- Campus emergency -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnCampusEmergency"
                 android:layout_width="match_parent"
@@ -238,7 +220,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="24dp"
                 android:paddingEnd="20dp"
-                android:text="Campus Emergency\nGet immediate help on campus."
+                android:text="@string/campus_home_emergency"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="17sp"
@@ -247,10 +229,7 @@
                 android:drawableEnd="@drawable/ic_arrow_right_white"
                 android:drawablePadding="18dp" />
 
-            <!-- ================================================= -->
-            <!-- CAMPUS SAFETY MAP -->
-            <!-- ================================================= -->
-
+            <!-- Campus safety map -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnCampusSafetyMap"
                 android:layout_width="match_parent"
@@ -262,7 +241,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="24dp"
                 android:paddingEnd="20dp"
-                android:text="Campus Safety Map\nView safety resources and locations."
+                android:text="@string/campus_home_safety_map"
                 android:textAllCaps="false"
                 android:textColor="#0B1F3A"
                 android:textSize="17sp"
@@ -271,10 +250,7 @@
                 android:drawableEnd="@drawable/ic_arrow_right"
                 android:drawablePadding="18dp" />
 
-            <!-- ================================================= -->
-            <!-- CAMPUS ALERTS -->
-            <!-- ================================================= -->
-
+            <!-- Campus alerts -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnCampusAlerts"
                 android:layout_width="match_parent"
@@ -286,7 +262,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="24dp"
                 android:paddingEnd="20dp"
-                android:text="Campus Alerts\nStay updated with important alerts."
+                android:text="@string/campus_home_alerts"
                 android:textAllCaps="false"
                 android:textColor="#0B1F3A"
                 android:textSize="17sp"
@@ -295,10 +271,7 @@
                 android:drawableEnd="@drawable/ic_arrow_right"
                 android:drawablePadding="18dp" />
 
-            <!-- ================================================= -->
-            <!-- MY CAMPUS REPORTS -->
-            <!-- ================================================= -->
-
+            <!-- My campus reports -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnMyCampusReports"
                 android:layout_width="match_parent"
@@ -310,7 +283,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="24dp"
                 android:paddingEnd="20dp"
-                android:text="My Campus Reports\nView and manage your reported incidents."
+                android:text="@string/campus_home_my_reports"
                 android:textAllCaps="false"
                 android:textColor="#0B1F3A"
                 android:textSize="17sp"
@@ -319,10 +292,7 @@
                 android:drawableEnd="@drawable/ic_arrow_right"
                 android:drawablePadding="18dp" />
 
-            <!-- ================================================= -->
-            <!-- LOGOUT -->
-            <!-- ================================================= -->
-
+            <!-- Logout -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
@@ -333,20 +303,16 @@
                 android:backgroundTint="@null"
                 android:stateListAnimator="@null"
                 android:gravity="center"
-                android:text="LOG OUT"
+                android:text="@string/campus_home_logout"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
-
     </ScrollView>
 
-    <!-- ===================================================== -->
-    <!-- BOTTOM NAVIGATION -->
-    <!-- ===================================================== -->
-
+    <!-- Bottom navigation -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="92dp"
@@ -356,8 +322,6 @@
         android:elevation="8dp"
         android:paddingTop="8dp"
         android:paddingBottom="6dp">
-
-        <!-- HOME -->
 
         <LinearLayout
             android:id="@+id/navHome"
@@ -373,13 +337,13 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_home_blue"
-                android:contentDescription="Home" />
+                android:contentDescription="@string/campus_home_nav_home" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Home"
+                android:text="@string/campus_home_nav_home"
                 android:textColor="#1976D2"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -389,10 +353,7 @@
                 android:layout_height="3dp"
                 android:layout_marginTop="5dp"
                 android:background="#1976D2" />
-
         </LinearLayout>
-
-        <!-- MAP -->
 
         <LinearLayout
             android:id="@+id/navMap"
@@ -408,19 +369,16 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_map_outline"
-                android:contentDescription="Map" />
+                android:contentDescription="@string/campus_home_nav_map" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Map"
+                android:text="@string/campus_home_nav_map"
                 android:textColor="#506174"
                 android:textSize="14sp" />
-
         </LinearLayout>
-
-        <!-- REPORTS -->
 
         <LinearLayout
             android:id="@+id/navReports"
@@ -436,19 +394,16 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_report_outline"
-                android:contentDescription="Reports" />
+                android:contentDescription="@string/campus_home_nav_reports" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Reports"
+                android:text="@string/campus_home_nav_reports"
                 android:textColor="#506174"
                 android:textSize="14sp" />
-
         </LinearLayout>
-
-        <!-- ALERTS -->
 
         <LinearLayout
             android:id="@+id/navNotifications"
@@ -464,19 +419,16 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_bell_outline"
-                android:contentDescription="Alerts" />
+                android:contentDescription="@string/campus_home_nav_alerts" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Alerts"
+                android:text="@string/campus_home_nav_alerts"
                 android:textColor="#506174"
                 android:textSize="14sp" />
-
         </LinearLayout>
-
-        <!-- PROFILE -->
 
         <LinearLayout
             android:id="@+id/navProfile"
@@ -492,16 +444,15 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_profile_outline"
-                android:contentDescription="Profile" />
+                android:contentDescription="@string/campus_home_nav_profile" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Profile"
+                android:text="@string/campus_home_nav_profile"
                 android:textColor="#506174"
                 android:textSize="14sp" />
-
         </LinearLayout>
 
     </LinearLayout>

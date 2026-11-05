@@ -1,9 +1,11 @@
+
 package com.example.safezone
 
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.MotionEvent
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -28,77 +30,43 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_change_password)
 
         auth = FirebaseAuth.getInstance()
 
-        // ==============================
-        // FIND VIEWS
-        // ==============================
+        // Find views using the IDs in activity_change_password.xml
+        tvBack = findViewById(R.id.tvBack)
+        tvSuccess = findViewById(R.id.tvSuccess)
 
-        tvBack =
-            findViewById(R.id.tvBack)
+        etCurrentPassword = findViewById(R.id.etCurrentPassword)
+        etNewPassword = findViewById(R.id.etNewPassword)
+        etConfirmPassword = findViewById(R.id.etConfirmPassword)
 
-        tvSuccess =
-            findViewById(R.id.tvSuccess)
+        btnChangePassword = findViewById(R.id.btnChangePassword)
+        btnBackToSettings = findViewById(R.id.btnBackToSettings)
 
-        etCurrentPassword =
-            findViewById(R.id.etCurrentPassword)
+        // Hide the success message until the password is changed
+        tvSuccess.visibility = View.GONE
 
-        etNewPassword =
-            findViewById(R.id.etNewPassword)
-
-        etConfirmPassword =
-            findViewById(R.id.etConfirmPassword)
-
-        btnChangePassword =
-            findViewById(R.id.btnChangePassword)
-
-        btnBackToSettings =
-            findViewById(R.id.btnBackToSettings)
-
-
-        // ==============================
-        // BACK ARROW
-        // ==============================
-
+        // Back navigation
         tvBack.setOnClickListener {
             finish()
         }
 
-
-        // ==============================
-        // PASSWORD VISIBILITY
-        // ==============================
-
-        setupPasswordVisibility(etCurrentPassword)
-
-        setupPasswordVisibility(etNewPassword)
-
-        setupPasswordVisibility(etConfirmPassword)
-
-
-        // ==============================
-        // CHANGE PASSWORD
-        // ==============================
-
-        btnChangePassword.setOnClickListener {
-
-            changePassword()
-        }
-
-
-        // ==============================
-        // BACK TO SETTINGS
-        // ==============================
-
         btnBackToSettings.setOnClickListener {
-
             finish()
         }
-    }
 
+        // Password visibility controls
+        setupPasswordVisibility(etCurrentPassword)
+        setupPasswordVisibility(etNewPassword)
+        setupPasswordVisibility(etConfirmPassword)
+
+        // Change password
+        btnChangePassword.setOnClickListener {
+            changePassword()
+        }
+    }
 
     // =====================================================
     // CHANGE PASSWORD
@@ -106,220 +74,145 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     private fun changePassword() {
 
-        val currentPassword =
-            etCurrentPassword.text.toString()
+        val currentPassword = etCurrentPassword.text.toString()
+        val newPassword = etNewPassword.text.toString()
+        val confirmPassword = etConfirmPassword.text.toString()
 
-        val newPassword =
-            etNewPassword.text.toString()
-
-        val confirmPassword =
-            etConfirmPassword.text.toString()
-
-
-        // ==============================
-        // CHECK CURRENT USER
-        // ==============================
-
+        // Check whether a user is signed in
         val user = auth.currentUser
 
         if (user == null) {
-
             Toast.makeText(
                 this,
-                "No logged-in account was found.",
+                getString(R.string.change_password_no_user),
                 Toast.LENGTH_LONG
             ).show()
 
             finish()
-
             return
         }
 
-
-        // ==============================
-        // CURRENT PASSWORD
-        // ==============================
-
+        // Validate current password
         if (currentPassword.isEmpty()) {
-
             etCurrentPassword.error =
-                "Please enter your current password"
-
+                getString(R.string.change_password_current_required)
             etCurrentPassword.requestFocus()
-
             return
         }
 
-
-        // ==============================
-        // NEW PASSWORD
-        // ==============================
-
+        // Validate new password
         if (newPassword.isEmpty()) {
-
             etNewPassword.error =
-                "Please enter a new password"
-
+                getString(R.string.change_password_new_required)
             etNewPassword.requestFocus()
-
             return
         }
 
-
-        // ==============================
-        // PASSWORD LENGTH
-        // ==============================
-
+        // Require at least six characters
         if (newPassword.length < 6) {
-
             etNewPassword.error =
-                "Password must contain at least 6 characters"
-
+                getString(R.string.change_password_min_length)
             etNewPassword.requestFocus()
-
             return
         }
 
-
-        // ==============================
-        // CONFIRM PASSWORD
-        // ==============================
-
+        // Validate confirmation
         if (confirmPassword.isEmpty()) {
-
             etConfirmPassword.error =
-                "Please confirm your new password"
-
+                getString(R.string.change_password_confirm_required)
             etConfirmPassword.requestFocus()
-
             return
         }
 
-
-        // ==============================
-        // PASSWORD MATCH
-        // ==============================
-
+        // Ensure both new password entries match
         if (newPassword != confirmPassword) {
-
             etConfirmPassword.error =
-                "Passwords do not match"
-
+                getString(R.string.change_password_mismatch)
             etConfirmPassword.requestFocus()
-
             return
         }
 
-
-        // ==============================
-        // CHECK SAME PASSWORD
-        // ==============================
-
+        // Ensure the new password differs from the current password
         if (currentPassword == newPassword) {
-
             etNewPassword.error =
-                "New password must be different from your current password"
-
+                getString(R.string.change_password_same_as_current)
             etNewPassword.requestFocus()
-
             return
         }
 
-
-        // ==============================
-        // GET USER EMAIL
-        // ==============================
-
+        // Retrieve the account email
         val email = user.email
 
         if (email.isNullOrEmpty()) {
-
             Toast.makeText(
                 this,
-                "Your account email could not be found.",
+                getString(R.string.change_password_email_missing),
                 Toast.LENGTH_LONG
             ).show()
-
             return
         }
 
-
-        // ==============================
-        // DISABLE BUTTON
-        // ==============================
-
+        // Disable the button while the request is processing
         btnChangePassword.isEnabled = false
-
         btnChangePassword.text =
-            "CHANGING PASSWORD..."
+            getString(R.string.change_password_processing)
 
+        // Hide any previous success message
+        tvSuccess.visibility = View.GONE
 
-        // =================================================
-        // RE-AUTHENTICATE USER
-        // =================================================
-
-        val credential =
-            EmailAuthProvider.getCredential(
-                email,
-                currentPassword
-            )
+        // Re-authenticate the user with their current password
+        val credential = EmailAuthProvider.getCredential(
+            email,
+            currentPassword
+        )
 
         user.reauthenticate(credential)
             .addOnCompleteListener { reAuthTask ->
 
                 if (reAuthTask.isSuccessful) {
 
-                    // ==========================================
-                    // CURRENT PASSWORD IS CORRECT
-                    // ==========================================
-
+                    // Update the password after successful re-authentication
                     user.updatePassword(newPassword)
                         .addOnCompleteListener { updateTask ->
 
+                            // Restore the button
                             btnChangePassword.isEnabled = true
-
                             btnChangePassword.text =
-                                "CHANGE PASSWORD"
-
+                                getString(R.string.change_password_button)
 
                             if (updateTask.isSuccessful) {
 
-                                // ==============================
-                                // SUCCESS
-                                // ==============================
-
-                                tvSuccess.visibility =
-                                    TextView.VISIBLE
+                                // Display success message
+                                tvSuccess.text =
+                                    getString(R.string.change_password_success)
+                                tvSuccess.visibility = View.VISIBLE
 
                                 Toast.makeText(
                                     this,
-                                    "Password changed successfully!",
+                                    getString(R.string.change_password_success),
                                     Toast.LENGTH_LONG
                                 ).show()
 
-
-                                // Clear fields
-
+                                // Clear password fields
                                 etCurrentPassword.text.clear()
-
                                 etNewPassword.text.clear()
-
                                 etConfirmPassword.text.clear()
-
 
                             } else {
 
-                                // ==============================
-                                // UPDATE FAILED
-                                // ==============================
-
+                                // Report password update failure
                                 val errorMessage =
-                                    updateTask.exception?.message
-                                        ?: "Unable to change password."
+                                    updateTask.exception?.localizedMessage
+                                        ?: getString(
+                                            R.string.change_password_unknown_error
+                                        )
 
                                 Toast.makeText(
                                     this,
-                                    errorMessage,
+                                    getString(
+                                        R.string.change_password_update_failed,
+                                        errorMessage
+                                    ),
                                     Toast.LENGTH_LONG
                                 ).show()
                             }
@@ -327,61 +220,51 @@ class ChangePasswordActivity : AppCompatActivity() {
 
                 } else {
 
-                    // ==============================
-                    // CURRENT PASSWORD INCORRECT
-                    // ==============================
-
+                    // Restore the button if re-authentication fails
                     btnChangePassword.isEnabled = true
-
                     btnChangePassword.text =
-                        "CHANGE PASSWORD"
+                        getString(R.string.change_password_button)
 
                     etCurrentPassword.error =
-                        "Current password is incorrect"
-
+                        getString(R.string.change_password_current_incorrect)
                     etCurrentPassword.requestFocus()
 
                     Toast.makeText(
                         this,
-                        "Current password is incorrect.",
+                        getString(R.string.change_password_current_incorrect),
                         Toast.LENGTH_LONG
                     ).show()
                 }
             }
     }
 
-
     // =====================================================
     // PASSWORD VISIBILITY
     // =====================================================
 
-    private fun setupPasswordVisibility(
-        editText: EditText
-    ) {
+    private fun setupPasswordVisibility(editText: EditText) {
 
-        editText.setOnTouchListener { _, event ->
+        editText.setOnTouchListener { view, event ->
 
             if (event.action == MotionEvent.ACTION_UP) {
 
-                val drawableEnd =
-                    editText.compoundDrawables[2]
+                val drawableEnd = editText.compoundDrawables[2]
 
                 if (drawableEnd != null) {
 
-                    val drawableWidth =
-                        drawableEnd.bounds.width()
+                    // Calculate the drawable's clickable area
+                    val drawableWidth = drawableEnd.bounds.width()
 
                     val clickPosition =
-                        editText.right -
-                                drawableWidth -
-                                editText.paddingEnd
+                        editText.width -
+                                editText.paddingEnd -
+                                drawableWidth
 
-                    if (event.rawX >= clickPosition) {
+                    if (event.x >= clickPosition) {
+                        togglePasswordVisibility(editText)
 
-                        togglePasswordVisibility(
-                            editText
-                        )
-
+                        // Handle the icon tap without triggering other actions
+                        view.performClick()
                         return@setOnTouchListener true
                     }
                 }
@@ -391,37 +274,20 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
     }
 
-
     // =====================================================
-    // TOGGLE PASSWORD
+    // TOGGLE PASSWORD VISIBILITY
     // =====================================================
 
-    private fun togglePasswordVisibility(
-        editText: EditText
-    ) {
+    private fun togglePasswordVisibility(editText: EditText) {
 
-        val cursorPosition =
-            editText.selectionStart
+        val cursorPosition = editText.selectionStart
 
+        val isPasswordHidden =
+            editText.transformationMethod is PasswordTransformationMethod
 
-        if (editText.transformationMethod == null) {
-
-            // Hide password
-
-            editText.transformationMethod =
-                PasswordTransformationMethod.getInstance()
-
-            editText.setCompoundDrawablesWithIntrinsicBounds(
-                R.drawable.ic_lock,
-                0,
-                R.drawable.ic_visibility_off,
-                0
-            )
-
-        } else {
+        if (isPasswordHidden) {
 
             // Show password
-
             editText.transformationMethod =
                 HideReturnsTransformationMethod.getInstance()
 
@@ -431,15 +297,25 @@ class ChangePasswordActivity : AppCompatActivity() {
                 R.drawable.ic_visibility,
                 0
             )
+
+        } else {
+
+            // Hide password
+            editText.transformationMethod =
+                PasswordTransformationMethod.getInstance()
+
+            editText.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_lock,
+                0,
+                R.drawable.ic_visibility_off,
+                0
+            )
         }
 
-
+        // Preserve the cursor position
         if (cursorPosition >= 0) {
-
             editText.setSelection(
-                cursorPosition.coerceAtMost(
-                    editText.text.length
-                )
+                cursorPosition.coerceAtMost(editText.text.length)
             )
         }
     }

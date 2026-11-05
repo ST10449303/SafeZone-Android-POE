@@ -1,3 +1,4 @@
+
 package com.example.safezone
 
 import android.Manifest
@@ -18,17 +19,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.safezone.data.IncidentReportRepository
+import com.example.safezone.data.SafeZoneDatabase
+import com.example.safezone.sync.IncidentReportSyncScheduler
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class PersonalIncidentReportActivity : AppCompatActivity() {
-
-    // ==========================================
-    // VIEWS
-    // ==========================================
 
     private lateinit var tvBack: TextView
     private lateinit var spIncidentType: Spinner
@@ -39,119 +41,68 @@ class PersonalIncidentReportActivity : AppCompatActivity() {
     private lateinit var btnAddPhoto: Button
     private lateinit var btnAddVideo: Button
     private lateinit var btnAddFile: Button
-
     private lateinit var tvEvidence: TextView
     private lateinit var btnSubmitReport: Button
 
-    // ==========================================
-    // FIREBASE
-    // ==========================================
-
     private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
-
-    // ==========================================
-    // EVIDENCE
-    // ==========================================
+    private lateinit var reportRepository: IncidentReportRepository
 
     private var selectedPhotoUri: Uri? = null
     private var selectedVideoUri: Uri? = null
     private var selectedFileUri: Uri? = null
 
-    // ==========================================
-    // REAL LOCATION
-    // ==========================================
-
     private var currentLatitude: Double? = null
     private var currentLongitude: Double? = null
 
-    // ==========================================
-    // REQUEST CODES
-    // ==========================================
-
     companion object {
-
         private const val PHOTO_REQUEST = 2001
         private const val VIDEO_REQUEST = 2002
         private const val FILE_REQUEST = 2003
         private const val LOCATION_REQUEST = 2004
     }
 
-    // ==========================================
-    // ON CREATE
-    // ==========================================
-
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-
-        setContentView(
-            R.layout.activity_personal_incident_report
-        )
-
-        // ==========================================
-        // CONNECT XML
-        // ==========================================
+        setContentView(R.layout.activity_personal_incident_report)
 
         tvBack = findViewById(R.id.tvBack)
+        spIncidentType = findViewById(R.id.spIncidentType)
+        etDescription = findViewById(R.id.etDescription)
+        etLocation = findViewById(R.id.etLocation)
+        etDateTime = findViewById(R.id.etDateTime)
 
-        spIncidentType =
-            findViewById(R.id.spIncidentType)
-
-        etDescription =
-            findViewById(R.id.etDescription)
-
-        etLocation =
-            findViewById(R.id.etLocation)
-
-        etDateTime =
-            findViewById(R.id.etDateTime)
-
-        btnAddPhoto =
-            findViewById(R.id.btnAddPhoto)
-
-        btnAddVideo =
-            findViewById(R.id.btnAddVideo)
-
-        btnAddFile =
-            findViewById(R.id.btnAddFile)
-
-        tvEvidence =
-            findViewById(R.id.tvEvidence)
-
-        btnSubmitReport =
-            findViewById(R.id.btnSubmitReport)
-
-        // ==========================================
-        // FIREBASE
-        // ==========================================
+        btnAddPhoto = findViewById(R.id.btnAddPhoto)
+        btnAddVideo = findViewById(R.id.btnAddVideo)
+        btnAddFile = findViewById(R.id.btnAddFile)
+        tvEvidence = findViewById(R.id.tvEvidence)
+        btnSubmitReport = findViewById(R.id.btnSubmitReport)
 
         auth = FirebaseAuth.getInstance()
 
-        db = FirebaseFirestore.getInstance()
+        val database =
+            SafeZoneDatabase.getDatabase(applicationContext)
 
-        // ==========================================
-        // BACK
-        // ==========================================
+        reportRepository = IncidentReportRepository(
+            dao = database.incidentReportDao(),
+            firestore = FirebaseFirestore.getInstance()
+        )
 
         tvBack.setOnClickListener {
             finish()
         }
 
-        // ==========================================
-        // INCIDENT TYPES
-        // ==========================================
-
+        // Localized incident types.
+        // Keep the first item at position zero for validation.
         val incidentTypes = arrayOf(
-            "Select incident type",
-            "Theft",
-            "Assault",
-            "Harassment",
-            "Accident",
-            "Suspicious Activity",
-            "Property Damage",
-            "Missing Person",
-            "Other"
+            getString(R.string.personal_incident_type_select),
+            getString(R.string.personal_incident_type_theft),
+            getString(R.string.personal_incident_type_assault),
+            getString(R.string.personal_incident_type_harassment),
+            getString(R.string.personal_incident_type_accident),
+            getString(R.string.personal_incident_type_suspicious),
+            getString(R.string.personal_incident_type_property_damage),
+            getString(R.string.personal_incident_type_missing_person),
+            getString(R.string.personal_incident_type_other)
         )
 
         val adapter = ArrayAdapter(
@@ -166,109 +117,99 @@ class PersonalIncidentReportActivity : AppCompatActivity() {
 
         spIncidentType.adapter = adapter
 
-        // ==========================================
-        // DATE & TIME
-        // ==========================================
-
-        val currentDateTime =
+        etDateTime.setText(
             SimpleDateFormat(
                 "dd MMM yyyy, HH:mm",
                 Locale.getDefault()
             ).format(Date())
+        )
 
-        etDateTime.setText(currentDateTime)
-
-        // ==========================================
-        // GET REAL LOCATION
-        // ==========================================
+        tvEvidence.text =
+            getString(R.string.personal_incident_no_evidence)
 
         getCurrentLocation()
 
-        // ==========================================
-        // ADD PHOTO
-        // ==========================================
-
         btnAddPhoto.setOnClickListener {
-
-            val intent =
-                Intent(Intent.ACTION_OPEN_DOCUMENT)
-
-            intent.type = "image/*"
-
-            intent.addCategory(
-                Intent.CATEGORY_OPENABLE
-            )
-
-            intent.addFlags(
-                Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                        Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
-            )
-
-            startActivityForResult(
-                intent,
-                PHOTO_REQUEST
-            )
+            openEvidencePicker("image/*", PHOTO_REQUEST)
         }
-
-        // ==========================================
-        // ADD VIDEO
-        // ==========================================
 
         btnAddVideo.setOnClickListener {
-
-            val intent =
-                Intent(Intent.ACTION_OPEN_DOCUMENT)
-
-            intent.type = "video/*"
-
-            intent.addCategory(
-                Intent.CATEGORY_OPENABLE
-            )
-
-            intent.addFlags(
-                Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                        Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
-            )
-
-            startActivityForResult(
-                intent,
-                VIDEO_REQUEST
-            )
+            openEvidencePicker("video/*", VIDEO_REQUEST)
         }
-
-        // ==========================================
-        // ADD FILE
-        // ==========================================
 
         btnAddFile.setOnClickListener {
+            openEvidencePicker("*/*", FILE_REQUEST)
+        }
 
-            val intent =
-                Intent(Intent.ACTION_OPEN_DOCUMENT)
+        btnSubmitReport.setOnClickListener {
+            submitReport()
+        }
+    }
 
-            intent.type = "*/*"
+    // ==================================================
+    // OPEN EVIDENCE PICKER
+    // ==================================================
 
-            intent.addCategory(
-                Intent.CATEGORY_OPENABLE
-            )
+    private fun openEvidencePicker(
+        mimeType: String,
+        requestCode: Int
+    ) {
+        val intent = Intent(
+            Intent.ACTION_OPEN_DOCUMENT
+        ).apply {
+            type = mimeType
+            addCategory(Intent.CATEGORY_OPENABLE)
 
-            intent.addFlags(
+            addFlags(
                 Intent.FLAG_GRANT_READ_URI_PERMISSION or
                         Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
             )
+        }
 
-            startActivityForResult(
-                intent,
-                FILE_REQUEST
+        startActivityForResult(intent, requestCode)
+    }
+
+    // ==================================================
+    // DISPLAY SELECTED EVIDENCE
+    // ==================================================
+
+    private fun updateEvidenceDisplay() {
+        val evidence = mutableListOf<String>()
+
+        selectedPhotoUri?.let {
+            evidence.add(
+                getString(
+                    R.string.personal_incident_evidence_photo,
+                    it.lastPathSegment
+                        ?: getString(R.string.personal_incident_selected)
+                )
             )
         }
 
-        // ==========================================
-        // SUBMIT
-        // ==========================================
+        selectedVideoUri?.let {
+            evidence.add(
+                getString(
+                    R.string.personal_incident_evidence_video,
+                    it.lastPathSegment
+                        ?: getString(R.string.personal_incident_selected)
+                )
+            )
+        }
 
-        btnSubmitReport.setOnClickListener {
+        selectedFileUri?.let {
+            evidence.add(
+                getString(
+                    R.string.personal_incident_evidence_file,
+                    it.lastPathSegment
+                        ?: getString(R.string.personal_incident_selected)
+                )
+            )
+        }
 
-            submitReport()
+        tvEvidence.text = if (evidence.isEmpty()) {
+            getString(R.string.personal_incident_no_evidence)
+        } else {
+            evidence.joinToString("\n")
         }
     }
 
@@ -277,25 +218,17 @@ class PersonalIncidentReportActivity : AppCompatActivity() {
     // ==================================================
 
     private fun getCurrentLocation() {
+        val fineGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
-        val fineGranted =
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-
-        val coarseGranted =
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-
-        // ==========================================
-        // REQUEST PERMISSION
-        // ==========================================
+        val coarseGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
         if (!fineGranted && !coarseGranted) {
-
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(
@@ -304,149 +237,111 @@ class PersonalIncidentReportActivity : AppCompatActivity() {
                 ),
                 LOCATION_REQUEST
             )
-
             return
         }
 
-        // ==========================================
-        // LOCATION MANAGER
-        // ==========================================
-
         val locationManager =
-            getSystemService(
-                LOCATION_SERVICE
-            ) as LocationManager
+            getSystemService(LOCATION_SERVICE) as LocationManager
 
-        val gpsEnabled =
-            try {
-                locationManager.isProviderEnabled(
-                    LocationManager.GPS_PROVIDER
-                )
-            } catch (e: Exception) {
-                false
-            }
+        val gpsEnabled = try {
+            locationManager.isProviderEnabled(
+                LocationManager.GPS_PROVIDER
+            )
+        } catch (_: Exception) {
+            false
+        }
 
-        val networkEnabled =
-            try {
-                locationManager.isProviderEnabled(
-                    LocationManager.NETWORK_PROVIDER
-                )
-            } catch (e: Exception) {
-                false
-            }
-
-        // ==========================================
-        // LOCATION SERVICES OFF
-        // ==========================================
+        val networkEnabled = try {
+            locationManager.isProviderEnabled(
+                LocationManager.NETWORK_PROVIDER
+            )
+        } catch (_: Exception) {
+            false
+        }
 
         if (!gpsEnabled && !networkEnabled) {
+            currentLatitude = null
+            currentLongitude = null
 
             etLocation.setText(
-                "Location services are turned off"
+                getString(R.string.personal_incident_location_services_off)
             )
 
             Toast.makeText(
                 this,
-                "Please turn on Location services.",
+                getString(R.string.personal_incident_enable_location),
                 Toast.LENGTH_LONG
             ).show()
 
             try {
                 startActivity(
-                    Intent(
-                        Settings.ACTION_LOCATION_SOURCE_SETTINGS
-                    )
+                    Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 )
-            } catch (e: Exception) {
-                // Ignore if settings cannot be opened
+            } catch (_: Exception) {
+                // Settings could not be opened.
             }
 
             return
         }
 
-        // ==========================================
-        // FIND BEST LAST KNOWN LOCATION
-        // ==========================================
-
         var bestLocation: Location? = null
 
         if (gpsEnabled) {
-
             try {
-
-                val gpsLocation =
+                bestLocation =
                     locationManager.getLastKnownLocation(
                         LocationManager.GPS_PROVIDER
                     )
-
-                if (gpsLocation != null) {
-                    bestLocation = gpsLocation
-                }
-
-            } catch (e: SecurityException) {
-                // Permission problem
+            } catch (_: SecurityException) {
+                // Permission may have changed.
             }
         }
 
         if (networkEnabled) {
-
             try {
-
                 val networkLocation =
                     locationManager.getLastKnownLocation(
                         LocationManager.NETWORK_PROVIDER
                     )
 
-                if (networkLocation != null) {
-
-                    if (
-                        bestLocation == null ||
-                        networkLocation.accuracy <
-                        bestLocation.accuracy
-                    ) {
-
-                        bestLocation =
-                            networkLocation
-                    }
+                if (
+                    networkLocation != null &&
+                    (
+                            bestLocation == null ||
+                                    networkLocation.accuracy <
+                                    bestLocation.accuracy
+                            )
+                ) {
+                    bestLocation = networkLocation
                 }
-
-            } catch (e: SecurityException) {
-                // Permission problem
+            } catch (_: SecurityException) {
+                // Permission may have changed.
             }
         }
 
-        // ==========================================
-        // SAVE REAL COORDINATES
-        // ==========================================
-
         if (bestLocation != null) {
-
-            currentLatitude =
-                bestLocation.latitude
-
-            currentLongitude =
-                bestLocation.longitude
-
-            val latitude =
-                bestLocation.latitude
-
-            val longitude =
-                bestLocation.longitude
+            currentLatitude = bestLocation.latitude
+            currentLongitude = bestLocation.longitude
 
             etLocation.setText(
-                "Latitude: $latitude\nLongitude: $longitude"
+                getString(
+                    R.string.personal_incident_coordinates_display,
+                    bestLocation.latitude.toString(),
+                    bestLocation.longitude.toString()
+                )
             )
-
         } else {
+            currentLatitude = null
+            currentLongitude = null
 
             etLocation.setText(
-                "Current location unavailable"
+                getString(R.string.personal_incident_location_unavailable)
             )
         }
     }
 
     // ==================================================
-    // LOCATION PERMISSION RESULT
+    // LOCATION PERMISSIONS
     // ==================================================
 
     override fun onRequestPermissionsResult(
@@ -454,36 +349,35 @@ class PersonalIncidentReportActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-
         super.onRequestPermissionsResult(
             requestCode,
             permissions,
             grantResults
         )
 
-        if (
-            requestCode ==
-            LOCATION_REQUEST
-        ) {
-
+        if (requestCode == LOCATION_REQUEST) {
             if (
                 grantResults.isNotEmpty() &&
                 grantResults.any {
                     it == PackageManager.PERMISSION_GRANTED
                 }
             ) {
-
                 getCurrentLocation()
-
             } else {
+                currentLatitude = null
+                currentLongitude = null
 
                 etLocation.setText(
-                    "Location permission not granted"
+                    getString(
+                        R.string.personal_incident_location_permission_denied
+                    )
                 )
 
                 Toast.makeText(
                     this,
-                    "Location permission is required to record the incident location.",
+                    getString(
+                        R.string.personal_incident_location_permission_required
+                    ),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -491,7 +385,7 @@ class PersonalIncidentReportActivity : AppCompatActivity() {
     }
 
     // ==================================================
-    // EVIDENCE RESULT
+    // HANDLE SELECTED PHOTO, VIDEO OR FILE
     // ==================================================
 
     @Deprecated("Deprecated in Android API")
@@ -500,71 +394,36 @@ class PersonalIncidentReportActivity : AppCompatActivity() {
         resultCode: Int,
         data: Intent?
     ) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-        super.onActivityResult(
-            requestCode,
-            resultCode,
-            data
-        )
+        if (resultCode != Activity.RESULT_OK) return
 
-        if (
-            resultCode != Activity.RESULT_OK ||
-            data?.data == null
-        ) {
-            return
-        }
-
-        val uri = data.data ?: return
-
-        // ==========================================
-        // KEEP PERMISSION FOR THE URI
-        // ==========================================
+        val resultIntent = data ?: return
+        val uri = resultIntent.data ?: return
 
         try {
+            val hasReadPermission =
+                (resultIntent.flags and
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION) != 0
 
-            val takeFlags =
-                data.flags and
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION
-
-            contentResolver.takePersistableUriPermission(
-                uri,
-                takeFlags
-            )
-
-        } catch (e: Exception) {
-            // Some providers do not support persistable permission
+            if (hasReadPermission) {
+                contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            }
+        } catch (_: Exception) {
+            // Continue if the provider does not support
+            // persistable URI permissions.
         }
-
-        // ==========================================
-        // SAVE SELECTED EVIDENCE
-        // ==========================================
 
         when (requestCode) {
-
-            PHOTO_REQUEST -> {
-
-                selectedPhotoUri = uri
-
-                tvEvidence.text =
-                    "Photo selected:\n${uri.lastPathSegment}"
-            }
-
-            VIDEO_REQUEST -> {
-
-                selectedVideoUri = uri
-
-                tvEvidence.text =
-                    "Video selected:\n${uri.lastPathSegment}"
-            }
-
-            FILE_REQUEST -> {
-
-                selectedFileUri = uri
-
-                tvEvidence.text =
-                    "File selected:\n${uri.lastPathSegment}"
-            }
+            PHOTO_REQUEST -> selectedPhotoUri = uri
+            VIDEO_REQUEST -> selectedVideoUri = uri
+            FILE_REQUEST -> selectedFileUri = uri
         }
+
+        updateEvidenceDisplay()
     }
 
     // ==================================================
@@ -572,217 +431,155 @@ class PersonalIncidentReportActivity : AppCompatActivity() {
     // ==================================================
 
     private fun submitReport() {
-
-        // ==========================================
-        // CHECK LOGIN
-        // ==========================================
-
-        val currentUser =
-            auth.currentUser
+        val currentUser = auth.currentUser
 
         if (currentUser == null) {
-
             Toast.makeText(
                 this,
-                "Please log in first.",
+                getString(R.string.personal_incident_login_required),
                 Toast.LENGTH_SHORT
             ).show()
-
             return
         }
 
-        // ==========================================
-        // INCIDENT TYPE
-        // ==========================================
-
-        if (
-            spIncidentType.selectedItemPosition == 0
-        ) {
-
+        if (spIncidentType.selectedItemPosition == 0) {
             Toast.makeText(
                 this,
-                "Please select an incident type.",
+                getString(R.string.personal_incident_select_type_error),
                 Toast.LENGTH_SHORT
             ).show()
-
             return
         }
 
         val incidentType =
             spIncidentType.selectedItem.toString()
 
-        // ==========================================
-        // FORM VALUES
-        // ==========================================
-
         val description =
-            etDescription.text
-                .toString()
-                .trim()
+            etDescription.text.toString().trim()
 
         val location =
-            etLocation.text
-                .toString()
-                .trim()
+            etLocation.text.toString().trim()
 
         val dateTime =
-            etDateTime.text
-                .toString()
-                .trim()
-
-        // ==========================================
-        // VALIDATE DESCRIPTION
-        // ==========================================
+            etDateTime.text.toString().trim()
 
         if (description.isEmpty()) {
-
             etDescription.error =
-                "Please describe what happened."
+                getString(R.string.personal_incident_description_error)
 
             etDescription.requestFocus()
-
             return
         }
 
-        // ==========================================
-        // VALIDATE LOCATION
-        // ==========================================
-
         if (
-            location.isEmpty() ||
+            location.isBlank() ||
+            location.contains("unavailable", ignoreCase = true) ||
+            location.contains("turned off", ignoreCase = true) ||
             location.contains(
-                "unavailable",
+                "permission not granted",
                 ignoreCase = true
             ) ||
             location.contains(
-                "turned off",
+                "ayitholakali",
+                ignoreCase = true
+            ) ||
+            location.contains(
+                "ga e teng",
                 ignoreCase = true
             )
         ) {
-
             Toast.makeText(
                 this,
-                "Please enable location services and wait for your real location to appear.",
+                getString(
+                    R.string.personal_incident_valid_location_error
+                ),
                 Toast.LENGTH_LONG
             ).show()
-
             return
         }
 
-        // ==========================================
-        // EVIDENCE VALUES
-        // ==========================================
+        val latitude = currentLatitude
+        val longitude = currentLongitude
 
-        val photoUri =
-            selectedPhotoUri?.toString() ?: ""
+        if (latitude == null || longitude == null) {
+            Toast.makeText(
+                this,
+                getString(
+                    R.string.personal_incident_coordinates_unavailable
+                ),
+                Toast.LENGTH_LONG
+            ).show()
+            return
+        }
 
-        val videoUri =
-            selectedVideoUri?.toString() ?: ""
+        // Preserve all three independent evidence selections.
+        val photoUri = selectedPhotoUri?.toString() ?: ""
+        val videoUri = selectedVideoUri?.toString() ?: ""
+        val fileUri = selectedFileUri?.toString() ?: ""
 
-        val fileUri =
-            selectedFileUri?.toString() ?: ""
+        val photoName = selectedPhotoUri?.lastPathSegment ?: ""
+        val videoName = selectedVideoUri?.lastPathSegment ?: ""
+        val fileName = selectedFileUri?.lastPathSegment ?: ""
 
-        // ==========================================
-        // REPORT DATA
-        // ==========================================
-
-        val reportData =
-            hashMapOf<String, Any>(
-
-                // User
-                "userId" to currentUser.uid,
-
-                // Incident
-                "incidentType" to incidentType,
-
-                // Description
-                "description" to description,
-
-                // Display location
-                "location" to location,
-
-                // Real GPS
-                "latitude" to
-                        (currentLatitude ?: 0.0),
-
-                "longitude" to
-                        (currentLongitude ?: 0.0),
-
-                // Date/time shown to user
-                "dateTime" to dateTime,
-
-                // Status
-                "status" to "Submitted",
-
-                // Evidence
-                "photoEvidence" to photoUri,
-
-                "videoEvidence" to videoUri,
-
-                "fileEvidence" to fileUri,
-
-                // Evidence names
-                "photoName" to
-                        (
-                                selectedPhotoUri
-                                    ?.lastPathSegment ?: ""
-                                ),
-
-                "videoName" to
-                        (
-                                selectedVideoUri
-                                    ?.lastPathSegment ?: ""
-                                ),
-
-                "fileName" to
-                        (
-                                selectedFileUri
-                                    ?.lastPathSegment ?: ""
-                                ),
-
-                // Created timestamp
-                "createdAt" to
-                        System.currentTimeMillis()
-            )
-
-        // ==========================================
-        // DISABLE BUTTON
-        // ==========================================
+        val userId = currentUser.uid
 
         btnSubmitReport.isEnabled = false
-
         btnSubmitReport.text =
-            "Submitting..."
+            getString(R.string.personal_incident_saving)
 
-        // ==========================================
-        // SAVE TO FIRESTORE
-        // ==========================================
+        lifecycleScope.launch {
+            try {
+                // Save locally first. The repository's existing
+                // implementation is retained.
+                reportRepository.saveReportLocally(
+                    userId = userId,
+                    incidentType = incidentType,
+                    description = description,
+                    location = location,
+                    latitude = latitude,
+                    longitude = longitude,
+                    dateTime = dateTime,
+                    photoEvidence = photoUri,
+                    videoEvidence = videoUri,
+                    fileEvidence = fileUri,
+                    photoName = photoName,
+                    videoName = videoName,
+                    fileName = fileName,
+                    createdAt = System.currentTimeMillis()
+                )
 
-        db.collection("IncidentReports")
-            .add(reportData)
-            .addOnSuccessListener {
+                // Schedule synchronization separately.
+                IncidentReportSyncScheduler.schedule(
+                    applicationContext,
+                    userId
+                )
 
                 Toast.makeText(
-                    this,
-                    "Incident report submitted successfully.",
+                    this@PersonalIncidentReportActivity,
+                    getString(
+                        R.string.personal_incident_saved_offline
+                    ),
                     Toast.LENGTH_LONG
                 ).show()
 
                 finish()
-            }
-            .addOnFailureListener { exception ->
-
-                btnSubmitReport.isEnabled =
-                    true
-
-                btnSubmitReport.text =
-                    "Submit Report"
-
+            } catch (exception: Exception) {
                 Toast.makeText(
-                    this,
-                    "Unable to submit report: ${exception.message}",
+                    this@PersonalIncidentReportActivity,
+                    getString(
+                        R.string.personal_incident_save_failed,
+                        exception.message
+                            ?: getString(
+                                R.string.personal_incident_unknown_error
+                            )
+                    ),
                     Toast.LENGTH_LONG
                 ).show()
+            } finally {
+                btnSubmitReport.isEnabled = true
+                btnSubmitReport.text =
+                    getString(R.string.personal_incident_submit)
             }
+        }
     }
 }

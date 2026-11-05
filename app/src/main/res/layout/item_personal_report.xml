@@ -15,7 +15,7 @@
         android:id="@+id/tvReportType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Incident"
+        android:text="@string/personal_reports_incident"
         android:textColor="#0B1F3A"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Incident ID: -"
+        android:text="@string/personal_reports_incident_id_placeholder"
         android:textColor="#1976D2"
         android:textSize="13sp"
         android:textStyle="bold" />
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Campus: Not provided"
+        android:text="@string/personal_reports_campus_placeholder"
         android:textColor="#667085"
         android:textSize="13sp" />
 
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        android:text="Date: Not available"
+        android:text="@string/personal_reports_date_placeholder"
         android:textColor="#667085"
         android:textSize="14sp" />
 
@@ -61,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Time: Not available"
+        android:text="@string/personal_reports_time_placeholder"
         android:textColor="#667085"
         android:textSize="14sp" />
 
@@ -71,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Description"
+        android:text="@string/personal_reports_description_heading"
         android:textColor="#172033"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -81,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="No description provided."
+        android:text="@string/personal_reports_no_description"
         android:textColor="#667085"
         android:textSize="14sp" />
 
@@ -91,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Location"
+        android:text="@string/personal_reports_location_heading"
         android:textColor="#172033"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -101,18 +101,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Location not provided"
+        android:text="@string/personal_reports_location_placeholder"
         android:textColor="#667085"
         android:textSize="14sp" />
 
-    <!-- GPS -->
+    <!-- GPS COORDINATES -->
 
     <TextView
         android:id="@+id/tvReportCoordinates"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Coordinates not available"
+        android:text="@string/personal_reports_coordinates_placeholder"
         android:textColor="#667085"
         android:textSize="13sp"
         android:visibility="gone" />
@@ -127,7 +127,7 @@
         android:background="@drawable/bg_secondary_button"
         android:backgroundTint="@null"
         android:stateListAnimator="@null"
-        android:text="VIEW LOCATION ON MAP"
+        android:text="@string/personal_reports_view_map"
         android:textAllCaps="false"
         android:textColor="#0B1F3A"
         android:textSize="14sp"
@@ -145,7 +145,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Status: "
+            android:text="@string/personal_reports_status_label"
             android:textColor="#172033"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -154,7 +154,7 @@
             android:id="@+id/tvReportStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submitted"
+            android:text="@string/personal_reports_submitted"
             android:textColor="#1976D2"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -168,7 +168,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:text="Evidence"
+        android:text="@string/personal_reports_evidence_heading"
         android:textColor="#172033"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -182,7 +182,7 @@
         android:background="@drawable/bg_secondary_button"
         android:backgroundTint="@null"
         android:stateListAnimator="@null"
-        android:text="VIEW PHOTO"
+        android:text="@string/personal_reports_view_photo"
         android:textAllCaps="false"
         android:textColor="#0B1F3A"
         android:textSize="14sp"
@@ -196,7 +196,7 @@
         android:background="@drawable/bg_secondary_button"
         android:backgroundTint="@null"
         android:stateListAnimator="@null"
-        android:text="VIEW VIDEO"
+        android:text="@string/personal_reports_view_video"
         android:textAllCaps="false"
         android:textColor="#0B1F3A"
         android:textSize="14sp"
@@ -210,7 +210,7 @@
         android:background="@drawable/bg_secondary_button"
         android:backgroundTint="@null"
         android:stateListAnimator="@null"
-        android:text="VIEW FILE"
+        android:text="@string/personal_reports_view_file"
         android:textAllCaps="false"
         android:textColor="#0B1F3A"
         android:textSize="14sp"
